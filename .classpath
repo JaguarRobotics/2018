@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
+	<classpathentry kind="var" path="networktables" sourcepath="ntcore.sources"/>
+	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>
+	<classpathentry kind="var" path="cscore" sourcepath="cscore.sources"/>
+	<classpathentry kind="var" path="wpiutil" sourcepath="wpiutil.sources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/activation-1.1.1.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/bugsnag-3.1.1.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/commons-codec-1.10.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/hazelcast-3.5.4.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/jackson-annotations-2.8.8.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/jackson-core-2.8.8.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/jackson-databind-2.8.8.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/jaglibs.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/librato-java-2.1.0.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/log4j-api-2.9.1.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/log4j-core-2.9.1.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/log4j-slf4j-impl-2.9.1.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/metrics-core-3.2.2.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/metrics-jvm-3.2.2.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/metrics-librato-5.1.0.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/moquette-broker-0.10.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/netty-buffer-4.1.12.Final.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/netty-codec-4.1.12.Final.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/netty-codec-http-4.1.12.Final.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/netty-codec-mqtt-4.1.12.Final.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/netty-common-4.1.12.Final.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/netty-handler-4.1.12.Final.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/netty-resolver-4.1.12.Final.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/netty-transport-4.1.12.Final.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/netty-transport-native-epoll-4.1.12.Final-linux-x86_64.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/netty-transport-native-unix-common-4.1.12.Final.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/org.eclipse.paho.client.mqttv3-1.0.2.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
