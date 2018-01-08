@@ -1,0 +1,30 @@
+apply plugin: "java"
+apply plugin: "eclipse"
+
+repositories {
+    maven {
+        url "http://first.wpi.edu/FRC/roborio/maven/release/"
+    }
+}
+
+dependencies {
+    compile "edu.wpi.first.cscore:cscore-java:1.1.0"
+    compile "edu.wpi.first.ntcore:ntcore-java:4.0.0"
+    compile "org.opencv:opencv-java:3.2.0"
+    compile "edu.wpi.first.wpilibj:wpilibj-java:2018.1.1"
+    compile "edu.wpi.first.wpiutil:wpiutil-java:3.0.0"
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = [ "src/" ]
+        }
+    }
+}
+
+eclipse {
+    project {
+        natures "edu.wpi.first.wpilib.plugins.core.nature.FRCProjectNature"
+    }
+}

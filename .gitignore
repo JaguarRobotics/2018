@@ -251,3 +251,4 @@ Temporary Items
 .gradle
 .classpath
 .project
+!gradle-wrapper.jar
