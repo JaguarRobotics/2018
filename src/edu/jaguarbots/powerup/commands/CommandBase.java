@@ -2,8 +2,9 @@ package edu.jaguarbots.powerup.commands;
 
 import edu.jaguarbots.powerup.OI;
 import edu.jaguarbots.powerup.RobotMap;
-import edu.jaguarbots.powerup.subsystems.ClimberSubsystem;
 import edu.jaguarbots.powerup.subsystems.DriveSubsystem;
+import edu.jaguarbots.powerup.subsystems.IntakeSubsystem;
+import edu.jaguarbots.powerup.subsystems.LiftSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -21,9 +22,13 @@ public abstract class CommandBase extends Command implements RobotMap {
      */
     public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
     /**
-     * This creates the climber subsystem
+     * This creates the intake subsystem
      */
-    public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+    public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    /**
+     * This creates the lift subsystem
+     */
+    public static final LiftSubsystem liftSubsystem = new LiftSubsystem();
     public CommandBase() {
 	super();
     }

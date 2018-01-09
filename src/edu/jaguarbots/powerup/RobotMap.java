@@ -19,7 +19,7 @@ public interface RobotMap {
     public static final int LEFT_ENCODER_CHANNEL_B = 1;
     public static final int RIGHT_ENCODER_CHANNEL_A = 2;
     public static final int RIGHT_ENCODER_CHANNEL_B = 3;
-    // Joysticks
+    // Controls
     public static final int LEFT_JOYSTICK_PORT = 1;
     public static final int RIGHT_JOYSTICK_PORT = 2;
     public static final int MANIPULATOR_JOYSTICK_PORT = 3;
@@ -27,5 +27,11 @@ public interface RobotMap {
     public static final double ROBOT_WIDTH = 16;
     public static final int SOLENOID_GEAR_SHIFT_PORT = 1;
     public static final int SOLENOID_GEAR_DOOR_PORT = 2;
+    // Cutoff Values for potentiometers
+    public static final int PORTAL_POTENTIOMETER_VALUE = 0;
+    public static final int HIGHSCALE_POTENTIOMETER_VALUE = 0;
+    public static final int MIDSCALE_POTENTIOMETER_VALUE = 0;
+    public static final int LOWSCALE_POTENTIOMETER_VALUE = 0;
+    public static final int SWITCH_POTENTIOMETER_VALUE = 0;
 
 }
