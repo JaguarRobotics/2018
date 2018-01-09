@@ -1,7 +1,7 @@
 package edu.jaguarbots.powerup.commands;
 
-import edu.jagbots.powerup.OI;
-import edu.jagbots.powerup.RobotMap;
+import edu.jaguarbots.powerup.OI;
+import edu.jaguarbots.powerup.RobotMap;
 import edu.jaguarbots.powerup.subsystems.ClimberSubsystem;
 import edu.jaguarbots.powerup.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.command.Command;

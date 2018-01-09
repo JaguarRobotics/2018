@@ -1,8 +1,8 @@
 package edu.jaguarbots.powerup.subsystems;
 
-import edu.jagbots.powerup.IOFactory;
-import edu.jagbots.powerup.MotorID;
-import edu.jagbots.powerup.RobotMap;
+import edu.jaguarbots.powerup.IOFactory;
+import edu.jaguarbots.powerup.MotorID;
+import edu.jaguarbots.powerup.RobotMap;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 

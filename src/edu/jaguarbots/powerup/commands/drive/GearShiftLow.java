@@ -1,6 +1,6 @@
 package edu.jaguarbots.powerup.commands.drive;
 
-import edu.jagbots.powerup.Robot.Gear;
+import edu.jaguarbots.powerup.Robot.Gear;
 import edu.jaguarbots.powerup.commands.CommandBase;
 import edu.jaguarbots.powerup.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

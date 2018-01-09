@@ -1,6 +1,6 @@
 package edu.jaguarbots.powerup.subsystems;
 
-import edu.jagbots.powerup.OversampledEncoder;
+import edu.jaguarbots.powerup.OversampledEncoder;
 import edu.jaguarbots.powerup.commands.drive.DriveTank;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
