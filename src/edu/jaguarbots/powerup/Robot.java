@@ -28,13 +28,15 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void robotInit() {
-	try {
-	    CommandBase.init();
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
+	CommandBase.init();
 	SmartDashboard.putNumber("Joystick Tolerance", 1);
     }
+    /**
+     * What the robot does repeatedly while existing
+     * 
+     * @since Always
+     * @version 2018
+     */
     @Override
     public void robotPeriodic() {
 	super.robotPeriodic();
@@ -48,7 +50,7 @@ public class Robot extends IterativeRobot {
     public void disabledInit() {
     }
     /**
-     * What the robot does while disabled
+     * What the robot does repeatedly while disabled
      * 
      * @since Always
      * @version 2018
@@ -96,6 +98,7 @@ public class Robot extends IterativeRobot {
     }
     /**
      * This function is called repeatedly while in test mode
+     * 
      * @since Always
      * @version 2018
      */

@@ -14,29 +14,52 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public abstract class CommandBase extends Command implements RobotMap {
     /**
-     * This is the oi
+     * This creates the oi
+     * 
+     * @since Always
+     * @version 2018
      */
     public static OI oi;
     /**
      * This creates the drive subsystem
+     * 
+     * @since Always
+     * @version 2018
      */
-    public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+    public static DriveSubsystem driveSubsystem;
     /**
      * This creates the intake subsystem
+     * 
+     * @since 2018
+     * @version 2018
      */
-    public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    public static IntakeSubsystem intakeSubsystem;
     /**
      * This creates the lift subsystem
+     * 
+     * @since 2018
+     * @version 2018
      */
-    public static final LiftSubsystem liftSubsystem = new LiftSubsystem();
+    public static LiftSubsystem liftSubsystem;
+    /**
+     * This is the class that is the base of the commands and initializes the subsystems
+     * 
+     * @since Always
+     * @version 2018
+     */
     public CommandBase() {
 	super();
     }
-    public static void init() throws InterruptedException {
-	try {
-	    oi = new OI();
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
+    /**
+     * This method intializes all of the subsystems
+     * 
+     * @since Always
+     * @version 2018
+     */
+    public static void init() {
+	oi = new OI();
+	driveSubsystem = new DriveSubsystem();
+	intakeSubsystem = new IntakeSubsystem();
+	liftSubsystem = new LiftSubsystem();
     }
 }

@@ -43,6 +43,6 @@ public class Raise extends CommandBase {
     }
     @Override
     protected void interrupted() {
-	LiftSubsystem.liftMotor.set(0);
+	end();
     }
 }

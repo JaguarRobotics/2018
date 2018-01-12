@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * @version 2018
  */
 public class OI implements RobotMap {
-    public OI() throws InterruptedException {
+    public OI() {
     }
     // The controllers we are using this year
     public final Joystick Joystick0 = new Joystick(LEFT_JOYSTICK_PORT);
