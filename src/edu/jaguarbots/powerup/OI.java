@@ -6,32 +6,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator interface to the commands and command groups that allow control of the robot.
+ * @author Everyone
+ * @since Always
+ * @version 2018
  */
 public class OI implements RobotMap {
     public OI() throws InterruptedException {
     }
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a
-    //// joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
-    // Start the command when the button is released and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
+    // The controllers we are using this year
     public final Joystick Joystick0 = new Joystick(LEFT_JOYSTICK_PORT);
     public final Joystick Joystick1 = new Joystick(RIGHT_JOYSTICK_PORT);
     public final Joystick Manipulator = new Joystick(MANIPULATOR_JOYSTICK_PORT);
@@ -69,41 +51,4 @@ public class OI implements RobotMap {
     public final Button ManipulatorXbox_Start = new JoystickButton(Manipulator, 8);
     public final Button ManipulatorXbox_LStick = new JoystickButton(Manipulator, 9);
     public final Button ManipulatorXbox_RStick = new JoystickButton(Manipulator, 10);
-    // Dualshock/Playstation controller buttons if needed. currently unlikely to
-    // be used.
-    /*
-     * public final Button Manipulator_Select = new JoystickButton(Manipulator,
-     * 1); public final Button Manipulator_L3 = new JoystickButton(Manipulator,
-     * 2); public final Button Manipulator_R3 = new JoystickButton(Manipulator,
-     * 3); public final Button Manipulator_Start = new
-     * JoystickButton(Manipulator, 4); public final Button Manipulator_DpadUp =
-     * new JoystickButton(Manipulator, 5); public final Button
-     * Manipulator_DpadRight = new JoystickButton(Manipulator, 6); public final
-     * Button Manipulator_DpadDown = new JoystickButton(Manipulator, 7); public
-     * final Button Manipulator_DpadLeft = new JoystickButton(Manipulator, 8);
-     * public final Button Manipulator_L2 = new JoystickButton(Manipulator, 9);
-     * public final Button Manipulator_R2 = new JoystickButton(Manipulator, 10);
-     * public final Button Manipulator_L1 = new JoystickButton(Manipulator, 11);
-     * public final Button Manipulator_R1 = new JoystickButton(Manipulator, 12);
-     * public final Button Manipulator_Triangle = new
-     * JoystickButton(Manipulator, 13); public final Button Manipulator_Circle =
-     * new JoystickButton(Manipulator, 14); public final Button Manipulator_X =
-     * new JoystickButton(Manipulator, 15); public final Button
-     * Manipulator_Square = new JoystickButton(Manipulator, 16);
-     */
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.s
-    // // TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
-    // Start the command when the button is released and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
 }

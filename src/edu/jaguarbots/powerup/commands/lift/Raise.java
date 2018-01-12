@@ -1,6 +1,13 @@
 package edu.jaguarbots.powerup.commands.lift;
 
 import edu.jaguarbots.powerup.commands.CommandBase;
+/**
+ * The command to raise the lift
+ * 
+ * @author Brian
+ * @since 2018
+ * @version 2018
+ */
 import edu.jaguarbots.powerup.subsystems.LiftSubsystem;
 public class Raise extends CommandBase {
     /**
@@ -9,7 +16,7 @@ public class Raise extends CommandBase {
     private static double raiseValue = 0;
     /**
      * Raises the lift of the robot to specified potentiometer value
-     * @param raiseValue
+     * @param raiseValue the value to raise the robot to
      */
     public Raise(double raiseValue) {
 	Raise.raiseValue = raiseValue;
