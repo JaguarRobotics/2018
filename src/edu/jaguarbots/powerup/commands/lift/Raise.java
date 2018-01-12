@@ -18,6 +18,7 @@ public class Raise extends CommandBase {
      * @version 2018
      */
     private double raiseValue = 0;
+
     /**
      * Raises the lift of the robot to specified potentiometer value
      * 
@@ -27,9 +28,10 @@ public class Raise extends CommandBase {
      * @version 2018
      */
     public Raise(double raiseValue) {
-	requires(liftSubsystem);
-	this.raiseValue = raiseValue;
+        requires(liftSubsystem);
+        this.raiseValue = raiseValue;
     }
+
     /**
      * What happens on initialize, does nothing
      * 
@@ -39,6 +41,7 @@ public class Raise extends CommandBase {
     @Override
     protected void initialize() {
     }
+
     /**
      * What happens while the command is running, moves the motor
      * 
@@ -47,8 +50,9 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void execute() {
-	LiftSubsystem.liftMotor.set(1);
+        LiftSubsystem.liftMotor.set(1);
     }
+
     /**
      * Checks if the potentiometer value has reached the target value
      * 
@@ -58,12 +62,13 @@ public class Raise extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-	if (liftSubsystem.getPotentiometerValue() >= raiseValue) {
-	    return true;
-	} else {
-	    return false;
-	}
+        if (liftSubsystem.getPotentiometerValue() >= raiseValue) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
     /**
      * Turns off the motor when the command ends
      * 
@@ -72,8 +77,9 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void end() {
-	LiftSubsystem.liftMotor.set(0);
+        LiftSubsystem.liftMotor.set(0);
     }
+
     /**
      * Runs end if the command is interrupted
      * 
@@ -82,6 +88,6 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void interrupted() {
-	end();
+        end();
     }
 }

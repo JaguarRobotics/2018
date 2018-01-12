@@ -24,7 +24,7 @@ public class EncoderTurn extends CommandBase {
      * @since 2017
      * @version 2018
      */
-    private double arclength;
+    private double       arclength;
     /**
      * The width of the wheel base
      * 
@@ -32,6 +32,7 @@ public class EncoderTurn extends CommandBase {
      * @version 2018
      */
     private final double WHEELBASE_WIDTH = 18.0;
+
     @Override
     /**
      * Resets the encoders and starts them again when the command runs
@@ -40,9 +41,10 @@ public class EncoderTurn extends CommandBase {
      * @version 2018
      */
     protected void initialize() {
-	driveSubsystem.resetEncoders(true, true);
-	driveSubsystem.startEncoders();
+        driveSubsystem.resetEncoders(true, true);
+        driveSubsystem.startEncoders();
     }
+
     @Override
     /**
      * turns the robot whichever way you tell it
@@ -51,10 +53,11 @@ public class EncoderTurn extends CommandBase {
      * @version 2018
      */
     protected void execute() {
-	SmartDashboard.putNumber("EncoderLeft", CommandBase.driveSubsystem.getEncoderLeft());
-	SmartDashboard.putNumber("EncoderRight", CommandBase.driveSubsystem.getEncoderRight());
-	driveSubsystem.driveTank(-speed, speed);
+        SmartDashboard.putNumber("EncoderLeft", CommandBase.driveSubsystem.getEncoderLeft());
+        SmartDashboard.putNumber("EncoderRight", CommandBase.driveSubsystem.getEncoderRight());
+        driveSubsystem.driveTank(-speed, speed);
     }
+
     @Override
     /**
      * Determines if the robot has turned far enough
@@ -63,10 +66,11 @@ public class EncoderTurn extends CommandBase {
      * @version 2018
      */
     protected boolean isFinished() {
-	double left = Math.abs(driveSubsystem.getEncoderLeft());
-	double right = Math.abs(driveSubsystem.getEncoderRight());
-	return Math.max(left, right) >= arclength;
+        double left = Math.abs(driveSubsystem.getEncoderLeft());
+        double right = Math.abs(driveSubsystem.getEncoderRight());
+        return Math.max(left, right) >= arclength;
     }
+
     @Override
     /**
      * Stops the robot
@@ -75,8 +79,9 @@ public class EncoderTurn extends CommandBase {
      * @version 2018
      */
     protected void end() {
-	driveSubsystem.driveTank(0, 0);
+        driveSubsystem.driveTank(0, 0);
     }
+
     @Override
     /**
      * If the command is interrupted it runs the end method to stop the robot
@@ -85,8 +90,9 @@ public class EncoderTurn extends CommandBase {
      * @version 2018
      */
     protected void interrupted() {
-	end();
+        end();
     }
+
     /**
      * Default constructor
      * 
@@ -98,10 +104,11 @@ public class EncoderTurn extends CommandBase {
      * @version 2018
      */
     public EncoderTurn(double angle, double speed) {
-	requires(driveSubsystem);
-	this.speed = (angle < 0) ? -1 * Math.abs(speed) : Math.abs(speed);
-	this.arclength = Math.abs(angle * WHEELBASE_WIDTH / 2);
+        requires(driveSubsystem);
+        this.speed = (angle < 0) ? -1 * Math.abs(speed) : Math.abs(speed);
+        this.arclength = Math.abs(angle * WHEELBASE_WIDTH / 2);
     }
+
     /**
      * Turns the robot at a speed of 0.7
      * 
@@ -111,6 +118,6 @@ public class EncoderTurn extends CommandBase {
      * @version 2018
      */
     public EncoderTurn(double angle) {
-	this(angle, 0.7);
+        this(angle, 0.7);
     }
 }

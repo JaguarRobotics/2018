@@ -19,14 +19,14 @@ public abstract class CommandBase extends Command implements RobotMap {
      * @since Always
      * @version 2018
      */
-    public static OI oi;
+    public static OI              oi;
     /**
      * This creates the drive subsystem
      * 
      * @since Always
      * @version 2018
      */
-    public static DriveSubsystem driveSubsystem;
+    public static DriveSubsystem  driveSubsystem;
     /**
      * This creates the intake subsystem
      * 
@@ -40,7 +40,8 @@ public abstract class CommandBase extends Command implements RobotMap {
      * @since 2018
      * @version 2018
      */
-    public static LiftSubsystem liftSubsystem;
+    public static LiftSubsystem   liftSubsystem;
+
     /**
      * This is the class that is the base of the commands and initializes the subsystems
      * 
@@ -48,8 +49,9 @@ public abstract class CommandBase extends Command implements RobotMap {
      * @version 2018
      */
     public CommandBase() {
-	super();
+        super();
     }
+
     /**
      * This method intializes all of the subsystems
      * 
@@ -57,9 +59,9 @@ public abstract class CommandBase extends Command implements RobotMap {
      * @version 2018
      */
     public static void init() {
-	oi = new OI();
-	driveSubsystem = new DriveSubsystem();
-	intakeSubsystem = new IntakeSubsystem();
-	liftSubsystem = new LiftSubsystem();
+        oi = new OI();
+        driveSubsystem = new DriveSubsystem();
+        intakeSubsystem = new IntakeSubsystem();
+        liftSubsystem = new LiftSubsystem();
     }
 }

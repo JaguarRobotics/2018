@@ -21,6 +21,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     private Command autonomousCommand;
+
     /**
      * What runs when the robot is initalized
      * 
@@ -28,9 +29,10 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void robotInit() {
-	CommandBase.init();
-	SmartDashboard.putNumber("Joystick Tolerance", 1);
+        CommandBase.init();
+        SmartDashboard.putNumber("Joystick Tolerance", 1);
     }
+
     /**
      * What the robot does repeatedly while existing
      * 
@@ -39,8 +41,9 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotPeriodic() {
-	super.robotPeriodic();
+        super.robotPeriodic();
     }
+
     /**
      * What runs when the robot is disabled
      * 
@@ -49,6 +52,7 @@ public class Robot extends IterativeRobot {
      */
     public void disabledInit() {
     }
+
     /**
      * What the robot does repeatedly while disabled
      * 
@@ -56,8 +60,9 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void disabledPeriodic() {
-	Scheduler.getInstance().run();
+        Scheduler.getInstance().run();
     }
+
     /**
      * What autonomous does on start
      * 
@@ -65,8 +70,9 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void autonomousInit() {
-	autonomousCommand.start();
+        autonomousCommand.start();
     }
+
     /**
      * What the robot constantly does while in autonomous
      * 
@@ -74,8 +80,9 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void autonomousPeriodic() {
-	Scheduler.getInstance().run();
+        Scheduler.getInstance().run();
     }
+
     /**
      * This function is called when teleop starts
      * 
@@ -83,10 +90,11 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopInit() {
-	if (autonomousCommand != null) {
-	    autonomousCommand.cancel();
-	}
+        if (autonomousCommand != null) {
+            autonomousCommand.cancel();
+        }
     }
+
     /**
      * This function is called repeatedly during teleop
      * 
@@ -94,8 +102,9 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopPeriodic() {
-	Scheduler.getInstance().run();
+        Scheduler.getInstance().run();
     }
+
     /**
      * This function is called repeatedly while in test mode
      * 

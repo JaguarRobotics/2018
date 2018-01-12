@@ -25,6 +25,6 @@ abstract class SubsystemBase extends Subsystem implements RobotMap {
      * @since 2017
      */
     protected static SpeedController motor(int channel, MotorID motor) {
-	return IOFactory.motor(channel, motor);
+        return IOFactory.motor(channel, motor);
     }
 }

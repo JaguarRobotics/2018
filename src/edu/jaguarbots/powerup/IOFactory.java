@@ -27,21 +27,21 @@ public class IOFactory {
      * @since 2017
      */
     public static SpeedController motor(int channel, MotorID motor) {
-	switch (motor) {
-	    case CANTJaguar:
-		return new Jaguar(channel);
-	    case SD540:
-		return new SD540(channel);
-	    case Spark:
-		return new Spark(channel);
-	    case Talon:
-		return new Talon(channel);
-	    case Victor:
-		return new Victor(channel);
-	    case VictorSP:
-		return new VictorSP(channel);
-	    default:
-		throw new UnsupportedOperationException("Invalid motor type");
-	}
+        switch (motor) {
+            case CANTJaguar:
+                return new Jaguar(channel);
+            case SD540:
+                return new SD540(channel);
+            case Spark:
+                return new Spark(channel);
+            case Talon:
+                return new Talon(channel);
+            case Victor:
+                return new Victor(channel);
+            case VictorSP:
+                return new VictorSP(channel);
+            default:
+                throw new UnsupportedOperationException("Invalid motor type");
+        }
     }
 }

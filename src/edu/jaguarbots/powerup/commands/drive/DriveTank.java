@@ -18,8 +18,9 @@ public class DriveTank extends CommandBase {
      * @version 2018
      */
     public DriveTank() {
-	requires(driveSubsystem);
+        requires(driveSubsystem);
     }
+
     /**
      * The power given to the left motor
      * 
@@ -34,9 +35,11 @@ public class DriveTank extends CommandBase {
      * @version 2018
      */
     double right;
+
     @Override
     protected void initialize() {
     }
+
     /**
      * Drives the robot with joysticks exponentially (PowNum is the power that it raises it to) to give it more control
      * 
@@ -45,26 +48,27 @@ public class DriveTank extends CommandBase {
      */
     @Override
     protected void execute() {
-	SmartDashboard.putNumber("EncoderLeft", CommandBase.driveSubsystem.getEncoderLeft());
-	SmartDashboard.putNumber("EncoderRight", CommandBase.driveSubsystem.getEncoderRight());
-	double powNum = 2;
-	double joystickTolerance = SmartDashboard.getNumber("Joystick Tolerance", 1);
-	double joystick0 = oi.Joystick0.getY() * joystickTolerance;
-	double joystick1 = oi.Joystick1.getY() * joystickTolerance;
-	double adjustedJoystick0 = Math.abs(joystick0);
-	double adjustedJoystick1 = Math.abs(joystick1);
-	double powerJoystick0 = Math.pow(adjustedJoystick0, powNum);
-	double powerJoystick1 = Math.pow(adjustedJoystick1, powNum);
-	if (Math.abs(powerJoystick0) > adjustedJoystick0) {
-	    powerJoystick0 = adjustedJoystick0;
-	}
-	if (Math.abs(powerJoystick1) > adjustedJoystick1) {
-	    powerJoystick1 = adjustedJoystick1;
-	}
-	left = (powerJoystick0 * (adjustedJoystick0 / joystick0)) / joystickTolerance;
-	right = (powerJoystick1 * (adjustedJoystick1 / joystick1)) / joystickTolerance;
-	driveSubsystem.driveTank(-left, -right);
+        SmartDashboard.putNumber("EncoderLeft", CommandBase.driveSubsystem.getEncoderLeft());
+        SmartDashboard.putNumber("EncoderRight", CommandBase.driveSubsystem.getEncoderRight());
+        double powNum = 2;
+        double joystickTolerance = SmartDashboard.getNumber("Joystick Tolerance", 1);
+        double joystick0 = oi.Joystick0.getY() * joystickTolerance;
+        double joystick1 = oi.Joystick1.getY() * joystickTolerance;
+        double adjustedJoystick0 = Math.abs(joystick0);
+        double adjustedJoystick1 = Math.abs(joystick1);
+        double powerJoystick0 = Math.pow(adjustedJoystick0, powNum);
+        double powerJoystick1 = Math.pow(adjustedJoystick1, powNum);
+        if (Math.abs(powerJoystick0) > adjustedJoystick0) {
+            powerJoystick0 = adjustedJoystick0;
+        }
+        if (Math.abs(powerJoystick1) > adjustedJoystick1) {
+            powerJoystick1 = adjustedJoystick1;
+        }
+        left = (powerJoystick0 * (adjustedJoystick0 / joystick0)) / joystickTolerance;
+        right = (powerJoystick1 * (adjustedJoystick1 / joystick1)) / joystickTolerance;
+        driveSubsystem.driveTank(-left, -right);
     }
+
     /**
      * Determines if the command is done which is never is because driving is never done
      * 
@@ -74,8 +78,9 @@ public class DriveTank extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-	return false;
+        return false;
     }
+
     /**
      * What happens when the command ends
      * 
@@ -85,6 +90,7 @@ public class DriveTank extends CommandBase {
     @Override
     protected void end() {
     }
+
     /**
      * What happens if the command is interrupted
      * 

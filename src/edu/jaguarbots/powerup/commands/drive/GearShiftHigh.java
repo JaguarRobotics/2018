@@ -19,8 +19,9 @@ public class GearShiftHigh extends CommandBase {
      * @version 2018
      */
     public GearShiftHigh() {
-	requires(driveSubsystem);
+        requires(driveSubsystem);
     }
+
     @Override
     /**
      * Sets the robot to high gear
@@ -29,8 +30,9 @@ public class GearShiftHigh extends CommandBase {
      * @version 2018
      */
     protected void initialize() {
-	DriveSubsystem.gearShiftHigh();
+        DriveSubsystem.gearShiftHigh();
     }
+
     @Override
     /**
      * Runs while command is running, does nothing
@@ -40,6 +42,7 @@ public class GearShiftHigh extends CommandBase {
      */
     protected void execute() {
     }
+
     @Override
     /**
      * Determines if the command is done which is instantly true
@@ -49,8 +52,9 @@ public class GearShiftHigh extends CommandBase {
      * @version 2018
      */
     protected boolean isFinished() {
-	return true;
+        return true;
     }
+
     @Override
     /**
      * Runs once the robot is in high gear, updates smart dashboard
@@ -59,8 +63,9 @@ public class GearShiftHigh extends CommandBase {
      * @version 2018
      */
     protected void end() {
-	SmartDashboard.putString("Gear", Gear.High.toString());
+        SmartDashboard.putString("Gear", Gear.High.toString());
     }
+
     @Override
     /**
      * Runs if the command gets interrupted, does nothing

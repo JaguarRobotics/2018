@@ -24,14 +24,15 @@ public class EncoderDrive extends CommandBase {
      * @since 2016
      * @version 2018
      */
-    private double distance;
+    private double              distance;
     /**
      * The speed to travel at (between 0 and 1)
      * 
      * @since 2016
      * @version 2018
      */
-    private double speed;
+    private double              speed;
+
     /**
      * Drives a certain distance at a speed of .7
      * 
@@ -41,8 +42,9 @@ public class EncoderDrive extends CommandBase {
      * @version 2018
      */
     public EncoderDrive(double distance) {
-	this(distance, (distance < 0) ? -0.7 : 0.7);
+        this(distance, (distance < 0) ? -0.7 : 0.7);
     }
+
     /**
      * Drives a certain distance at a certain speed.
      * 
@@ -54,10 +56,11 @@ public class EncoderDrive extends CommandBase {
      * @version 2018
      */
     public EncoderDrive(double distance, double speed) {
-	requires(driveSubsystem);
-	this.distance = distance;
-	this.speed = (distance < 0) ? -1 * Math.abs(speed) : Math.abs(speed);
+        requires(driveSubsystem);
+        this.distance = distance;
+        this.speed = (distance < 0) ? -1 * Math.abs(speed) : Math.abs(speed);
     }
+
     /**
      * Gets the distance the encoders have gone
      * 
@@ -66,8 +69,9 @@ public class EncoderDrive extends CommandBase {
      * @version 2018
      */
     private double distanceTraveled() {
-	return (Math.abs(driveSubsystem.getEncoderLeft()) + Math.abs(driveSubsystem.getEncoderRight())) / 2;
+        return (Math.abs(driveSubsystem.getEncoderLeft()) + Math.abs(driveSubsystem.getEncoderRight())) / 2;
     }
+
     /**
      * When called resets and restarts the encoders
      * 
@@ -76,9 +80,10 @@ public class EncoderDrive extends CommandBase {
      */
     @Override
     protected void initialize() {
-	driveSubsystem.resetEncoders(true, true);
-	driveSubsystem.startEncoders();
+        driveSubsystem.resetEncoders(true, true);
+        driveSubsystem.startEncoders();
     }
+
     /**
      * Drives the robot calculating if one motor is stronger than another
      * 
@@ -87,17 +92,19 @@ public class EncoderDrive extends CommandBase {
      */
     @Override
     protected void execute() {
-	boolean correctMotors = true;
-	double[] powers = driveSubsystem.getMotorPowers();
-	double adjSpeed = Math.min(((distance - distanceTraveled()) / distance) * (1 - CUTOFF_VALUE) + CUTOFF_VALUE, speed);
-	if (correctMotors) {
-	    driveSubsystem.driveTank(adjSpeed * powers[0], adjSpeed * powers[1]);
-	} else {
-	    driveSubsystem.driveTank(speed, speed);
-	    SmartDashboard.putNumber("EncoderLeft", CommandBase.driveSubsystem.getEncoderLeft());
-	    SmartDashboard.putNumber("EncoderRight", CommandBase.driveSubsystem.getEncoderRight());
-	}
+        boolean correctMotors = true;
+        double[] powers = driveSubsystem.getMotorPowers();
+        double adjSpeed = Math.min(((distance - distanceTraveled()) / distance) * (1 - CUTOFF_VALUE) + CUTOFF_VALUE,
+                        speed);
+        if (correctMotors) {
+            driveSubsystem.driveTank(adjSpeed * powers[0], adjSpeed * powers[1]);
+        } else {
+            driveSubsystem.driveTank(speed, speed);
+            SmartDashboard.putNumber("EncoderLeft", CommandBase.driveSubsystem.getEncoderLeft());
+            SmartDashboard.putNumber("EncoderRight", CommandBase.driveSubsystem.getEncoderRight());
+        }
     }
+
     /**
      * Determines if the robot has gone the disance that it is supposed to
      * 
@@ -107,14 +114,15 @@ public class EncoderDrive extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-	boolean isFinished = false;
-	if (speed > 0) {
-	    isFinished = distanceTraveled() >= distance;
-	} else {
-	    isFinished = distanceTraveled() <= distance;
-	}
-	return isFinished;
+        boolean isFinished = false;
+        if (speed > 0) {
+            isFinished = distanceTraveled() >= distance;
+        } else {
+            isFinished = distanceTraveled() <= distance;
+        }
+        return isFinished;
     }
+
     @Override
     /**
      * Stops the robot when isFinished returns true
@@ -123,8 +131,9 @@ public class EncoderDrive extends CommandBase {
      * @version 2018
      */
     protected void end() {
-	driveSubsystem.driveTank(0, 0);
+        driveSubsystem.driveTank(0, 0);
     }
+
     /**
      * What runs if the command gets interrupted
      * 
@@ -133,6 +142,6 @@ public class EncoderDrive extends CommandBase {
      */
     @Override
     protected void interrupted() {
-	end();
+        end();
     }
 }

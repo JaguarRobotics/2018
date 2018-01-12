@@ -18,6 +18,7 @@ public class Lower extends CommandBase {
      * @version 2018
      */
     private double lowerValue = 0;
+
     /**
      * Lowers the lift of the robot to specified potentiometer value
      * 
@@ -27,9 +28,10 @@ public class Lower extends CommandBase {
      * @version 2018
      */
     public Lower(double lowerValue) {
-	requires(liftSubsystem);
-	this.lowerValue = lowerValue;
+        requires(liftSubsystem);
+        this.lowerValue = lowerValue;
     }
+
     /**
      * What happens on initialize, does nothing
      * 
@@ -39,6 +41,7 @@ public class Lower extends CommandBase {
     @Override
     protected void initialize() {
     }
+
     /**
      * What happens while the command is running, moves the motor
      * 
@@ -47,8 +50,9 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void execute() {
-	LiftSubsystem.liftMotor.set(-1);
+        LiftSubsystem.liftMotor.set(-1);
     }
+
     /**
      * Checks if the potentiometer value has reached the target value
      * 
@@ -58,12 +62,13 @@ public class Lower extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-	if (liftSubsystem.getPotentiometerValue() <= lowerValue) {
-	    return true;
-	} else {
-	    return false;
-	}
+        if (liftSubsystem.getPotentiometerValue() <= lowerValue) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
     /**
      * Turns off the motor when the command ends
      * 
@@ -72,8 +77,9 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void end() {
-	LiftSubsystem.liftMotor.set(0);
+        LiftSubsystem.liftMotor.set(0);
     }
+
     /**
      * Runs end if the command is interrupted
      * 
@@ -82,6 +88,6 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void interrupted() {
-	end();
+        end();
     }
 }

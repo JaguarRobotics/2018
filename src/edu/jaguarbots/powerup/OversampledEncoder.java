@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj.Encoder;
  * @author Zach Deibert
  * @since 2017
  * @version 2018
- *
  */
 public class OversampledEncoder extends Encoder {
     @Override
     public double getDistance() {
-	return super.getDistance();
+        return super.getDistance();
     }
+
     /**
      * Creates a new Oversampled encoder
      * 
@@ -24,7 +24,7 @@ public class OversampledEncoder extends Encoder {
      *            The second channel for the encoder
      */
     public OversampledEncoder(int channelA, int channelB) {
-	super(channelA, channelB, false, EncodingType.k4X);
-	setSamplesToAverage(127);
+        super(channelA, channelB, false, EncodingType.k4X);
+        setSamplesToAverage(127);
     }
 }

@@ -14,8 +14,9 @@ public class DriveArcade extends CommandBase {
      * Drives the robot in teleop based on one joystick
      */
     public DriveArcade() {
-	requires(driveSubsystem);
+        requires(driveSubsystem);
     }
+
     /**
      * left motor power to pass to the driveSubsystem.driveTank().
      * 
@@ -44,6 +45,7 @@ public class DriveArcade extends CommandBase {
      * @version 2018
      */
     double stickY;
+
     @Override
     /**
      * What happens when you initalize DriveArcade
@@ -53,6 +55,7 @@ public class DriveArcade extends CommandBase {
      */
     protected void initialize() {
     }
+
     /**
      * What happens while isFinished is returning false
      * 
@@ -61,12 +64,13 @@ public class DriveArcade extends CommandBase {
      */
     @Override
     protected void execute() {
-	stickX = oi.Joystick1.getX();
-	stickY = oi.Joystick1.getY();
-	left = stickY + ((stickX < 0) ? stickX : 0);
-	right = stickY - ((stickX > 0) ? stickX : 0);
-	driveSubsystem.driveTank(-left, -right);
+        stickX = oi.Joystick1.getX();
+        stickY = oi.Joystick1.getY();
+        left = stickY + ((stickX < 0) ? stickX : 0);
+        right = stickY - ((stickX > 0) ? stickX : 0);
+        driveSubsystem.driveTank(-left, -right);
     }
+
     /**
      * Determines whether or not the DriveArcade is done
      * 
@@ -76,8 +80,9 @@ public class DriveArcade extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-	return false;
+        return false;
     }
+
     /**
      * What happens when isFinished returns true which it never will for this
      * 
@@ -87,6 +92,7 @@ public class DriveArcade extends CommandBase {
     @Override
     protected void end() {
     }
+
     /**
      * What happens when the code is interrupted
      * 
