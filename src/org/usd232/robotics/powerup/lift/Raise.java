@@ -2,6 +2,7 @@ package org.usd232.robotics.powerup.lift;
 
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
+import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The command to raise the lift
@@ -50,7 +51,7 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void execute() {
-        LiftSubsystem.liftRelay.set(1);
+        LiftSubsystem.liftRelay.set(Relay.Value.kForward);
     }
 
     /**
@@ -77,7 +78,7 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.liftRelay.set(0);
+        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
     }
 
     /**
