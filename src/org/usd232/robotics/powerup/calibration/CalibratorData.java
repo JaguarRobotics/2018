@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class CalibratorData implements Serializable {
     /**
-     * 
+     * Generated serial version uid
      */
     private static final long serialVersionUID = 5137717876753409990L;
     
@@ -27,8 +27,23 @@ public class CalibratorData implements Serializable {
         this.liftBottom = liftBottom;
     }
     private double liftScale;
+    /**
+     * @return true if potentiometer measures height of scale
+     * @since 2018 
+     * @version 2018
+     */
     private double liftSwitch;
+    /**
+     * @return true if potentiometer measures height of switch
+     * @since 2018
+     * @version 2018
+     */
     private double liftBottom;
+    /**
+     * @return true if potentiometer measures lowest point
+     * @since 2018
+     * @version 2018
+     */
     
     
 }
