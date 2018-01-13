@@ -21,6 +21,11 @@ sourceSets {
             srcDirs = [ "src/" ]
         }
     }
+    generator {
+    	java {
+    		srcDirs = [ "generator/" ]
+    	}
+    }
 }
 
 eclipse {
