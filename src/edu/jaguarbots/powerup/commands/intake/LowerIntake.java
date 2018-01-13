@@ -2,6 +2,12 @@ package edu.jaguarbots.powerup.commands.intake;
 
 import edu.jaguarbots.powerup.commands.CommandBase;
 
+/**
+ * Lowers cube
+ * @author Evan
+ * @version 2018
+ * @since 2018
+ */
 public class LowerIntake extends CommandBase {
     public LowerIntake() {
         requires(intakeSubsystem);

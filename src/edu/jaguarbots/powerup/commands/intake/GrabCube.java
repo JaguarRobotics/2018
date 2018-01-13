@@ -2,6 +2,12 @@ package edu.jaguarbots.powerup.commands.intake;
 
 import edu.jaguarbots.powerup.commands.CommandBase;
 
+/**
+ * Grabs cube
+ * @author Evan
+ * @version 2018
+ * @since 2018
+ */
 public class GrabCube extends CommandBase {
     public GrabCube() {
         requires(intakeSubsystem);

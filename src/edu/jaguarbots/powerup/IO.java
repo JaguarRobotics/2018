@@ -55,4 +55,18 @@ public interface IO extends RobotMap {
      * The motor for the lift of the robot
      */
     public static final SpeedController liftMotor            = IOFactory.motor(LIFT_MOTOR_PORT, LIFT_MOTOR_TYPE);
+    
+    /**
+	 * Grabs and releases cube
+	 * @since 2018
+	 * @version 2018
+	 */
+	public static final Solenoid grabSol = new Solenoid(RobotMap.solIntakeGrab);
+	
+	/**
+	 * Raises and lowers power cube
+	 * @since 2018
+	 * @version 2018
+	 */
+	public static final Solenoid liftSol = new Solenoid(RobotMap.solIntakeLift);
 }

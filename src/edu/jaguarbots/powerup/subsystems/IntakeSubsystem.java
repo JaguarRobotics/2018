@@ -2,28 +2,52 @@ package edu.jaguarbots.powerup.subsystems;
 
 import edu.jaguarbots.powerup.RobotMap;
 
+/**
+ * Handles manipulation of power cube
+ * @author Evan
+ * @since 2018
+ * @version 2018
+ *
+ */
 public class IntakeSubsystem extends SubsystemBase {
-	
-	private Solenoid grabSol = new Solenoid(RobotMap.solIntakeGrab);
-	private Solenoid liftSol = new Solenoid(RobotMap.solIntakeLift);
 	
 	public IntakeSubsystem() {
 		
 	
 	}
 	
+	/**
+	 * Grabs cube
+	 * @since 2018
+	 * @version 2018
+	 */
 	public void intakeGrabberIn() {
 		grabSol.set(true);
 	}
 	
+	/**
+	 * Releases cube
+	 * @since 2018
+	 * @version 2018
+	 */
 	public void intakeGrabberOut() {
 		grabSol.set(false);
 	}
 	
+	/**
+	 * Raises power cube
+	 * @since 2018
+	 * @version 2018
+	 */
 	public void intakeGrabberUp() {
 		liftSol.set(true);
 	}
 	
+	/**
+	 * Lowers power cube
+	 * @since 2018
+	 * @version 2018
+	 */
 	public void intakeGrabberDown() {
 		liftSol.set(false);
 	}

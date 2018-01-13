@@ -2,6 +2,12 @@ package edu.jaguarbots.powerup.commands.intake;
 
 import edu.jaguarbots.powerup.commands.CommandBase;
 
+/**
+ * Drops cube
+ * @author Evan
+ * @version 2018
+ * @since 2018
+ */
 public class DropCube extends CommandBase {
     public DropCube() {
         requires(intakeSubsystem);
@@ -11,7 +17,7 @@ public class DropCube extends CommandBase {
     protected void initialize() {
     }
 
-    @Override
+     @Override
     protected void execute() {
     	intakeSubsystem.intakeGrabberOut();
     }
