@@ -11,26 +11,18 @@ import edu.wpi.first.wpilibj.Relay;
  * @since 2018
  * @version 2018
  */
-public class Lower extends CommandBase {
-    /**
-     * Value that we are lowering to
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    private double lowerValue = 0;
+public class ManualLower extends CommandBase {
 
     /**
-     * Lowers the lift of the robot to specified potentiometer value
+     * Lowers the lift 
      * 
      * @param lowerValue
      *            the value the robot the lift to
      * @since 2018
      * @version 2018
      */
-    public Lower(double lowerValue) {
+    public ManualLower() {
         requires(liftSubsystem);
-        this.lowerValue = lowerValue;
     }
 
     /**
@@ -55,21 +47,17 @@ public class Lower extends CommandBase {
     }
 
     /**
-     * Checks if the potentiometer value has reached the target value
+     * Checks if it's done
      * 
-     * @return true if potentiometer value is lower than or equal to targetValue
+     * @return returns false
      * @since 2018
      * @version 2018
      */
     @Override
-    protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() <= lowerValue) {
-            return true;
-        } else {
+    protected boolean isFinished() {  
             return false;
         }
-    }
-
+   
     /**
      * Turns off the motor when the command ends
      * 
