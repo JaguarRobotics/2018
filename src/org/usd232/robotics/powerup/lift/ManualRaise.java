@@ -11,26 +11,18 @@ import edu.wpi.first.wpilibj.Relay;
  * @since 2018
  * @version 2018
  */
-public class Raise extends CommandBase {
-    /**
-     * Value that we are raising to
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    private double raiseValue = 0;
+public class ManualRaise extends CommandBase {
 
     /**
-     * Raises the lift of the robot to specified potentiometer value
+     * Raises the lift
      * 
      * @param raiseValue
      *            the value the robot the lift to
      * @since 2018
      * @version 2018
      */
-    public Raise(double raiseValue) {
+    public ManualRaise(double raiseValue) {
         requires(liftSubsystem);
-        this.raiseValue = raiseValue;
     }
 
     /**
@@ -55,19 +47,15 @@ public class Raise extends CommandBase {
     }
 
     /**
-     * Checks if the potentiometer value has reached the target value
+     * Checks if it's done
      * 
-     * @return true if potentiometer value is greater than or equal to targetValue
+     * @return false
      * @since 2018
      * @version 2018
      */
     @Override
     protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() >= raiseValue) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 
     /**
