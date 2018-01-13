@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj.VictorSP;
  * 
  * @author Zach Deibert
  * @since 2017
- * @version 2017
+ * @version 2018
  */
-public class IOFactory {
+class IOFactory {
     /**
      * Creates a motor
      * 
