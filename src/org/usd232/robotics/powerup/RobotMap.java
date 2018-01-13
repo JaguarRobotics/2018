@@ -22,7 +22,7 @@ public interface RobotMap {
      * @since 2017
      * @version 2018
      */
-    public static final MotorID LEFT_DRIVE_MOTOR_TYPE      = null;
+    public static final MotorID LEFT_DRIVE_MOTOR_TYPE      = MotorID.Talon;
     /**
      * The port for the right motor
      * 
@@ -36,14 +36,7 @@ public interface RobotMap {
      * @since 2017
      * @version 2018
      */
-    public static final MotorID RIGHT_DRIVE_MOTOR_TYPE     = null;
-    /**
-     * The port for the lift motor
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    public static final int     LIFT_RELAY_PORT            = 2;
+    public static final MotorID RIGHT_DRIVE_MOTOR_TYPE     = MotorID.Talon;
     // Digital I/Os
     /**
      * The A channel for the left encoder port number
@@ -73,6 +66,21 @@ public interface RobotMap {
      * @version 2018
      */
     public static final int     RIGHT_ENCODER_CHANNEL_B    = 3;
+//    Relay
+    /**
+     * The port for the lift relay
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final int     LIFT_RELAY_PORT            = 0;
+    /**
+     * The port for the whinch relay
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final int     WHINCH_RELAY_PORT            = 1;
     // Analog Ports
     /**
      * The port for the potentiometer
@@ -81,6 +89,13 @@ public interface RobotMap {
      * @version 2018
      */
     public static final int     POTENTIOMETER_PORT         = 0;
+    /**
+     * Gyroscope port
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final int GYROSCOPE_PORT = 1;
     // Controls
     /**
      * The port for the left joystick
