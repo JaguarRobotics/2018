@@ -13,11 +13,12 @@ public class RaiseIntake extends CommandBase {
 
     @Override
     protected void execute() {
+    	intakeSubsystem.intakeGrabberUp();
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override

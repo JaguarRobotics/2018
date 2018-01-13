@@ -13,11 +13,12 @@ public class DropCube extends CommandBase {
 
     @Override
     protected void execute() {
+    	intakeSubsystem.intakeGrabberOut();
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override

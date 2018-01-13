@@ -13,11 +13,12 @@ public class LowerIntake extends CommandBase {
 
     @Override
     protected void execute() {
+    	intakeSubsystem.intakeGrabberDown();
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override

@@ -13,11 +13,12 @@ public class GrabCube extends CommandBase {
 
     @Override
     protected void execute() {
+    	intakeSubsystem.intakeGrabberIn();
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
