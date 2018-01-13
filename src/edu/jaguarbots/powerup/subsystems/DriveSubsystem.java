@@ -1,10 +1,6 @@
 package edu.jaguarbots.powerup.subsystems;
 
-import edu.jaguarbots.powerup.OversampledEncoder;
 import edu.jaguarbots.powerup.commands.drive.DriveTank;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
@@ -13,27 +9,9 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class DriveSubsystem extends SubsystemBase {
     /**
-     * left drive motor
-     */
-    private static SpeedController   leftDrive     = motor(LEFT_DRIVE_MOTOR_PORT, LEFT_DRIVE_MOTOR_TYPE);
-    /**
-     * right drive motor
-     */
-    private static SpeedController   rightDrive    = motor(RIGHT_DRIVE_MOTOR_PORT, RIGHT_DRIVE_MOTOR_TYPE);
-    /**
      * Class that controls both drive motors
      */
-    private static DifferentialDrive robotDrive    = new DifferentialDrive(leftDrive, rightDrive);
-    /**
-     * Encoder on left side of drive
-     */
-    private Encoder                  leftEncoder   = new OversampledEncoder(LEFT_ENCODER_CHANNEL_A,
-                    LEFT_ENCODER_CHANNEL_B);
-    /**
-     * Encoder on right side of drive
-     */
-    private Encoder                  rightEncoder  = new OversampledEncoder(RIGHT_ENCODER_CHANNEL_A,
-                    RIGHT_ENCODER_CHANNEL_B);
+    private static DifferentialDrive robotDrive    = new DifferentialDrive(leftDriveMotor, rightDriveMotor);
     /**
      * distance left encoder has traveled.
      */
@@ -54,10 +32,6 @@ public class DriveSubsystem extends SubsystemBase {
      * pulses per rotation for the encoders.
      */
     private int                      ppr           = (int) (400 * 3);
-    /**
-     * Solenoid to shift gears.
-     */
-    private static Solenoid          gearSol       = new Solenoid(SOLENOID_GEAR_SHIFT_PORT);
     /**
      * Counter used to count in get motor powers
      */
@@ -81,14 +55,6 @@ public class DriveSubsystem extends SubsystemBase {
     public double getEncoderTicksFromInches(double inches) {
         double result = inches * (ppr / (Math.PI * diameter));
         return result;
-    }
-
-    public void initEncoders() {
-        leftEncoder.free();
-        rightEncoder.free();
-        leftEncoder = new Encoder(LEFT_ENCODER_CHANNEL_A, LEFT_ENCODER_CHANNEL_B);
-        rightEncoder = new Encoder(RIGHT_ENCODER_CHANNEL_A, RIGHT_ENCODER_CHANNEL_B);
-        counter = 0;
     }
 
     /**
@@ -148,10 +114,10 @@ public class DriveSubsystem extends SubsystemBase {
      */
     public void resetEncoders(boolean left, boolean right) {
         if (left) {
-            leftEncoder.reset();
+            leftDriveEncoder.reset();
         }
         if (right) {
-            rightEncoder.reset();
+            rightDriveEncoder.reset();
         }
     }
 
@@ -159,8 +125,8 @@ public class DriveSubsystem extends SubsystemBase {
      * Sets encoder distance
      */
     public void startEncoders() {
-        leftEncoder.setDistancePerPulse(Math.PI * diameter / ppr);
-        rightEncoder.setDistancePerPulse(Math.PI * diameter / ppr);
+        leftDriveEncoder.setDistancePerPulse(Math.PI * diameter / ppr);
+        rightDriveEncoder.setDistancePerPulse(Math.PI * diameter / ppr);
     }
 
     /**
@@ -169,8 +135,8 @@ public class DriveSubsystem extends SubsystemBase {
      * @return array of encoder values with left occupying slot 0, and right occupying slot 1
      */
     public double[] getEncoders() {
-        leftEncoderValue = leftEncoder.getDistance();
-        rightEncoderValue = rightEncoder.getDistance();
+        leftEncoderValue = leftDriveEncoder.getDistance();
+        rightEncoderValue = rightDriveEncoder.getDistance();
         encoderValues = new double[] { leftEncoderValue, rightEncoderValue };
         return encoderValues;
     }
@@ -208,35 +174,35 @@ public class DriveSubsystem extends SubsystemBase {
      * @return left encoder distance
      */
     public double getEncoderLeft() {
-        return leftEncoder.getDistance();
+        return leftDriveEncoder.getDistance();
     }
 
     /**
      * @return right encoder distance
      */
     public double getEncoderRight() {
-        return rightEncoder.getDistance();
+        return rightDriveEncoder.getDistance();
     }
 
     /**
      * @return whether extended. If true, extended.
      */
     public static boolean getGearShift() {
-        return gearSol.get();
+        return gearShiftSolenoid.get();
     }
 
     /**
      * Extends solenoid to shift gears on wheels.
      */
     public static void gearShiftHigh() {
-        gearSol.set(true);
+        gearShiftSolenoid.set(true);
     }
 
     /**
      * Retracts solenoid to shift back gear on wheels.
      */
     public static void gearShiftLow() {
-        gearSol.set(false);
+        gearShiftSolenoid.set(false);
     }
 
     /**
