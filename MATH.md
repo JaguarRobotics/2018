@@ -44,7 +44,7 @@ $`r_2 = {ds_2 \over d \theta} - w`$
 
 And they can be averaged to get:
 
-$`\bar r = { { \Delta s_1 + \Delta s_2 } \over 2 }`$
+$`\bar r = { { { { \Delta s_1 + \Delta s_2 } \over { d \theta } } - w } over 2 }`$
 
 Let $`\bar x`$ be the center of mass along the x-axis, then the radius of the robot's arc would be:
 
