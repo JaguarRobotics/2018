@@ -87,7 +87,7 @@ $`= d \bar s`$
 
 ## Uses
 
-This algorithm is used in `DriveSubsystem`.
+This algorithm is used in `DriveSubsystem.getMotorPowers()`.
 
 ## Final Formula
 
