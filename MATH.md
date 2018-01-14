@@ -25,9 +25,9 @@ $`ds_2 = (r + w) d \theta`$
 
 Both of those equations can then be solved for $`r`$, giving:
 
-$`r_1 = {ds_1 over d \theta}`$
+$`r_1 = {ds_1 \over d \theta}`$
 
-$`r_2 = {ds_2 over d \theta} - w`$
+$`r_2 = {ds_2 \over d \theta} - w`$
 
 And they can be averaged to get:
 
