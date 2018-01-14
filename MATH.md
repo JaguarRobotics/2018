@@ -19,9 +19,9 @@ This algorithm is used in `LocationSubsystem`.
 
 ## Final Formula
 
-$`x = \sum \Big [ \Big ( { { \Delta s_1 + \Delta s_2 } \over 2 } + w \bar x \Big ) \text {versin} ( \Delta \theta ) \sin ( \theta ) + \Big ( { { \Delta s_1 + \Delta s_2 } \over 2 } + w \bar x \Big ) \sin ( \Delta \theta ) \cos ( \theta ) \Big ] + C_x`$
+$`x = \sum \Big [ \Big ( { { { { \Delta s_1 + \Delta s_2} \over { \Delta \theta } } - w } \over 2 } + w \bar x \Big ) \text {versin} ( \Delta \theta ) \sin ( \theta ) + \Big ( { { { { \Delta s_1 + \Delta s_2} \over { \Delta \theta } } - w } \over 2 } + w \bar x \Big ) \sin ( \Delta \theta ) \cos ( \theta ) \Big ] + C_x`$
 
-$`y = \sum \Big [ \Big ( { { \Delta s_1 + \Delta s_2 } \over 2 } + w \bar x \Big ) \text {versin} ( \Delta \theta ) \cos ( \theta ) + \Big ( { { \Delta s_1 + \Delta s_2 } \over 2 } + w \bar x \Big ) \sin ( \Delta \theta ) \sin ( \theta ) \Big ] + C_y`$
+$`y = \sum \Big [ \Big ( { { { { \Delta s_1 + \Delta s_2} \over { \Delta \theta } } - w } \over 2 } + w \bar x \Big ) \text {versin} ( \Delta \theta ) \cos ( \theta ) + \Big ( { { { { \Delta s_1 + \Delta s_2} \over { \Delta \theta } } - w } \over 2 } + w \bar x \Big ) \sin ( \Delta \theta ) \sin ( \theta ) \Big ] + C_y`$
 
 ## Derivation
 
@@ -58,16 +58,16 @@ $`dy = ( \bar r + w \bar x ) \sin ( d \theta )`$
 
 After substituting in $`\bar r`$ and approximating the differentials,
 
-$`\Delta x = \Big ( { { \Delta s_1 + \Delta s_2 } \over 2 } + w \bar x \Big ) \text {versin} ( \Delta \theta )`$
+$`\Delta x = \Big ( { { { { \Delta s_1 + \Delta s_2} \over { \Delta \theta } } - w } \over 2 } + w \bar x \Big ) \text {versin} ( \Delta \theta )`$
 
-$`\Delta y = \Big ( { { \Delta s_1 + \Delta s_2 } \over 2 } + w \bar x \Big ) \sin ( \Delta \theta )`$
+$`\Delta y = \Big ( { { { { \Delta s_1 + \Delta s_2} \over { \Delta \theta } } - w } \over 2 } + w \bar x \Big ) \sin ( \Delta \theta )`$
 
 However, this assumes that the robot is always at $`(0, 0)`$ facing the positive y-axis.
 To account for this, we do a polar basis transformation, to get:
 
-$`x = \sum \Big [ \Big ( { { \Delta s_1 + \Delta s_2 } \over 2 } + w \bar x \Big ) \text {versin} ( \Delta \theta ) \sin ( \theta ) + \Big ( { { \Delta s_1 + \Delta s_2 } \over 2 } + w \bar x \Big ) \sin ( \Delta \theta ) \cos ( \theta ) \Big ] + C_x`$
+$`x = \sum \Big [ \Big ( { { { { \Delta s_1 + \Delta s_2} \over { \Delta \theta } } - w } \over 2 } + w \bar x \Big ) \text {versin} ( \Delta \theta ) \sin ( \theta ) + \Big ( { { { { \Delta s_1 + \Delta s_2} \over { \Delta \theta } } - w } \over 2 } + w \bar x \Big ) \sin ( \Delta \theta ) \cos ( \theta ) \Big ] + C_x`$
 
-$`y = \sum \Big [ \Big ( { { \Delta s_1 + \Delta s_2 } \over 2 } + w \bar x \Big ) \text {versin} ( \Delta \theta ) \cos ( \theta ) + \Big ( { { \Delta s_1 + \Delta s_2 } \over 2 } + w \bar x \Big ) \sin ( \Delta \theta ) \sin ( \theta ) \Big ] + C_y`$
+$`y = \sum \Big [ \Big ( { { { { \Delta s_1 + \Delta s_2} \over { \Delta \theta } } - w } \over 2 } + w \bar x \Big ) \text {versin} ( \Delta \theta ) \cos ( \theta ) + \Big ( { { { { \Delta s_1 + \Delta s_2} \over { \Delta \theta } } - w } \over 2 } + w \bar x \Big ) \sin ( \Delta \theta ) \sin ( \theta ) \Big ] + C_y`$
 
 ## Implementation Considerations
 
