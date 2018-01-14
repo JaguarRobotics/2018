@@ -65,7 +65,7 @@ $`dx = \lim \limits_ { \Delta \theta \to 0 } \Big ( { { { { \Delta s_1 + \Delta 
 
 $`= { 1 \over 2 } \lim \limits_ { \Delta \theta \to 0 } { { ( \Delta s_1 + \Delta s_2 - \Delta \theta w + 2 w \bar x ) versin ( \Delta \theta ) } \over { \Delta \theta } }`$
 
-$`= { 1 \over 2 } ( \Delta s_1 + \Delta s_2 - \Delta \theta w + 2 w \bar x ) \lim \limits_ { \Delta \theta \to 0 } { { versin ( \Delta \theta ) } \over ( \Delta \theta ) }`$
+$`= { 1 \over 2 } ( \Delta s_1 + \Delta s_2 - \Delta \theta w + 2 w \bar x ) \lim \limits_ { \Delta \theta \to 0 } { { versin ( \Delta \theta ) } \over { \Delta \theta } }`$
 
 $`= { 1 \over 2 } ( \Delta s_1 + \Delta s_2 - \Delta \theta w + 2 w \bar x ) \lim \limits_ { \Delta \theta \to 0 } { { \sin ( \Delta \theta ) } \over 1 }`$
 
@@ -75,7 +75,7 @@ $`dy = \lim \limits_ { \Delta \theta \to 0 } \Big ( { { { { \Delta s_1 + \Delta 
 
 $`= { 1 \over 2 } \lim \limits_ { \Delta \theta \to 0 } { { ( \Delta s_1 + \Delta s_2 - \Delta \theta w + 2 w \bar x ) \sin ( \Delta \theta ) } \over { \Delta \theta } }`$
 
-$`= { 1 \over 2 } ( \Delta s_1 + \Delta s_2 - \Delta \theta w + 2 w \bar x ) \lim \limits_ { \Delta \theta \to 0 } { { \sin ( \Delta \theta ) } \over ( \Delta \theta ) }`$
+$`= { 1 \over 2 } ( \Delta s_1 + \Delta s_2 - \Delta \theta w + 2 w \bar x ) \lim \limits_ { \Delta \theta \to 0 } { { \sin ( \Delta \theta ) } \over { \Delta \theta } }`$
 
 $`= { 1 \over 2 } ( \Delta s_1 + \Delta s_2 - \Delta \theta w + 2 w \bar x ) \lim \limits_ { \Delta \theta \to 0 } { { \cos ( \Delta \theta ) } \over 1 }`$
 
