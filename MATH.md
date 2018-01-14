@@ -82,3 +82,23 @@ $`= { 1 \over 2 } ( \Delta s_1 + \Delta s_2 - \Delta \theta w + 2 w \bar x ) \li
 $`= { 1 \over 2 } ( \Delta s_1 + \Delta s_2 - \Delta \theta w + 2 w \bar x )`$
 
 $`= d \bar s`$
+
+# Motor Bias Correction
+
+## Uses
+
+This algorithm is used in `DriveSubsystem`.
+
+## Final Formula
+
+$`\epsilon = \min \Bigg ( \begin {cases} { { 6 \big | | s_1 | - | s_2 | + 1 \big | } \over { | s_1 | + 1 } } &\text {if } | s_1 | \ge | s_2 | \\ { { 6 \big | | s_1 | - | s_2 | + 1 \big | } \over { | s_2 | } } &\text {if } | s_1 | < | s_2 | \end {cases}, 1 \Bigg )`$
+
+## Derivation
+
+Unknown
+
+## Implementation Considerations
+
+For the first few frames, this will be inaccurate, so they need to be skipped.
+
+To correct, the lagging motor should be set to full and the leading motor should be set to $`1 - \epsilon`$.
