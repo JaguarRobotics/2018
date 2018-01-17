@@ -155,6 +155,18 @@ public interface RobotMap {
      * @version 2018
      */
     public static final int     SWITCH_POTENTIOMETER_VALUE = 0;
+    /**
+     * The port for the solenoid that grabs the cube
+     * 
+     * @since 2018
+     */
+    public static final int     INTAKE_GRAB_SOLENOID       = 0;
+    /**
+     * The port for the solenoid that lifts the intake system
+     * 
+     * @since 2018
+     */
+    public static final int     INTAKE_LIFT_SOLENOID       = 0;
 
     /**
      * The enum constants for the gears that the robot could be in
