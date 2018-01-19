@@ -9,20 +9,33 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
+/**
+ * This class contains the writeToFile and the readFile methods for the calibration
+ * 
+ * @author Brian
+ * @since 2018
+ * @version 2018
+ */
 public class Calibration extends IterativeRobot {
     /**
-     * This function is run when the robot is first started up and should be used for any initialization code.
+     * This is the file that we save / look for
+     * 
+     * @since 2018
+     * @version 2018
      */
     private static File f;
 
-    public static void init() {
-    }
-
+    /**
+     * Writes the Object of the CalibratorData to a file to be read and used later
+     * 
+     * @param data The current CallibratorData Object right after calibration
+     * @since 2018
+     * @version 2018
+     */
     public static void writeToFile(CalibratorData data) {
         try {
             f = new File("/home/lvuser/CalibrationSettings.txt");
             if (!f.exists()) {
-                System.out.println("Detected file doesnt exist");
                 f.createNewFile();
             }
             try (FileOutputStream fo = new FileOutputStream(f); ObjectOutputStream oos = new ObjectOutputStream(fo)) {
@@ -35,7 +48,15 @@ public class Calibration extends IterativeRobot {
             e.printStackTrace();
         }
     }
-
+/**
+ * Reads the File that got saved of the CalibratorData object.
+ * 
+ * @return Returns the CalibratorData object that was saved in the past
+ * @throws IOException
+ * @throws ClassNotFoundException
+ * @since 2018
+ * @version 2018
+ */
     public static CalibratorData readFile() throws IOException, ClassNotFoundException {
         try (FileInputStream fi = new FileInputStream(f); ObjectInputStream ois = new ObjectInputStream(fi)) {
             return (CalibratorData) ois.readObject();
