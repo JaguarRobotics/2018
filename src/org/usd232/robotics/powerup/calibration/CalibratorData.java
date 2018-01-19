@@ -8,37 +8,37 @@ public class CalibratorData implements Serializable {
      */
     private static final long serialVersionUID = 5137717876753409990L;
     
-    public double getLiftScale() {
+    public static double getLiftScale() {
         return liftScale;
     }
-    public void setLiftScale(double liftScale) {
-        this.liftScale = liftScale;
+    public static void setLiftScale(double liftScale) {
+        CalibratorData.liftScale = liftScale;
     }
-    public double getLiftSwitch() {
+    public static double getLiftSwitch() {
         return liftSwitch;
     }
-    public void setLiftSwitch(double liftSwitch) {
-        this.liftSwitch = liftSwitch;
+    public static void setLiftSwitch(double liftSwitch) {
+        CalibratorData.liftSwitch = liftSwitch;
     }
-    public double getLiftBottom() {
+    public static double getLiftBottom() {
         return liftBottom;
     }
-    public void setLiftBottom(double liftBottom) {
-        this.liftBottom = liftBottom;
+    public static void setLiftBottom(double liftBottom) {
+        CalibratorData.liftBottom = liftBottom;
     }
-    private double liftScale;
+    private static double liftScale;
     /**
      * @return true if potentiometer measures height of scale
      * @since 2018 
      * @version 2018
      */
-    private double liftSwitch;
+    private static double liftSwitch;
     /**
      * @return true if potentiometer measures height of switch
      * @since 2018
      * @version 2018
      */
-    private double liftBottom;
+    private static double liftBottom;
     /**
      * @return true if potentiometer measures lowest point
      * @since 2018

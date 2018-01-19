@@ -1,9 +1,12 @@
 package org.usd232.robotics.powerup;
 
+import org.usd232.robotics.powerup.calibration.Calibration;
+import org.usd232.robotics.powerup.calibration.CalibratorData;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -14,13 +17,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @version 2018
  */
 public class Robot extends IterativeRobot {
+    public static CalibratorData calibratorData;
+    public static boolean        isTesting                = false;
+    public static int            amountOfThingsCalibrated = 0;
     /**
      * The command that the robot does for autonomous
      * 
      * @since Always
      * @version 2018
      */
-    private Command autonomousCommand;
+    private Command              autonomousCommand;
+    /**
+     * Chooser used in SmartDashboard to choose which alliance we are on
+     * 
+     * @since 2017
+     */
+    @SuppressWarnings("rawtypes")
+    public static final SendableChooser calibrationSetter = new SendableChooser();
 
     /**
      * What runs when the robot is initalized
@@ -28,9 +41,18 @@ public class Robot extends IterativeRobot {
      * @since Always
      * @version 2018
      */
+    @SuppressWarnings("unchecked")
     public void robotInit() {
         CommandBase.init();
         SmartDashboard.putNumber("Joystick Tolerance", 1);
+        try {
+            calibratorData = Calibration.readFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
+        calibrationSetter.addObject("Calibrating", RobotMap.CalibrationMode.Calibrating);
+        SmartDashboard.putData("Calibration Setter", calibrationSetter);
     }
 
     /**
@@ -90,6 +112,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopInit() {
+        isTesting = true;
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
@@ -112,5 +135,14 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testPeriodic() {
+    }
+
+    /**
+     * This function is called whenever test is enabled
+     * 
+     * @since Always
+     * @version 2018
+     */
+    public void testInit() {
     }
 }

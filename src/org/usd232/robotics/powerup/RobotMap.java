@@ -132,7 +132,7 @@ public interface RobotMap {
      * @since 2017
      * @version 2018
      */
-    public static final int     SOLENOID_GEAR_SHIFT_PORT   = 1;
+    public static final int     SOLENOID_GEAR_SHIFT_PORT   = 0;
     // Cutoff Values for potentiometers
     /**
      * The potentiometer value for the height of the portal
@@ -160,13 +160,13 @@ public interface RobotMap {
      * 
      * @since 2018
      */
-    public static final int     INTAKE_GRAB_SOLENOID       = 0;
+    public static final int     INTAKE_GRAB_SOLENOID       = 1;
     /**
      * The port for the solenoid that lifts the intake system
      * 
      * @since 2018
      */
-    public static final int     INTAKE_LIFT_SOLENOID       = 0;
+    public static final int     INTAKE_LIFT_SOLENOID       = 2;
 
     /**
      * The enum constants for the gears that the robot could be in
@@ -177,4 +177,14 @@ public interface RobotMap {
     public enum Gear {
         Low, High
     }
+    /**
+     * enum constants if the robot is in calibration mode
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public enum CalibrationMode {
+    Calibrating, NotCalibrating
+    }
+
 }
