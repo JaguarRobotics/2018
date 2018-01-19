@@ -4,6 +4,7 @@ import org.usd232.robotics.powerup.commands.CommandBase;
 
 /**
  * Grabs cube
+ * 
  * @author Evan
  * @version 2018
  * @since 2018
@@ -19,7 +20,7 @@ public class GrabCube extends CommandBase {
 
     @Override
     protected void execute() {
-    	intakeSubsystem.intakeGrabberIn();
+        intakeSubsystem.intakeGrabberIn();
     }
 
     @Override

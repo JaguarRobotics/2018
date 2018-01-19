@@ -13,7 +13,7 @@ public class Calibration extends IterativeRobot {
     /**
      * This function is run when the robot is first started up and should be used for any initialization code.
      */
-    private static File               f;
+    private static File f;
 
     public static void init() {
     }

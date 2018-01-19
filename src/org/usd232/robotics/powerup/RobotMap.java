@@ -66,7 +66,7 @@ public interface RobotMap {
      * @version 2018
      */
     public static final int     RIGHT_ENCODER_CHANNEL_B    = 3;
-//    Relay
+    // Relay
     /**
      * The port for the lift relay
      * 
@@ -80,7 +80,7 @@ public interface RobotMap {
      * @since 2018
      * @version 2018
      */
-    public static final int     WHINCH_RELAY_PORT            = 1;
+    public static final int     WHINCH_RELAY_PORT          = 1;
     // Analog Ports
     /**
      * The port for the potentiometer
@@ -95,7 +95,7 @@ public interface RobotMap {
      * @since 2018
      * @version 2018
      */
-    public static final int GYROSCOPE_PORT = 1;
+    public static final int     GYROSCOPE_PORT             = 1;
     // Controls
     /**
      * The port for the left joystick
@@ -177,6 +177,7 @@ public interface RobotMap {
     public enum Gear {
         Low, High
     }
+
     /**
      * enum constants if the robot is in calibration mode
      * 
@@ -184,7 +185,6 @@ public interface RobotMap {
      * @version 2018
      */
     public enum CalibrationMode {
-    Calibrating, NotCalibrating
+        Calibrating, NotCalibrating
     }
-
 }

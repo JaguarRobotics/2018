@@ -12,9 +12,8 @@ import edu.wpi.first.wpilibj.Relay;
  * @version 2018
  */
 public class ManualLower extends CommandBase {
-
     /**
-     * Lowers the lift 
+     * Lowers the lift
      * 
      * @param lowerValue
      *            the value the robot the lift to
@@ -54,10 +53,10 @@ public class ManualLower extends CommandBase {
      * @version 2018
      */
     @Override
-    protected boolean isFinished() {  
-            return false;
-        }
-   
+    protected boolean isFinished() {
+        return false;
+    }
+
     /**
      * Turns off the motor when the command ends
      * 
