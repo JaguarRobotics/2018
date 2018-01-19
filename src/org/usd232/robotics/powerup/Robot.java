@@ -17,23 +17,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @version 2018
  */
 public class Robot extends IterativeRobot {
-    public static CalibratorData calibratorData;
-    public static boolean        isTesting                = false;
-    public static int            amountOfThingsCalibrated = 0;
+    public static CalibratorData        calibratorData;
+    public static boolean               isTesting                = false;
+    public static int                   amountOfThingsCalibrated = 0;
     /**
      * The command that the robot does for autonomous
      * 
      * @since Always
      * @version 2018
      */
-    private Command              autonomousCommand;
+    private Command                     autonomousCommand;
     /**
      * Chooser used in SmartDashboard to choose which alliance we are on
      * 
      * @since 2017
      */
     @SuppressWarnings("rawtypes")
-    public static final SendableChooser calibrationSetter = new SendableChooser();
+    public static final SendableChooser calibrationSetter        = new SendableChooser();
 
     /**
      * What runs when the robot is initalized

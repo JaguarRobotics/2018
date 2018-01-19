@@ -55,19 +55,19 @@ public interface IO extends RobotMap {
     /**
      * The solenoid to shift gears
      */
-//    public static final Solenoid        gearShiftSolenoid    = new Solenoid(SOLENOID_GEAR_SHIFT_PORT);
+    // public static final Solenoid gearShiftSolenoid = new Solenoid(SOLENOID_GEAR_SHIFT_PORT);
     /**
      * Grabs and releases cube
      * 
      * @since 2018
      * @version 2018
      */
-//    public static final Solenoid        grabSolenoid         = new Solenoid(INTAKE_GRAB_SOLENOID);
+    // public static final Solenoid grabSolenoid = new Solenoid(INTAKE_GRAB_SOLENOID);
     /**
      * Raises and lowers power cube
      * 
      * @since 2018
      * @version 2018
      */
-//    public static final Solenoid        liftSolenoid         = new Solenoid(INTAKE_LIFT_SOLENOID);
+    // public static final Solenoid liftSolenoid = new Solenoid(INTAKE_LIFT_SOLENOID);
 }

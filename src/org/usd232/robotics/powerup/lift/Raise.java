@@ -51,7 +51,7 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void execute() {
-        LiftSubsystem.liftRelay.set( Relay.Value.kForward);
+        LiftSubsystem.liftRelay.set(Relay.Value.kForward);
     }
 
     /**

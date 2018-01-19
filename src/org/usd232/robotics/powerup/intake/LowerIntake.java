@@ -4,6 +4,7 @@ import org.usd232.robotics.powerup.commands.CommandBase;
 
 /**
  * Lowers cube
+ * 
  * @author Evan
  * @version 2018
  * @since 2018
@@ -19,7 +20,7 @@ public class LowerIntake extends CommandBase {
 
     @Override
     protected void execute() {
-    	intakeSubsystem.intakeGrabberDown();
+        intakeSubsystem.intakeGrabberDown();
     }
 
     @Override
@@ -34,5 +35,4 @@ public class LowerIntake extends CommandBase {
     @Override
     protected void interrupted() {
     }
-    
 }

@@ -4,6 +4,7 @@ import org.usd232.robotics.powerup.commands.CommandBase;
 
 /**
  * Drops cube
+ * 
  * @author Evan
  * @version 2018
  * @since 2018
@@ -17,9 +18,9 @@ public class DropCube extends CommandBase {
     protected void initialize() {
     }
 
-     @Override
+    @Override
     protected void execute() {
-    	intakeSubsystem.intakeGrabberOut();
+        intakeSubsystem.intakeGrabberOut();
     }
 
     @Override

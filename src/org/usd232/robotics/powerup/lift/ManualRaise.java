@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.Relay;
  * @version 2018
  */
 public class ManualRaise extends CommandBase {
-
     /**
      * Raises the lift
      * 
@@ -43,7 +42,7 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void execute() {
-        LiftSubsystem.liftRelay.set( Relay.Value.kForward);
+        LiftSubsystem.liftRelay.set(Relay.Value.kForward);
     }
 
     /**
