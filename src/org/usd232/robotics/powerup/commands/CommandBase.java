@@ -59,9 +59,9 @@ public abstract class CommandBase extends Command implements RobotMap {
      * @version 2018
      */
     public static void init() {
-        oi = new OI();
         driveSubsystem = new DriveSubsystem();
         intakeSubsystem = new IntakeSubsystem();
         liftSubsystem = new LiftSubsystem();
+        oi = new OI();
     }
 }

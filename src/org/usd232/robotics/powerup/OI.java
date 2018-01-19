@@ -1,5 +1,8 @@
 package org.usd232.robotics.powerup;
 
+import org.usd232.robotics.powerup.calibration.CalibrateCommand;
+//import org.usd232.robotics.powerup.lift.ManualLower;
+//import org.usd232.robotics.powerup.lift.ManualRaise;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -14,13 +17,19 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI implements RobotMap {
     public OI() {
+        Joystick0_Button1.whenPressed(new CalibrateCommand());
+        Joystick1_Button1.whenPressed(new CalibrateCommand());
+//        Joystick0_Button3.whileHeld(new ManualRaise());
+//        Joystick0_Button3.whileHeld(new ManualLower());
+//        Joystick1_Button3.whileHeld(new ManualRaise());
+//        Joystick1_Button3.whileHeld(new ManualLower());
     }
 
     // The controllers we are using this year
     public final Joystick Joystick0              = new Joystick(LEFT_JOYSTICK_PORT);
     public final Joystick Joystick1              = new Joystick(RIGHT_JOYSTICK_PORT);
     public final Joystick Manipulator            = new Joystick(MANIPULATOR_JOYSTICK_PORT);
-    // Buttons here are as labelled on the controllers.
+    // Buttons here are as labeled on the controllers.
     public final Button   Joystick0_Button1      = new JoystickButton(Joystick0, 1);
     public final Button   Joystick0_Button2      = new JoystickButton(Joystick0, 2);
     public final Button   Joystick0_Button3      = new JoystickButton(Joystick0, 3);

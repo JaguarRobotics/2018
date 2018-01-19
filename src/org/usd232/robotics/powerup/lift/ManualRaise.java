@@ -21,7 +21,7 @@ public class ManualRaise extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    public ManualRaise(double raiseValue) {
+    public ManualRaise() {
         requires(liftSubsystem);
     }
 

@@ -45,10 +45,6 @@ public interface IO extends RobotMap {
     public static final Encoder         rightDriveEncoder    = new OversampledEncoder(RIGHT_ENCODER_CHANNEL_A,
                     RIGHT_ENCODER_CHANNEL_B);
     /**
-     * The solenoid to shift gears
-     */
-    public static final Solenoid        gearShiftSolenoid    = new Solenoid(SOLENOID_GEAR_SHIFT_PORT);
-    /**
      * The potentiometer that measures the height of the scissor lift
      */
     public static final Potentiometer   scissorPotentiometer = new AnalogPotentiometer(POTENTIOMETER_PORT, 360, 0);
@@ -57,17 +53,21 @@ public interface IO extends RobotMap {
      */
     public static final Relay           liftRelay            = new Relay(LIFT_RELAY_PORT);
     /**
+     * The solenoid to shift gears
+     */
+//    public static final Solenoid        gearShiftSolenoid    = new Solenoid(SOLENOID_GEAR_SHIFT_PORT);
+    /**
      * Grabs and releases cube
      * 
      * @since 2018
      * @version 2018
      */
-    public static final Solenoid        grabSolenoid         = new Solenoid(INTAKE_GRAB_SOLENOID);
+//    public static final Solenoid        grabSolenoid         = new Solenoid(INTAKE_GRAB_SOLENOID);
     /**
      * Raises and lowers power cube
      * 
      * @since 2018
      * @version 2018
      */
-    public static final Solenoid        liftSolenoid         = new Solenoid(INTAKE_LIFT_SOLENOID);
+//    public static final Solenoid        liftSolenoid         = new Solenoid(INTAKE_LIFT_SOLENOID);
 }
