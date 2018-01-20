@@ -1,5 +1,6 @@
 package org.usd232.robotics.powerup;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
@@ -45,7 +46,13 @@ public interface IO extends RobotMap {
      */
     public static final Encoder         rightDriveEncoder    = new OversampledEncoder(RIGHT_ENCODER_CHANNEL_A,
                     RIGHT_ENCODER_CHANNEL_B);
-    public static final BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
+    /**
+     * The analog gyroscope
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final AnalogGyro gyro = new AnalogGyro(1);
     /**
      * The solenoid to shift gears
      */
