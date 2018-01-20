@@ -56,7 +56,7 @@ public interface IO extends RobotMap {
      * @since 2018
      * @version 2018
      */
-    public static final AnalogGyro gyro = new AnalogGyro(1);
+    public static final AnalogGyro      gyro                 = new AnalogGyro(1);
     /**
      * The solenoid to shift gears
      * 

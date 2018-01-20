@@ -4,6 +4,7 @@ import org.usd232.robotics.powerup.commands.CommandBase;
 
 /**
  * Raises cube
+ * 
  * @author Evan
  * @version 2018
  * @since 2018
@@ -19,7 +20,7 @@ public class RaiseIntake extends CommandBase {
 
     @Override
     protected void execute() {
-    	intakeSubsystem.intakeGrabberUp();
+        intakeSubsystem.intakeGrabberUp();
     }
 
     @Override
