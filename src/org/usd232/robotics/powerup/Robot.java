@@ -107,7 +107,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        CommandBase.locationSubsystem.setLastVariables();
+        CommandBase.locationSubsystem.updateValues();
     }
 
     /**

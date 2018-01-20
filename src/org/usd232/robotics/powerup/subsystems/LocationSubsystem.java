@@ -1,19 +1,21 @@
 package org.usd232.robotics.powerup.subsystems;
 
-import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 
 public class LocationSubsystem extends SubsystemBase {
-    private double       lastLeftEncoder  = 0;
-    private double       lastRightEncoder = 0;
-    private double       lastX            = 0;
-    private double       lastY            = 0;
-    private double       lastAngle        = 0;
+    private static final double WIDTH = 18;
+    private static final double CENTER_OF_MASS = 0.5;
     private final double angleOffset;
+    private double lastS1;
+    private double lastS2;
+    private double lastTheta;
+    private double x;
+    private double y;
+    private double theta;
 
     public LocationSubsystem() {
         CommandBase.driveSubsystem.resetEncoders(true, true);
-        angleOffset = getAngle();
+        angleOffset = gyro.getAngle();
     }
 
     @Override
@@ -21,63 +23,40 @@ public class LocationSubsystem extends SubsystemBase {
     }
 
     public double getX() {
-        double encoderValueLeft = CommandBase.driveSubsystem
-                        .getDistanceInInches(CommandBase.driveSubsystem.getEncoderLeft());
-        double encoderValueRight = CommandBase.driveSubsystem
-                        .getDistanceInInches(CommandBase.driveSubsystem.getEncoderRight());
-        double angleValue = getAngle();
-        double deltaAngle = Math.abs(angleValue - lastAngle);
-        double deltaRightValue = encoderValueRight - lastRightEncoder;
-        double deltaLeftValue = encoderValueLeft - lastLeftEncoder;
-        double addedEncoderValues = deltaLeftValue + (deltaRightValue * -1);
-        double versineAngle = 1 - Math.cos(deltaAngle);
-        double cosAngle = Math.cos(angleValue);
-        double sinAngle = Math.sin(angleValue);
-        double sinDeltaAngle = Math.sin(deltaAngle);
-        if (deltaAngle != 0) {
-            lastX += (((((addedEncoderValues / deltaAngle - ROBOT_WIDTH) / 2) + ROBOT_WIDTH * .5) * versineAngle)
-                            * cosAngle)
-                            + (((((addedEncoderValues / deltaAngle - ROBOT_WIDTH) / 2) + ROBOT_WIDTH * .5)
-                                            * sinDeltaAngle) * sinAngle);
-        } else {
-            lastX += addedEncoderValues / 2 * sinAngle;
-        }
-        return lastX;
+        return x;
     }
 
     public double getY() {
-        double encoderValueLeft = CommandBase.driveSubsystem
-                        .getDistanceInInches(CommandBase.driveSubsystem.getEncoderLeft());
-        double encoderValueRight = CommandBase.driveSubsystem
-                        .getDistanceInInches(CommandBase.driveSubsystem.getEncoderRight());
-        double angleValue = getAngle();
-        double deltaAngle = Math.abs(angleValue - lastAngle);
-        double deltaRightValue = encoderValueRight - lastRightEncoder;
-        double deltaLeftValue = encoderValueLeft - lastLeftEncoder;
-        double addedEncoderValues = deltaLeftValue + (deltaRightValue * -1);
-        double versineAngle = 1 - Math.cos(deltaAngle);
-        double cosAngle = Math.cos(angleValue);
-        double sinAngle = Math.sin(angleValue);
-        double sinDeltaAngle = Math.sin(deltaAngle);
-        if (deltaAngle != 0) {
-            lastY += (((((addedEncoderValues / deltaAngle - ROBOT_WIDTH) / 2) + ROBOT_WIDTH * .5) * versineAngle)
-                            * sinAngle)
-                            + (((((addedEncoderValues / deltaAngle - ROBOT_WIDTH) / 2) + ROBOT_WIDTH * .5)
-                                            * sinDeltaAngle) * cosAngle);
-        } else {
-            lastY += addedEncoderValues / 2 * cosAngle;
-        }
-        return lastY;
+        return y;
     }
 
     public double getAngle() {
-        double angle = IO.gyro.getAngle();
-        return angle - angleOffset;
+        return theta;
     }
 
-    public void setLastVariables() {
-        lastLeftEncoder = CommandBase.driveSubsystem.getDistanceInInches(CommandBase.driveSubsystem.getEncoderLeft());
-        lastRightEncoder = CommandBase.driveSubsystem.getDistanceInInches(CommandBase.driveSubsystem.getEncoderRight());
-        lastAngle = getAngle();
+    public void updateValues() {
+        double s1 = CommandBase.driveSubsystem.getDistanceInInches(CommandBase.driveSubsystem.getEncoderLeft());
+        double s2 = CommandBase.driveSubsystem.getDistanceInInches(CommandBase.driveSubsystem.getEncoderRight());
+        theta = getAngle() - angleOffset;
+        double ds1 = s1 - lastS1;
+        double ds2 = s2 - lastS2;
+        double dtheta = theta - lastTheta;
+        lastS1 = s1;
+        lastS2 = s2;
+        lastTheta = theta;
+        double xPart;
+        double yPart;
+        if (dtheta == 0) {
+            xPart = 0;
+            yPart = (ds1 + ds2) / 2;
+        } else {
+            double coefficient = ((ds1 + ds2) / dtheta - WIDTH) / 2 + WIDTH * CENTER_OF_MASS;
+            xPart = coefficient * Math.sin(dtheta);
+            yPart = coefficient * (1 - Math.cos(dtheta));
+        }
+        double sin = Math.sin(theta);
+        double cos = Math.cos(theta);
+        x += xPart * cos + yPart * sin;
+        y += xPart * sin + yPart * cos;
     }
 }
