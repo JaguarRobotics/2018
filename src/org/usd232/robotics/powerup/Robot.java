@@ -2,12 +2,15 @@ package org.usd232.robotics.powerup;
 
 import org.usd232.robotics.powerup.calibration.Calibration;
 import org.usd232.robotics.powerup.calibration.CalibratorData;
+import org.usd232.robotics.powerup.commands.Autonomous;
 import org.usd232.robotics.powerup.commands.CommandBase;
+import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import io.netty.channel.local.LocalAddress;
 
 /**
  * The first class that is called to set everything up
@@ -44,15 +47,16 @@ public class Robot extends IterativeRobot {
     @SuppressWarnings("unchecked")
     public void robotInit() {
         CommandBase.init();
+        autonomousCommand = new Autonomous();
         SmartDashboard.putNumber("Joystick Tolerance", 1);
-        try {
-            calibratorData = Calibration.readFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
-        calibrationSetter.addObject("Calibrating", RobotMap.CalibrationMode.Calibrating);
-        SmartDashboard.putData("Calibration Setter", calibrationSetter);
+//        try {
+//            calibratorData = Calibration.readFile();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
+//        calibrationSetter.addObject("Calibrating", RobotMap.CalibrationMode.Calibrating);
+//        SmartDashboard.putData("Calibration Setter", calibrationSetter);
     }
 
     /**
@@ -103,6 +107,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        CommandBase.locationSubsystem.setLastVariables();
     }
 
     /**

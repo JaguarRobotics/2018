@@ -94,11 +94,13 @@ public class BezierCurve implements IAutonomousStepParameter {
      * @since 2018
      */
     public Point evaluate(double t) {
-        if (t < 0 || t > 1) {
-            throw new IllegalArgumentException("t must be in [0, 1].");
+        if (t < 0) {
+            t = 0;
+        } else if (t > 1) {
+            t = 1;
         }
         int hashCode = controlPoints.hashCode();
-        Point p = evaluate(controlPoints.toArray(new Point[0]), t, 0, controlPoints.size());
+        Point p = evaluate(controlPoints.toArray(new Point[0]), t, 0, controlPoints.size() - 1);
         if (hashCode != controlPoints.hashCode()) {
             throw new ConcurrentModificationException("Ther curve cannot be modified while it is being evaluated");
         }

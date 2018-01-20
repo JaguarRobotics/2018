@@ -56,6 +56,15 @@ public class DriveSubsystem extends SubsystemBase {
         double result = inches * (ppr / (Math.PI * diameter));
         return result;
     }
+    /**
+     * @param encoder ticks
+     *            number of encoder ticks to convert
+     * @return number of inches from encoder ticks
+     */
+    public double getEncoderInchesFromEncoderTicks(double encoderTicks) {
+        double result = encoderTicks / ppr * (Math.PI * diameter);
+        return result;
+    }
 
     /**
      * @param radians

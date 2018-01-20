@@ -30,6 +30,7 @@ public class BezierDrive extends CommandBase {
      * @since 2018
      */
     private final BezierCurve   curve;
+    private final Point startingPoint;
     /**
      * The width of the field
      * 
@@ -101,10 +102,11 @@ public class BezierDrive extends CommandBase {
      */
     @Override
     protected void execute() {
+        System.out.printf("(%f, %f) @ %f\n", locationSubsystem.getX(), locationSubsystem.getY(), locationSubsystem.getAngle());
         double time = 0;
         double distance = 9001;
-        double robotX = locationSubsystem.getX() / fieldWidth;
-        double robotY = locationSubsystem.getY() / fieldHeight;
+        double robotX = locationSubsystem.getX() / fieldWidth + startingPoint.getX();
+        double robotY = locationSubsystem.getY() / fieldHeight + startingPoint.getY();
         for (double t = 0; t < 1.000000001; t += TIME_STEP) {
             Point point = curve.evaluate(t);
             double dx = point.getX() - robotX;
@@ -115,7 +117,7 @@ public class BezierDrive extends CommandBase {
                 time = t;
             }
         }
-        if (time < 1 && robotX > 0 && robotX < 1 && robotY > 0 && robotY < 1) {
+        if (time < 1 && robotX >= 0 && robotX <= 1 && robotY >= 0 && robotY <= 1) {
             double dx = robotX - lastX;
             double dy = robotY - lastY;
             distance = Math.sqrt(dx * dx + dy * dy);
@@ -140,9 +142,15 @@ public class BezierDrive extends CommandBase {
             lastLeftEncoder = encoderLeft;
             lastRightEncoder = encoderRight;
             ds = Math.sqrt(ds1 * ds1 + ds2 * ds2);
+            if (ds == 0) {
+                ds = 1;
+            }
             ds1 = ds - robotWidth * centerOfMass * angle;
             ds2 = ds1 + robotWidth * angle;
-            driveSubsystem.driveTank(ds1, ds2);
+            ds = Math.max(Math.abs(ds1), Math.abs(ds2));
+            ds1 /= ds;
+            ds2 /= ds;
+            driveSubsystem.driveTank(ds2, ds1);
         } else {
             finished = true;
         }
@@ -197,8 +205,8 @@ public class BezierDrive extends CommandBase {
         this.fieldHeight = fieldHeight;
         this.robotWidth = robotWidth;
         this.centerOfMass = centerOfMass;
-        Point point = curve.getControlPoints().toArray(new Point[0])[0];
-        lastX = point.getX();
-        lastY = point.getY();
+        startingPoint = curve.getControlPoints().toArray(new Point[0])[0];
+        lastX = startingPoint.getX();
+        lastY = startingPoint.getY();
     }
 }

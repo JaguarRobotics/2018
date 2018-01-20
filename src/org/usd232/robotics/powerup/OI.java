@@ -1,6 +1,8 @@
 package org.usd232.robotics.powerup;
 
 import org.usd232.robotics.powerup.calibration.CalibrateCommand;
+import org.usd232.robotics.powerup.drive.GearShiftHigh;
+import org.usd232.robotics.powerup.drive.GearShiftLow;
 // import org.usd232.robotics.powerup.lift.ManualLower;
 // import org.usd232.robotics.powerup.lift.ManualRaise;
 import edu.wpi.first.wpilibj.Joystick;
@@ -19,6 +21,10 @@ public class OI implements RobotMap {
     public OI() {
         Joystick0_Button1.whenPressed(new CalibrateCommand());
         Joystick1_Button1.whenPressed(new CalibrateCommand());
+        Joystick0_Button3.whenPressed(new GearShiftHigh());
+        Joystick1_Button3.whenPressed(new GearShiftHigh());
+        Joystick0_Button2.whenPressed(new GearShiftLow());
+        Joystick1_Button2.whenPressed(new GearShiftLow());
         // Joystick0_Button3.whileHeld(new ManualRaise());
         // Joystick0_Button3.whileHeld(new ManualLower());
         // Joystick1_Button3.whileHeld(new ManualRaise());
