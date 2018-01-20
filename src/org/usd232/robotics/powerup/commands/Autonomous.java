@@ -1,24 +1,29 @@
 package org.usd232.robotics.powerup.commands;
 
-import org.usd232.robotics.powerup.subsystems.DriveSubsystem;
+import org.usd232.robotics.autonomous.BezierCurve;
+import org.usd232.robotics.autonomous.Point;
+import org.usd232.robotics.powerup.drive.BezierDrive;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * The Code to run during the autonomous section of a match.
+ * The class that sets up the routes to run in autonomous
  * 
- * @author Brian, Nathan, Cody
- * @since Always
+ * @author Zach Deibert
+ * @since 2018
  * @version 2018
  */
 public class Autonomous extends CommandGroup {
     /**
-     * This is what runs when you call autonomous
+     * Sets up this {@link CommandGroup} to run the autonomous commands
      * 
-     * @since Always
+     * @since 2018
      * @version 2018
      */
-    @SuppressWarnings("unused")
     public Autonomous() {
-        DriveSubsystem ds = CommandBase.driveSubsystem;
+        BezierCurve curve = new BezierCurve();
+        curve.addControlPoint(new Point(0, 0));
+        curve.addControlPoint(new Point(0, 1));
+        curve.addControlPoint(new Point(1, 1));
+        addSequential(new BezierDrive(curve, 8 * 12, 8 * 12, 18, 0.5));
     }
 }
