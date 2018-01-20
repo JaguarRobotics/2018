@@ -9,7 +9,8 @@ public class LocationSubsystem extends SubsystemBase {
     private double lastX            = 0;
     private double lastY            = 0;
     private double lastAngle        = 0;
-
+    public LocationSubsystem() {
+    }
     @Override
     protected void initDefaultCommand() {
     }
