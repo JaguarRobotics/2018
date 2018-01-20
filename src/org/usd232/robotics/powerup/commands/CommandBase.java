@@ -20,35 +20,35 @@ public abstract class CommandBase extends Command implements RobotMap {
      * @since Always
      * @version 2018
      */
-    public static OI              oi;
+    public static OI                oi;
     /**
      * This creates the drive subsystem
      * 
      * @since Always
      * @version 2018
      */
-    public static DriveSubsystem  driveSubsystem;
+    public static DriveSubsystem    driveSubsystem;
     /**
      * This creates the intake subsystem
      * 
      * @since 2018
      * @version 2018
      */
-    public static IntakeSubsystem intakeSubsystem;
+    public static IntakeSubsystem   intakeSubsystem;
     /**
      * This creates the lift subsystem
      * 
      * @since 2018
      * @version 2018
      */
-    public static LiftSubsystem   liftSubsystem;
+    public static LiftSubsystem     liftSubsystem;
     /**
      * This creates the Tracking subsystem
      * 
      * @since 2018
      * @version 2018
      */
-    public static LocationSubsystem   locationSubsystem;
+    public static LocationSubsystem locationSubsystem;
 
     /**
      * This is the class that is the base of the commands and initializes the subsystems
