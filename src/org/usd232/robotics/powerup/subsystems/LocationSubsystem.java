@@ -1,5 +1,6 @@
 package org.usd232.robotics.powerup.subsystems;
 
+import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 
 public class LocationSubsystem extends SubsystemBase {
@@ -54,6 +55,7 @@ public class LocationSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        return 0;
+        double angle = IO.gyro.getAngle();
+        return angle;
     }
 }
