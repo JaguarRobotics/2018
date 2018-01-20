@@ -1,6 +1,7 @@
 package org.usd232.robotics.powerup;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -44,6 +45,7 @@ public interface IO extends RobotMap {
      */
     public static final Encoder         rightDriveEncoder    = new OversampledEncoder(RIGHT_ENCODER_CHANNEL_A,
                     RIGHT_ENCODER_CHANNEL_B);
+    public static final BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
     /**
      * The solenoid to shift gears
      */
