@@ -5,6 +5,7 @@ import org.usd232.robotics.powerup.RobotMap;
 import org.usd232.robotics.powerup.subsystems.DriveSubsystem;
 import org.usd232.robotics.powerup.subsystems.IntakeSubsystem;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
+import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -41,6 +42,13 @@ public abstract class CommandBase extends Command implements RobotMap {
      * @version 2018
      */
     public static LiftSubsystem   liftSubsystem;
+    /**
+     * This creates the Tracking subsystem
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static LocationSubsystem   locationSubsystem;
 
     /**
      * This is the class that is the base of the commands and initializes the subsystems
@@ -63,5 +71,6 @@ public abstract class CommandBase extends Command implements RobotMap {
         driveSubsystem = new DriveSubsystem();
         intakeSubsystem = new IntakeSubsystem();
         liftSubsystem = new LiftSubsystem();
+        locationSubsystem = new LocationSubsystem();
     }
 }
