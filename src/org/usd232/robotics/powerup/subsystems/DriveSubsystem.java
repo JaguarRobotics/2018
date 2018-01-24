@@ -159,7 +159,7 @@ public class DriveSubsystem extends SubsystemBase {
      *            speed
      */
     public void driveTank(double left, double right) {
-        robotDrive.tankDrive(left, right);
+        robotDrive.tankDrive(left, right * 0.96);
     }
 
     /**
@@ -197,22 +197,21 @@ public class DriveSubsystem extends SubsystemBase {
      * @return whether extended. If true, extended.
      */
     public static boolean getGearShift() {
-        return false;
-        // return gearShiftSolenoid.get();
+        return gearShiftSolenoid.get();
     }
 
     /**
      * Extends solenoid to shift gears on wheels.
      */
     public static void gearShiftHigh() {
-        // gearShiftSolenoid.set(true);
+        gearShiftSolenoid.set(true);
     }
 
     /**
      * Retracts solenoid to shift back gear on wheels.
      */
     public static void gearShiftLow() {
-        // gearShiftSolenoid.set(false);
+        gearShiftSolenoid.set(false);
     }
 
     /**

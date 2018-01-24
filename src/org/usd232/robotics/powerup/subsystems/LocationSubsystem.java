@@ -15,7 +15,7 @@ public class LocationSubsystem extends SubsystemBase {
 
     public LocationSubsystem() {
         CommandBase.driveSubsystem.resetEncoders(true, true);
-        angleOffset = gyro.getAngle();
+        angleOffset = gyro.getAngle() * Math.PI / 180;
     }
 
     @Override
@@ -35,9 +35,9 @@ public class LocationSubsystem extends SubsystemBase {
     }
 
     public void updateValues() {
-        double s1 = CommandBase.driveSubsystem.getDistanceInInches(CommandBase.driveSubsystem.getEncoderLeft());
+        double s1 = CommandBase.driveSubsystem.getDistanceInInches(-CommandBase.driveSubsystem.getEncoderLeft());
         double s2 = CommandBase.driveSubsystem.getDistanceInInches(CommandBase.driveSubsystem.getEncoderRight());
-        theta = getAngle() - angleOffset;
+        theta = gyro.getAngle() * Math.PI / 180 - angleOffset;
         double ds1 = s1 - lastS1;
         double ds2 = s2 - lastS2;
         double dtheta = theta - lastTheta;
@@ -51,12 +51,13 @@ public class LocationSubsystem extends SubsystemBase {
             yPart = (ds1 + ds2) / 2;
         } else {
             double coefficient = ((ds1 + ds2) / dtheta - WIDTH) / 2 + WIDTH * CENTER_OF_MASS;
-            xPart = coefficient * Math.sin(dtheta);
+            xPart = -coefficient * Math.sin(dtheta);
             yPart = coefficient * (1 - Math.cos(dtheta));
         }
         double sin = Math.sin(theta);
         double cos = Math.cos(theta);
         x += xPart * cos + yPart * sin;
         y += xPart * sin + yPart * cos;
+		System.out.printf("(%f, %f) @ %f (%f)\n", x, y, theta, gyro.getAngle());
     }
 }
