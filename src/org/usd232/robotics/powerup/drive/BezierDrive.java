@@ -24,7 +24,7 @@ public class BezierDrive extends CommandBase {
 	 * @since 2018
 	 */
 	private static final double MAX_ANGLE_CHANGE = Math.PI / 4;
-	private static final double SPEED = 0.75;
+	private static final double SPEED = .8;
 	/**
 	 * The curve to drive along
 	 * 
@@ -93,6 +93,7 @@ public class BezierDrive extends CommandBase {
 	@Override
 	protected void initialize() {
 		driveSubsystem.robotStop();
+		locationSubsystem.reset();
 		lastLeftEncoder = driveSubsystem.getEncoderLeft();
 		lastRightEncoder = driveSubsystem.getEncoderRight();
 		finished = false;
