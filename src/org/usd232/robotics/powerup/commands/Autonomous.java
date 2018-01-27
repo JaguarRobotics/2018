@@ -22,8 +22,8 @@ public class Autonomous extends CommandGroup {
     public Autonomous() {
         BezierCurve curve = new BezierCurve();
         curve.addControlPoint(new Point(0.25, 0.25));
+        curve.addControlPoint(new Point(0.5, 0.75));
         curve.addControlPoint(new Point(0.25, 0.75));
-        curve.addControlPoint(new Point(0.75, 0.75));
         addSequential(new BezierDrive(curve, 2 * 12 * 8, 2 * 12 *8, 18, 0.5));
     }
 }
