@@ -159,7 +159,7 @@ public class DriveSubsystem extends SubsystemBase {
      *            speed
      */
     public void driveTank(double left, double right) {
-        robotDrive.tankDrive(left, right * 0.96);
+        robotDrive.tankDrive(left, right);
     }
 
     /**

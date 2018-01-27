@@ -5,7 +5,7 @@ import org.usd232.robotics.powerup.commands.CommandBase;
 public class LocationSubsystem extends SubsystemBase {
     private static final double WIDTH = 18;
     private static final double CENTER_OF_MASS = 0.5;
-    private final double angleOffset;
+    private double angleOffset;
     private double lastS1;
     private double lastS2;
     private double lastTheta;
@@ -14,8 +14,7 @@ public class LocationSubsystem extends SubsystemBase {
     private double theta;
 
     public LocationSubsystem() {
-        CommandBase.driveSubsystem.resetEncoders(true, true);
-        angleOffset = gyro.getAngle() * Math.PI / 180;
+        reset();
     }
 
     @Override
@@ -33,7 +32,16 @@ public class LocationSubsystem extends SubsystemBase {
     public double getAngle() {
         return theta;
     }
-
+    
+    public void reset() {
+        CommandBase.driveSubsystem.resetEncoders(true, true);
+        angleOffset = gyro.getAngle() * Math.PI / 180;// - Math.PI / 4;
+//        x = 2 * 12;
+//        y = 6 * 12;
+        x = 0;
+        y = 0;
+    }
+    
     public void updateValues() {
         double s1 = CommandBase.driveSubsystem.getDistanceInInches(-CommandBase.driveSubsystem.getEncoderLeft());
         double s2 = CommandBase.driveSubsystem.getDistanceInInches(CommandBase.driveSubsystem.getEncoderRight());
@@ -56,8 +64,8 @@ public class LocationSubsystem extends SubsystemBase {
         }
         double sin = Math.sin(theta);
         double cos = Math.cos(theta);
-        x += xPart * cos + yPart * sin;
-        y += xPart * sin + yPart * cos;
-		System.out.printf("(%f, %f) @ %f (%f)\n", x, y, theta, gyro.getAngle());
+        x += xPart * sin + yPart * cos;
+        y += xPart * cos + yPart * sin;
+		//System.out.printf("(%f, %f) @ %f (%f)\n", x, y, theta, gyro.getAngle());
     }
 }

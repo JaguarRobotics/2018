@@ -116,6 +116,7 @@ public class BezierDrive extends CommandBase {
 				distance = ds;
 				time = t;
 			}
+			// System.out.printf("(%f, %f)\n", point.getX(), point.getY());
 		}
 		if (time < 1 && robotX >= 0 && robotX <= 1 && robotY >= 0 && robotY <= 1) {
 			double dx = robotX - lastX;
@@ -125,16 +126,24 @@ public class BezierDrive extends CommandBase {
 			Point nextPoint = curve.evaluate(time + TIME_STEP);
 			dx = nextPoint.getX() - point.getX();
 			dy = nextPoint.getY() - point.getY();
+			
 			double ds = Math.sqrt(dx * dx + dy * dy);
 			dx /= ds;
 			dy /= ds;
 			double angle = Math.atan2(point.getY() - robotY + dy * distance, point.getX() - robotX + dx * distance)
-					- locationSubsystem.getAngle();
+					/* - locationSubsystem.getAngle() */;
 			if (angle < -MAX_ANGLE_CHANGE) {
 				angle = -MAX_ANGLE_CHANGE;
 			} else if (angle > MAX_ANGLE_CHANGE) {
 				angle = MAX_ANGLE_CHANGE;
 			}
+			/*
+			System.out.printf(
+					"Turn angle = %f, time = %f, vector = (%f, %f) -> (%f, %f), current angle = %f, location = (%f, %f) aka (%f, %f)\n",
+					angle, time, point.getX(), point.getY(), nextPoint.getX(), nextPoint.getY(),
+					locationSubsystem.getAngle(), locationSubsystem.getX(), locationSubsystem.getY(), robotX, robotY);
+					*/
+			System.out.printf("%f, %f, %f, %f\n", robotX, robotY, point.getX(), point.getY());
 			if (angle < 0) {
 				driveSubsystem.driveTank(SPEED * Math.cos(angle), SPEED);
 			} else {
