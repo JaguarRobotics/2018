@@ -1,18 +1,27 @@
+import org.gradle.internal.os.OperatingSystem
+
+switch (OperatingSystem.current()) {
+	case OperatingSystem.WINDOWS:
+		project.ext.lwjglNatives = "natives-windows"
+		break
+	case OperatingSystem.LINUX:
+		project.ext.lwjglNatives = "natives-linux"
+	    break
+	case OperatingSystem.MAC_OS:
+		project.ext.lwjglNatives = "natives-macos"
+		break
+}
+
 apply plugin: "java"
 apply plugin: "eclipse"
 
+project.ext.lwjglVersion = "3.1.5"
+
 repositories {
+    mavenCentral()
     maven {
         url "http://first.wpi.edu/FRC/roborio/maven/release/"
     }
-}
-
-dependencies {
-    compile "edu.wpi.first.cscore:cscore-java:1.1.0"
-    compile "edu.wpi.first.ntcore:ntcore-java:4.0.0"
-    compile "org.opencv:opencv-java:3.2.0"
-    compile "edu.wpi.first.wpilibj:wpilibj-java:2018.1.1"
-    compile "edu.wpi.first.wpiutil:wpiutil-java:3.0.0"
 }
 
 sourceSets {
@@ -33,7 +42,30 @@ sourceSets {
     }
 }
 
+dependencies {
+    compile "edu.wpi.first.cscore:cscore-java:1.1.0"
+    compile "edu.wpi.first.ntcore:ntcore-java:4.0.0"
+    compile "org.opencv:opencv-java:3.2.0"
+    compile "edu.wpi.first.wpilibj:wpilibj-java:2018.1.1"
+    compile "edu.wpi.first.wpiutil:wpiutil-java:3.0.0"
+    minimapCompile "org.lwjgl:lwjgl:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl-assimp:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl-glfw:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl-openal:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl-opengl:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl-stb:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl:$lwjglVersion:$lwjglNatives"
+	minimapCompile "org.lwjgl:lwjgl-assimp:$lwjglVersion:$lwjglNatives"
+	minimapCompile "org.lwjgl:lwjgl-glfw:$lwjglVersion:$lwjglNatives"
+	minimapCompile "org.lwjgl:lwjgl-openal:$lwjglVersion:$lwjglNatives"
+	minimapCompile "org.lwjgl:lwjgl-opengl:$lwjglVersion:$lwjglNatives"
+	minimapCompile "org.lwjgl:lwjgl-stb:$lwjglVersion:$lwjglNatives"
+}
+
 eclipse {
+    classpath {
+        plusConfigurations << configurations.minimapCompile
+    }
     project {
         natures "edu.wpi.first.wpilib.plugins.core.nature.FRCProjectNature"
     }
