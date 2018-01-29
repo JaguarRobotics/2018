@@ -22,6 +22,13 @@ public class Window implements Runnable {
         GL11.glColor3f(0, 0, 1);
         GL11.glVertex2f(1, 1);
         GL11.glEnd();
+        GL11.glBegin(GL11.GL_QUADS);
+        GL11.glColor4d(1, 1, 1, 0.5);
+        GL11.glVertex2f(-1, -1);
+        GL11.glVertex2d(-1, 0.5);
+        GL11.glVertex2d(0.5, 0.5);
+        GL11.glVertex2d(0.5, -1);
+        GL11.glEnd();
     }
 
     @Override
@@ -30,6 +37,8 @@ public class Window implements Runnable {
         GLFW.glfwSwapInterval(1);
         GLFW.glfwShowWindow(id);
         GL.createCapabilities();
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glClearColor(0, 0, 0, 1);
         while (!GLFW.glfwWindowShouldClose(id)) {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
