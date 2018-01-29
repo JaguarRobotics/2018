@@ -62,6 +62,10 @@ public class Window implements Runnable {
         }
     }
 
+    private void windowResized(long window, int width, int height) {
+        GL11.glViewport(0, 0, width, height);
+    }
+
     public Window() {
         GLFWErrorCallback.createPrint(System.err).set();
         if (!GLFW.glfwInit()) {
@@ -82,5 +86,6 @@ public class Window implements Runnable {
             GLFWVidMode vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
             GLFW.glfwSetWindowPos(id, (vidmode.width() - width.get(0)) / 2, (vidmode.height() - height.get(0)) / 2);
         }
+        GLFW.glfwSetWindowSizeCallback(id, this::windowResized);
     }
 }
