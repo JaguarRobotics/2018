@@ -26,6 +26,11 @@ sourceSets {
     		srcDirs = [ "generator/" ]
     	}
     }
+    minimap {
+        java {
+            srcDirs = [ "minimap/" ]
+        }
+    }
 }
 
 eclipse {
