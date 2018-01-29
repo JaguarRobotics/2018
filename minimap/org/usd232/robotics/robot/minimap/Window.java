@@ -14,6 +14,11 @@ public class Window implements Runnable {
     private long id;
 
     private void render() {
+    	GL11.glLoadIdentity();
+    	GL11.glScaled(0.5, 0.5, 1);
+    	GL11.glTranslated(1, 1, 0);
+    	GL11.glRotated(30, 0, 0, 1);
+    	
         GL11.glBegin(GL11.GL_TRIANGLES);
         GL11.glColor3f(1, 0, 0);
         GL11.glVertex2f(0, 0);
@@ -37,6 +42,7 @@ public class Window implements Runnable {
         GLFW.glfwSwapInterval(1);
         GLFW.glfwShowWindow(id);
         GL.createCapabilities();
+        GLFW.glfwSetWindowSizeCallback(id, this::windowResized);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glClearColor(0, 0, 0, 1);
@@ -74,7 +80,7 @@ public class Window implements Runnable {
         GLFW.glfwDefaultWindowHints();
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
-        id = GLFW.glfwCreateWindow(800, 600, "Robot Minimap", MemoryUtil.NULL, MemoryUtil.NULL);
+        id = GLFW.glfwCreateWindow(300, 600, "Robot Minimap", MemoryUtil.NULL, MemoryUtil.NULL);
         if (id == MemoryUtil.NULL) {
             throw new RuntimeException("Failed to create the GLFW window");
         }
@@ -86,6 +92,5 @@ public class Window implements Runnable {
             GLFWVidMode vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
             GLFW.glfwSetWindowPos(id, (vidmode.width() - width.get(0)) / 2, (vidmode.height() - height.get(0)) / 2);
         }
-        GLFW.glfwSetWindowSizeCallback(id, this::windowResized);
     }
 }
