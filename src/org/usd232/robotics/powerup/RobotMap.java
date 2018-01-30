@@ -187,4 +187,21 @@ public interface RobotMap {
     public enum CalibrationMode {
         Calibrating, NotCalibrating
     }
+    /**
+     * enum constants for what our alliance is
+     * 
+     * @since 2017
+     * @version 2018
+     */
+    public enum Alliance {
+        Red, Blue
+    }    /**
+     * enum constants for robot starting position
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public enum StartingPosition {
+        Left, Right, Middle
+    }
 }
