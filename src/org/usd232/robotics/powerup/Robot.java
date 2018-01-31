@@ -78,7 +78,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void disabledInit() {
-    	CommandBase.locationSubsystem.reset();
     }
 
     /**
@@ -98,7 +97,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void autonomousInit() {
-    	CommandBase.locationSubsystem.reset();
         autonomousCommand.start();
     }
 

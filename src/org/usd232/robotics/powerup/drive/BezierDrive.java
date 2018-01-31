@@ -24,7 +24,7 @@ public class BezierDrive extends CommandBase {
 	 * @since 2018
 	 */
 	private static final double MAX_ANGLE_CHANGE = Math.PI / 4;
-	private static final double SPEED = .8;
+	private static final double SPEED = 0.8;
 	/**
 	 * The curve to drive along
 	 * 
@@ -93,7 +93,6 @@ public class BezierDrive extends CommandBase {
 	@Override
 	protected void initialize() {
 		driveSubsystem.robotStop();
-		locationSubsystem.reset();
 		lastLeftEncoder = driveSubsystem.getEncoderLeft();
 		lastRightEncoder = driveSubsystem.getEncoderRight();
 		finished = false;
@@ -122,17 +121,19 @@ public class BezierDrive extends CommandBase {
 		if (time < 1 && robotX >= 0 && robotX <= 1 && robotY >= 0 && robotY <= 1) {
 			double dx = robotX - lastX;
 			double dy = robotY - lastY;
+			lastX = robotX;
+			lastY = robotY;
 			distance = Math.sqrt(dx * dx + dy * dy);
 			Point point = curve.evaluate(time);
 			Point nextPoint = curve.evaluate(time + TIME_STEP);
 			dx = nextPoint.getX() - point.getX();
 			dy = nextPoint.getY() - point.getY();
-			
 			double ds = Math.sqrt(dx * dx + dy * dy);
 			dx /= ds;
 			dy /= ds;
 			double angle = Math.atan2(point.getY() - robotY + dy * distance, point.getX() - robotX + dx * distance)
-					/* - locationSubsystem.getAngle() */;
+					 /*- locationSubsystem.getAngle()*/;
+//			System.out.println(angle);
 			if (angle < -MAX_ANGLE_CHANGE) {
 				angle = -MAX_ANGLE_CHANGE;
 			} else if (angle > MAX_ANGLE_CHANGE) {
@@ -144,11 +145,16 @@ public class BezierDrive extends CommandBase {
 					angle, time, point.getX(), point.getY(), nextPoint.getX(), nextPoint.getY(),
 					locationSubsystem.getAngle(), locationSubsystem.getX(), locationSubsystem.getY(), robotX, robotY);
 					*/
-			System.out.printf("%f, %f, %f, %f\n", robotX, robotY, point.getX(), point.getY());
-			if (angle < 0) {
-				driveSubsystem.driveTank(SPEED * Math.cos(angle), SPEED);
+			//System.out.printf("%f, %f, %f, %f\n", robotX, robotY, point.getX(), point.getY());
+			//double low = SPEED * (0.5 + 0.5 * (Math.abs(angle) / MAX_ANGLE_CHANGE));
+			double low = SPEED * 0.75;
+			double high = SPEED;
+			if (angle > 0) {
+//				System.out.printf("Motors: (%f, %f)\n", low, high);
+				driveSubsystem.driveTank(low, high);
 			} else {
-				driveSubsystem.driveTank(SPEED, SPEED * Math.cos(angle));
+//				System.out.printf("Motors: (%f, %f)\n", high, low);
+				driveSubsystem.driveTank(high, low);
 			}
 		} else {
 			finished = true;
