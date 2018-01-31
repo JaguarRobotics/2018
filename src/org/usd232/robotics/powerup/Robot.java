@@ -156,7 +156,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testPeriodic() {
-        Scheduler.getInstance().run();
     }
 
     /**
