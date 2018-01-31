@@ -41,7 +41,6 @@ public class Robot extends IterativeRobot {
      * @since Always
      * @version 2018
      */
-    @SuppressWarnings("unchecked")
     public void robotInit() {
         CommandBase.init();
         SmartDashboard.putNumber("Joystick Tolerance", 1);
@@ -50,9 +49,6 @@ public class Robot extends IterativeRobot {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
-        calibrationSetter.addObject("Calibrating", RobotMap.CalibrationMode.Calibrating);
-        SmartDashboard.putData("Calibration Setter", calibrationSetter);
     }
 
     /**
