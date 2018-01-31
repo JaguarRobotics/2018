@@ -92,6 +92,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void autonomousInit() {
+        Robot.isTesting = false;
         autonomousCommand.start();
     }
 
@@ -112,7 +113,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopInit() {
-        isTesting = true;
+        isTesting = false;
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
@@ -144,5 +145,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testInit() {
+        Robot.isTesting = true;
     }
 }
