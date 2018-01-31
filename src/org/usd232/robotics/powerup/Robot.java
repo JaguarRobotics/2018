@@ -70,9 +70,9 @@ public class Robot extends IterativeRobot {
     	allianceChooser.addDefault("Blue", RobotMap.Alliance.Blue);
     	allianceChooser.addObject("Red", RobotMap.Alliance.Red);
     	SmartDashboard.putData("Alliance", allianceChooser);
-    	positionChooser.addDefault("Left", RobotMap.StartingPosition.Left);
-    	positionChooser.addObject("Middle", RobotMap.StartingPosition.Middle);
-    	positionChooser.addObject("Right", RobotMap.StartingPosition.Right);
+    	positionChooser.addDefault("Left", RobotMap.StartingPosition.One);
+    	positionChooser.addObject("Middle", RobotMap.StartingPosition.Two);
+    	positionChooser.addObject("Right", RobotMap.StartingPosition.Three);
     	SmartDashboard.putData("Starting Position", positionChooser);
     }
 
@@ -156,6 +156,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testPeriodic() {
+        Scheduler.getInstance().run();
     }
 
     /**
