@@ -202,6 +202,6 @@ public interface RobotMap {
      * @version 2018
      */
     public enum StartingPosition {
-        Left, Right, Middle
+        One, Two, Three
     }
 }
