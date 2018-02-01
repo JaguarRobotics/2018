@@ -26,6 +26,7 @@ public class Autonomous extends CommandGroup {
      */
     @SuppressWarnings("unused")
     public Autonomous() {
+        int positiveSide = 1;// Change to -1 if wired backwards
         DriveSubsystem ds = CommandBase.driveSubsystem;
         StartingPosition pos = (StartingPosition) Robot.positionChooser.getSelected();
         Alliance alliance = (Alliance) Robot.allianceChooser.getSelected();
@@ -38,34 +39,34 @@ public class Autonomous extends CommandGroup {
                 }
                 if (sides[1] == 'R') {
                     addSequential(new EncoderDrive(206));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * 90)));
                     addSequential(new EncoderDrive(132));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(-90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * -90)));
                     addSequential(new EncoderDrive(32));
                 }
             }
             if (pos.equals(RobotMap.StartingPosition.Two)) {
                 if (sides[1] == 'L') {
                     addSequential(new EncoderDrive(60));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(-90)));//-90 is counter clockwise
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * -90)));
                     addSequential(new EncoderDrive(64));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * 90)));
                     addSequential(new EncoderDrive(160));
                 }
                 if (sides[1] == 'R') {
                     addSequential(new EncoderDrive(60));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * 90)));
                     addSequential(new EncoderDrive(90));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(-90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * -90)));
                     addSequential(new EncoderDrive(184));
                 }
             }
             if (pos.equals(RobotMap.StartingPosition.Three)) {
                 if (sides[1] == 'L') {
                     addSequential(new EncoderDrive(206));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(-90)));//-90 is counter clockwise
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * -90)));
                     addSequential(new EncoderDrive(132));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * 90)));
                     addSequential(new EncoderDrive(32));
                 }
                 if (sides[1] == 'R') {
@@ -73,7 +74,7 @@ public class Autonomous extends CommandGroup {
                 }
             }
         }
-        //Complete guess, probably not accurate
+        // Complete guess, probably not accurate
         if (alliance.equals(Alliance.Blue)) {
             if (pos.equals(RobotMap.StartingPosition.Three)) {
                 if (sides[1] == 'L') {
@@ -81,34 +82,34 @@ public class Autonomous extends CommandGroup {
                 }
                 if (sides[1] == 'R') {
                     addSequential(new EncoderDrive(206));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * 90)));
                     addSequential(new EncoderDrive(132));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(-90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * -90)));
                     addSequential(new EncoderDrive(32));
                 }
             }
             if (pos.equals(RobotMap.StartingPosition.Two)) {
                 if (sides[1] == 'L') {
                     addSequential(new EncoderDrive(60));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(90)));//-90 is counter clockwise
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * 90)));
                     addSequential(new EncoderDrive(64));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(-90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * -90)));
                     addSequential(new EncoderDrive(160));
                 }
                 if (sides[1] == 'R') {
                     addSequential(new EncoderDrive(60));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(-90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * -90)));
                     addSequential(new EncoderDrive(90));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * 90)));
                     addSequential(new EncoderDrive(184));
                 }
             }
             if (pos.equals(RobotMap.StartingPosition.One)) {
                 if (sides[1] == 'L') {
                     addSequential(new EncoderDrive(206));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(-90)));//-90 is counter clockwise
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * -90)));
                     addSequential(new EncoderDrive(132));
-                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(90)));
+                    addSequential(new EncoderTurn(ds.getRadiansFromDegrees(positiveSide * 90)));
                     addSequential(new EncoderDrive(32));
                 }
                 if (sides[1] == 'R') {
