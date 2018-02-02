@@ -53,6 +53,8 @@ public class Robot extends IterativeRobot {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Thread thread = new Thread(new LogServer());
+        thread.start();
         calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
         calibrationSetter.addObject("Calibrating", RobotMap.CalibrationMode.Calibrating);
         SmartDashboard.putData("Calibration Setter", calibrationSetter);
