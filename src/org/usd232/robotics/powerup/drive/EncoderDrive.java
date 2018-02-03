@@ -1,5 +1,6 @@
 package org.usd232.robotics.powerup.drive;
 
+import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -80,6 +81,7 @@ public class EncoderDrive extends CommandBase {
      */
     @Override
     protected void initialize() {
+        IO.gyro.reset();
         driveSubsystem.resetEncoders(true, true);
         driveSubsystem.startEncoders();
     }
@@ -97,7 +99,16 @@ public class EncoderDrive extends CommandBase {
         double adjSpeed = Math.min(((distance - distanceTraveled()) / distance) * (1 - CUTOFF_VALUE) + CUTOFF_VALUE,
                         speed);
         if (correctMotors) {
-            driveSubsystem.driveTank(adjSpeed * powers[0], adjSpeed * powers[1]);
+            if (Math.abs(IO.gyro.getAngle()) >= 1) {
+                if (Math.abs(driveSubsystem.getEncoderLeft()) > Math.abs(driveSubsystem.getEncoderRight())) {
+                    driveSubsystem.driveTank(adjSpeed * powers[0], (adjSpeed * powers[1])
+                                    * (Math.abs(driveSubsystem.getEncoderRight() / driveSubsystem.getEncoderLeft())));
+                } else {
+                    driveSubsystem.driveTank(adjSpeed * powers[0]*(Math.abs(driveSubsystem.getEncoderLeft() / driveSubsystem.getEncoderRight())), adjSpeed * powers[1]);
+                }
+            } else {
+                driveSubsystem.driveTank(adjSpeed * powers[0], adjSpeed * powers[1]);
+            }
         } else {
             driveSubsystem.driveTank(speed, speed);
             SmartDashboard.putNumber("EncoderLeft", CommandBase.driveSubsystem.getEncoderLeft());
