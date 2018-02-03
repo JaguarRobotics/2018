@@ -13,8 +13,8 @@ if (window.require) {
     }
 
     function addMessageListener(listener) {
-        electron.ipcRenderer.on("message", function(ev, data) {
-            listener(data);
+        electron.ipcRenderer.on("message", function(ev, message, date, level, logger) {
+            listener(message, date, level, logger);
         });
     }
 } else {
@@ -33,7 +33,7 @@ if (window.require) {
     function addMessageListener(listener) {
         var i = 0;
         setInterval(function() {
-            listener("Hello, world #" + ++i + "!");
+            listener("Hello, world #" + ++i + "!", new Date().getTime(), 4, "Default");
         }, 1000);
     }
 }

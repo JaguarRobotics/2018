@@ -9,8 +9,13 @@ electron.ipcMain.on("connectServer", (ev, ip, port, id) => {
             "port": port
         });
         sock.on("data", data => {
-            console.log(data.toString());
-            ev.sender.send("message", data.toString());
+            const messageLen = data.readInt32BE(0);
+            const message = data.toString("utf8", 4, messageLen + 4);
+            const date = (data.readInt32BE(messageLen + 4) * 4294967296) + data.readInt32BE(messageLen + 8);
+            const level = data.readInt8(messageLen + 12);
+            const loggerLen = data.readInt32BE(messageLen + 13);
+            const logger = data.toString("utf8", messageLen + 17);
+            ev.sender.send("message", message, date, level, logger);
         });
     } catch (e) {
         console.error(e);

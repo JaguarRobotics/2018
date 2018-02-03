@@ -10,7 +10,7 @@ class Message {
         this.levelStr = LoggingLevel.toString[level];
         this.levelStrPad = this.levelStr.padEnd(LoggingLevel.maxLength, "\u00a0");
         this.logger = logger;
-        this.shortLogger = logger.length < shortLoggerLength ? logger.padStart(shortLoggerLength, "\u00a0") : `...${logger.substr(logger.length - shortLoggerLength + 3)}`;
+        this.shortLogger = logger.length <= shortLoggerLength ? logger.padStart(shortLoggerLength, "\u00a0") : `...${logger.substr(logger.length - shortLoggerLength + 3)}`;
     }
 }
 
@@ -22,8 +22,8 @@ export default class LogController {
         this.levelFilters = LoggingLevel.toString.map(() => true);
         this.ip = "127.0.0.1";
         this.port = 5800;
-        window.addMessageListener(data => {
-            this.messageReceived(new Message(data, new Date().getTime(), LoggingLevel.STDOUT, "Default"));
+        window.addMessageListener((message, date, level, logger) => {
+            this.messageReceived(new Message(message, date, level, logger));
         });
         this.server = window.connectServer(this.ip, this.port);
     }
