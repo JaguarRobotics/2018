@@ -5,7 +5,6 @@ import org.usd232.robotics.powerup.RobotMap;
 import org.usd232.robotics.powerup.RobotMap.Alliance;
 import org.usd232.robotics.powerup.RobotMap.StartingPosition;
 import org.usd232.robotics.powerup.drive.EncoderDrive;
-import org.usd232.robotics.powerup.drive.EncoderTurn;
 import org.usd232.robotics.powerup.drive.GyroTurn;
 import org.usd232.robotics.powerup.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.DriverStation;

@@ -64,7 +64,8 @@ public class GyroTurn extends CommandBase {
      */
     protected boolean isFinished() {
         double gyroValue = Math.abs(IO.gyro.getAngle());
-        return gyroValue >= arclength;
+        System.out.println("Gyro says " + IO.gyro.getAngle() + " And we should be going to " + arclength);
+        return Math.abs(gyroValue) >= Math.abs(arclength);
     }
 
     @Override
@@ -102,7 +103,7 @@ public class GyroTurn extends CommandBase {
     public GyroTurn(double angle, double speed) {
         requires(driveSubsystem);
         this.speed = (angle < 0) ? -1 * Math.abs(speed) : Math.abs(speed);
-        this.arclength = Math.abs(angle * WHEELBASE_WIDTH / 2);
+        this.arclength = angle;
     }
 
     /**
@@ -114,6 +115,6 @@ public class GyroTurn extends CommandBase {
      * @version 2018
      */
     public GyroTurn(double angle) {
-        this(angle, 0.7);
+        this(angle, 0.6);
     }
 }
