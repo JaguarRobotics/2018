@@ -1,7 +1,6 @@
 package org.usd232.robotics.powerup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.calibration.Calibration;
 import org.usd232.robotics.powerup.calibration.CalibratorData;
 import org.usd232.robotics.powerup.commands.CommandBase;
@@ -20,7 +19,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @version 2018
  */
 public class Robot extends IterativeRobot {
-    private static final Logger logger = LoggerFactory.getLogger(Robot.class);
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG = new Logger();
     public static CalibratorData        calibratorData;
     public static boolean               isTesting                = false;
     public static int                   amountOfThingsCalibrated = 0;

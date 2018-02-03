@@ -1,6 +1,7 @@
 package org.usd232.robotics.powerup.drive;
 
 import org.usd232.robotics.powerup.commands.CommandBase;
+import org.usd232.robotics.powerup.log.Logger;
 
 /**
  * Drives the robot in teleop based on one joystick
@@ -10,6 +11,13 @@ import org.usd232.robotics.powerup.commands.CommandBase;
  * @version 2018
  */
 public class DriveArcade extends CommandBase {
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG = new Logger();
     /**
      * Drives the robot in teleop based on one joystick
      */

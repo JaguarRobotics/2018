@@ -133,7 +133,6 @@ public interface RobotMap {
      * @version 2018
      */
     public static final int     SOLENOID_GEAR_SHIFT_PORT   = 0;
-    // Cutoff Values for potentiometers
     /**
      * The potentiometer value for the height of the portal
      * 

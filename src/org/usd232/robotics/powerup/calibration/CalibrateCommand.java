@@ -3,6 +3,7 @@ package org.usd232.robotics.powerup.calibration;
 import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.RobotMap;
 import org.usd232.robotics.powerup.commands.CommandBase;
+import org.usd232.robotics.powerup.log.Logger;
 /**
  * Command to write the Calibration file
  * 
@@ -12,6 +13,13 @@ import org.usd232.robotics.powerup.commands.CommandBase;
  *
  */
 public class CalibrateCommand extends CommandBase {
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG = new Logger();
     @Override
     protected void initialize() {
         if (Robot.calibrationSetter.getSelected().equals(RobotMap.CalibrationMode.Calibrating)) {

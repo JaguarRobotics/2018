@@ -1,6 +1,7 @@
 package org.usd232.robotics.powerup.drive;
 
 import org.usd232.robotics.powerup.commands.CommandBase;
+import org.usd232.robotics.powerup.log.Logger;
 
 /**
  * Pauses the specified number of milliseconds (only used in Auto)
@@ -10,6 +11,13 @@ import org.usd232.robotics.powerup.commands.CommandBase;
  * @version 2018
  */
 public class DrivePause extends CommandBase {
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG = new Logger();
     /**
      * Time to wait in milliseconds
      * 

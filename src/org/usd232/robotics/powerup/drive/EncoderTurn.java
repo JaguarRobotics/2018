@@ -1,6 +1,7 @@
 package org.usd232.robotics.powerup.drive;
 
 import org.usd232.robotics.powerup.commands.CommandBase;
+import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -11,6 +12,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @version 2018
  */
 public class EncoderTurn extends CommandBase {
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG = new Logger();
     /**
      * The speed at which to turn
      * 
