@@ -35,7 +35,35 @@ public class DriveSubsystem extends SubsystemBase {
     /**
      * Counter used to count in get motor powers
      */
-    int                              counter       = 0;
+    public static int                counter       = 0;
+
+    /**
+     * Calculates motor powers for adjusted driving <html>you can view the math
+     * below<img src="https://puu.sh/tO9Si/990853f967.png"></img></html>
+     * 
+     * @return returns an array of powers with left in slot 0 & right in slot 1
+     */
+    public double[] getMotorPowers() {
+        double left = Math.abs(getEncoderLeft());
+        double right = Math.abs(getEncoderRight());
+        double diff = Math.abs(right - left + 1);
+        double percentage = diff / ((right >= left) ? right : left); // (diff * 3) / ((right >= left) ? right : left) *
+                                                                     // 2;
+        percentage = Math.min(percentage, 1);
+        double powers[] = new double[2];
+        if (right > left) {
+            powers[0] = 1;
+            powers[1] = 1 - percentage;
+        } else if (right == left) {
+            powers[0] = 1;
+            powers[1] = 1;
+        } else {
+            powers[0] = 1 - percentage;
+            powers[1] = 1;
+        }
+        counter++;
+        return (counter > 20) ? powers : new double[] { 1, 1 };
+    }
 
     /**
      * @param encoderTicks
@@ -56,9 +84,10 @@ public class DriveSubsystem extends SubsystemBase {
         double result = inches * (ppr / (Math.PI * diameter));
         return result;
     }
+
     /**
-     * @param encoder ticks
-     *            number of encoder ticks to convert
+     * @param encoder
+     *            ticks number of encoder ticks to convert
      * @return number of inches from encoder ticks
      */
     public double getEncoderInchesFromEncoderTicks(double encoderTicks) {
@@ -85,32 +114,6 @@ public class DriveSubsystem extends SubsystemBase {
      */
     public double getRadiansFromDegrees(double degrees) {
         return (degrees / 360) * (Math.PI * 2);
-    }
-
-    /**
-     * Calculates motor powers for adjusted driving <html>you can view the math
-     * below<img src="https://puu.sh/tO9Si/990853f967.png"></img></html>
-     * 
-     * @return returns an array of powers with left in slot 0 & right in slot 1
-     */
-    public double[] getMotorPowers() {
-        double left = Math.abs(getEncoderLeft());
-        double right = Math.abs(getEncoderRight());
-        double diff = Math.abs(right - left + 1);
-        double percentage = (diff * 3) / ((right >= left) ? right + 1 : left) * 2;
-        percentage = Math.min(percentage, 1);
-        double powers[] = new double[2];
-        if (right > left) {
-            powers[0] = 1;
-            powers[1] = 1 - percentage;
-        } else {
-            powers[0] = 1 - percentage;
-            powers[1] = 1;
-        }
-        if (counter % 5 == 0) {
-        }
-        counter++;
-        return (counter > 20) ? powers : new double[] { 1, 1 };
     }
 
     /**
