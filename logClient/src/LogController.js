@@ -20,20 +20,12 @@ export default class LogController {
         this.messages = [];
         this.settingsVisible = true;
         this.levelFilters = LoggingLevel.toString.map(() => true);
-        let i = 0;
-        setInterval(() => {
-            this.messageReceived(new Message(`Hello, world #${++i}!`, new Date().getTime(), LoggingLevel.STDOUT, "LogController.Hello"));
-        }, 1000);
-        setInterval(() => {
-            this.messageReceived(new Message("This is a trace message", new Date().getTime(), LoggingLevel.TRACE, "LogController"));
-            this.messageReceived(new Message("This is a debug message", new Date().getTime(), LoggingLevel.DEBUG, "LogController"));
-            this.messageReceived(new Message("This is a info message", new Date().getTime(), LoggingLevel.INFO, "LogController"));
-            this.messageReceived(new Message("This is a stdout message", new Date().getTime(), LoggingLevel.STDOUT, "LogController"));
-            this.messageReceived(new Message("This is a warn message", new Date().getTime(), LoggingLevel.WARN, "LogController"));
-            this.messageReceived(new Message("This is a stderr message", new Date().getTime(), LoggingLevel.STDERR, "LogController"));
-            this.messageReceived(new Message("This is a error message", new Date().getTime(), LoggingLevel.ERROR, "LogController"));
-            this.messageReceived(new Message("This is a fatal message", new Date().getTime(), LoggingLevel.FATAL, "LogController"));
-        }, 12345);
+        this.ip = "127.0.0.1";
+        this.port = 5800;
+        window.addMessageListener(data => {
+            this.messageReceived(new Message(data, new Date().getTime(), LoggingLevel.STDOUT, "Default"));
+        });
+        this.server = window.connectServer(this.ip, this.port);
     }
 
     triggerUpdates() {
@@ -66,5 +58,13 @@ export default class LogController {
     setLevelFilter(level, value) {
         this.levelFilters[level] = value;
         this.triggerUpdates();
+    }
+
+    setServer(ip, port) {
+        this.ip = ip;
+        this.port = port;
+        this.triggerUpdates();
+        window.disconnectServer(this.server);
+        this.server = window.connectServer(ip, port);
     }
 }

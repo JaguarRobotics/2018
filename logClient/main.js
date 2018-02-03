@@ -1,6 +1,11 @@
 const electron = require("electron");
 const path = require("path");
 const url = require("url");
+require("./net");
+
+electron.dialog.showErrorBox = (title, content) => {
+    console.log(`${title}:\n${content}`);
+};
 
 let mainWindow;
 
