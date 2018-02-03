@@ -20,6 +20,7 @@ public class Robot extends IterativeRobot {
     public static CalibratorData        calibratorData;
     public static boolean               isTesting                = false;
     public static int                   amountOfThingsCalibrated = 0;
+    public static MinimapCoordsServer minimapServer;
     /**
      * The command that the robot does for autonomous
      * 
@@ -53,6 +54,12 @@ public class Robot extends IterativeRobot {
         calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
         calibrationSetter.addObject("Calibrating", RobotMap.CalibrationMode.Calibrating);
         SmartDashboard.putData("Calibration Setter", calibrationSetter);
+        
+        try {
+			minimapServer = new MinimapCoordsServer();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     /**
