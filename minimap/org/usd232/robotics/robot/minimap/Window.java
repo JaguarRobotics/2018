@@ -55,6 +55,8 @@ public class Window implements Runnable {
     private static final float POWER_CUBE_ZONE_WIDTH = 3.75f;
     private static final float POWER_CUBE_ZONE_HEIGHT = 3.5f;
     private static final float POWER_CUBE_ZONE_CENTER_Y = SWITCH_CENTER_Y - (SWITCH_HEIGHT + POWER_CUBE_ZONE_HEIGHT) / 2f;
+    private static final float PORTAL_WIDTH = 26.69f / 12f;
+    private static final float PORTAL_HEIGHT = 35f / 12f;
 //    private static MinimapCoordsClient client;
     private static final float ROBOT_LENGTH = 24.5f / 12f;
     private static final float ROBOT_WIDTH = 22.5f / 12f;
@@ -62,6 +64,7 @@ public class Window implements Runnable {
     private static double robotX = 10;
     private static double robotY = 5;
     private static double robotAngle = 0;
+    private static int windowHeight = 800;
     
     private void render() {
     	GL11.glLoadIdentity();
@@ -80,6 +83,7 @@ public class Window implements Runnable {
     	doPlatformZone();
     	doPowerCubeZone();
     	doRobot();
+    	doBoundary();
     }
     
     private void doLines() {    	
@@ -508,6 +512,44 @@ public class Window implements Runnable {
     	GL11.glPopMatrix();
     }
     
+    private void doBoundary() {
+    	GL11.glColor4fv(OPP_COLOR);
+    	GL11.glBegin(GL11.GL_TRIANGLES);
+        GL11.glVertex2f(PORTAL_WIDTH, 0);
+        GL11.glVertex2f(0, PORTAL_HEIGHT);
+        GL11.glVertex2f(0, 0);
+        GL11.glEnd();
+    	GL11.glBegin(GL11.GL_TRIANGLES);
+        GL11.glVertex2f(FIELD_WIDTH - PORTAL_WIDTH, 0);
+        GL11.glVertex2f(FIELD_WIDTH, PORTAL_HEIGHT);
+        GL11.glVertex2f(FIELD_WIDTH, 0);
+        GL11.glEnd();
+
+    	GL11.glColor4fv(TEAM_COLOR);
+    	GL11.glBegin(GL11.GL_TRIANGLES);
+        GL11.glVertex2f(PORTAL_WIDTH, FIELD_HEIGHT);
+        GL11.glVertex2f(0, FIELD_HEIGHT - PORTAL_HEIGHT);
+        GL11.glVertex2f(0, FIELD_HEIGHT);
+        GL11.glEnd();
+    	GL11.glBegin(GL11.GL_TRIANGLES);
+        GL11.glVertex2f(FIELD_WIDTH - PORTAL_WIDTH, FIELD_HEIGHT);
+        GL11.glVertex2f(FIELD_WIDTH, FIELD_HEIGHT - PORTAL_HEIGHT);
+        GL11.glVertex2f(FIELD_WIDTH, FIELD_HEIGHT);
+        GL11.glEnd();
+    	
+    	GL11.glColor3fv(BLACK);
+    	GL11.glBegin(GL11.GL_LINE_LOOP);
+        GL11.glVertex2f(PORTAL_WIDTH, 0);
+        GL11.glVertex2f(FIELD_WIDTH - PORTAL_WIDTH, 0);
+        GL11.glVertex2f(FIELD_WIDTH, PORTAL_HEIGHT);
+        GL11.glVertex2f(FIELD_WIDTH, FIELD_HEIGHT - PORTAL_HEIGHT);
+        GL11.glVertex2f(FIELD_WIDTH - PORTAL_WIDTH, FIELD_HEIGHT - (FIELD_HEIGHT / windowHeight));
+        GL11.glVertex2f(PORTAL_WIDTH, FIELD_HEIGHT - (FIELD_HEIGHT / windowHeight));
+        GL11.glVertex2f(0, FIELD_HEIGHT - PORTAL_HEIGHT);
+        GL11.glVertex2f(0, PORTAL_HEIGHT);
+        GL11.glEnd();
+    }
+    
     @Override
     public void run() {
         GLFW.glfwMakeContextCurrent(id);
@@ -541,6 +583,7 @@ public class Window implements Runnable {
     }
 
     private void windowResized(long window, int width, int height) {
+    	windowHeight = height;
         GL11.glViewport(0, 0, width, height);
     }
 
@@ -552,7 +595,7 @@ public class Window implements Runnable {
         GLFW.glfwDefaultWindowHints();
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
-        id = GLFW.glfwCreateWindow(400, 800, "Robot Minimap", MemoryUtil.NULL, MemoryUtil.NULL);
+        id = GLFW.glfwCreateWindow(windowHeight / 2, windowHeight, "Robot Minimap", MemoryUtil.NULL, MemoryUtil.NULL);
         if (id == MemoryUtil.NULL) {
             throw new RuntimeException("Failed to create the GLFW window");
         }
