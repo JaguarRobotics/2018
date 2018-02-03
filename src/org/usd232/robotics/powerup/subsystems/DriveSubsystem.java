@@ -56,6 +56,15 @@ public class DriveSubsystem extends SubsystemBase {
         double result = inches * (ppr / (Math.PI * diameter));
         return result;
     }
+    /**
+     * @param encoder ticks
+     *            number of encoder ticks to convert
+     * @return number of inches from encoder ticks
+     */
+    public double getEncoderInchesFromEncoderTicks(double encoderTicks) {
+        double result = encoderTicks / ppr * (Math.PI * diameter);
+        return result;
+    }
 
     /**
      * @param radians
@@ -188,22 +197,21 @@ public class DriveSubsystem extends SubsystemBase {
      * @return whether extended. If true, extended.
      */
     public static boolean getGearShift() {
-        return false;
-        // return gearShiftSolenoid.get();
+        return gearShiftSolenoid.get();
     }
 
     /**
      * Extends solenoid to shift gears on wheels.
      */
     public static void gearShiftHigh() {
-        // gearShiftSolenoid.set(true);
+        gearShiftSolenoid.set(true);
     }
 
     /**
      * Retracts solenoid to shift back gear on wheels.
      */
     public static void gearShiftLow() {
-        // gearShiftSolenoid.set(false);
+        gearShiftSolenoid.set(false);
     }
 
     /**

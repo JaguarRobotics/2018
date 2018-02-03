@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * The Code to run during the autonomous section of a match.
+ * The class that sets up the routes to run in autonomous
  * 
  * @author Brian, Cody
  * @since Always

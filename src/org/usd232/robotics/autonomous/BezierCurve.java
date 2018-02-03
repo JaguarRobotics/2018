@@ -79,9 +79,14 @@ public class BezierCurve implements IAutonomousStepParameter {
         if (start == end) {
             return controlPoints[start];
         } else {
+        	//pi point initial
             Point pi = evaluate(controlPoints, t, start, end - 1);
+            //pf point final
             Point pf = evaluate(controlPoints, t, start + 1, end);
-            return new Point(pi.getX() + (pf.getX() - pi.getX()) * t, pi.getY() + (pf.getY() - pi.getY()) * t);
+            double changeX = (pf.getX()-pi.getX());
+            double changeY = (pf.getY()-pi.getY());
+            //System.out.printf("(%f, %f) -> (%f, %f)\n", pi.getX(), pi.getY(), pf.getX(), pf.getY());
+            return new Point(pi.getX() + changeX * t, pi.getY() + changeY * t);
         }
     }
 
@@ -94,11 +99,13 @@ public class BezierCurve implements IAutonomousStepParameter {
      * @since 2018
      */
     public Point evaluate(double t) {
-        if (t < 0 || t > 1) {
-            throw new IllegalArgumentException("t must be in [0, 1].");
+        if (t < 0) {
+            t = 0;
+        } else if (t > 1) {
+            t = 1;
         }
         int hashCode = controlPoints.hashCode();
-        Point p = evaluate(controlPoints.toArray(new Point[0]), t, 0, controlPoints.size());
+        Point p = evaluate(controlPoints.toArray(new Point[0]), t, 0, controlPoints.size() - 1);
         if (hashCode != controlPoints.hashCode()) {
             throw new ConcurrentModificationException("Ther curve cannot be modified while it is being evaluated");
         }
