@@ -12,13 +12,6 @@ import org.usd232.robotics.powerup.commands.CommandBase;
  *
  */
 public class CalibrateCommand extends CommandBase {
-    /**
-     * Checks how many times the command has been run and then on the last one writes the file.
-     * Order of things being calibrated is the Scale Height, Switch Height, Bottom Height
-     * 
-     * @since 2018
-     * @version 2018
-     */
     @Override
     protected void initialize() {
         if (Robot.calibrationSetter.getSelected().equals(RobotMap.CalibrationMode.Calibrating)) {

@@ -1,0 +1,6 @@
+[submodule "logClient/public/polyfill"]
+	path = logClient/public/polyfill
+	url = https://github.com/uxitten/polyfill.git
+[submodule "logClient/public/material-design-icons"]
+	path = logClient/public/material-design-icons
+	url = https://github.com/google/material-design-icons.git
