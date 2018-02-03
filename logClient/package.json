@@ -1,0 +1,21 @@
+{
+    "name": "jaguar-log-client",
+    "version": "1.0.0",
+    "description": "The logging client for the robot's logs",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "prestart": "react-scripts build",
+        "dev": "react-scripts start"
+    },
+    "repository": "https://gitlab.com/JaguarRobotics/2018.git",
+    "author": "Zach Deibert",
+    "license": "MIT",
+    "dependencies": {
+        "electron": "^1.7.12",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0",
+        "react-scripts": "1.1.0"
+    },
+    "homepage": "."
+}

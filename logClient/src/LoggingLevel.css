@@ -1,0 +1,24 @@
+.level-TRACE {
+    color: #3F3FFF;
+}
+.level-DEBUG {
+    color: #3F7FAF;
+}
+.level-INFO {
+    color: #FFAFAF;
+}
+.level-STDOUT {
+    color: #AFFFAF;
+}
+.level-WARN {
+    color: #AF3F7F;
+}
+.level-STDERR {
+    color: #FF7F00;
+}
+.level-ERROR {
+    color: #FF3F00;
+}
+.level-FATAL {
+    color: #FF0000;
+}
