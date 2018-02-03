@@ -45,4 +45,8 @@ public class LogServer implements Runnable {
             }
         }
     }
+    
+    public static void main(String[] args) {
+        new LogServer().run();
+    }
 }
