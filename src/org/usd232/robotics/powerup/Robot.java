@@ -57,7 +57,7 @@ public class Robot extends IterativeRobot {
         try {
             calibratorData = Calibration.readFile();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e, "Error in Robot Init");
         }
         Thread thread = new Thread(new LogServer());
         thread.start();
