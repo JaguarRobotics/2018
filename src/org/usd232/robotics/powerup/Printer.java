@@ -15,8 +15,8 @@ public class Printer extends OutputStream {
     
     @Override
     public void write(byte[] b, int off, int len) throws IOException {
-        parent.write(b, off, len);
         logServer.write(b, off, len);
+        parent.write(b, off, len);
     }
 
     @Override

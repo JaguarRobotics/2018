@@ -41,10 +41,6 @@ public class LogServer implements Runnable {
             } catch (IOException exception) {
             } finally {
                 if (socket != null) {
-                    try {
-                        socket.close();
-                    } catch (IOException ignored) {
-                    }
                 }
             }
         }

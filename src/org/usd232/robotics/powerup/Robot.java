@@ -117,7 +117,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopInit() {
-        logger.info("Logger worked");
+        System.out.println("Teleop initialized");
         isTesting = true;
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
