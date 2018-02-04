@@ -21,7 +21,8 @@ public class MachineLearningBezierDrive extends MachineLearningDrive {
         return a.getX() == b.getX() && a.getY() == b.getY();
     }
 
-    public MachineLearningBezierDrive(BezierCurve curve, double width, double height) {
+    public MachineLearningBezierDrive(double speed, BezierCurve curve, double width, double height) {
+        super(speed);
         this.curve = curve;
         this.width = width;
         this.height = height;

@@ -25,6 +25,6 @@ public class Autonomous extends CommandGroup {
         curve.addControlPoint(new Point(0.25, 0.75));
         curve.addControlPoint(new Point(0.75, 0.75));
         addSequential(new ResetLocationCommand());
-        addSequential(new MachineLearningBezierDrive(curve, 2 * 12 * 8, 2 * 12 * 8));
+        addSequential(new MachineLearningBezierDrive(0.5, curve, 2 * 12 * 8, 2 * 12 * 8));
     }
 }
