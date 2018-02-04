@@ -33,11 +33,12 @@ public abstract class MachineLearningDrive extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public synchronized void start() {
         learner = new MachineLearner(10);
         learner.learn(new Vector().setComponent("angle", Double.MAX_VALUE),
                         new Vector().setComponent("left", 1).setComponent("right", 1));
         iv = null;
+        super.start();
     }
 
     @Override
@@ -57,7 +58,8 @@ public abstract class MachineLearningDrive extends CommandBase {
         double distanceTraveled = Math.sqrt(dx * dx + dy * dy);
         double targetAngle = 0;
         for (double diff = Math.PI / 2; diff > ACCURACY; diff /= 2) {
-            Point value = closestCurvePointTo(x + distanceTraveled * Math.cos(targetAngle), y + distanceTraveled * Math.sin(targetAngle));
+            Point value = closestCurvePointTo(x + distanceTraveled * Math.cos(targetAngle),
+                            y + distanceTraveled * Math.sin(targetAngle));
             double reportedAngle = Math.atan2(value.getY() - y, value.getX() - x);
             if (reportedAngle < 0) {
                 targetAngle -= diff;
