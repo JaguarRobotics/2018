@@ -36,7 +36,8 @@ public class MachineLearningDriveStraight extends MachineLearningDrive {
         return linearDistanceTraveled >= distance;
     }
 
-    public MachineLearningDriveStraight(double inches) {
+    public MachineLearningDriveStraight(double speed, double inches) {
+        super(speed);
         distance = inches;
     }
 }
