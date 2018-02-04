@@ -2,6 +2,7 @@ package org.usd232.robotics.powerup.drive;
 
 import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
+import org.usd232.robotics.powerup.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -81,9 +82,11 @@ public class EncoderDrive extends CommandBase {
      */
     @Override
     protected void initialize() {
+        DriveSubsystem.counter = 0;
         IO.gyro.reset();
         driveSubsystem.resetEncoders(true, true);
         driveSubsystem.startEncoders();
+        System.out.println("Initial gyro value: " + IO.gyro.getAngle());
     }
 
     /**
@@ -96,19 +99,11 @@ public class EncoderDrive extends CommandBase {
     protected void execute() {
         boolean correctMotors = true;
         double[] powers = driveSubsystem.getMotorPowers();
+        System.out.println("Left Motor: " + powers[0] + " Right Motor " + powers[1]);
         double adjSpeed = Math.min(((distance - distanceTraveled()) / distance) * (1 - CUTOFF_VALUE) + CUTOFF_VALUE,
                         speed);
         if (correctMotors) {
-            if (Math.abs(IO.gyro.getAngle()) >= 1) {
-                if (Math.abs(driveSubsystem.getEncoderLeft()) > Math.abs(driveSubsystem.getEncoderRight())) {
-                    driveSubsystem.driveTank(adjSpeed * powers[0], (adjSpeed * powers[1])
-                                    * (Math.abs(driveSubsystem.getEncoderRight() / driveSubsystem.getEncoderLeft())));
-                } else {
-                    driveSubsystem.driveTank(adjSpeed * powers[0]*(Math.abs(driveSubsystem.getEncoderLeft() / driveSubsystem.getEncoderRight())), adjSpeed * powers[1]);
-                }
-            } else {
-                driveSubsystem.driveTank(adjSpeed * powers[0], adjSpeed * powers[1]);
-            }
+            driveSubsystem.driveTank(adjSpeed * powers[0], adjSpeed * powers[1]);
         } else {
             driveSubsystem.driveTank(speed, speed);
             SmartDashboard.putNumber("EncoderLeft", CommandBase.driveSubsystem.getEncoderLeft());
