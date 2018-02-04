@@ -13,6 +13,7 @@ public abstract class MachineLearningDrive extends CommandBase {
     private double              lastY;
     private double              lastAngle;
     private Vector              iv;
+    private final double        maxSpeed;
 
     protected abstract Point calculateFormula(double t);
 
@@ -36,7 +37,7 @@ public abstract class MachineLearningDrive extends CommandBase {
     public synchronized void start() {
         learner = new MachineLearner(10);
         learner.learn(new Vector().setComponent("angle", Double.MAX_VALUE),
-                        new Vector().setComponent("left", 1).setComponent("right", 1));
+                        new Vector().setComponent("left", maxSpeed).setComponent("right", maxSpeed));
         iv = null;
         super.start();
     }
@@ -79,8 +80,9 @@ public abstract class MachineLearningDrive extends CommandBase {
         learner = null;
     }
 
-    public MachineLearningDrive() {
+    public MachineLearningDrive(double maxSpeed) {
         requires(driveSubsystem);
         requires(locationSubsystem);
+        this.maxSpeed = maxSpeed;
     }
 }
