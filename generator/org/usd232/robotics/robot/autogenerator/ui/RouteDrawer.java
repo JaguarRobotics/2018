@@ -26,11 +26,14 @@ public class RouteDrawer extends JPanel {
 	 */
 	private final Object[] buttonArray = { new DropCubeButton(), new EncoderDriveButton(), new GyroTurnButton(),
 			new CloseButton() };
+	public static double imageWidth;
+	public static double imageHeight;
 
 	public RouteDrawer(Object object, Object object2) {
 		setLayout(null);
 		ImageIcon backgroundImage = getImage("Field.png");//Gets Field Image
-		
+		imageWidth = backgroundImage.getIconWidth();
+		imageHeight = backgroundImage.getIconHeight();
 		//Create toolbar and add buttons
 		JPanel toolbar = new JPanel();
 		toolbar.setBounds(0,0, backgroundImage.getIconWidth(), TOOLBAR_HEIGHT);
@@ -44,6 +47,10 @@ public class RouteDrawer extends JPanel {
 		JLabel label = new JLabel(backgroundImage);
 		backgroundPanel.add(label);
 		add(backgroundPanel);
+		//Create Robot
+		Robot robot = new Robot(200, 200);
+		Main.screen.add(robot);
+		robot.setVisible(true);
 		
 		//Set bounds and visibility
 		setBounds(0, 0, backgroundImage.getIconWidth(), backgroundImage.getIconHeight() + toolbar.getHeight());
