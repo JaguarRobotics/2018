@@ -1,4 +1,4 @@
-package org.usd232.robotics.robot.autogenerator;
+package org.usd232.robotics.autogenerator.commands;
 
 public class Straight {
 	double startX;

@@ -1,4 +1,4 @@
-package buttons;
+package org.usd232.robotics.robot.autogenerator.buttons;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;

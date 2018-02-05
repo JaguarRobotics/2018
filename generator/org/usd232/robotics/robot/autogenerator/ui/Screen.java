@@ -7,10 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import buttons.CloseButton;
-import buttons.DropCubeButton;
-import buttons.EncoderDriveButton;
-import buttons.GyroTurnButton;
+import org.usd232.robotics.robot.autogenerator.buttons.CloseButton;
+import org.usd232.robotics.robot.autogenerator.buttons.DropCubeButton;
+import org.usd232.robotics.robot.autogenerator.buttons.EncoderDriveButton;
+import org.usd232.robotics.robot.autogenerator.buttons.GyroTurnButton;
 
 public class Screen extends JFrame {
 
