@@ -21,6 +21,18 @@ public enum StepType {
      */
     Bezier,
     /**
+     * The robot should be able to go with a standard straight
+     * 
+     * @since 2018
+     */
+    EncoderDrive,
+    /**
+     * The robot should be able to tank turn with the gyro
+     * 
+     * @since 2018
+     */
+    GyroTurn,
+    /**
      * The robot should execute a command that was programmed for the specific game year.
      * 
      * @since 2018
