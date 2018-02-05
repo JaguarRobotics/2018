@@ -27,12 +27,13 @@ public class RouteDrawer extends JPanel {
 	private final Object[] buttonArray = { new DropCubeButton(), new EncoderDriveButton(), new GyroTurnButton(),
 			new CloseButton() };
 
-	public RouteDrawer() {
+	public RouteDrawer(Object object, Object object2) {
+		setLayout(null);
 		ImageIcon backgroundImage = getImage("Field.png");//Gets Field Image
-
+		
 		//Create toolbar and add buttons
 		JPanel toolbar = new JPanel();
-		toolbar.setBounds(0, 0, backgroundImage.getIconWidth(), TOOLBAR_HEIGHT);
+		toolbar.setBounds(0,0, backgroundImage.getIconWidth(), TOOLBAR_HEIGHT);
 		addButtons(toolbar);
 		add(toolbar);
 		
@@ -45,9 +46,10 @@ public class RouteDrawer extends JPanel {
 		add(backgroundPanel);
 		
 		//Set bounds and visibility
-		setBounds(0, 0, backgroundImage.getIconWidth(), backgroundImage.getIconHeight());
+		setBounds(0, 0, backgroundImage.getIconWidth(), backgroundImage.getIconHeight() + toolbar.getHeight());
 		Main.screen.setBounds(0, 0, backgroundPanel.getWidth(), backgroundPanel.getHeight() + toolbar.getHeight());
 		setVisible(true);
+		Main.screen.setVisible(true);
 	}
 	/**
 	 * Gets an Image
