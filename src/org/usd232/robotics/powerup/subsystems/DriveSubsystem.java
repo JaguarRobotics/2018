@@ -1,5 +1,6 @@
 package org.usd232.robotics.powerup.subsystems;
 
+import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.drive.DriveTank;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -43,26 +44,27 @@ public class DriveSubsystem extends SubsystemBase {
      * 
      * @return returns an array of powers with left in slot 0 & right in slot 1
      */
-    public double[] getMotorPowers() {
-        double left = Math.abs(getEncoderLeft());
-        double right = Math.abs(getEncoderRight());
-        double diff = Math.abs(right - left + 1);
-        double percentage = diff / ((right >= left) ? right : left); // (diff * 3) / ((right >= left) ? right : left) *
-                                                                     // 2;
-        percentage = Math.min(percentage, 1);
-        double powers[] = new double[2];
-        if (right > left) {
-            powers[0] = 1;
-            powers[1] = 1 - percentage;
-        } else if (right == left) {
-            powers[0] = 1;
-            powers[1] = 1;
-        } else {
-            powers[0] = 1 - percentage;
-            powers[1] = 1;
-        }
-        counter++;
-        return (counter > 20) ? powers : new double[] { 1, 1 };
+    public double[] getMotorPowers(double desiredAngle) {
+    	double angle = CommandBase.locationSubsystem.getAngle();
+    	double turnAngle = desiredAngle - angle;
+    	double left = 0;
+    	double right = 0;
+    	double tan = Math.tan(turnAngle + 45);
+    	if(angle == 0) {
+    		left = 1;
+    		right = 1;
+    	}
+    	if(angle < 0) {
+    		left = tan;
+    		right = 1;
+    	} else {
+    		left = 1;
+    		right = Math.pow(tan, -1);
+    	}
+    	if(left >= 1) left = 1;
+    	if(right >= 1) right = 1;
+    	System.out.println("Angle: " + angle);
+    	return new double[] {left, right};
     }
 
     /**
