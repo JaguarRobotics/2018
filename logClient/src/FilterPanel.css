@@ -1,0 +1,45 @@
+.filter-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.filter-container .padding {
+    flex-grow: 1;
+}
+.filter-panel {
+    width: 200px;
+    margin-right: -210px;
+    transition: margin-right 0.4s ease-in-out;
+    background-color: #4F4F4F;
+    box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 3px 3px;
+    padding: 4px;
+}
+.filter-panel.active {
+    margin-right: 0;
+}
+.filter-panel * {
+    margin: 0;
+    padding: 0;
+}
+.filter-panel h1 {
+    padding: 0;
+    font-size: 20px;
+    text-align: center;
+    color: #FFFFFF;
+}
+.filter-panel ul {
+    list-style-type: none;
+}
+.filter-panel li {
+    text-decoration: line-through;
+    cursor: pointer;
+}
+.filter-panel li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.filter-panel li.active {
+    text-decoration: none;
+}
