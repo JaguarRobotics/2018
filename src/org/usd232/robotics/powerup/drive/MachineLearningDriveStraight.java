@@ -26,6 +26,7 @@ public class MachineLearningDriveStraight extends MachineLearningDrive {
         startX = locationSubsystem.getX();
         startY = locationSubsystem.getY();
         angle = locationSubsystem.getAngle();
+        super.initialize();
     }
 
     @Override

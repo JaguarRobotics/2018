@@ -39,9 +39,11 @@ public class Point {
      * @since 2018
      */
     public void setX(double x) {
+        /*
         if (x < 0 || x > 1) {
             throw new IllegalArgumentException("x must be in [0, 1].");
         }
+        */
         this.x = x;
     }
 
@@ -63,9 +65,11 @@ public class Point {
      * @since 2018
      */
     public void setY(double y) {
+        /*
         if (y < 0 || y > 1) {
             throw new IllegalArgumentException("y must be in [0, 1].");
         }
+        */
         this.y = y;
     }
 

@@ -165,6 +165,14 @@ public class DriveSubsystem extends SubsystemBase {
         robotDrive.tankDrive(left, right);
     }
 
+    public double getLeftMotor() {
+        return leftDriveMotor.get();
+    }
+
+    public double getRightMotor() {
+        return rightDriveMotor.get();
+    }
+
     /**
      * Turns robot counter-clockwise at a specific speed.
      * 
