@@ -3,6 +3,9 @@ package org.usd232.robotics.powerup;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+
 import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 import java.nio.ByteBuffer;
 
@@ -23,10 +26,18 @@ public class MinimapCoordsServer {
 	
 	public MinimapCoordsServer() throws Exception {
 	    socket = new DatagramSocket();
-	    byte[] inbuf = new byte[100];
+	    byte[] inbuf = "Hello".getBytes();
 	    packet = new DatagramPacket(inbuf, 100);
+	    byte[] emptyBytes = {0, 0, 0, 0};
+	    InetAddress addr = InetAddress.getByAddress(emptyBytes);
+	    SocketAddress sockAdrs = new InetSocketAddress(addr, PORT);
+	    socket.bind(sockAdrs);
 	    socket.receive(packet);
 	    adrs = packet.getAddress();
+	    socket.connect(adrs, PORT);
+	    String greeting = inbuf.toString();
+	    if(greeting.equals("Hello"))
+	    	System.out.println("Connection has begun on " + adrs.getHostName() + ":" + PORT);
 	}
 	
 	public static void sendPositionInfo() throws Exception {

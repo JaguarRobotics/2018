@@ -57,7 +57,7 @@ public class Window implements Runnable {
     private static final float POWER_CUBE_ZONE_CENTER_Y = SWITCH_CENTER_Y - (SWITCH_HEIGHT + POWER_CUBE_ZONE_HEIGHT) / 2f;
     private static final float PORTAL_WIDTH = 26.69f / 12f;
     private static final float PORTAL_HEIGHT = 35f / 12f;
-//    private static MinimapCoordsClient client;
+    private static MinimapCoordsClient client;
     private static final float ROBOT_LENGTH = 24.5f / 12f;
     private static final float ROBOT_WIDTH = 22.5f / 12f;
     private static final float ROBOT_COM = 6f / 12f;
@@ -71,9 +71,9 @@ public class Window implements Runnable {
     	GL11.glTranslated(-1, -1, 0);
     	GL11.glScaled(2. / FIELD_WIDTH, 2. / FIELD_HEIGHT, 1);
 
-//    	robotX = client.getX();
-//    	robotY = client.getY();
-//    	robotAngle = client.getAngle();
+    	robotX = client.getX();
+    	robotY = client.getY();
+    	robotAngle = client.getAngle();
     	
     	doLines();
     	doNullTerritories();
@@ -607,6 +607,6 @@ public class Window implements Runnable {
             GLFWVidMode vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
             GLFW.glfwSetWindowPos(id, (vidmode.width() - width.get(0)) / 2, (vidmode.height() - height.get(0)) / 2);
         }
-//        client = new MinimapCoordsClient();
+        client = new MinimapCoordsClient();
     }
 }

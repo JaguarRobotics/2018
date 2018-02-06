@@ -10,9 +10,6 @@ import java.util.Arrays;
 public class MinimapCoordsClient {
 	
 	private static final int PORT = 5801;
-	private static byte[] xBytes = new byte[8];
-	private static byte[] yBytes = new byte[8];
-	private static byte[] angleBytes = new byte[8];
 	private static double robotX = 0;
 	private static double robotY = 0;
 	private static double robotAngle = 0;
@@ -24,12 +21,14 @@ public class MinimapCoordsClient {
 	public MinimapCoordsClient() throws Exception {
 		adrs = InetAddress.getByName("10.18.10.2");
 	    socket = new DatagramSocket();
-	    byte[] greeting = "Hello".getBytes();
+	    socket.connect(adrs, PORT);
+	    byte[] greeting = new byte[128];
+	    greeting = "Hello".getBytes();
 	    packet = new DatagramPacket(greeting, greeting.length, adrs, PORT);
 	    socket.send(packet);
 	}
 	
-	public static void sendPositionInfo() throws Exception {
+	public static void recievePositionInfo() throws Exception {
 		packet = new DatagramPacket(inbuf, inbuf.length);
 		socket.receive(packet);
 
@@ -46,6 +45,7 @@ public class MinimapCoordsClient {
 		robotX = toDouble(Arrays.copyOfRange(inbuf, 0, 8));
 		robotY = toDouble(Arrays.copyOfRange(inbuf, 8, 16));
 		robotAngle = toDouble(Arrays.copyOfRange(inbuf, 16, 24));
+		recievePositionInfo();
 	}
 
 	public static double toDouble(byte[] bytes) {
