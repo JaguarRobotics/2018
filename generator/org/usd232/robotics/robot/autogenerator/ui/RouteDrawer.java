@@ -1,16 +1,17 @@
 package org.usd232.robotics.robot.autogenerator.ui;
 
 import java.awt.Component;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import org.usd232.robotics.autonomous.AutonomousRoute;
 import org.usd232.robotics.robot.autogenerator.Main;
 import org.usd232.robotics.robot.autogenerator.buttons.CloseButton;
 import org.usd232.robotics.robot.autogenerator.buttons.DropCubeButton;
 import org.usd232.robotics.robot.autogenerator.buttons.EncoderDriveButton;
 import org.usd232.robotics.robot.autogenerator.buttons.GyroTurnButton;
+import org.usd232.robotics.robot.autogenerator.ui.Startup.AllianceStation;
+import org.usd232.robotics.robot.autogenerator.ui.Startup.Alliances;
 
 public class RouteDrawer extends JPanel {
 	/**
@@ -28,8 +29,15 @@ public class RouteDrawer extends JPanel {
 			new CloseButton() };
 	public static double imageWidth;
 	public static double imageHeight;
+	public static Robot robot;
+	public static Alliances alliance;
+	public static AllianceStation allianceStation;
+    public static AutonomousRoute autonomousRoute;
 
-	public RouteDrawer(Object object, Object object2) {
+	public RouteDrawer(Object alliance, Object allianceStation) {
+	    RouteDrawer.autonomousRoute = new AutonomousRoute();
+	    RouteDrawer.alliance = (Alliances) alliance;
+	    RouteDrawer.allianceStation = (AllianceStation) allianceStation;
 		setLayout(null);
 		ImageIcon backgroundImage = getImage("Field.png");//Gets Field Image
 		imageWidth = backgroundImage.getIconWidth();
@@ -48,7 +56,7 @@ public class RouteDrawer extends JPanel {
 		backgroundPanel.add(label);
 		add(backgroundPanel);
 		//Create Robot
-		Robot robot = new Robot(200, 200);
+		robot = new Robot(200, 200);
 		Main.screen.add(robot);
 		robot.setVisible(true);
 		

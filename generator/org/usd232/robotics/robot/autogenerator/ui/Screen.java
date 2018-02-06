@@ -2,8 +2,6 @@ package org.usd232.robotics.robot.autogenerator.ui;
 
 import javax.swing.JFrame;
 
-import org.usd232.robotics.robot.autogenerator.Main;
-
 public class Screen extends JFrame {
 
 	/**

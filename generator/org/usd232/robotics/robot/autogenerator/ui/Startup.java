@@ -21,17 +21,17 @@ public class Startup extends JPanel {
 		Main.screen.setTitle("Autonomous Chooser 2018");
 		Main.screen.setBounds(0, 0, 150, 300);
 		//Create Menus and button and add options
-		JComboBox<alliances> alliance = new JComboBox<>();
-		alliance.addItem(alliances.Blue);
-		alliance.addItem(alliances.Red);
+		JComboBox<Alliances> alliance = new JComboBox<>();
+		alliance.addItem(Alliances.Blue);
+		alliance.addItem(Alliances.Red);
 		alliance.setBounds(0, 0, 150, 100);
 		add(alliance);
 		
-		JComboBox<allianceStation> allianceStationBox = new JComboBox<>();
+		JComboBox<AllianceStation> allianceStationBox = new JComboBox<>();
 		allianceStationBox.setBounds(0, 100, 150, 100);
-		allianceStationBox.addItem(allianceStation.One);
-		allianceStationBox.addItem(allianceStation.Two);
-		allianceStationBox.addItem(allianceStation.Three);
+		allianceStationBox.addItem(AllianceStation.One);
+		allianceStationBox.addItem(AllianceStation.Two);
+		allianceStationBox.addItem(AllianceStation.Three);
 		add(allianceStationBox);
 		
 		JButton go = new JButton("Go");
@@ -49,10 +49,10 @@ public class Startup extends JPanel {
 		//Set bounds and visibility
 		setVisible(true);
 	}
-	private enum alliances {
+	public static enum Alliances {
 		Red, Blue
 	}
-	private enum allianceStation {
+	public static enum AllianceStation {
 		One, Two, Three
 	}
 }

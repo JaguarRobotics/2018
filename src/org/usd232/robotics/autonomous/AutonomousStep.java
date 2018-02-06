@@ -38,6 +38,7 @@ public class AutonomousStep {
      *            The type of step
      * @since 2018
      */
+    @SuppressWarnings("incomplete-switch")
     public void setType(StepType type) {
         if (type == null) {
             throw new NullPointerException("type cannot be null");
