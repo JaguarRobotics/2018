@@ -33,7 +33,7 @@ public class Autonomous extends CommandGroup {
         Alliance alliance = (Alliance) Robot.allianceChooser.getSelected();
         String gameData = DriverStation.getInstance().getGameSpecificMessage();
         char[] sides = gameData.toCharArray();
-        System.out.println(sides.length);
+        addSequential(new GyroTurn(45,.6));
         if (alliance.equals(Alliance.Red)) {
             if (pos.equals(RobotMap.StartingPosition.One)) {
                 if (sides[1] == 'L') {

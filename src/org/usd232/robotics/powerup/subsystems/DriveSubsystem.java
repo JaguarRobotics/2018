@@ -1,5 +1,6 @@
 package org.usd232.robotics.powerup.subsystems;
 
+import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.drive.DriveTank;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -35,7 +36,40 @@ public class DriveSubsystem extends SubsystemBase {
     /**
      * Counter used to count in get motor powers
      */
-    int                              counter       = 0;
+    public static int                counter       = 0;
+    /**
+     * Stores the last angle of the robot
+     */
+    public static double lastAngle = 0;
+
+    /**
+     * Calculates motor powers for adjusted driving <html>you can view the math
+     * below<img src="https://puu.sh/tO9Si/990853f967.png"></img></html>
+     * 
+     * @return returns an array of powers with left in slot 0 & right in slot 1
+     */
+    public double[] getMotorPowers(double desiredAngle) {
+    	double angle = CommandBase.locationSubsystem.getAngle();
+    	double turnAngle = desiredAngle - angle;
+    	double left = 0;
+    	double right = 0;
+    	double tan = Math.tan(turnAngle + 45);
+    	if(angle == 0) {
+    		left = 1;
+    		right = 1;
+    	}
+    	if(angle < 0) {
+    		left = tan;
+    		right = 1;
+    	} else {
+    		left = 1;
+    		right = Math.pow(tan, -1);
+    	}
+    	if(left >= 1) left = 1;
+    	if(right >= 1) right = 1;
+    	System.out.println("Angle: " + angle);
+    	return new double[] {left, right};
+    }
 
     /**
      * @param encoderTicks
@@ -56,9 +90,10 @@ public class DriveSubsystem extends SubsystemBase {
         double result = inches * (ppr / (Math.PI * diameter));
         return result;
     }
+
     /**
-     * @param encoder ticks
-     *            number of encoder ticks to convert
+     * @param encoder
+     *            ticks number of encoder ticks to convert
      * @return number of inches from encoder ticks
      */
     public double getEncoderInchesFromEncoderTicks(double encoderTicks) {
@@ -85,32 +120,6 @@ public class DriveSubsystem extends SubsystemBase {
      */
     public double getRadiansFromDegrees(double degrees) {
         return (degrees / 360) * (Math.PI * 2);
-    }
-
-    /**
-     * Calculates motor powers for adjusted driving <html>you can view the math
-     * below<img src="https://puu.sh/tO9Si/990853f967.png"></img></html>
-     * 
-     * @return returns an array of powers with left in slot 0 & right in slot 1
-     */
-    public double[] getMotorPowers() {
-        double left = Math.abs(getEncoderLeft());
-        double right = Math.abs(getEncoderRight());
-        double diff = Math.abs(right - left + 1);
-        double percentage = (diff * 3) / ((right >= left) ? right + 1 : left) * 2;
-        percentage = Math.min(percentage, 1);
-        double powers[] = new double[2];
-        if (right > left) {
-            powers[0] = 1;
-            powers[1] = 1 - percentage;
-        } else {
-            powers[0] = 1 - percentage;
-            powers[1] = 1;
-        }
-        if (counter % 5 == 0) {
-        }
-        counter++;
-        return (counter > 20) ? powers : new double[] { 1, 1 };
     }
 
     /**

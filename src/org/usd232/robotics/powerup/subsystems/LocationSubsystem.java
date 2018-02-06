@@ -66,6 +66,11 @@ public class LocationSubsystem extends SubsystemBase {
 		double cos = Math.cos(theta);
 		x -= xPart * sin + yPart * cos;
 		y += xPart * cos + yPart * sin;
-		System.out.printf("(%f, %f) @ %f (%f)\n", x, y, theta, gyro.getAngle());
+	}
+	/**
+	 * Gets the angle based on where the encoders have gone.
+	 */
+	public void getEncoderAngle() {
+	    
 	}
 }

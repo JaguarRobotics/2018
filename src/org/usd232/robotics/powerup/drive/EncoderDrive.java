@@ -1,6 +1,8 @@
 package org.usd232.robotics.powerup.drive;
 
+import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
+import org.usd232.robotics.powerup.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -80,8 +82,10 @@ public class EncoderDrive extends CommandBase {
      */
     @Override
     protected void initialize() {
+        DriveSubsystem.counter = 0;
         driveSubsystem.resetEncoders(true, true);
         driveSubsystem.startEncoders();
+        System.out.println("Initial gyro value: " + IO.gyro.getAngle());
     }
 
     /**
@@ -93,7 +97,8 @@ public class EncoderDrive extends CommandBase {
     @Override
     protected void execute() {
         boolean correctMotors = true;
-        double[] powers = driveSubsystem.getMotorPowers();
+        double[] powers = driveSubsystem.getMotorPowers(0);
+        System.out.println("Left Motor: " + powers[0] + " Right Motor " + powers[1]);
         double adjSpeed = Math.min(((distance - distanceTraveled()) / distance) * (1 - CUTOFF_VALUE) + CUTOFF_VALUE,
                         speed);
         if (correctMotors) {

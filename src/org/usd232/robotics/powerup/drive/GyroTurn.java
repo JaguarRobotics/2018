@@ -41,7 +41,6 @@ public class GyroTurn extends CommandBase {
      * @version 2018
      */
     protected void initialize() {
-        IO.gyro.reset();
     }
 
     @Override
@@ -65,7 +64,7 @@ public class GyroTurn extends CommandBase {
     protected boolean isFinished() {
         double gyroValue = Math.abs(IO.gyro.getAngle());
         System.out.println("Gyro says " + IO.gyro.getAngle() + " And we should be going to " + arclength);
-        return Math.abs(gyroValue) >= Math.abs(arclength);
+        return Math.abs(gyroValue) >= Math.abs(arclength + CommandBase.driveSubsystem.lastAngle);
     }
 
     @Override
@@ -77,6 +76,7 @@ public class GyroTurn extends CommandBase {
      */
     protected void end() {
         driveSubsystem.driveTank(0, 0);
+        driveSubsystem.lastAngle = driveSubsystem.lastAngle + arclength;
     }
 
     @Override
@@ -115,6 +115,6 @@ public class GyroTurn extends CommandBase {
      * @version 2018
      */
     public GyroTurn(double angle) {
-        this(angle, 0.6);
+        this(angle, 0.7);
     }
 }
