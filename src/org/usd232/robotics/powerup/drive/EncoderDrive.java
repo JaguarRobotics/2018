@@ -83,7 +83,6 @@ public class EncoderDrive extends CommandBase {
     @Override
     protected void initialize() {
         DriveSubsystem.counter = 0;
-        IO.gyro.reset();
         driveSubsystem.resetEncoders(true, true);
         driveSubsystem.startEncoders();
         System.out.println("Initial gyro value: " + IO.gyro.getAngle());
@@ -98,7 +97,7 @@ public class EncoderDrive extends CommandBase {
     @Override
     protected void execute() {
         boolean correctMotors = true;
-        double[] powers = driveSubsystem.getMotorPowers();
+        double[] powers = driveSubsystem.getMotorPowers(0);
         System.out.println("Left Motor: " + powers[0] + " Right Motor " + powers[1]);
         double adjSpeed = Math.min(((distance - distanceTraveled()) / distance) * (1 - CUTOFF_VALUE) + CUTOFF_VALUE,
                         speed);

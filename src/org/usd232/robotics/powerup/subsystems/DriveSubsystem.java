@@ -37,6 +37,10 @@ public class DriveSubsystem extends SubsystemBase {
      * Counter used to count in get motor powers
      */
     public static int                counter       = 0;
+    /**
+     * Stores the last angle of the robot
+     */
+    public static double lastAngle = 0;
 
     /**
      * Calculates motor powers for adjusted driving <html>you can view the math
