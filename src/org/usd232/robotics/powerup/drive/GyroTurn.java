@@ -76,6 +76,7 @@ public class GyroTurn extends CommandBase {
      */
     protected void end() {
         driveSubsystem.driveTank(0, 0);
+        driveSubsystem.lastAngle = driveSubsystem.lastAngle + arclength;
     }
 
     @Override
