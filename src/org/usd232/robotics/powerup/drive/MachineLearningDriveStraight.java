@@ -10,9 +10,9 @@ public class MachineLearningDriveStraight extends MachineLearningDrive {
 
     @Override
     protected Point calculateFormula(double t) {
-        return new Point(startX + distance * Math.cos(angle) * t, startY + distance * Math.sin(angle) * t);
+        return new Point(startX + distance * -Math.sin(angle) * t, startY + distance * Math.cos(angle) * t);
     }
-
+/*
     @Override
     protected Point closestCurvePointTo(double x, double y) {
         double dx = x - startX;
@@ -20,12 +20,13 @@ public class MachineLearningDriveStraight extends MachineLearningDrive {
         double distance = (Math.PI / 2 - angle + Math.atan2(dy, dx)) * Math.sqrt(dx * dx + dy * dy);
         return new Point(startX + distance * Math.cos(angle), startY + distance * Math.sin(angle));
     }
-
+*/
     @Override
     protected void initialize() {
         startX = locationSubsystem.getX();
         startY = locationSubsystem.getY();
         angle = locationSubsystem.getAngle();
+        super.initialize();
     }
 
     @Override

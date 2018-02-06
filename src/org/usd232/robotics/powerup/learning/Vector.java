@@ -3,7 +3,7 @@ package org.usd232.robotics.powerup.learning;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Vector {
+public class Vector implements Cloneable {
     private final Map<String, Double> components;
 
     public double getComponent(String name) {
@@ -52,7 +52,16 @@ public class Vector {
         }
     }
 
+    @Override
+    public Vector clone() {
+        return new Vector(new HashMap<String, Double>(components));
+    }
+
+    private Vector(Map<String, Double> components) {
+        this.components = components;
+    }
+
     public Vector() {
-        components = new HashMap<String, Double>();
+        this(new HashMap<String, Double>());
     }
 }

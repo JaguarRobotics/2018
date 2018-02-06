@@ -4,8 +4,10 @@ import org.usd232.robotics.autonomous.Point;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.learning.MachineLearner;
 import org.usd232.robotics.powerup.learning.Vector;
+import org.usd232.robotics.powerup.log.Logger;
 
 public abstract class MachineLearningDrive extends CommandBase {
+    private static final Logger LOG            = new Logger();
     private static final double ACCURACY       = 0.001;
     private static final double ROUGH_ACCURACY = 0.01;
     private MachineLearner      learner;
@@ -34,12 +36,15 @@ public abstract class MachineLearningDrive extends CommandBase {
     }
 
     @Override
-    public synchronized void start() {
-        learner = new MachineLearner(10);
-        learner.learn(new Vector().setComponent("angle", Double.MAX_VALUE),
-                        new Vector().setComponent("left", maxSpeed).setComponent("right", maxSpeed));
+    protected void initialize() {
+        learner = new MachineLearner(5);
+        for (int i = 0; i < 5; ++i) {
+            learner.learn(new Vector().setComponent("left", maxSpeed * 0.7).setComponent("right", maxSpeed),
+                            new Vector().setComponent("angle", -Math.PI));
+            learner.learn(new Vector().setComponent("left", maxSpeed).setComponent("right", maxSpeed * 0.7),
+                            new Vector().setComponent("angle", Math.PI));
+        }
         iv = null;
-        super.start();
     }
 
     @Override
@@ -59,18 +64,19 @@ public abstract class MachineLearningDrive extends CommandBase {
         double distanceTraveled = Math.sqrt(dx * dx + dy * dy);
         double targetAngle = 0;
         for (double diff = Math.PI / 2; diff > ACCURACY; diff /= 2) {
-            Point value = closestCurvePointTo(x + distanceTraveled * Math.cos(targetAngle),
-                            y + distanceTraveled * Math.sin(targetAngle));
-            double reportedAngle = Math.atan2(value.getY() - y, value.getX() - x);
-            if (reportedAngle < 0) {
+            Point value = closestCurvePointTo(x + distanceTraveled * -Math.sin(targetAngle),
+                            y + distanceTraveled * Math.cos(targetAngle));
+            double reportedAngle = Math.atan2(value.getX() - x, -value.getY() + y);
+            if (reportedAngle < targetAngle) {
                 targetAngle -= diff;
-            } else if (reportedAngle > 0) {
+            } else if (reportedAngle > targetAngle) {
                 targetAngle += diff;
             } else {
                 break;
             }
         }
         iv = learner.calculate(new Vector().setComponent("angle", targetAngle));
+        LOG.debug("(%f, %f) @ %f", iv.getComponent("left"), iv.getComponent("right"), targetAngle);
         driveSubsystem.driveTank(iv.getComponent("left"), iv.getComponent("right"));
     }
 

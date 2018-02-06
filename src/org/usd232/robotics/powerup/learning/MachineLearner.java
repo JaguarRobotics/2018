@@ -42,7 +42,7 @@ public class MachineLearner {
         for (int i = 0; i < max; ++i) {
             Guess guess = guessIterator.next();
             if (bestGuess == null) {
-                bestGuess = guess.output;
+                bestGuess = guess.output.clone();
             } else {
                 bestGuess.addFrom(guess.output);
             }
