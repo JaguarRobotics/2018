@@ -3,6 +3,7 @@ package org.usd232.robotics.powerup.drive;
 import org.usd232.robotics.autonomous.ISpeedFunction;
 import org.usd232.robotics.autonomous.Point;
 import org.usd232.robotics.powerup.commands.CommandBase;
+import org.usd232.robotics.powerup.log.Logger;
 
 /**
  * Drives along a piecewise curve
@@ -12,6 +13,7 @@ import org.usd232.robotics.powerup.commands.CommandBase;
  * @version 2018
  */
 public class PiecewiseDrive extends CommandBase {
+    private static final Logger  LOG = new Logger();
     /**
      * A list of points, in order, to follow as part of the curve
      * 
@@ -51,8 +53,8 @@ public class PiecewiseDrive extends CommandBase {
     @Override
     protected void execute() {
         while (!isFinished()) {
-            double dx = locationSubsystem.getX() - points[pointNum].getX();
-            double dy = locationSubsystem.getY() - points[pointNum].getY();
+            double dx = points[pointNum].getX() - locationSubsystem.getX();
+            double dy = points[pointNum].getY() - locationSubsystem.getY();
             double distance = Math.sqrt(dx * dx + dy * dy);
             if (distance <= accuracy) {
                 ++pointNum;
@@ -65,6 +67,9 @@ public class PiecewiseDrive extends CommandBase {
                 } else if (speed > 1) {
                     speed = 1;
                 }
+                LOG.debug("Running to point #%d (%.3f, %.3f) from (%.3f, %.3f), which is (%.3f, %.3f) difference, by settings motors to (%.3f, %.3f) at speed %.3f (that's an angle of %.3f).",
+                                pointNum, points[pointNum].getX(), points[pointNum].getY(), locationSubsystem.getX(),
+                                locationSubsystem.getY(), dx, dy, powers[0], powers[1], speed, angle);
                 driveSubsystem.driveTank(speed * powers[0], speed * powers[1]);
                 break;
             }

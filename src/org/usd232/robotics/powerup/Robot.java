@@ -62,11 +62,13 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         CommandBase.init();
         SmartDashboard.putNumber("Joystick Tolerance", 1);
+        /*
         try {
             calibratorData = Calibration.readFile();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        */
         Thread thread = new Thread(new LogServer());
         thread.start();
         calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);

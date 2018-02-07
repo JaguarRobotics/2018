@@ -40,7 +40,7 @@ public class DriveSubsystem extends SubsystemBase {
     /**
      * Stores the last angle of the robot
      */
-    public static double lastAngle = 0;
+    public static double             lastAngle     = 0;
 
     /**
      * Calculates motor powers for adjusted driving <html>you can view the math
@@ -49,26 +49,37 @@ public class DriveSubsystem extends SubsystemBase {
      * @return returns an array of powers with left in slot 0 & right in slot 1
      */
     public double[] getMotorPowers(double desiredAngle) {
-    	double angle = CommandBase.locationSubsystem.getAngle();
-    	double turnAngle = desiredAngle - angle;
-    	double left = 0;
-    	double right = 0;
-    	double tan = Math.tan(turnAngle + 45);
-    	if(angle == 0) {
-    		left = 1;
-    		right = 1;
-    	}
-    	if(angle < 0) {
-    		left = tan;
-    		right = 1;
-    	} else {
-    		left = 1;
-    		right = Math.pow(tan, -1);
-    	}
-    	if(left >= 1) left = 1;
-    	if(right >= 1) right = 1;
-    	System.out.println("Angle: " + angle);
-    	return new double[] {left, right};
+        double angle = CommandBase.locationSubsystem.getAngle();
+        double turnAngle = desiredAngle - angle;
+        double left = 0;
+        double right = 0;
+        double tan = Math.tan(turnAngle + Math.PI / 4);
+        if (turnAngle == 0) {
+            left = 1;
+            right = 1;
+        }
+        if (turnAngle < 0) {
+            left = tan;
+            right = 1;
+        } else {
+            left = 1;
+            right = Math.pow(tan, -1);
+        }
+        if (left > 1) {
+            left = 1;
+        } else if (left < -1) {
+            left = -1;
+        }
+        if (right > 1) {
+            right = 1;
+        } else if (right < -1) {
+            right = -1;
+        }
+        double leftUnit = Math.copySign(1, left);
+        left = leftUnit - 10 * (leftUnit - left);
+        double rightUnit = Math.copySign(1, right);
+        right = rightUnit - 10 * (rightUnit - right);
+        return new double[] { left, right };
     }
 
     /**
