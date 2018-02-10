@@ -56,8 +56,6 @@ public class DriveTank extends CommandBase {
      */
     @Override
     protected void execute() {
-        SmartDashboard.putNumber("EncoderLeft", CommandBase.driveSubsystem.getEncoderLeft());
-        SmartDashboard.putNumber("EncoderRight", CommandBase.driveSubsystem.getEncoderRight());
         double powNum = 2;
         double joystickTolerance = SmartDashboard.getNumber("Joystick Tolerance", 1);
         double joystick0 = oi.Joystick0.getY() * joystickTolerance;

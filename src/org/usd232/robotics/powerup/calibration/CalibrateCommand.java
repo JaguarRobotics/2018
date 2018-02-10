@@ -22,7 +22,7 @@ public class CalibrateCommand extends CommandBase {
     private static final Logger LOG = new Logger();
     @Override
     protected void initialize() {
-        if (Robot.calibrationSetter.getSelected().equals(RobotMap.CalibrationMode.Calibrating)) {
+        if (Robot.isTesting) {
             if (Robot.amountOfThingsCalibrated == 0) {
                 CalibratorData.setLiftScale(liftSubsystem.getPotentiometerValue());
                 Robot.amountOfThingsCalibrated++;
