@@ -1,6 +1,5 @@
 package org.usd232.robotics.powerup.subsystems;
 
-import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.drive.DriveTank;
 import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
