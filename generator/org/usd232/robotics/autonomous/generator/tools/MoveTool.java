@@ -11,7 +11,6 @@ public class MoveTool extends Tool {
         FieldView view = getToolbar().getFieldView();
         view.setImageX(view.getImageX() + ((double) dx) / (double) view.getWidth());
         view.setImageY(view.getImageY() + ((double) dy) / (double) view.getHeight());
-        System.out.printf("(%d, %d) x (%d, %d) -> (%f, %f)\n", dx, dy, view.getWidth(), view.getHeight(), view.getImageX(), view.getImageY());
     }
 
     public MoveTool() {
