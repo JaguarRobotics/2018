@@ -17,6 +17,8 @@ public class Toolbar extends Container implements MouseListener, MouseMotionList
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        Tool tool = getSelectedTool();
+        tool.onClick(e.getX(), e.getY());
     }
 
     @Override
@@ -80,9 +82,9 @@ public class Toolbar extends Container implements MouseListener, MouseMotionList
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         add(new MoveTool());
         add(new Tool("rotate_90_degrees_ccw"));
-        add(new Tool("zoom_in"));
-        add(new Tool("zoom_out"));
-        add(new Tool("settings_overscan"));
+        add(new ZoomInTool());
+        add(new ZoomOutTool());
+        add(new ResetView());
         add(new Tool("timer"));
         add(new Tool("linear_scale"));
         add(new Tool("rotate_left"));

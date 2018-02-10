@@ -50,6 +50,9 @@ public class Tool extends JToggleButton implements ChangeListener {
 
     public void onDrag(int x, int y, int dx, int dy) {
     }
+    
+    public void onClick(int x, int y) {
+    }
 
     public Tool(String icon) {
         insideStateChanged = new ThreadLocal<Boolean>() {
