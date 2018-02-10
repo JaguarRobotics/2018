@@ -11,36 +11,28 @@ public enum StepType {
     /**
      * The robot should wait for a given amount of time.
      * 
+     * @see SleepParameter
      * @since 2018
      */
     Sleep,
     /**
      * The robot should drive along a given distance curve.
      * 
+     * @see DriveParameter
      * @since 2018
      */
     Drive,
     /**
      * The robot should turn a certain angle.
      * 
+     * @see TurnParameter
      * @sine 2018
      */
     Turn,
     /**
-     * The robot should be able to go with a standard straight
-     * 
-     * @since 2018
-     */
-    EncoderDrive,
-    /**
-     * The robot should be able to tank turn with the gyro
-     * 
-     * @since 2018
-     */
-    GyroTurn,
-    /**
      * The robot should execute a command that was programmed for the specific game year.
      * 
+     * @see CustomCommandParameter
      * @since 2018
      */
     CustomCommand

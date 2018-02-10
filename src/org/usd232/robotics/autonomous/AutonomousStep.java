@@ -38,7 +38,6 @@ public class AutonomousStep {
      *            The type of step
      * @since 2018
      */
-    @SuppressWarnings("incomplete-switch")
     public void setType(StepType type) {
         if (type == null) {
             throw new NullPointerException("type cannot be null");
@@ -48,6 +47,16 @@ public class AutonomousStep {
             case Sleep:
                 if (!(param instanceof SleepParameter)) {
                     setParameter(new SleepParameter());
+                }
+                break;
+            case Drive:
+                if (!(param instanceof DriveParameter)) {
+                    setParameter(new DriveParameter());
+                }
+                break;
+            case Turn:
+                if (!(param instanceof TurnParameter)) {
+                    setParameter(new TurnParameter());
                 }
                 break;
             case CustomCommand:
@@ -80,6 +89,12 @@ public class AutonomousStep {
         }
         if (param instanceof SleepParameter) {
             setType(StepType.Sleep);
+            this.param = param;
+        } else if (param instanceof DriveParameter) {
+            setType(StepType.Drive);
+            this.param = param;
+        } else if (param instanceof TurnParameter) {
+            setType(StepType.Turn);
             this.param = param;
         } else if (param instanceof CustomCommandParameter) {
             setType(StepType.CustomCommand);

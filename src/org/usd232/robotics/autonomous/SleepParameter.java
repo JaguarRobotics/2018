@@ -4,6 +4,7 @@ package org.usd232.robotics.autonomous;
  * The parameters for a sleep step
  * 
  * @author Zach Deibert
+ * @see StepType#Sleep
  * @since 2018
  * @version 2018
  */
