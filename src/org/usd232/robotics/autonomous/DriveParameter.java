@@ -1,5 +1,7 @@
 package org.usd232.robotics.autonomous;
 
+import java.nio.ByteBuffer;
+
 /**
  * The parameters for a drive straight command
  * 
@@ -14,7 +16,23 @@ public class DriveParameter implements IAutonomousStepParameter {
      * 
      * @since 2018
      */
-    private double distance;
+    private float distance;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void serialize(ByteBuffer ser) {
+        ser.putFloat(getDistance());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deserialize(ByteBuffer ser) {
+        setDistance(ser.getFloat());
+    }
 
     /**
      * Gets the distance, in inches, to drive forward.
@@ -22,7 +40,7 @@ public class DriveParameter implements IAutonomousStepParameter {
      * @return The distance, in inches, to drive forward
      * @since 2018
      */
-    public double getDistance() {
+    public float getDistance() {
         return distance;
     }
 
@@ -33,7 +51,7 @@ public class DriveParameter implements IAutonomousStepParameter {
      *            The distance, in inches, to drive forward
      * @sinec 2018
      */
-    public void setDistance(double distance) {
+    public void setDistance(float distance) {
         if (distance < 0) {
             throw new IllegalArgumentException("Distance must not be negative");
         }

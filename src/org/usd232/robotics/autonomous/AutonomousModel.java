@@ -1,6 +1,8 @@
 package org.usd232.robotics.autonomous;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,7 +16,13 @@ import edu.wpi.first.wpilibj.DriverStation;
  * @since 2018
  * @version 2018
  */
-public class AutonomousModel {
+public class AutonomousModel implements IBufferSerializable {
+    /**
+     * The maximum size of the model
+     * 
+     * @since 2018
+     */
+    private static final int      MAX_SER_SIZE = 65536;
     /**
      * The list of routes that are supported.
      * 
@@ -26,13 +34,92 @@ public class AutonomousModel {
      * 
      * @since 2018
      */
-    public static final int       modelVersion = 1;
+    public static final byte      modelVersion = 1;
     /**
      * The year of the game that this model was created for.
      * 
      * @since 2018
      */
-    private int                   year;
+    private short                 year;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void serialize(ByteBuffer ser) {
+        Collection<AutonomousRoute> routes = getRoutes();
+        ser.put((byte) routes.size());
+        for (AutonomousRoute route : routes) {
+            route.serialize(ser);
+        }
+        ser.put(modelVersion);
+        ser.putShort(year);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deserialize(ByteBuffer ser) {
+        routes.clear();
+        byte length = ser.get();
+        for (int i = 0; i < length; ++i) {
+            AutonomousRoute route = new AutonomousRoute();
+            route.deserialize(ser);
+            addRoute(route);
+        }
+        if (ser.get() != modelVersion) {
+            throw new IllegalStateException("Wrong model version");
+        }
+        setYear(ser.getShort());
+    }
+
+    /**
+     * Serializes this object
+     * 
+     * @return The binary data
+     * @since 2018
+     */
+    public byte[] serialize() {
+        ByteBuffer ser = ByteBuffer.allocate(MAX_SER_SIZE);
+        serialize(ser);
+        byte[] buffer = new byte[ser.position()];
+        ser.position(0);
+        ser.get(buffer);
+        return buffer;
+    }
+
+    /**
+     * Deserializes this object
+     * 
+     * @param buffer
+     *            The binary data
+     * @since 2018
+     */
+    public void deserialize(byte[] buffer) {
+        deserialize(ByteBuffer.wrap(buffer));
+    }
+
+    /**
+     * Serializes this object to a string
+     * 
+     * @return The string data
+     * @since 2018
+     */
+    public String serializeString() {
+        return Base64.getEncoder().encodeToString(serialize());
+    }
+
+    /**
+     * Deserializes this object from a string
+     * 
+     * @param str
+     *            The string data
+     * @since 2018
+     */
+    public void deserialize(String str) {
+        deserialize(Base64.getDecoder().decode(str));
+    }
 
     /**
      * Gets the list of routes that are supported.
@@ -96,6 +183,9 @@ public class AutonomousModel {
                 throw new IllegalArgumentException("Route contains configurations that already exist in this model");
             }
         }
+        if (route.models.size() >= Byte.MAX_VALUE) {
+            throw new IllegalStateException("There are too many routes");
+        }
         route.models.add(this);
         routes.add(route);
     }
@@ -133,7 +223,7 @@ public class AutonomousModel {
      *            The year that this model was created for
      * @since 2018
      */
-    public void setYear(int year) {
+    public void setYear(short year) {
         if (year < 0) {
             throw new IllegalArgumentException("Year cannot be negative");
         }
@@ -147,6 +237,20 @@ public class AutonomousModel {
      */
     public AutonomousModel() {
         routes = new ArrayList<AutonomousRoute>();
-        year = Calendar.getInstance().get(Calendar.YEAR);
+        setYear((short) Calendar.getInstance().get(Calendar.YEAR));
+    }
+
+    /**
+     * Constructs from a serialized string
+     * 
+     * @param data
+     *            The string data
+     * @see AutonomousModel#deserialize(String)
+     * @see AutonomousModel#serializeString()
+     * @since 2018
+     */
+    public AutonomousModel(String data) {
+        this();
+        deserialize(data);
     }
 }
