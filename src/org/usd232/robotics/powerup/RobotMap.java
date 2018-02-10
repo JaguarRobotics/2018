@@ -177,14 +177,4 @@ public interface RobotMap {
     public enum Gear {
         Low, High
     }
-
-    /**
-     * enum constants if the robot is in calibration mode
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    public enum CalibrationMode {
-        Calibrating, NotCalibrating
-    }
 }

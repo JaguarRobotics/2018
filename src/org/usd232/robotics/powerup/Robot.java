@@ -45,7 +45,6 @@ public class Robot extends IterativeRobot {
      * @since Always
      * @version 2018
      */
-    @SuppressWarnings("unchecked")
     public void robotInit() {
         CommandBase.init();
         SmartDashboard.putNumber("Joystick Tolerance", 1);
@@ -98,6 +97,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void autonomousInit() {
+        Robot.isTesting = false;
         autonomousCommand.start();
     }
 
@@ -118,8 +118,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopInit() {
-        System.out.println("Teleop initialized");
-        isTesting = true;
+        isTesting = false;
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
@@ -151,5 +150,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testInit() {
+        Robot.isTesting = true;
     }
 }
