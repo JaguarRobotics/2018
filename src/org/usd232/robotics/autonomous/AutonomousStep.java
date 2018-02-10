@@ -50,11 +50,6 @@ public class AutonomousStep {
                     setParameter(new SleepParameter());
                 }
                 break;
-            case Bezier:
-                if (!(param instanceof BezierCurve)) {
-                    setParameter(new BezierCurve());
-                }
-                break;
             case CustomCommand:
                 if (!(param instanceof CustomCommandParameter)) {
                 }
@@ -85,9 +80,6 @@ public class AutonomousStep {
         }
         if (param instanceof SleepParameter) {
             setType(StepType.Sleep);
-            this.param = param;
-        } else if (param instanceof BezierCurve) {
-            setType(StepType.Bezier);
             this.param = param;
         } else if (param instanceof CustomCommandParameter) {
             setType(StepType.CustomCommand);
