@@ -18,7 +18,9 @@ public class Toolbar extends Container implements MouseListener, MouseMotionList
     @Override
     public void mouseClicked(MouseEvent e) {
         Tool tool = getSelectedTool();
-        tool.onClick(e.getX(), e.getY());
+        if (tool != null) {
+            tool.onClick(e.getX(), e.getY());
+        }
     }
 
     @Override
