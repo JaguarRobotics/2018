@@ -9,15 +9,11 @@ public class ResetView extends Tool {
     public ResetView() {
         super(ICON);
     }
-    
+
     @Override
     public void onEnable() {
         FieldView view = getToolbar().getFieldView();
-        view.setImageScale(1);
-        view.setImageX(0);
-        view.setImageY(0);
-        super.onEnable();
+        view.getTransformation().setToIdentity();
         setSelected(false);
     }
-
 }

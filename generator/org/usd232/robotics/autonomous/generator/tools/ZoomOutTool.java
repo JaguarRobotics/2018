@@ -1,5 +1,6 @@
 package org.usd232.robotics.autonomous.generator.tools;
 
+import java.awt.geom.AffineTransform;
 import org.usd232.robotics.autonomous.generator.FieldView;
 
 public class ZoomOutTool extends Tool {
@@ -9,10 +10,13 @@ public class ZoomOutTool extends Tool {
     public ZoomOutTool() {
         super(ICON);
     }
-    
+
     @Override
     public void onClick(int x, int y) {
         FieldView view = getToolbar().getFieldView();
-        view.setImageScale(view.getImageScale()*.75);
+        AffineTransform matrix = view.getTransformation();
+        matrix.translate(x, y);
+        matrix.scale(3. / 4., 3. / 4.);
+        matrix.translate(-x, -y);
     }
 }

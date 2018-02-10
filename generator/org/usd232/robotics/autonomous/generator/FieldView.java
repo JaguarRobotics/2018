@@ -5,15 +5,13 @@ import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
 import javax.swing.ImageIcon;
 
 public class FieldView extends Container {
     private static final long serialVersionUID = -6766487415290825938L;
     private Image             image;
-    private double            x;
-    private double            y;
-    private double            scale;
-    private double            rotation;
+    private AffineTransform   imageTransformation;
 
     public void paintBackground(Graphics g) {
         // Handle resizing windows
@@ -25,16 +23,18 @@ public class FieldView extends Container {
         int height = (int) (image.getHeight(this) * scale);
         int x = (getWidth() - width) / 2;
         int y = (getHeight() - height) / 2;
+        // Draw background
+        g.setColor(getBackground());
+        g.fillRect(0, 0, getWidth(), getHeight());
         // Apply transformations
-        width *= this.scale;
-        height *= this.scale;
-        x += this.x * getWidth();
-        y += this.y * getHeight();
+        AffineTransform transform = g2d.getTransform();
+        AffineTransform realTransform = new AffineTransform(transform);
+        realTransform.concatenate(imageTransformation);
+        g2d.setTransform(realTransform);
         // Draw
-        g2d.setColor(getBackground());
-        g2d.fillRect(0, 0, getWidth(), getHeight());
-        g2d.rotate(rotation * Math.PI, getWidth()/2, getHeight()/2);
         g2d.drawImage(image, x, y, width, height, this);
+        // Restore the old matrix so nothing bad happens
+        g2d.setTransform(transform);
     }
 
     @Override
@@ -43,46 +43,9 @@ public class FieldView extends Container {
         super.paint(g);
     }
 
-    public void resetScale() {
-        x = 0;
-        y = 0;
-        scale = 1;
-    }
-
-    public double getImageX() {
-        return x;
-    }
-
-    public void setImageX(double x) {
-        this.x = x;
+    public AffineTransform getTransformation() {
         repaint();
-    }
-
-    public double getImageY() {
-        return y;
-    }
-
-    public void setImageY(double y) {
-        this.y = y;
-        repaint();
-    }
-
-    public double getImageScale() {
-        return scale;
-    }
-
-    public void setImageScale(double scale) {
-        this.scale = scale;
-        repaint();
-    }
-
-    public double getRotation() {
-        return rotation;
-    }
-
-    public void setRotation(double rotation) {
-        this.rotation += rotation;
-        repaint();
+        return imageTransformation;
     }
 
     public FieldView() {
@@ -90,6 +53,7 @@ public class FieldView extends Container {
         image = new ImageIcon(
                         FieldView.class.getResource("/org/usd232/robotics/autonomous/generator/resources/field.png"))
                                         .getImage();
-        resetScale();
+        imageTransformation = new AffineTransform();
+        imageTransformation.setToIdentity();
     }
 }
