@@ -1,7 +1,6 @@
 package org.usd232.robotics.powerup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.calibration.Calibration;
 import org.usd232.robotics.powerup.calibration.CalibratorData;
 import org.usd232.robotics.powerup.commands.Autonomous;
@@ -22,7 +21,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 @SuppressWarnings("rawtypes")
 public class Robot extends IterativeRobot {
-    private static final Logger logger = LoggerFactory.getLogger(Robot.class);
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG = new Logger();
     /**
      * chooser used on the SmartDashboard to choose the starting position
      * 
@@ -65,7 +70,7 @@ public class Robot extends IterativeRobot {
         try {
             calibratorData = Calibration.readFile();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e, "Error in Robot Init");
         }
         */
         Thread thread = new Thread(new LogServer());

@@ -2,6 +2,7 @@ package org.usd232.robotics.powerup.commands;
 
 import org.usd232.robotics.powerup.OI;
 import org.usd232.robotics.powerup.RobotMap;
+import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.DriveSubsystem;
 import org.usd232.robotics.powerup.subsystems.IntakeSubsystem;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
@@ -14,6 +15,13 @@ import edu.wpi.first.wpilibj.command.Command;
  * @author Nathan Gawith
  */
 public abstract class CommandBase extends Command implements RobotMap {
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG = new Logger();
     /**
      * This creates the oi
      * 

@@ -9,6 +9,12 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * @since 2017
  */
 public class DriveSubsystem extends SubsystemBase {
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private static final Logger LOG = new Logger();
     /**
      * Class that controls both drive motors

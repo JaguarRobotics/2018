@@ -23,12 +23,37 @@ public class Logger {
         log(level, String.format(format, args));
     }
 
+    public void log(LogLevel level, Throwable throwable, String message) {
+        log(level, "%s%n%s: %s%n%s", message, throwable.getClass().getName(), throwable.getMessage(),
+                        throwable.getStackTrace());
+    }
+
+    public void log(LogLevel level, Throwable throwable, String format, Object... args) {
+        log(level, throwable, String.format(format, args));
+    }
+
+    public void log(LogLevel level, Throwable throwable) {
+        log(level, throwable, "An Unhandled Exception has Occured");
+    }
+
     public void trace(String message) {
         log(LogLevel.TRACE, message);
     }
 
     public void trace(String format, Object... args) {
         log(LogLevel.TRACE, format, args);
+    }
+
+    public void trace(Throwable throwable, String message) {
+        log(LogLevel.TRACE, throwable, message);
+    }
+
+    public void trace(Throwable throwable, String format, Object... args) {
+        log(LogLevel.TRACE, throwable, format, args);
+    }
+
+    public void trace(Throwable throwable) {
+        log(LogLevel.TRACE, throwable);
     }
 
     public void debug(String message) {
@@ -39,12 +64,36 @@ public class Logger {
         log(LogLevel.DEBUG, format, args);
     }
 
+    public void debug(Throwable throwable, String message) {
+        log(LogLevel.DEBUG, throwable, message);
+    }
+
+    public void debug(Throwable throwable, String format, Object... args) {
+        log(LogLevel.DEBUG, throwable, format, args);
+    }
+
+    public void debug(Throwable throwable) {
+        log(LogLevel.DEBUG, throwable);
+    }
+
     public void info(String message) {
         log(LogLevel.INFO, message);
     }
 
     public void info(String format, Object... args) {
         log(LogLevel.INFO, format, args);
+    }
+
+    public void info(Throwable throwable, String message) {
+        log(LogLevel.INFO, throwable, message);
+    }
+
+    public void info(Throwable throwable, String format, Object... args) {
+        log(LogLevel.INFO, throwable, format, args);
+    }
+
+    public void info(Throwable throwable) {
+        log(LogLevel.INFO, throwable);
     }
 
     public void warn(String message) {
@@ -55,6 +104,18 @@ public class Logger {
         log(LogLevel.WARN, format, args);
     }
 
+    public void warn(Throwable throwable, String message) {
+        log(LogLevel.WARN, throwable, message);
+    }
+
+    public void warn(Throwable throwable, String format, Object... args) {
+        log(LogLevel.WARN, throwable, format, args);
+    }
+
+    public void warn(Throwable throwable) {
+        log(LogLevel.WARN, throwable);
+    }
+
     public void error(String message) {
         log(LogLevel.ERROR, message);
     }
@@ -63,12 +124,36 @@ public class Logger {
         log(LogLevel.ERROR, format, args);
     }
 
+    public void error(Throwable throwable, String message) {
+        log(LogLevel.ERROR, throwable, message);
+    }
+
+    public void error(Throwable throwable, String format, Object... args) {
+        log(LogLevel.ERROR, throwable, format, args);
+    }
+
+    public void error(Throwable throwable) {
+        log(LogLevel.ERROR, throwable);
+    }
+
     public void fatal(String message) {
         log(LogLevel.FATAL, message);
     }
 
     public void fatal(String format, Object... args) {
         log(LogLevel.FATAL, format, args);
+    }
+
+    public void fatal(Throwable throwable, String message) {
+        log(LogLevel.FATAL, throwable, message);
+    }
+
+    public void fatal(Throwable throwable, String format, Object... args) {
+        log(LogLevel.FATAL, throwable, format, args);
+    }
+
+    public void fatal(Throwable throwable) {
+        log(LogLevel.FATAL, throwable);
     }
 
     public String getName() {

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -17,6 +18,13 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * @version 2018
  */
 public class Calibration extends IterativeRobot {
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG = new Logger();
     /**
      * This is the file that we save / look for
      * 
