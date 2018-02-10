@@ -3,6 +3,7 @@ package org.usd232.robotics.autonomous.generator;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -12,9 +13,11 @@ public class FieldView extends Container {
     private double            x;
     private double            y;
     private double            scale;
+    private double            rotation;
 
     public void paintBackground(Graphics g) {
         // Handle resizing windows
+        Graphics2D g2d = (Graphics2D) g;
         double maxWidth = ((double) getWidth()) / (double) image.getWidth(this);
         double maxHeight = ((double) getHeight()) / (double) image.getHeight(this);
         double scale = Math.min(maxWidth, maxHeight);
@@ -28,9 +31,10 @@ public class FieldView extends Container {
         x += this.x * getWidth();
         y += this.y * getHeight();
         // Draw
-        g.setColor(getBackground());
-        g.fillRect(0, 0, getWidth(), getHeight());
-        g.drawImage(image, x, y, width, height, this);
+        g2d.setColor(getBackground());
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+        g2d.rotate(rotation * Math.PI, getWidth()/2, getHeight()/2);
+        g2d.drawImage(image, x, y, width, height, this);
     }
 
     @Override
@@ -69,6 +73,15 @@ public class FieldView extends Container {
 
     public void setImageScale(double scale) {
         this.scale = scale;
+        repaint();
+    }
+
+    public double getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(double rotation) {
+        this.rotation += rotation;
         repaint();
     }
 

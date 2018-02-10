@@ -81,7 +81,7 @@ public class Toolbar extends Container implements MouseListener, MouseMotionList
         this.fieldView = fieldView;
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         add(new MoveTool());
-        add(new Tool("rotate_90_degrees_ccw"));
+        add(new RotateImage());
         add(new ZoomInTool());
         add(new ZoomOutTool());
         add(new ResetView());
