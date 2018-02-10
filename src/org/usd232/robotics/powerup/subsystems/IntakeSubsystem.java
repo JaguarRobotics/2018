@@ -18,7 +18,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @version 2018
      */
     public void grabCube() {
-        // grabSolenoid.set(true);
+        grabSolenoid.set(true);
     }
 
     /**
@@ -28,7 +28,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @version 2018
      */
     public void dropCube() {
-         // grabSolenoid.set(false);
+        grabSolenoid.set(false);
     }
 
     /**
@@ -38,7 +38,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @version 2018
      */
     public void raiseIntake() {
-        // liftSolenoid.set(true);
+        liftSolenoid.set(true);
     }
 
     /**
@@ -48,7 +48,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @version 2018
      */
     public void lowerIntake() {
-        // liftSolenoid.set(false);
+        liftSolenoid.set(false);
     }
 
     @Override
