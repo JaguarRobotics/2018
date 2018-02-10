@@ -49,6 +49,7 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void initialize() {
+        LOG.info("Lowering Lift to " + lowerValue);
     }
 
     /**

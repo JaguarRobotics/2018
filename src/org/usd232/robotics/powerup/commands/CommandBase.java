@@ -80,5 +80,6 @@ public abstract class CommandBase extends Command implements RobotMap {
         liftSubsystem = new LiftSubsystem();
         locationSubsystem = new LocationSubsystem();
         oi = new OI();
+        LOG.info("Subsystems Have Been Initialized");
     }
 }

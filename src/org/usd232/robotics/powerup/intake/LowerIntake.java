@@ -24,11 +24,12 @@ public class LowerIntake extends CommandBase {
 
     @Override
     protected void initialize() {
+        intakeSubsystem.lowerIntake();
+        LOG.info("Intake Lowered");
     }
 
     @Override
     protected void execute() {
-        intakeSubsystem.intakeGrabberDown();
     }
 
     @Override

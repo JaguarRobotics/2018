@@ -40,6 +40,7 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void initialize() {
+        LOG.info("Manually Raising Lift");
     }
 
     /**

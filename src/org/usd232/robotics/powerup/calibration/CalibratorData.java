@@ -1,16 +1,8 @@
 package org.usd232.robotics.powerup.calibration;
 
 import java.io.Serializable;
-import org.usd232.robotics.powerup.log.Logger;
 
 public class CalibratorData implements Serializable {
-    /**
-     * The Logger
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    private static final Logger LOG = new Logger();
     /**
      * Generated serial version uid
      */
@@ -40,22 +32,22 @@ public class CalibratorData implements Serializable {
         CalibratorData.liftBottom = liftBottom;
     }
 
-    private static double liftScale;
     /**
      * @return true if potentiometer measures height of scale
      * @since 2018
      * @version 2018
      */
-    private static double liftSwitch;
+    private static double liftScale;
     /**
      * @return true if potentiometer measures height of switch
      * @since 2018
      * @version 2018
      */
-    private static double liftBottom;
+    private static double liftSwitch;
     /**
      * @return true if potentiometer measures lowest point
      * @since 2018
      * @version 2018
      */
+    private static double liftBottom;
 }

@@ -29,6 +29,7 @@ public class Autonomous extends CommandGroup {
      * @version 2018
      */
     public Autonomous() {
+        LOG.trace("Autonmous Started");
         ISpeedFunction speed = t->Math.min(0.8, 9.323308271 * t * t * t - 18.42105263 * t * t + 8.897744361 * t + 0.6);
         for (int i = 0; i < 400; ++i) {
             addSequential(new DriveForward(speed, 48, 0.1, 0.01));

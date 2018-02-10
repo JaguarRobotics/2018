@@ -23,6 +23,7 @@ public class LiftSubsystem extends SubsystemBase {
 
     public double getPotentiometerValue() {
         double value = scissorPotentiometer.get();
+        LOG.info("Potentiometer Value Is At " + value);
         return value;
     }
 }
