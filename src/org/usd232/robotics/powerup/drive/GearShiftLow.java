@@ -39,6 +39,7 @@ public class GearShiftLow extends CommandBase {
      */
     protected void initialize() {
         DriveSubsystem.gearShiftLow();
+        LOG.info("Shifted Into Low Gear");
     }
 
     @Override

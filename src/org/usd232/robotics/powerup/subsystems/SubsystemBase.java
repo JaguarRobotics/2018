@@ -2,7 +2,6 @@ package org.usd232.robotics.powerup.subsystems;
 
 import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.RobotMap;
-import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**

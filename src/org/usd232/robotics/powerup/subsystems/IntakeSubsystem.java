@@ -1,7 +1,5 @@
 package org.usd232.robotics.powerup.subsystems;
 
-import org.usd232.robotics.powerup.log.Logger;
-
 /**
  * Handles manipulation of power cube
  * 
@@ -10,13 +8,6 @@ import org.usd232.robotics.powerup.log.Logger;
  * @version 2018
  */
 public class IntakeSubsystem extends SubsystemBase {
-    /**
-     * The Logger
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    private static final Logger LOG = new Logger();
     public IntakeSubsystem() {
     }
 
@@ -26,7 +17,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @since 2018
      * @version 2018
      */
-    public void intakeGrabberIn() {
+    public void grabCube() {
         // grabSolenoid.set(true);
     }
 
@@ -36,8 +27,8 @@ public class IntakeSubsystem extends SubsystemBase {
      * @since 2018
      * @version 2018
      */
-    public void intakeGrabberOut() {
-        // grabSolenoid.set(false);
+    public void dropCube() {
+         // grabSolenoid.set(false);
     }
 
     /**
@@ -46,7 +37,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @since 2018
      * @version 2018
      */
-    public void intakeGrabberUp() {
+    public void raiseIntake() {
         // liftSolenoid.set(true);
     }
 
@@ -56,7 +47,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @since 2018
      * @version 2018
      */
-    public void intakeGrabberDown() {
+    public void lowerIntake() {
         // liftSolenoid.set(false);
     }
 

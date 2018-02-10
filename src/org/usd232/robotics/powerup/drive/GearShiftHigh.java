@@ -39,6 +39,7 @@ public class GearShiftHigh extends CommandBase {
      */
     protected void initialize() {
         DriveSubsystem.gearShiftHigh();
+        LOG.info("Shifted Into High Gear");
     }
 
     @Override

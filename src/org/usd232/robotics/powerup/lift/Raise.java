@@ -49,6 +49,7 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void initialize() {
+        LOG.info("Raising Lift To " + raiseValue);
     }
 
     /**

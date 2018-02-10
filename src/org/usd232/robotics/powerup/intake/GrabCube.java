@@ -24,11 +24,12 @@ public class GrabCube extends CommandBase {
 
     @Override
     protected void initialize() {
+        intakeSubsystem.grabCube();
+        LOG.info("Cube Grabbed");
     }
 
     @Override
     protected void execute() {
-        intakeSubsystem.intakeGrabberIn();
     }
 
     @Override

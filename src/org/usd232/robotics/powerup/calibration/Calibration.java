@@ -45,15 +45,16 @@ public class Calibration extends IterativeRobot {
             f = new File("/home/lvuser/CalibrationSettings.txt");
             if (!f.exists()) {
                 f.createNewFile();
+                LOG.info("Created A New Calibration File");
             }
             try (FileOutputStream fo = new FileOutputStream(f); ObjectOutputStream oos = new ObjectOutputStream(fo)) {
                 oos.writeObject(data);
                 oos.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error(e, "Error In Calibration Trying To Write The Calibration File");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e,"Could Not Create A New File");
         }
     }
 /**
@@ -69,7 +70,7 @@ public class Calibration extends IterativeRobot {
         try (FileInputStream fi = new FileInputStream(f); ObjectInputStream ois = new ObjectInputStream(fi)) {
             return (CalibratorData) ois.readObject();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOG.error(e, "Could Not Read The File");
         }
         return null;
     }
