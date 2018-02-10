@@ -1,5 +1,7 @@
 package org.usd232.robotics.autonomous;
 
+import java.nio.ByteBuffer;
+
 /**
  * The parameters for a turning command
  * 
@@ -14,7 +16,23 @@ public class TurnParameter implements IAutonomousStepParameter {
      * 
      * @since 2018
      */
-    private double angle;
+    private float angle;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void serialize(ByteBuffer ser) {
+        ser.putFloat(getAngle());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deserialize(ByteBuffer ser) {
+        setAngle(ser.getFloat());
+    }
 
     /**
      * Gets the angle to turn, in radians.
@@ -22,7 +40,7 @@ public class TurnParameter implements IAutonomousStepParameter {
      * @return The angle to turn, in radians
      * @since 2018
      */
-    public double getAngle() {
+    public float getAngle() {
         return angle;
     }
 
@@ -33,7 +51,7 @@ public class TurnParameter implements IAutonomousStepParameter {
      *            The angle to turn, in radians
      * @since 2018
      */
-    public void setAngle(double angle) {
+    public void setAngle(float angle) {
         this.angle = angle;
     }
 }

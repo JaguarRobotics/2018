@@ -1,5 +1,7 @@
 package org.usd232.robotics.autonomous;
 
+import java.nio.ByteBuffer;
+
 /**
  * The parameters for a sleep step
  * 
@@ -15,6 +17,22 @@ public class SleepParameter implements IAutonomousStepParameter {
      * @since 2018
      */
     private short millis;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void serialize(ByteBuffer ser) {
+        ser.putShort(getMillis());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deserialize(ByteBuffer ser) {
+        setMillis(ser.getShort());
+    }
 
     /**
      * Gets the time to sleep, in milliseconds.

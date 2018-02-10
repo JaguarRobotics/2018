@@ -7,5 +7,5 @@ package org.usd232.robotics.autonomous;
  * @since 2018
  * @version 2018
  */
-public interface IAutonomousStepParameter {
+public interface IAutonomousStepParameter extends IBufferSerializable {
 }
