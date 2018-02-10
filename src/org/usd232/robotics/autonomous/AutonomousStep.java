@@ -1,5 +1,7 @@
 package org.usd232.robotics.autonomous;
 
+import java.nio.ByteBuffer;
+
 /**
  * Represents a single step that the autonomous route must take.
  * 
@@ -7,7 +9,7 @@ package org.usd232.robotics.autonomous;
  * @since 2018
  * @version 2018
  */
-public class AutonomousStep {
+public class AutonomousStep implements IBufferSerializable {
     /**
      * The type of step this is
      * 
@@ -20,6 +22,24 @@ public class AutonomousStep {
      * @since 2018
      */
     private IAutonomousStepParameter param;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void serialize(ByteBuffer ser) {
+        ser.put((byte) getType().ordinal());
+        param.serialize(ser);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deserialize(ByteBuffer ser) {
+        setType(StepType.values()[ser.get()]);
+        param.deserialize(ser);
+    }
 
     /**
      * Gets the type of step this is
