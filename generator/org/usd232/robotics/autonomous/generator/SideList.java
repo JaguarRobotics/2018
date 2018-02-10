@@ -13,13 +13,13 @@ public class SideList extends Container {
     private static final long serialVersionUID = 1890289959504726076L;
     private JTextField        textField;
 
-    public SideList() {
+    public SideList(String labelName) {
         setPreferredSize(new Dimension(100, 100));
         setBackground(Color.GREEN);
         SpringLayout springLayout = new SpringLayout();
         setLayout(springLayout);
         
-        JLabel lblLabel = new JLabel("Label");
+        JLabel lblLabel = new JLabel(labelName);
         springLayout.putConstraint(SpringLayout.NORTH, lblLabel, 10, SpringLayout.NORTH, this);
         springLayout.putConstraint(SpringLayout.WEST, lblLabel, 10, SpringLayout.WEST, this);
         add(lblLabel);
