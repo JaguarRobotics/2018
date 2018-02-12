@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI implements RobotMap {
     public OI() {
-        Joystick0_Button1.whenPressed(new CalibrateCommand());
-        Joystick1_Button1.whenPressed(new CalibrateCommand());
+        Joystick0_Button11.whenPressed(new CalibrateCommand());
+        Joystick1_Button11.whenPressed(new CalibrateCommand());
         Joystick0_Button3.whenPressed(new GearShiftHigh());
         Joystick1_Button3.whenPressed(new GearShiftHigh());
         Joystick0_Button2.whenPressed(new GearShiftLow());
