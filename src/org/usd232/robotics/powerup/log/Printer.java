@@ -23,7 +23,8 @@ public class Printer extends OutputStream {
         int i;
         for (i = stackTrace.length - 1; i >= 0
                         && Arrays.binarySearch(EXCLUDED_CLASSES, stackTrace[i].getClassName()) < 0; --i);
-        logServer.write(LogServer.serialize(b, off, len, System.currentTimeMillis(), level, stackTrace[i + 1].getClassName()));
+        logServer.write(LogServer.serialize(b, off, len, System.currentTimeMillis(), level,
+                        stackTrace[i + 1].getClassName()));
     }
 
     @Override

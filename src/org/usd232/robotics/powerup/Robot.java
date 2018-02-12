@@ -29,7 +29,7 @@ public class Robot extends IterativeRobot {
      * @since 2018
      * @version 2018
      */
-    private static final Logger LOG = new Logger();
+    private static final Logger                           LOG                      = new Logger();
     /**
      * chooser used on the SmartDashboard to choose the starting position
      * 
@@ -41,23 +41,23 @@ public class Robot extends IterativeRobot {
      * 
      * @since 2017
      */
-    public static final SendableChooser<Alliance> allianceChooser          = new SendableChooser<Alliance>();
-    public static CalibratorData        calibratorData;
-    public static boolean               isTesting                = false;
-    public static int                   amountOfThingsCalibrated = 0;
+    public static final SendableChooser<Alliance>         allianceChooser          = new SendableChooser<Alliance>();
+    public static CalibratorData                          calibratorData;
+    public static boolean                                 isTesting                = false;
+    public static int                                     amountOfThingsCalibrated = 0;
     /**
      * The command that the robot does for autonomous
      * 
      * @since Always
      * @version 2018
      */
-    private Command                     autonomousCommand;
+    private Command                                       autonomousCommand;
     /**
      * Chooser used in SmartDashboard to choose which alliance we are on
      * 
      * @since 2017
      */
-    public static final SendableChooser<CalibrationMode> calibrationSetter        = new SendableChooser<CalibrationMode>();
+    public static final SendableChooser<CalibrationMode>  calibrationSetter        = new SendableChooser<CalibrationMode>();
 
     /**
      * What runs when the robot is initalized

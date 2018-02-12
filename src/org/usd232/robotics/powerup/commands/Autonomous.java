@@ -22,6 +22,7 @@ public class Autonomous extends CommandGroup {
      * @version 2018
      */
     private static final Logger LOG = new Logger();
+
     /**
      * Sets up this {@link CommandGroup} to run the autonomous commands
      * 

@@ -21,6 +21,7 @@ public class ManualRaise extends CommandBase {
      * @version 2018
      */
     private static final Logger LOG = new Logger();
+
     /**
      * Raises the lift
      * 

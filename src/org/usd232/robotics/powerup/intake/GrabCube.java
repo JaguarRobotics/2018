@@ -18,6 +18,7 @@ public class GrabCube extends CommandBase {
      * @version 2018
      */
     private static final Logger LOG = new Logger();
+
     public GrabCube() {
         requires(intakeSubsystem);
     }

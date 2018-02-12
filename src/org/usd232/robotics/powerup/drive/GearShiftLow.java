@@ -20,6 +20,7 @@ public class GearShiftLow extends CommandBase {
      * @version 2018
      */
     private static final Logger LOG = new Logger();
+
     /**
      * Shifts the robot into low gear.
      * 

@@ -17,6 +17,7 @@ public class LiftSubsystem extends SubsystemBase {
      * @version 2018
      */
     private static final Logger LOG = new Logger();
+
     @Override
     protected void initDefaultCommand() {
     }
