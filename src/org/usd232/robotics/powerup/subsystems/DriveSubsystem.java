@@ -15,7 +15,7 @@ public class DriveSubsystem extends SubsystemBase {
      * @since 2018
      * @version 2018
      */
-    private static final Logger LOG = new Logger();
+    private static final Logger      LOG        = new Logger();
     /**
      * Class that controls both drive motors
      */

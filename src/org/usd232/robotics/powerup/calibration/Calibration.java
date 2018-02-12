@@ -31,12 +31,13 @@ public class Calibration extends IterativeRobot {
      * @since 2018
      * @version 2018
      */
-    private static File f;
+    private static File         f;
 
     /**
      * Writes the Object of the CalibratorData to a file to be read and used later
      * 
-     * @param data The current CallibratorData Object right after calibration
+     * @param data
+     *            The current CallibratorData Object right after calibration
      * @since 2018
      * @version 2018
      */
@@ -54,18 +55,19 @@ public class Calibration extends IterativeRobot {
                 LOG.error(e, "Error In Calibration Trying To Write The Calibration File");
             }
         } catch (IOException e) {
-            LOG.error(e,"Could Not Create A New File");
+            LOG.error(e, "Could Not Create A New File");
         }
     }
-/**
- * Reads the File that got saved of the CalibratorData object.
- * 
- * @return Returns the CalibratorData object that was saved in the past
- * @throws IOException
- * @throws ClassNotFoundException
- * @since 2018
- * @version 2018
- */
+
+    /**
+     * Reads the File that got saved of the CalibratorData object.
+     * 
+     * @return Returns the CalibratorData object that was saved in the past
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @since 2018
+     * @version 2018
+     */
     public static CalibratorData readFile() throws IOException, ClassNotFoundException {
         try (FileInputStream fi = new FileInputStream(f); ObjectInputStream ois = new ObjectInputStream(fi)) {
             return (CalibratorData) ois.readObject();

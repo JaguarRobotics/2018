@@ -3,13 +3,13 @@ package org.usd232.robotics.powerup.calibration;
 import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
+
 /**
  * Command to write the Calibration file
  * 
  * @author Brian
  * @since 2018
  * @version 2018
- *
  */
 public class CalibrateCommand extends CommandBase {
     /**
@@ -19,6 +19,7 @@ public class CalibrateCommand extends CommandBase {
      * @version 2018
      */
     private static final Logger LOG = new Logger();
+
     @Override
     protected void initialize() {
         if (Robot.isTesting) {
@@ -39,6 +40,7 @@ public class CalibrateCommand extends CommandBase {
             }
         }
     }
+
     /**
      * Always finishes immediately
      * 

@@ -2,6 +2,7 @@ package org.usd232.robotics.powerup;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
  * @version 2018
  */
 public interface IO extends RobotMap {
+    // Motors and Encoders
     /**
      * The left drive motor
      * 
@@ -50,6 +52,7 @@ public interface IO extends RobotMap {
      */
     public static final Encoder         rightDriveEncoder    = new OversampledEncoder(RIGHT_ENCODER_CHANNEL_A,
                     RIGHT_ENCODER_CHANNEL_B);
+    // Gyros and Potentiometers
     /**
      * The analog gyroscope
      * 
@@ -70,6 +73,7 @@ public interface IO extends RobotMap {
      * @since 2018
      * @version 2018
      */
+    // Relays
     public static final Relay           liftRelay            = new Relay(LIFT_RELAY_PORT);
     /**
      * Grabs and releases cube
@@ -77,6 +81,7 @@ public interface IO extends RobotMap {
      * @since 2018
      * @version 2018
      */
+    // Solenoids
     public static final Solenoid        grabSolenoid         = new Solenoid(INTAKE_GRAB_SOLENOID);
     /**
      * Raises and lowers power cube
@@ -92,4 +97,19 @@ public interface IO extends RobotMap {
      * @version 2018
      */
     public static final Solenoid        gearShiftSolenoid    = new Solenoid(SOLENOID_GEAR_SHIFT_PORT);
+    /**
+     * The limit switch that says if the Scissor lift is in bottom position
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    // Limit Switches
+    public static final DigitalInput    bottomLimitSwitch    = new DigitalInput(BOTTOM_LIMIT_SWITCH_PORT);
+    /**
+     * The limit switch that says if the Scissor lift is in top position
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final DigitalInput    topLimitSwitch       = new DigitalInput(TOP_LIMIT_SWITCH_PORT);
 }

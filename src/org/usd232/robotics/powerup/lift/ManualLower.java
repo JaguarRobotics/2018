@@ -1,5 +1,6 @@
 package org.usd232.robotics.powerup.lift;
 
+import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
@@ -20,6 +21,7 @@ public class ManualLower extends CommandBase {
      * @version 2018
      */
     private static final Logger LOG = new Logger();
+
     /**
      * Lowers the lift
      * 
@@ -51,7 +53,9 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected void execute() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kOn);
+        if (!IO.bottomLimitSwitch.get()) {
+            LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
+        }
     }
 
     /**
@@ -63,6 +67,9 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
+        if (IO.bottomLimitSwitch.get()) {
+            return true;
+        }
         return false;
     }
 
@@ -74,7 +81,7 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
+        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
     }
 
     /**

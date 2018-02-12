@@ -22,7 +22,7 @@ public class LogServer implements Runnable {
             server.write(buffer);
         }
     }
-    
+
     static byte[] serialize(byte[] b, int off, int len, long date, LogLevel level, String logger) throws IOException {
         byte[] loggerBytes = logger.getBytes("UTF-8");
         byte[] buffer = new byte[4 + len + 8 + 1 + 4 + loggerBytes.length];
@@ -77,7 +77,7 @@ public class LogServer implements Runnable {
             }
         }
     }
-    
+
     public LogServer() {
         servers.add(this);
     }

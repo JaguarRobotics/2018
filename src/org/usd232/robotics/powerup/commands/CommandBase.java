@@ -21,7 +21,7 @@ public abstract class CommandBase extends Command implements RobotMap {
      * @since 2018
      * @version 2018
      */
-    private static final Logger LOG = new Logger();
+    private static final Logger     LOG = new Logger();
     /**
      * This creates the oi
      * 

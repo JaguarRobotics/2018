@@ -1,5 +1,6 @@
 package org.usd232.robotics.powerup.lift;
 
+import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
@@ -19,14 +20,14 @@ public class Lower extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    private static final Logger LOG = new Logger();
+    private static final Logger LOG        = new Logger();
     /**
      * Value that we are lowering to
      * 
      * @since 2018
      * @version 2018
      */
-    private double lowerValue = 0;
+    private double              lowerValue = 0;
 
     /**
      * Lowers the lift of the robot to specified potentiometer value
@@ -60,7 +61,9 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void execute() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kOn);
+        if (!IO.bottomLimitSwitch.get()) {
+            LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
+        }
     }
 
     /**
@@ -73,6 +76,8 @@ public class Lower extends CommandBase {
     @Override
     protected boolean isFinished() {
         if (liftSubsystem.getPotentiometerValue() <= lowerValue) {
+            return true;
+        } else if (IO.bottomLimitSwitch.get()) {
             return true;
         } else {
             return false;
@@ -87,7 +92,7 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
+        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
     }
 
     /**

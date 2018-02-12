@@ -18,6 +18,7 @@ public class LowerIntake extends CommandBase {
      * @version 2018
      */
     private static final Logger LOG = new Logger();
+
     public LowerIntake() {
         requires(intakeSubsystem);
     }
