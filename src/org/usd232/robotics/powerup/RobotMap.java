@@ -155,6 +155,21 @@ public interface RobotMap {
      * @version 2018
      */
     public static final int     SWITCH_POTENTIOMETER_VALUE = 0;
+//    DIO
+    /**
+     * The port for the Limit Switch that detects bottom position
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final int     BOTTOM_LIMIT_SWITCH_PORT   = 0;
+    /**
+     * The port for the Limit Switch that detects top position
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final int     TOP_LIMIT_SWITCH_PORT   = 1;
     /**
      * The port for the solenoid that grabs the cube
      * 
@@ -187,6 +202,7 @@ public interface RobotMap {
     public enum CalibrationMode {
         Calibrating, NotCalibrating
     }
+
     /**
      * enum constants for what our alliance is
      * 
@@ -195,7 +211,9 @@ public interface RobotMap {
      */
     public enum Alliance {
         Red, Blue
-    }    /**
+    }
+
+    /**
      * enum constants for robot starting position
      * 
      * @since 2018

@@ -2,6 +2,7 @@ package org.usd232.robotics.powerup;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -92,4 +93,18 @@ public interface IO extends RobotMap {
      * @version 2018
      */
     public static final Solenoid        gearShiftSolenoid    = new Solenoid(SOLENOID_GEAR_SHIFT_PORT);
+    /**
+     * The limit switch that says if the Scissor lift is in bottom position
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final DigitalInput    bottomLimitSwitch    = new DigitalInput(BOTTOM_LIMIT_SWITCH_PORT);
+    /**
+     * The limit switch that says if the Scissor lift is in top position
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final DigitalInput    topLimitSwitch       = new DigitalInput(TOP_LIMIT_SWITCH_PORT);
 }
