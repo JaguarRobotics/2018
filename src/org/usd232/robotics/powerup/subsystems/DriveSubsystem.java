@@ -30,7 +30,6 @@ public class DriveSubsystem extends SubsystemBase {
      *            speed
      */
     public void driveTank(double left, double right) {
-        LOG.debug("Motors are setting to (%f, %f)", left, right);
         robotDrive.tankDrive(left, right);
     }
 

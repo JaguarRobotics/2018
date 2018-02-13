@@ -124,7 +124,7 @@ public interface RobotMap {
      * @since 2017
      * @version 2018
      */
-    public static final int     SOLENOID_GEAR_SHIFT_PORT  = 1;
+    public static final int     SOLENOID_GEAR_SHIFT_PORT  = 2;
     /**
      * The port for the solenoid that grabs the cube
      * 
@@ -136,7 +136,7 @@ public interface RobotMap {
      * 
      * @since 2018
      */
-    public static final int     INTAKE_LIFT_SOLENOID      = 0;
+    public static final int     INTAKE_LIFT_SOLENOID      = 1;
     // Limit Switches
     /**
      * The port for the Limit Switch that detects bottom position
@@ -144,14 +144,14 @@ public interface RobotMap {
      * @since 2018
      * @version 2018
      */
-    public static final int     BOTTOM_LIMIT_SWITCH_PORT  = 0;
+    public static final int     BOTTOM_LIMIT_SWITCH_PORT  = 5;
     /**
      * The port for the Limit Switch that detects top position
      * 
      * @since 2018
      * @version 2018
      */
-    public static final int     TOP_LIMIT_SWITCH_PORT     = 1;
+    public static final int     TOP_LIMIT_SWITCH_PORT     = 6;
 
     /**
      * The enum constants for the gears that the robot could be in

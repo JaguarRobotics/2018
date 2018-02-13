@@ -6,13 +6,13 @@ import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.Relay;
 
 /**
- * Makes The Robot Climb Up VIA A Winch
+ * Stops The Robot Climb
  *
  * @author Brian Parks
  * @since 2018
  * @version 2018
  */
-public class ClimbUp extends CommandBase {
+public class ClimbStop extends CommandBase {
     private static final Logger LOG = new Logger();
     /**
      * Makes Robot Climb Up With The Winch
@@ -20,27 +20,25 @@ public class ClimbUp extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    public ClimbUp() {
+    public ClimbStop() {
     }
 
     @Override
     protected void execute() {
-        LOG.info("Running Climb Up Execute");
-        IO.winchRelay.set(Relay.Value.kForward);
+        LOG.info("Running Climb Stop Execute");
+        IO.winchRelay.set(Relay.Value.kOff);
     }
 
     @Override
     protected void end() {
-        IO.winchRelay.stopMotor();
     }
 
     @Override
     protected void interrupted() {
-        IO.winchRelay.stopMotor();
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 }

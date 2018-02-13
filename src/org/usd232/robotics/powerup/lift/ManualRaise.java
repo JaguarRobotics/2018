@@ -53,9 +53,7 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void execute() {
-        if (!IO.topLimitSwitch.get()) {
-            LiftSubsystem.liftRelay.set(Relay.Value.kForward);
-        }
+        LiftSubsystem.liftRelay.set(Relay.Value.kForward);
     }
 
     /**
@@ -67,9 +65,6 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (IO.topLimitSwitch.get()) {
-            return true;
-        }
         return false;
     }
 
@@ -81,7 +76,7 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
+        IO.liftRelay.stopMotor();
     }
 
     /**
