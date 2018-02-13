@@ -74,12 +74,12 @@ public interface RobotMap {
      */
     public static final int     LIFT_RELAY_PORT           = 0;
     /**
-     * The port for the whinch relay
+     * The port for the Winch Relay
      * 
      * @since 2018
      * @version 2018
      */
-    public static final int     WHINCH_RELAY_PORT         = 1;
+    public static final int     WINCH_RELAY_PORT          = 1;
     // Gyro and Potentiometer
     /**
      * The port for the potentiometer
