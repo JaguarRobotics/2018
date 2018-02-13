@@ -3,6 +3,12 @@ package org.usd232.robotics.powerup;
 import org.usd232.robotics.powerup.calibration.CalibrateCommand;
 import org.usd232.robotics.powerup.drive.GearShiftHigh;
 import org.usd232.robotics.powerup.drive.GearShiftLow;
+import org.usd232.robotics.powerup.intake.DropCube;
+import org.usd232.robotics.powerup.intake.GrabCube;
+import org.usd232.robotics.powerup.intake.LowerIntake;
+import org.usd232.robotics.powerup.intake.RaiseIntake;
+import org.usd232.robotics.powerup.lift.ManualLower;
+import org.usd232.robotics.powerup.lift.ManualRaise;
 // import org.usd232.robotics.powerup.lift.ManualLower;
 // import org.usd232.robotics.powerup.lift.ManualRaise;
 import edu.wpi.first.wpilibj.Joystick;
@@ -25,6 +31,13 @@ public class OI implements RobotMap {
         Joystick1_Button3.whenPressed(new GearShiftHigh());
         Joystick0_Button2.whenPressed(new GearShiftLow());
         Joystick1_Button2.whenPressed(new GearShiftLow());
+        
+        ManipulatorXbox_Y.whileActive(new ManualRaise());
+        ManipulatorXbox_A.whileActive(new ManualLower());
+        ManipulatorXbox_LB.whenPressed(new DropCube());
+        ManipulatorXbox_RB.whenPressed(new GrabCube());
+        ManipulatorXbox_Back.whenPressed(new LowerIntake());
+        ManipulatorXbox_Start.whenPressed(new RaiseIntake());
         // Joystick0_Button3.whileHeld(new ManualRaise());
         // Joystick0_Button3.whileHeld(new ManualLower());
         // Joystick1_Button3.whileHeld(new ManualRaise());
