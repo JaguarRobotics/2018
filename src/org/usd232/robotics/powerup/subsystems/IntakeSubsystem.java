@@ -8,6 +8,8 @@ package org.usd232.robotics.powerup.subsystems;
  * @version 2018
  */
 public class IntakeSubsystem extends SubsystemBase {
+    public static boolean intakeOpenPosition = true;
+    public static boolean intakeDown = true;
     public IntakeSubsystem() {
     }
 
@@ -19,6 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public void grabCube() {
         grabSolenoid.set(true);
+        intakeOpenPosition = false;
     }
 
     /**
@@ -29,6 +32,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public void dropCube() {
         grabSolenoid.set(false);
+        intakeOpenPosition = true;
     }
 
     /**
@@ -39,6 +43,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public void raiseIntake() {
         liftSolenoid.set(true);
+        intakeDown = false;
     }
 
     /**
@@ -49,8 +54,8 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public void lowerIntake() {
         liftSolenoid.set(false);
+        intakeDown = false;
     }
-
     @Override
     protected void initDefaultCommand() {
     }

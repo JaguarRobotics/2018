@@ -2,6 +2,7 @@ package org.usd232.robotics.powerup.intake;
 
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
+import org.usd232.robotics.powerup.subsystems.IntakeSubsystem;
 
 /**
  * Grabs cube
@@ -40,6 +41,7 @@ public class GrabCube extends CommandBase {
 
     @Override
     protected void end() {
+        IntakeSubsystem.intakeOpenPosition = false;
     }
 
     @Override

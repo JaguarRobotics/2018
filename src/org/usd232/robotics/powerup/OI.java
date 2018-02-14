@@ -36,10 +36,11 @@ public class OI implements RobotMap {
         Joystick1_Button2.whenPressed(new GearShiftLow());
         
         
-        ManipulatorXbox_X.whileHeld(new ClimbDown());
-        ManipulatorXbox_B.whileHeld(new ClimbUp());
-        ManipulatorXbox_Y.whileHeld(new ManualRaise());
-        ManipulatorXbox_A.whileHeld(new ManualLower());
+        ManipulatorXbox_RStick.whileHeld(new ClimbDown());
+        ManipulatorXbox_LStick.whileHeld(new ClimbUp());
+        
+        ManipulatorXbox_RB.whileHeld(new ManualRaise());
+        ManipulatorXbox_LB.whileHeld(new ManualLower());
         ManipulatorXbox_LB.whenPressed(new DropCube());
         ManipulatorXbox_RB.whenPressed(new GrabCube());
         ManipulatorXbox_Back.whenPressed(new LowerIntake());

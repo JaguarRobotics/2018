@@ -81,6 +81,12 @@ public interface IO extends RobotMap {
      * @version 2018
      */
     public static final Relay           winchRelay           = new Relay(WINCH_RELAY_PORT);
+    /**
+     * The Relay for the scissor lift
+     * 
+     * @since 2018
+     * @version 2018
+     */
     public static final Relay           liftRelay            = new Relay(LIFT_RELAY_PORT);
     /**
      * Grabs and releases cube
