@@ -20,10 +20,10 @@ public class ManualLower extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    private static final Logger LOG = new Logger();
-    private int                 counter    = 0;
-    private int                 onTime     = 8;
-    private int                 offTime    = 2;
+    private static final Logger LOG     = new Logger();
+    private int                 counter = 0;
+    private int                 onTime  = 5;
+    private int                 offTime = 5;
 
     /**
      * Lowers the lift
@@ -57,9 +57,9 @@ public class ManualLower extends CommandBase {
     @Override
     protected void execute() {
         if (counter % (onTime + offTime) >= offTime) {
-            if (!IO.bottomLimitSwitch.get()) {
-                LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
-            }
+            LiftSubsystem.liftRelay.set(Relay.Value.kForward);
+        } else {
+            LiftSubsystem.liftRelay.set(Relay.Value.kOff);
         }
         counter++;
     }

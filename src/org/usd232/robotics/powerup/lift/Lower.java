@@ -68,6 +68,8 @@ public class Lower extends CommandBase {
             if (!IO.bottomLimitSwitch.get()) {
                 LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
             }
+        } else {
+            LiftSubsystem.liftRelay.set(Relay.Value.kOff);
         }
         counter++;
     }
