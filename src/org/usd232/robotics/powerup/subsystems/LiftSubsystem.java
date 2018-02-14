@@ -16,7 +16,8 @@ public class LiftSubsystem extends SubsystemBase {
      * @since 2018
      * @version 2018
      */
-    private static final Logger LOG = new Logger();
+    private static final Logger LOG             = new Logger();
+    public static StepPositions currentPosition = StepPositions.Bottom;
 
     @Override
     protected void initDefaultCommand() {
@@ -26,5 +27,9 @@ public class LiftSubsystem extends SubsystemBase {
         double value = scissorPotentiometer.get();
         LOG.info("Potentiometer Value Is At " + value);
         return value;
+    }
+
+    public enum StepPositions {
+        Scale, Switch, Bottom, Climb
     }
 }

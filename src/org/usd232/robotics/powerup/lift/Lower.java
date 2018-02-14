@@ -28,6 +28,9 @@ public class Lower extends CommandBase {
      * @version 2018
      */
     private double              lowerValue = 0;
+    private int                 counter    = 0;
+    private int                 onTime     = 8;
+    private int                 offTime    = 2;
 
     /**
      * Lowers the lift of the robot to specified potentiometer value
@@ -61,9 +64,12 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void execute() {
-        if (!IO.bottomLimitSwitch.get()) {
-            LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
+        if (counter % (onTime + offTime) >= offTime) {
+            if (!IO.bottomLimitSwitch.get()) {
+                LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
+            }
         }
+        counter++;
     }
 
     /**

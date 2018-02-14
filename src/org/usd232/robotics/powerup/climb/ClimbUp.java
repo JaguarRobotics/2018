@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public class ClimbUp extends CommandBase {
     private static final Logger LOG = new Logger();
+
     /**
      * Makes Robot Climb Up With The Winch
      * 

@@ -12,6 +12,8 @@ import org.usd232.robotics.powerup.intake.LowerIntake;
 import org.usd232.robotics.powerup.intake.RaiseIntake;
 import org.usd232.robotics.powerup.lift.ManualLower;
 import org.usd232.robotics.powerup.lift.ManualRaise;
+import org.usd232.robotics.powerup.lift.StepDown;
+import org.usd232.robotics.powerup.lift.StepUp;
 // import org.usd232.robotics.powerup.lift.ManualLower;
 // import org.usd232.robotics.powerup.lift.ManualRaise;
 import edu.wpi.first.wpilibj.Joystick;
@@ -34,16 +36,17 @@ public class OI implements RobotMap {
         Joystick1_Button3.whenPressed(new GearShiftHigh());
         Joystick0_Button2.whenPressed(new GearShiftLow());
         Joystick1_Button2.whenPressed(new GearShiftLow());
-        
-        
-        ManipulatorXbox_X.whileHeld(new ClimbDown());
-        ManipulatorXbox_B.whileHeld(new ClimbUp());
-        ManipulatorXbox_Y.whileHeld(new ManualRaise());
-        ManipulatorXbox_A.whileHeld(new ManualLower());
-        ManipulatorXbox_LB.whenPressed(new DropCube());
-        ManipulatorXbox_RB.whenPressed(new GrabCube());
-        ManipulatorXbox_Back.whenPressed(new LowerIntake());
-        ManipulatorXbox_Start.whenPressed(new RaiseIntake());
+
+        ManipulatorXbox_RB.whileHeld(new ManualRaise());
+        ManipulatorXbox_RB.whenPressed(new StepUp());
+        ManipulatorXbox_LB.whileHeld(new ManualLower());
+        ManipulatorXbox_LB.whenPressed(new StepDown());
+        ManipulatorXbox_Start.whileHeld(new ClimbUp());
+        ManipulatorXbox_Back.whileHeld(new ClimbDown());
+        ManipulatorXbox_Y.whenPressed(new RaiseIntake());
+        ManipulatorXbox_A.whenPressed(new LowerIntake());
+        ManipulatorXbox_X.whenPressed(new DropCube());
+        ManipulatorXbox_B.whenPressed(new GrabCube());
     }
 
     // The controllers we are using this year
