@@ -78,9 +78,7 @@ public class StepUp extends CommandBase {
      */
     @Override
     protected void execute() {
-        if (!IO.bottomLimitSwitch.get()) {
-            LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
-        }
+        LiftSubsystem.raiseScissor();
     }
 
     /**
@@ -109,7 +107,7 @@ public class StepUp extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
+        LiftSubsystem.stopScissor();
     }
 
     /**

@@ -57,7 +57,7 @@ public class ManualLower extends CommandBase {
     @Override
     protected void execute() {
         if (counter % (onTime + offTime) >= offTime) {
-            LiftSubsystem.liftRelay.set(Relay.Value.kForward);
+            LiftSubsystem.lowerScissor();
         } else {
             LiftSubsystem.liftRelay.set(Relay.Value.kOff);
         }
@@ -84,7 +84,7 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected void end() {
-        IO.liftRelay.stopMotor();
+        LiftSubsystem.stopScissor();
     }
 
     /**

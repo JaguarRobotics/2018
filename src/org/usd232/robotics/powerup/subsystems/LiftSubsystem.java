@@ -1,6 +1,8 @@
 package org.usd232.robotics.powerup.subsystems;
 
+import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.log.Logger;
+import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The subsystem for the Lift
@@ -31,5 +33,16 @@ public class LiftSubsystem extends SubsystemBase {
 
     public enum StepPositions {
         Scale, Switch, Bottom, Climb
+    }
+
+    public static void raiseScissor() {
+        LiftSubsystem.liftRelay.set(Relay.Value.kForward);
+    }
+
+    public static void lowerScissor() {
+        LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
+    }
+    public static void stopScissor() {
+        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
     }
 }

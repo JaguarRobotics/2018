@@ -82,9 +82,7 @@ public class StepDown extends CommandBase {
     @Override
     protected void execute() {
         if (counter % (onTime + offTime) >= offTime) {
-            if (!IO.bottomLimitSwitch.get()) {
-                LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
-            }
+            LiftSubsystem.lowerScissor();
         }
         counter++;
     }
@@ -115,7 +113,7 @@ public class StepDown extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
+        LiftSubsystem.stopScissor();
     }
 
     /**

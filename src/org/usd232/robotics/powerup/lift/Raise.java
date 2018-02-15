@@ -61,9 +61,7 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void execute() {
-        if (!IO.topLimitSwitch.get()) {
-            LiftSubsystem.liftRelay.set(Relay.Value.kForward);
-        }
+        LiftSubsystem.raiseScissor();
     }
 
     /**
@@ -92,7 +90,7 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
+        LiftSubsystem.stopScissor();
     }
 
     /**

@@ -4,7 +4,6 @@ import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
-import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The command to raise the lift
@@ -53,7 +52,7 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void execute() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
+        LiftSubsystem.raiseScissor();
     }
 
     /**
@@ -76,7 +75,7 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void end() {
-        IO.liftRelay.stopMotor();
+        LiftSubsystem.stopScissor();
     }
 
     /**
