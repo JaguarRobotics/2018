@@ -2,7 +2,6 @@ package org.usd232.robotics.powerup;
 
 import org.usd232.robotics.powerup.calibration.CalibrateCommand;
 import org.usd232.robotics.powerup.climb.ClimbDown;
-import org.usd232.robotics.powerup.climb.ClimbStop;
 import org.usd232.robotics.powerup.climb.ClimbUp;
 import org.usd232.robotics.powerup.drive.GearShiftHigh;
 import org.usd232.robotics.powerup.drive.GearShiftLow;
@@ -38,9 +37,9 @@ public class OI implements RobotMap {
         Joystick1_Button2.whenPressed(new GearShiftLow());
 
         ManipulatorXbox_RB.whileHeld(new ManualRaise());
-//        ManipulatorXbox_RB.whenPressed(new StepUp());
+        ManipulatorXbox_RB.whenPressed(new StepUp());
         ManipulatorXbox_LB.whileHeld(new ManualLower());
-//        ManipulatorXbox_LB.whenPressed(new StepDown());
+        ManipulatorXbox_LB.whenPressed(new StepDown());
         ManipulatorXbox_Start.whileHeld(new ClimbUp());
         ManipulatorXbox_Back.whileHeld(new ClimbDown());
         ManipulatorXbox_Y.whenPressed(new RaiseIntake());
