@@ -144,14 +144,14 @@ public interface RobotMap {
      * @since 2018
      * @version 2018
      */
-    public static final int     BOTTOM_LIMIT_SWITCH_PORT  = 5;
+    public static final int     BOTTOM_LIMIT_SWITCH_PORT  = 0;
     /**
      * The port for the Limit Switch that detects top position
      * 
      * @since 2018
      * @version 2018
      */
-    public static final int     TOP_LIMIT_SWITCH_PORT     = 6;
+    public static final int     TOP_LIMIT_SWITCH_PORT     = 1;
 
     /**
      * The enum constants for the gears that the robot could be in

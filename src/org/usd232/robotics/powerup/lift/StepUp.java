@@ -91,7 +91,7 @@ public class StepUp extends CommandBase {
     protected boolean isFinished() {
         if (liftSubsystem.getPotentiometerValue() >= stepValue) {
             return true;
-        } else if (IO.bottomLimitSwitch.get()) {
+        } else if (IO.topLimitSwitch.get()) {
             return true;
         } else {
             return false;
