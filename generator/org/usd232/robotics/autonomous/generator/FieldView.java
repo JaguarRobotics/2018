@@ -2,9 +2,11 @@ package org.usd232.robotics.autonomous.generator;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import javax.swing.ImageIcon;
 
@@ -13,26 +15,41 @@ public class FieldView extends Container {
     private Image             image;
     private AffineTransform   imageTransformation;
 
-    public void paintBackground(Graphics g) {
-        // Handle resizing windows
-        Graphics2D g2d = (Graphics2D) g;
+    public Dimension getImageSize() {
         double maxWidth = ((double) getWidth()) / (double) image.getWidth(this);
         double maxHeight = ((double) getHeight()) / (double) image.getHeight(this);
         double scale = Math.min(maxWidth, maxHeight);
-        int width = (int) (image.getWidth(this) * scale);
-        int height = (int) (image.getHeight(this) * scale);
-        int x = (getWidth() - width) / 2;
-        int y = (getHeight() - height) / 2;
+        return new Dimension((int) (image.getWidth(this) * scale), (int) (image.getHeight(this) * scale));
+    }
+
+    public Point getOffsetTranslation() {
+        Point imageSize = GameCoordinate.fromNormalizedPoint(this, true, 1, 1).getPixels();
+        System.out.printf("Starting to paint the field with a viewport size of (%d, %d) and image size of (%f, %f)\n",
+                        getWidth(), getHeight(), imageSize.getX(), imageSize.getY());
+        int x = (getWidth() - imageSize.x) / 2;
+        int y = (getHeight() - imageSize.y) / 2;
+        return new Point(x, y);
+    }
+
+    public void paintBackground(Graphics g) {
+        // Handle resizing windows
+        Point imageSize = GameCoordinate.fromNormalizedPoint(this, true, 1, 1).getPixels();
+        System.out.printf("Starting to paint the field with a viewport size of (%d, %d) and image size of (%f, %f)\n",
+                        getWidth(), getHeight(), imageSize.getX(), imageSize.getY());
+        Point offset = getOffsetTranslation();
         // Draw background
         g.setColor(getBackground());
         g.fillRect(0, 0, getWidth(), getHeight());
         // Apply transformations
+        Graphics2D g2d = (Graphics2D) g;
         AffineTransform transform = g2d.getTransform();
         AffineTransform realTransform = new AffineTransform(transform);
+        realTransform.translate(offset.x, offset.y);
+        realTransform.scale(imageSize.x, imageSize.y);
         realTransform.concatenate(imageTransformation);
         g2d.setTransform(realTransform);
         // Draw
-        g2d.drawImage(image, x, y, width, height, this);
+        g.drawImage(image, 0, 0, 1, 1, this);
         // Restore the old matrix so nothing bad happens
         g2d.setTransform(transform);
     }
@@ -43,9 +60,18 @@ public class FieldView extends Container {
         super.paint(g);
     }
 
+    AffineTransform getTransformationRO() {
+        return imageTransformation;
+    }
+
     public AffineTransform getTransformation() {
         repaint();
-        return imageTransformation;
+        return getTransformationRO();
+    }
+
+    public void resetTransformation() {
+        AffineTransform matrix = getTransformation();
+        matrix.setToIdentity();
     }
 
     public FieldView() {
@@ -54,6 +80,6 @@ public class FieldView extends Container {
                         FieldView.class.getResource("/org/usd232/robotics/autonomous/generator/resources/field.png"))
                                         .getImage();
         imageTransformation = new AffineTransform();
-        imageTransformation.setToIdentity();
+        resetTransformation();
     }
 }

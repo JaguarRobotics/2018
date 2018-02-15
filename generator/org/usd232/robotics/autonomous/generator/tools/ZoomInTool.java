@@ -1,22 +1,37 @@
 package org.usd232.robotics.autonomous.generator.tools;
 
+import java.awt.Point;
 import java.awt.geom.AffineTransform;
-import org.usd232.robotics.autonomous.generator.FieldView;
+import java.awt.geom.Point2D;
+import org.usd232.robotics.autonomous.generator.GameCoordinate;
 
 public class ZoomInTool extends Tool {
     private static final long   serialVersionUID = -2152990834180811625L;
     private static final String ICON             = "zoom_in";
+    private static final double ZOOM_AMOUNT      = 1.1;
 
-    public ZoomInTool() {
-        super(ICON);
+    static void zoom(Tool tool, GameCoordinate position, boolean in) {
+        AffineTransform matrix = tool.getToolbar().getFieldView().getTransformation();
+        /*
+         * Point2D pt = position.getNormalizedPoint(); matrix.translate(-pt.getX(), -pt.getY()); double scale = in ?
+         * ZOOM_AMOUNT : 1. / ZOOM_AMOUNT; matrix.scale(scale, scale); matrix.translate(pt.getX() / scale, pt.getY() /
+         * scale);
+         */
+        double scale = in ? ZOOM_AMOUNT : 1. / ZOOM_AMOUNT;
+        Point then = position.getPixels();
+        matrix.scale(scale, scale);
+        Point now = position.getPixels();
+        Point2D diff = GameCoordinate.fromPixels(tool.getToolbar().getFieldView(), true,
+                        (int) (now.getX() - then.getX()), (int) (now.getY() - then.getY())).getNormalizedPoint();
+        matrix.translate(diff.getX(), diff.getY());
     }
 
     @Override
-    public void onClick(int x, int y) {
-        FieldView view = getToolbar().getFieldView();
-        AffineTransform matrix = view.getTransformation();
-        matrix.translate(x, y);
-        matrix.scale(4. / 3., 4. / 3.);
-        matrix.translate(-x, -y);
+    public void onClick(GameCoordinate position) {
+        zoom(this, position, true);
+    }
+
+    public ZoomInTool() {
+        super(ICON);
     }
 }

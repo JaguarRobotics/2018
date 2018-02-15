@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import org.usd232.robotics.autonomous.generator.FieldView;
+import org.usd232.robotics.autonomous.generator.GameCoordinate;
 
 public class Toolbar extends Container implements MouseListener, MouseMotionListener {
     private static final long serialVersionUID = 4293111239248868095L;
@@ -19,7 +20,7 @@ public class Toolbar extends Container implements MouseListener, MouseMotionList
     public void mouseClicked(MouseEvent e) {
         Tool tool = getSelectedTool();
         if (tool != null) {
-            tool.onClick(e.getX(), e.getY());
+            tool.onClick(GameCoordinate.fromPixels(fieldView, false, e.getX(), e.getY()));
         }
     }
 
@@ -59,9 +60,11 @@ public class Toolbar extends Container implements MouseListener, MouseMotionList
         lastY = y;
         if (tool != null) {
             if (mouseDown) {
-                tool.onDrag(x, y, dx, dy);
+                tool.onDrag(GameCoordinate.fromPixels(fieldView, false, x, y),
+                                GameCoordinate.fromPixels(fieldView, true, dx, dy));
             } else {
-                tool.onHover(x, y, dx, dy);
+                tool.onHover(GameCoordinate.fromPixels(fieldView, false, x, y),
+                                GameCoordinate.fromPixels(fieldView, true, dx, dy));
             }
         }
     }

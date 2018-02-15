@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.usd232.robotics.autonomous.generator.GameCoordinate;
 
 public class Tool extends JToggleButton implements ChangeListener {
     private static final long    serialVersionUID = -1475960958350342720L;
@@ -45,13 +46,13 @@ public class Tool extends JToggleButton implements ChangeListener {
     public void onDisable() {
     }
 
-    public void onHover(int x, int y, int dx, int dy) {
+    public void onHover(GameCoordinate position, GameCoordinate change) {
     }
 
-    public void onDrag(int x, int y, int dx, int dy) {
+    public void onDrag(GameCoordinate position, GameCoordinate change) {
     }
     
-    public void onClick(int x, int y) {
+    public void onClick(GameCoordinate position) {
     }
 
     public Tool(String icon) {
