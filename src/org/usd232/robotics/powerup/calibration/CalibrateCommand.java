@@ -39,6 +39,7 @@ public class CalibrateCommand extends CommandBase {
                 Robot.calibratorData.setLiftBottom(liftSubsystem.getPotentiometerValue());
                 Robot.amountOfThingsCalibrated++;
                 LOG.info("Calibrated The Lift Bottom");
+                Calibration.writeToFile(Robot.calibratorData);
                 LOG.info("Calibration Complete");
                 Robot.amountOfThingsCalibrated = 0;
             } else {
