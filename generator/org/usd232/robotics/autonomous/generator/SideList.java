@@ -25,7 +25,6 @@ public class SideList extends Container implements ActionListener, ListSelection
     private JButton                removeBtn;
     private ListModelBase<?, ?, ?> model;
     private boolean                isNamed;
-    private SideList               parent;
     private List<SideList>         children;
 
     @Override
@@ -35,6 +34,7 @@ public class SideList extends Container implements ActionListener, ListSelection
             newField.setText("");
         } else if (e.getSource() == removeBtn && !list.isSelectionEmpty()) {
             model.remove(list.getSelectedIndex());
+            removeBtn.setEnabled(false);
         }
     }
 
@@ -60,6 +60,25 @@ public class SideList extends Container implements ActionListener, ListSelection
         addBtn.setEnabled(b);
         removeBtn.setEnabled(b && !list.isSelectionEmpty());
         children.forEach(child->child.setEnabled(b && !list.isSelectionEmpty()));
+        if (!b) {
+            list.setSelectedIndices(new int[0]);
+        }
+    }
+
+    public void addListSelectionListener(ListSelectionListener listener) {
+        list.addListSelectionListener(listener);
+    }
+
+    public void removeListSelectionListener(ListSelectionListener listener) {
+        list.removeListSelectionListener(listener);
+    }
+
+    public boolean isSelectionEmpty() {
+        return list.isSelectionEmpty();
+    }
+    
+    public int getSelectedIndex() {
+        return list.getSelectedIndex();
     }
 
     public SideList(String labelName, ListModelBase<?, ?, ?> model, boolean isNamed, boolean canAdd, SideList parent) {
@@ -106,7 +125,6 @@ public class SideList extends Container implements ActionListener, ListSelection
         children = new ArrayList<>();
         this.isNamed = isNamed;
         if (parent != null) {
-            this.parent = parent;
             model.setParent(parent.model);
             parent.children.add(this);
             setEnabled(false);

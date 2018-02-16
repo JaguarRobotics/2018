@@ -3,7 +3,6 @@ package org.usd232.robotics.autonomous.generator;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
 public class GameCoordinate {

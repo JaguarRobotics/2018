@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.usd232.robotics.autonomous.AutonomousStep;
 import org.usd232.robotics.autonomous.generator.GameCoordinate;
 
 public class Tool extends JToggleButton implements ChangeListener {
@@ -51,8 +52,12 @@ public class Tool extends JToggleButton implements ChangeListener {
 
     public void onDrag(GameCoordinate position, GameCoordinate change) {
     }
-    
+
     public void onClick(GameCoordinate position) {
+    }
+
+    public void addStep(AutonomousStep step) {
+        getToolbar().getSidebar().addStep(step);
     }
 
     public Tool(String icon) {

@@ -42,11 +42,13 @@ public abstract class ListModelBase<TElement, TParentElement, TParent extends Li
         return toString(getRawElementAt(index));
     }
 
-    public void add(String name) {
+    public TElement add(String name) {
         int i = list.size();
-        list.add(create(name));
+        TElement element = create(name);
+        list.add(element);
         fireIntervalAdded(this, i, i);
         onUpdate();
+        return element;
     }
 
     public void remove(int i) {

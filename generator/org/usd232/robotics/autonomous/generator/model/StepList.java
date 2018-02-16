@@ -13,6 +13,9 @@ public class StepList extends ListModelBase<AutonomousStep, AutonomousRoute, Ver
 
     @Override
     protected String toString(AutonomousStep obj) {
+        if (obj.getType() == null) {
+            return "null";
+        }
         switch (obj.getType()) {
             case CustomCommand: {
                 CustomCommandParameter param = (CustomCommandParameter) obj.getGenericParameter();

@@ -20,10 +20,10 @@ public class MainWindow extends JFrame {
         getContentPane().setLayout(new BorderLayout(0, 0));
         FieldView fieldView = new FieldView();
         getContentPane().add(fieldView, BorderLayout.CENTER);
-        Toolbar toolbar = new Toolbar(fieldView);
-        getContentPane().add(toolbar, BorderLayout.NORTH);
         SideBar sidebar = new SideBar();
         getContentPane().add(sidebar, BorderLayout.WEST);
+        Toolbar toolbar = new Toolbar(fieldView, sidebar);
+        getContentPane().add(toolbar, BorderLayout.NORTH);
         setVisible(true);
     }
 }

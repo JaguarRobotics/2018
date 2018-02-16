@@ -108,16 +108,24 @@ public class AutonomousStep implements IBufferSerializable {
             throw new NullPointerException("param cannot be null");
         }
         if (param instanceof SleepParameter) {
-            setType(StepType.Sleep);
+            if (getType() != StepType.Sleep) {
+                setType(StepType.Sleep);
+            }
             this.param = param;
         } else if (param instanceof DriveParameter) {
-            setType(StepType.Drive);
+            if (getType() != StepType.Drive) {
+                setType(StepType.Drive);
+            }
             this.param = param;
         } else if (param instanceof TurnParameter) {
-            setType(StepType.Turn);
+            if (getType() != StepType.Turn) {
+                setType(StepType.Turn);
+            }
             this.param = param;
         } else if (param instanceof CustomCommandParameter) {
-            setType(StepType.CustomCommand);
+            if (getType() != StepType.CustomCommand) {
+                setType(StepType.CustomCommand);
+            }
             this.param = param;
         } else {
             throw new ClassCastException("Invalid parameter type");

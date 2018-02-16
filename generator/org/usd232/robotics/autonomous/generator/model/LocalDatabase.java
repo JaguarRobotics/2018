@@ -1,5 +1,6 @@
 package org.usd232.robotics.autonomous.generator.model;
 
+import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,20 +22,22 @@ public class LocalDatabase
     @Override
     protected void onUpdate() {
         if (!constructing) {
-            List<String> oldFiles = new LinkedList<>();
-            oldFiles.addAll(Arrays.asList(dir.list()));
-            for (Tuple2<String, AutonomousModel> tuple : list) {
-                String filename = Base64.getEncoder().encodeToString(tuple.obj1.getBytes());
-                oldFiles.remove(filename);
-                try (FileOutputStream stream = new FileOutputStream(new File(dir, filename))) {
-                    stream.write(tuple.obj2.serializeString().getBytes());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+            EventQueue.invokeLater(()-> {
+                List<String> oldFiles = new LinkedList<>();
+                oldFiles.addAll(Arrays.asList(dir.list()));
+                for (Tuple2<String, AutonomousModel> tuple : list) {
+                    String filename = Base64.getEncoder().encodeToString(tuple.obj1.getBytes());
+                    oldFiles.remove(filename);
+                    try (FileOutputStream stream = new FileOutputStream(new File(dir, filename))) {
+                        stream.write(tuple.obj2.serializeString().getBytes());
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            }
-            for (String file : oldFiles) {
-                new File(file).delete();
-            }
+                for (String file : oldFiles) {
+                    new File(file).delete();
+                }
+            });
         }
     }
 
