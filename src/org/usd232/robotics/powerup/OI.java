@@ -18,6 +18,8 @@ import org.usd232.robotics.powerup.lift.StepUp;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Trigger;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This class is the glue that binds the controls on the physical operator interface to the commands and command groups
@@ -27,7 +29,19 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * @since Always
  * @version 2018
  */
-public class OI implements RobotMap {
+public class OI extends Trigger implements RobotMap {
+    abstract class Scheduler extends ButtonScheduler {
+        @Override
+        public void start() {
+            super.start();
+        }
+    }
+
+    @Override
+    public boolean get() {
+        return false;
+    }
+
     public OI() {
         Joystick0_Button11.whenPressed(new CalibrateCommand());
         Joystick1_Button11.whenPressed(new CalibrateCommand());
@@ -35,8 +49,6 @@ public class OI implements RobotMap {
         Joystick1_Button3.whenPressed(new GearShiftHigh());
         Joystick0_Button2.whenPressed(new GearShiftLow());
         Joystick1_Button2.whenPressed(new GearShiftLow());
-        
-
         StepUp up = new StepUp();
         StepDown down = new StepDown();
         ManipulatorXbox_RB.whenPressed(up);
@@ -51,6 +63,42 @@ public class OI implements RobotMap {
         ManipulatorXbox_A.whenPressed(new LowerIntake());
         ManipulatorXbox_X.whenPressed(new DropCube());
         ManipulatorXbox_B.whenPressed(new GrabCube());
+    }
+
+    public void whenLessThan(Joystick joystick, int axis, double value, Command command) {
+        new Scheduler() {
+            private boolean pressedLast = joystick.getRawAxis(axis) < value;
+
+            @Override
+            public void execute() {
+                if (joystick.getRawAxis(axis) < value) {
+                    if (!pressedLast) {
+                        pressedLast = true;
+                        command.start();
+                    }
+                } else {
+                    pressedLast = false;
+                }
+            }
+        }.start();
+    }
+
+    public void whenGreaterThan(Joystick joystick, int axis, double value, Command command) {
+        new Scheduler() {
+            private boolean pressedLast = joystick.getRawAxis(axis) > value;
+
+            @Override
+            public void execute() {
+                if (joystick.getRawAxis(axis) > value) {
+                    if (!pressedLast) {
+                        pressedLast = true;
+                        command.start();
+                    }
+                } else {
+                    pressedLast = false;
+                }
+            }
+        }.start();
     }
 
     // The controllers we are using this year
