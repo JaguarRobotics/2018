@@ -8,10 +8,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.usd232.robotics.autonomous.AutonomousStep;
 import org.usd232.robotics.autonomous.generator.GameCoordinate;
+import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
 public class Tool extends JToggleButton implements ChangeListener {
     private static final long    serialVersionUID = -1475960958350342720L;
     private ThreadLocal<Boolean> insideStateChanged;
+    protected final GeneratorModel model;
 
     @Override
     protected void paintBorder(Graphics g) {
@@ -57,10 +59,11 @@ public class Tool extends JToggleButton implements ChangeListener {
     }
 
     public void addStep(AutonomousStep step) {
-        getToolbar().getSidebar().addStep(step);
+        model.addStep(step);
     }
 
-    public Tool(String icon) {
+    public Tool(String icon, GeneratorModel model) {
+        this.model = model;
         insideStateChanged = new ThreadLocal<Boolean>() {
             @Override
             protected Boolean initialValue() {

@@ -2,6 +2,7 @@ package org.usd232.robotics.autonomous.generator.tools;
 
 import org.usd232.robotics.autonomous.AutonomousStep;
 import org.usd232.robotics.autonomous.SleepParameter;
+import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
 public class SleepTool extends DrawingTool {
     private static final long   serialVersionUID = -801551249243642901L;
@@ -17,7 +18,7 @@ public class SleepTool extends DrawingTool {
         setSelected(false);
     }
 
-    public SleepTool() {
-        super(ICON);
+    public SleepTool(GeneratorModel model) {
+        super(ICON, model);
     }
 }

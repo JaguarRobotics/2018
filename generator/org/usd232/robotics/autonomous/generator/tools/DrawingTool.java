@@ -1,26 +1,20 @@
 package org.usd232.robotics.autonomous.generator.tools;
 
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
-public class DrawingTool extends Tool implements HierarchyListener, ListSelectionListener {
+public class DrawingTool extends Tool implements ListSelectionListener {
     private static final long serialVersionUID = -4579626106651887780L;
 
     @Override
-    public void hierarchyChanged(HierarchyEvent e) {
-        getToolbar().getSidebar().addListSelectionListener(this);
-    }
-
-    @Override
     public void valueChanged(ListSelectionEvent e) {
-        setVisible(!getToolbar().getSidebar().route.isSelectionEmpty());
+        setVisible(!model.versionListView.isSelectionEmpty());
     }
 
-    public DrawingTool(String icon) {
-        super(icon);
-        addHierarchyListener(this);
+    public DrawingTool(String icon, GeneratorModel model) {
+        super(icon, model);
         setVisible(false);
+        model.addListSelectionListener(this);
     }
 }

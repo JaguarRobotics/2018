@@ -8,12 +8,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import org.usd232.robotics.autonomous.generator.FieldView;
 import org.usd232.robotics.autonomous.generator.GameCoordinate;
-import org.usd232.robotics.autonomous.generator.SideBar;
+import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
 public class Toolbar extends Container implements MouseListener, MouseMotionListener {
     private static final long serialVersionUID = 4293111239248868095L;
     private FieldView         fieldView;
-    private SideBar           sidebar;
     private boolean           mouseDown;
     private int               lastX;
     private int               lastY;
@@ -84,23 +83,18 @@ public class Toolbar extends Container implements MouseListener, MouseMotionList
         return fieldView;
     }
 
-    public SideBar getSidebar() {
-        return sidebar;
-    }
-
-    public Toolbar(FieldView fieldView, SideBar sidebar) {
+    public Toolbar(GeneratorModel model, FieldView fieldView) {
         this.fieldView = fieldView;
-        this.sidebar = sidebar;
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        add(new MoveTool());
-        add(new RotateImage());
-        add(new ZoomInTool());
-        add(new ZoomOutTool());
-        add(new ResetView());
-        add(new SleepTool());
-        add(new DriveTool());
-        add(new TurnTool());
-        add(new CustomCommandTool());
+        add(new MoveTool(model));
+        add(new RotateImage(model));
+        add(new ZoomInTool(model));
+        add(new ZoomOutTool(model));
+        add(new ResetView(model));
+        add(new SleepTool(model));
+        add(new DriveTool(model));
+        add(new TurnTool(model));
+        add(new CustomCommandTool(model));
         fieldView.addMouseListener(this);
         fieldView.addMouseMotionListener(this);
     }

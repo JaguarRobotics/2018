@@ -1,6 +1,7 @@
 package org.usd232.robotics.autonomous.generator.tools;
 
 import org.usd232.robotics.autonomous.generator.GameCoordinate;
+import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
 public class ZoomOutTool extends Tool {
     private static final long   serialVersionUID = -2152990834180811625L;
@@ -11,7 +12,7 @@ public class ZoomOutTool extends Tool {
         ZoomInTool.zoom(this, position, false);
     }
 
-    public ZoomOutTool() {
-        super(ICON);
+    public ZoomOutTool(GeneratorModel model) {
+        super(ICON, model);
     }
 }

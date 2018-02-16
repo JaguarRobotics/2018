@@ -3,6 +3,7 @@ package org.usd232.robotics.autonomous.generator;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 import org.usd232.robotics.autonomous.generator.tools.Toolbar;
 
 public class MainWindow extends JFrame {
@@ -13,6 +14,7 @@ public class MainWindow extends JFrame {
     }
 
     public MainWindow() {
+        GeneratorModel model = new GeneratorModel();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(640, 480));
@@ -20,10 +22,12 @@ public class MainWindow extends JFrame {
         getContentPane().setLayout(new BorderLayout(0, 0));
         FieldView fieldView = new FieldView();
         getContentPane().add(fieldView, BorderLayout.CENTER);
-        SideBar sidebar = new SideBar();
+        SideBar sidebar = new SideBar(model);
         getContentPane().add(sidebar, BorderLayout.WEST);
-        Toolbar toolbar = new Toolbar(fieldView, sidebar);
+        Toolbar toolbar = new Toolbar(model, fieldView);
         getContentPane().add(toolbar, BorderLayout.NORTH);
+        PropertiesBar properties = new PropertiesBar();
+        getContentPane().add(properties, BorderLayout.EAST);
         setVisible(true);
     }
 }

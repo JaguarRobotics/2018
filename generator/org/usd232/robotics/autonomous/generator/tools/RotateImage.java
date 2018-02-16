@@ -1,5 +1,7 @@
 package org.usd232.robotics.autonomous.generator.tools;
 
+import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
+
 public class RotateImage extends Tool {
     private static final long   serialVersionUID = -2152990834180811625L;
     private static final String ICON             = "rotate_90_degrees_ccw";
@@ -10,7 +12,7 @@ public class RotateImage extends Tool {
         setSelected(false);
     }
 
-    public RotateImage() {
-        super(ICON);
+    public RotateImage(GeneratorModel model) {
+        super(ICON, model);
     }
 }

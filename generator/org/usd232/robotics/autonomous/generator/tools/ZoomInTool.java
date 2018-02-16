@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import org.usd232.robotics.autonomous.generator.GameCoordinate;
+import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
 public class ZoomInTool extends Tool {
     private static final long   serialVersionUID = -2152990834180811625L;
@@ -31,7 +32,7 @@ public class ZoomInTool extends Tool {
         zoom(this, position, true);
     }
 
-    public ZoomInTool() {
-        super(ICON);
+    public ZoomInTool(GeneratorModel model) {
+        super(ICON, model);
     }
 }

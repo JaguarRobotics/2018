@@ -2,6 +2,7 @@ package org.usd232.robotics.autonomous.generator.tools;
 
 import org.usd232.robotics.autonomous.AutonomousStep;
 import org.usd232.robotics.autonomous.TurnParameter;
+import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
 public class TurnTool extends DrawingTool {
     private static final long   serialVersionUID = 8763962239026604720L;
@@ -17,7 +18,7 @@ public class TurnTool extends DrawingTool {
         setSelected(false);
     }
 
-    public TurnTool() {
-        super(ICON);
+    public TurnTool(GeneratorModel model) {
+        super(ICON, model);
     }
 }
