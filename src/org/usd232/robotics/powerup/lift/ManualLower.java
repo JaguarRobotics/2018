@@ -34,7 +34,6 @@ public class ManualLower extends CommandBase {
      * @version 2018
      */
     public ManualLower() {
-        requires(liftSubsystem);
     }
 
     /**

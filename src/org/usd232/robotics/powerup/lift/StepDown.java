@@ -15,6 +15,20 @@ import edu.wpi.first.wpilibj.Relay;
  * @version 2018
  */
 public class StepDown extends CommandBase {
+    public class Canceler extends CommandBase {
+        @Override
+        protected boolean isFinished() {
+            return true;
+        }
+
+        @Override
+        protected void execute() {
+            if (initTime + 500 > System.currentTimeMillis()) {
+                cancel();
+            }
+        }
+    }
+
     /**
      * The Logger
      * 
@@ -32,6 +46,7 @@ public class StepDown extends CommandBase {
     private int                 counter   = 0;
     private int                 onTime    = 5;
     private int                 offTime   = 5;
+    private long                initTime;
 
     /**
      * Lowers the lift of the robot to specified potentiometer value
@@ -53,6 +68,7 @@ public class StepDown extends CommandBase {
      */
     @Override
     protected void initialize() {
+        initTime = System.currentTimeMillis();
         switch (LiftSubsystem.currentPosition) {
             case Climb:
                 stepValue = Robot.calibratorData.getLiftScale();

@@ -31,7 +31,6 @@ public class ManualRaise extends CommandBase {
      */
     public ManualRaise() {
         IO.helpRaiseSolenoid.set(true);
-        requires(liftSubsystem);
     }
 
     /**
