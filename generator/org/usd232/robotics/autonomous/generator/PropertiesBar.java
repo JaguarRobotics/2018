@@ -14,6 +14,10 @@ import javax.swing.SpringLayout;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.usd232.robotics.autonomous.AutonomousStep;
+import org.usd232.robotics.autonomous.CustomCommandParameter;
+import org.usd232.robotics.autonomous.DriveParameter;
+import org.usd232.robotics.autonomous.SleepParameter;
+import org.usd232.robotics.autonomous.TurnParameter;
 import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
 public class PropertiesBar extends Container implements ListSelectionListener {
@@ -27,6 +31,7 @@ public class PropertiesBar extends Container implements ListSelectionListener {
     private JTextField        commandField;
     private JPanel            stepContainer;
     private GeneratorModel    model;
+    private JTextPane         parameterField;
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -42,21 +47,35 @@ public class PropertiesBar extends Container implements ListSelectionListener {
             } else {
                 AutonomousStep step = model.stepList.getRawElementAt(model.stepListView.getSelectedIndex());
                 switch (step.getType()) {
-                    case CustomCommand:
+                    case CustomCommand: {
                         name = "custom";
+                        CustomCommandParameter param = (CustomCommandParameter) step.getGenericParameter();
+                        commandField.setText(Byte.toString(param.getCommandID()));
+                        parameterField.setText(param.getParameter());
                         break;
-                    case Drive:
+                    }
+                    case Drive: {
                         name = "drive";
+                        DriveParameter param = (DriveParameter) step.getGenericParameter();
+                        distanceField.setText(Float.toString(param.getDistance()));
                         break;
-                    case Sleep:
+                    }
+                    case Sleep: {
                         name = "sleep";
+                        SleepParameter param = (SleepParameter) step.getGenericParameter();
+                        timeField.setText(Short.toString(param.getMillis()));
                         break;
-                    case Turn:
+                    }
+                    case Turn: {
                         name = "turn";
+                        TurnParameter param = (TurnParameter) step.getGenericParameter();
+                        angleField.setText(Float.toString(param.getAngle()));
                         break;
-                    default:
+                    }
+                    default: {
                         name = "empty";
                         break;
+                    }
                 }
             }
             ((CardLayout) stepContainer.getLayout()).show(stepContainer, name);
@@ -259,7 +278,7 @@ public class PropertiesBar extends Container implements ListSelectionListener {
         gbc_lblParameters.gridx = 0;
         gbc_lblParameters.gridy = 1;
         customConfig.add(lblParameters, gbc_lblParameters);
-        JTextPane parameterField = new JTextPane();
+        parameterField = new JTextPane();
         GridBagConstraints gbc_parameterField = new GridBagConstraints();
         gbc_parameterField.fill = GridBagConstraints.BOTH;
         gbc_parameterField.gridx = 1;
