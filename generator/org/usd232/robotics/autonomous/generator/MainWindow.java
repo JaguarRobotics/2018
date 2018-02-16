@@ -26,7 +26,7 @@ public class MainWindow extends JFrame {
         getContentPane().add(sidebar, BorderLayout.WEST);
         Toolbar toolbar = new Toolbar(model, fieldView);
         getContentPane().add(toolbar, BorderLayout.NORTH);
-        PropertiesBar properties = new PropertiesBar();
+        PropertiesBar properties = new PropertiesBar(model);
         getContentPane().add(properties, BorderLayout.EAST);
         setVisible(true);
     }

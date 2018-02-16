@@ -11,8 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import org.usd232.robotics.autonomous.AutonomousStep;
+import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
-public class PropertiesBar extends Container {
+public class PropertiesBar extends Container implements ListSelectionListener {
     private static final long serialVersionUID = -1632296736445403910L;
     private JTextField        scaleField;
     private JTextField        startXField;
@@ -22,13 +26,46 @@ public class PropertiesBar extends Container {
     private JTextField        angleField;
     private JTextField        commandField;
     private JPanel            stepContainer;
-    private JPanel            emptyConfig;
-    private JPanel            sleepConfig;
-    private JPanel            driveConfig;
-    private JPanel            turnConfig;
-    private JPanel            customConfig;
+    private GeneratorModel    model;
 
-    public PropertiesBar() {
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (e.getSource() == model.localDatabaseView.list) {
+            scaleField.setEnabled(!model.localDatabaseView.isSelectionEmpty());
+        } else if (e.getSource() == model.versionListView.list) {
+            startXField.setEnabled(!model.versionListView.isSelectionEmpty());
+            startYField.setEnabled(!model.versionListView.isSelectionEmpty());
+        } else if (e.getSource() == model.stepListView.list) {
+            String name;
+            if (model.stepListView.isSelectionEmpty()) {
+                name = "empty";
+            } else {
+                AutonomousStep step = model.stepList.getRawElementAt(model.stepListView.getSelectedIndex());
+                switch (step.getType()) {
+                    case CustomCommand:
+                        name = "custom";
+                        break;
+                    case Drive:
+                        name = "drive";
+                        break;
+                    case Sleep:
+                        name = "sleep";
+                        break;
+                    case Turn:
+                        name = "turn";
+                        break;
+                    default:
+                        name = "empty";
+                        break;
+                }
+            }
+            ((CardLayout) stepContainer.getLayout()).show(stepContainer, name);
+        }
+    }
+
+    public PropertiesBar(GeneratorModel model) {
+        this.model = model;
+        model.addListSelectionListener(this);
         setPreferredSize(new Dimension(320, 400));
         SpringLayout springLayout = new SpringLayout();
         setLayout(springLayout);
@@ -56,6 +93,7 @@ public class PropertiesBar extends Container {
         gbc_lblFieldScale.gridy = 0;
         generalConfig.add(lblFieldScale, gbc_lblFieldScale);
         scaleField = new JTextField();
+        scaleField.setEnabled(false);
         GridBagConstraints gbc_scaleField = new GridBagConstraints();
         gbc_scaleField.anchor = GridBagConstraints.NORTH;
         gbc_scaleField.fill = GridBagConstraints.HORIZONTAL;
@@ -72,6 +110,7 @@ public class PropertiesBar extends Container {
         gbc_lblStartingX.gridy = 1;
         generalConfig.add(lblStartingX, gbc_lblStartingX);
         startXField = new JTextField();
+        startXField.setEnabled(false);
         GridBagConstraints gbc_startXField = new GridBagConstraints();
         gbc_startXField.anchor = GridBagConstraints.NORTH;
         gbc_startXField.fill = GridBagConstraints.HORIZONTAL;
@@ -88,6 +127,7 @@ public class PropertiesBar extends Container {
         gbc_lblStartingY.gridy = 2;
         generalConfig.add(lblStartingY, gbc_lblStartingY);
         startYField = new JTextField();
+        startYField.setEnabled(false);
         GridBagConstraints gbc_startYField = new GridBagConstraints();
         gbc_startYField.anchor = GridBagConstraints.NORTH;
         gbc_startYField.fill = GridBagConstraints.HORIZONTAL;
@@ -101,10 +141,10 @@ public class PropertiesBar extends Container {
         springLayout.putConstraint(SpringLayout.EAST, stepContainer, 0, SpringLayout.EAST, lblGeneralParameters);
         add(stepContainer);
         stepContainer.setLayout(new CardLayout(0, 0));
-        emptyConfig = new JPanel();
-        stepContainer.add(emptyConfig, "name_48178430288538");
-        sleepConfig = new JPanel();
-        stepContainer.add(sleepConfig, "name_47636848980292");
+        JPanel emptyConfig = new JPanel();
+        stepContainer.add(emptyConfig, "empty");
+        JPanel sleepConfig = new JPanel();
+        stepContainer.add(sleepConfig, "sleep");
         GridBagLayout gbl_sleepConfig = new GridBagLayout();
         gbl_sleepConfig.columnWidths = new int[] { 0, 0, 0, 0 };
         gbl_sleepConfig.rowHeights = new int[] { 0, 0 };
@@ -134,8 +174,8 @@ public class PropertiesBar extends Container {
         JLabel lblCommandParameters = new JLabel("Command Parameters:");
         springLayout.putConstraint(SpringLayout.NORTH, lblCommandParameters, 6, SpringLayout.SOUTH, generalConfig);
         springLayout.putConstraint(SpringLayout.NORTH, stepContainer, 6, SpringLayout.SOUTH, lblCommandParameters);
-        driveConfig = new JPanel();
-        stepContainer.add(driveConfig, "name_47636863115513");
+        JPanel driveConfig = new JPanel();
+        stepContainer.add(driveConfig, "drive");
         GridBagLayout gbl_driveConfig = new GridBagLayout();
         gbl_driveConfig.columnWidths = new int[] { 0, 0, 0, 0 };
         gbl_driveConfig.rowHeights = new int[] { 0, 0 };
@@ -162,8 +202,8 @@ public class PropertiesBar extends Container {
         gbc_lblIn.gridx = 2;
         gbc_lblIn.gridy = 0;
         driveConfig.add(lblIn, gbc_lblIn);
-        turnConfig = new JPanel();
-        stepContainer.add(turnConfig, "name_47791228642043");
+        JPanel turnConfig = new JPanel();
+        stepContainer.add(turnConfig, "turn");
         GridBagLayout gbl_turnConfig = new GridBagLayout();
         gbl_turnConfig.columnWidths = new int[] { 0, 0, 0, 0 };
         gbl_turnConfig.rowHeights = new int[] { 0, 0 };
@@ -190,8 +230,8 @@ public class PropertiesBar extends Container {
         gbc_lblub.gridx = 2;
         gbc_lblub.gridy = 0;
         turnConfig.add(lblub, gbc_lblub);
-        customConfig = new JPanel();
-        stepContainer.add(customConfig, "name_47941593184387");
+        JPanel customConfig = new JPanel();
+        stepContainer.add(customConfig, "custom");
         GridBagLayout gbl_customConfig = new GridBagLayout();
         gbl_customConfig.columnWidths = new int[] { 0, 0, 0 };
         gbl_customConfig.rowHeights = new int[] { 0, 0, 0 };

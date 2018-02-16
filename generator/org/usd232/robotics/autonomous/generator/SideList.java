@@ -20,7 +20,7 @@ import org.usd232.robotics.autonomous.generator.model.ListModelBase;
 public class SideList extends Container implements ActionListener, ListSelectionListener {
     private static final long      serialVersionUID = 1890289959504726076L;
     private JTextField             newField;
-    private JList<String>          list;
+    public final JList<String>     list;
     private JButton                addBtn;
     private JButton                removeBtn;
     private ListModelBase<?, ?, ?> model;
@@ -76,7 +76,7 @@ public class SideList extends Container implements ActionListener, ListSelection
     public boolean isSelectionEmpty() {
         return list.isSelectionEmpty();
     }
-    
+
     public int getSelectedIndex() {
         return list.getSelectedIndex();
     }
