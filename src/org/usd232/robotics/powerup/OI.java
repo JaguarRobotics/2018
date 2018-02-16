@@ -11,10 +11,7 @@ import org.usd232.robotics.powerup.intake.LowerIntake;
 import org.usd232.robotics.powerup.intake.RaiseIntake;
 import org.usd232.robotics.powerup.lift.ManualLower;
 import org.usd232.robotics.powerup.lift.ManualRaise;
-import org.usd232.robotics.powerup.lift.StepDown;
-import org.usd232.robotics.powerup.lift.StepUp;
-// import org.usd232.robotics.powerup.lift.ManualLower;
-// import org.usd232.robotics.powerup.lift.ManualRaise;
+import org.usd232.robotics.powerup.lift.Raise;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -49,56 +46,20 @@ public class OI extends Trigger implements RobotMap {
         Joystick1_Button3.whenPressed(new GearShiftHigh());
         Joystick0_Button2.whenPressed(new GearShiftLow());
         Joystick1_Button2.whenPressed(new GearShiftLow());
-        StepUp up = new StepUp();
-        StepDown down = new StepDown();
-        ManipulatorXbox_RB.whenPressed(up);
-        ManipulatorXbox_LB.whenPressed(down);
-        ManipulatorXbox_RB.whenReleased(up.new Canceler());
-        ManipulatorXbox_LB.whenReleased(down.new Canceler());
+        
         ManipulatorXbox_RB.whileHeld(new ManualRaise());
         ManipulatorXbox_LB.whileHeld(new ManualLower());
-        ManipulatorXbox_Start.whileHeld(new ClimbUp());
-        ManipulatorXbox_Back.whileHeld(new ClimbDown());
+        whenPovIs(Manipulator, 0, new Raise(Robot.calibratorData.getLiftScale()));
+        whenPovIs(Manipulator, 6, new Raise(Robot.calibratorData.getLiftSwitch()));
+        whenPovIs(Manipulator, 4, new Raise(Robot.calibratorData.getLiftBottom()));
+        whenGreaterThan(Manipulator, 2, .8, new ClimbDown());
+        whenGreaterThan(Manipulator, 3, .8, new ClimbUp());
+        ManipulatorXbox_Start.whenPressed(new GearShiftHigh());
+        ManipulatorXbox_Back.whenPressed(new GearShiftLow());
         ManipulatorXbox_Y.whenPressed(new RaiseIntake());
         ManipulatorXbox_A.whenPressed(new LowerIntake());
-        ManipulatorXbox_X.whenPressed(new DropCube());
-        ManipulatorXbox_B.whenPressed(new GrabCube());
-    }
-
-    public void whenLessThan(Joystick joystick, int axis, double value, Command command) {
-        new Scheduler() {
-            private boolean pressedLast = joystick.getRawAxis(axis) < value;
-
-            @Override
-            public void execute() {
-                if (joystick.getRawAxis(axis) < value) {
-                    if (!pressedLast) {
-                        pressedLast = true;
-                        command.start();
-                    }
-                } else {
-                    pressedLast = false;
-                }
-            }
-        }.start();
-    }
-
-    public void whenGreaterThan(Joystick joystick, int axis, double value, Command command) {
-        new Scheduler() {
-            private boolean pressedLast = joystick.getRawAxis(axis) > value;
-
-            @Override
-            public void execute() {
-                if (joystick.getRawAxis(axis) > value) {
-                    if (!pressedLast) {
-                        pressedLast = true;
-                        command.start();
-                    }
-                } else {
-                    pressedLast = false;
-                }
-            }
-        }.start();
+        ManipulatorXbox_X.whenPressed(new GrabCube());
+        ManipulatorXbox_B.whenPressed(new DropCube());
     }
 
     // The controllers we are using this year
@@ -139,4 +100,52 @@ public class OI extends Trigger implements RobotMap {
     public final Button   ManipulatorXbox_Start  = new JoystickButton(Manipulator, 8);
     public final Button   ManipulatorXbox_LStick = new JoystickButton(Manipulator, 9);
     public final Button   ManipulatorXbox_RStick = new JoystickButton(Manipulator, 10);
+
+    public void whenLessThan(Joystick joystick, int axis, double value, Command command) {
+        new Scheduler() {
+            private boolean pressedLast = joystick.getRawAxis(axis) < value;
+
+            @Override
+            public void execute() {
+                if (joystick.getRawAxis(axis) < value) {
+                    if (!pressedLast) {
+                        pressedLast = true;
+                        command.start();
+                    }
+                } else {
+                    pressedLast = false;
+                }
+            }
+        }.start();
+    }
+
+    public void whenGreaterThan(Joystick joystick, int axis, double value, Command command) {
+        new Scheduler() {
+            private boolean pressedLast = joystick.getRawAxis(axis) > value;
+
+            @Override
+            public void execute() {
+                if (joystick.getRawAxis(axis) > value) {
+                    if (!pressedLast) {
+                        pressedLast = true;
+                        command.start();
+                    }
+                } else {
+                    pressedLast = false;
+                }
+            }
+        }.start();
+    }
+
+    public void whenPovIs(Joystick joystick, int valueForCommand, Command command) {
+        new Scheduler() {
+            @Override
+            public void execute() {
+                int currentValue = (int) (((joystick.getPOV() + 22.5) % 360) / 45);
+                if (currentValue == valueForCommand) {
+                    command.start();
+                }
+            }
+        }.start();
+    }
 }

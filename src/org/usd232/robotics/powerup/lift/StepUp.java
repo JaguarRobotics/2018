@@ -14,19 +14,6 @@ import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
  * @version 2018
  */
 public class StepUp extends CommandBase {
-    public class Canceler extends CommandBase {
-        @Override
-        protected boolean isFinished() {
-            return true;
-        }
-
-        @Override
-        protected void execute() {
-            if (initTime + 500 > System.currentTimeMillis()) {
-                cancel();
-            }
-        }
-    }
 
     /**
      * The Logger
@@ -42,7 +29,6 @@ public class StepUp extends CommandBase {
      * @version 2018
      */
     private double              stepValue = 0;
-    private long                initTime;
 
     /**
      * Lowers the lift of the robot to specified potentiometer value
@@ -64,7 +50,6 @@ public class StepUp extends CommandBase {
      */
     @Override
     protected void initialize() {
-        initTime = System.currentTimeMillis();
         LOG.info("Lifting Lift to " + stepValue);
         switch (LiftSubsystem.currentPosition) {
             case Climb:

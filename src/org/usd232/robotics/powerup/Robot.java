@@ -165,6 +165,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopPeriodic() {
+        LOG.info("Bottom Switch " + Boolean.toString(IO.bottomLimitSwitch.get()) + " Top Switch " + Boolean.toString(IO.topLimitSwitch.get()));
         Scheduler.getInstance().run();
     }
 
