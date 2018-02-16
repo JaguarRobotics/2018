@@ -25,12 +25,11 @@ public class LiftSubsystem extends SubsystemBase {
     }
 
     public double getPotentiometerValue() {
-        double value = scissorPotentiometer.get();
-        return value;
+        return scissorPotentiometer.get();
     }
 
     public enum StepPositions {
-        Scale, Switch, Bottom
+        Bottom, Switch, Scale
     }
 
     public static void raiseScissor() {
