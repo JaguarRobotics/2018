@@ -35,7 +35,7 @@ public class LocalDatabase
                     }
                 }
                 for (String file : oldFiles) {
-                    new File(file).delete();
+                    new File(dir, file).delete();
                 }
             });
         }

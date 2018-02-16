@@ -9,11 +9,14 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import javax.swing.ImageIcon;
+import org.usd232.robotics.autonomous.generator.tools.Tool;
+import org.usd232.robotics.autonomous.generator.tools.Toolbar;
 
 public class FieldView extends Container {
     private static final long serialVersionUID = -6766487415290825938L;
     private Image             image;
     private AffineTransform   imageTransformation;
+    private Toolbar           toolbar;
 
     public Dimension getImageSize() {
         double maxWidth = ((double) getWidth()) / (double) image.getWidth(this);
@@ -58,6 +61,12 @@ public class FieldView extends Container {
     public void paint(Graphics g) {
         paintBackground(g);
         super.paint(g);
+        if (toolbar != null) {
+            Tool tool = toolbar.getSelectedTool();
+            if (tool != null) {
+                tool.paintOverlay(g);
+            }
+        }
     }
 
     AffineTransform getTransformationRO() {
@@ -72,6 +81,10 @@ public class FieldView extends Container {
     public void resetTransformation() {
         AffineTransform matrix = getTransformation();
         matrix.setToIdentity();
+    }
+
+    public void setToolbar(Toolbar toolbar) {
+        this.toolbar = toolbar;
     }
 
     public FieldView() {

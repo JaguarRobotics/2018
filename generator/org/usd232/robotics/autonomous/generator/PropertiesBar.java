@@ -50,6 +50,12 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
         changedUpdate(e);
     }
 
+    public void updateStartingPos() {
+        AutonomousRoute route = model.versionList.getRawElementAt(model.versionListView.getSelectedIndex());
+        startXField.setText(Float.toString(route.getStartX()));
+        startYField.setText(Float.toString(route.getStartY()));
+    }
+
     public float parseFloat(String str) {
         if (str.equals("") || str.equals("-")) {
             return 0;
@@ -96,10 +102,10 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
                 }
             } else if (e.getDocument() == startYField.getDocument()) {
                 try {
-                    route.setStartX(parseFloat(startYField.getText()));
+                    route.setStartY(parseFloat(startYField.getText()));
                     model.localDatabase.onUpdate();
                 } catch (NumberFormatException ex) {
-                    EventQueue.invokeLater(()->startYField.setText(Float.toString(route.getStartX())));
+                    EventQueue.invokeLater(()->startYField.setText(Float.toString(route.getStartY())));
                 }
             } else {
                 int i = model.stepListView.getSelectedIndex();
@@ -169,15 +175,19 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
         if (!ignoreValueChanged) {
             if (e.getSource() == model.localDatabaseView.list) {
                 scaleField.setEnabled(!model.localDatabaseView.isSelectionEmpty());
-                scaleField.setText(Float.toString(
-                                model.localDatabase.getRawElementAt(model.localDatabaseView.getSelectedIndex()).obj2
-                                                .getScale()));
+                if (scaleField.isEnabled()) {
+                    scaleField.setText(Float.toString(
+                                    model.localDatabase.getRawElementAt(model.localDatabaseView.getSelectedIndex()).obj2
+                                                    .getScale()));
+                }
             } else if (e.getSource() == model.versionListView.list) {
                 startXField.setEnabled(!model.versionListView.isSelectionEmpty());
                 startYField.setEnabled(!model.versionListView.isSelectionEmpty());
-                AutonomousRoute route = model.versionList.getRawElementAt(model.versionListView.getSelectedIndex());
-                startXField.setText(Float.toString(route.getStartX()));
-                startYField.setText(Float.toString(route.getStartY()));
+                if (!model.versionListView.isSelectionEmpty()) {
+                    AutonomousRoute route = model.versionList.getRawElementAt(model.versionListView.getSelectedIndex());
+                    startXField.setText(Float.toString(route.getStartX()));
+                    startYField.setText(Float.toString(route.getStartY()));
+                }
             } else if (e.getSource() == model.stepListView.list) {
                 String name;
                 if (model.stepListView.isSelectionEmpty()) {

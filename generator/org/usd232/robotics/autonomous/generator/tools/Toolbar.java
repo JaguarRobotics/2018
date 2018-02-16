@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import org.usd232.robotics.autonomous.generator.FieldView;
 import org.usd232.robotics.autonomous.generator.GameCoordinate;
+import org.usd232.robotics.autonomous.generator.PropertiesBar;
 import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
 public class Toolbar extends Container implements MouseListener, MouseMotionListener {
@@ -83,7 +84,7 @@ public class Toolbar extends Container implements MouseListener, MouseMotionList
         return fieldView;
     }
 
-    public Toolbar(GeneratorModel model, FieldView fieldView) {
+    public Toolbar(GeneratorModel model, FieldView fieldView, PropertiesBar props) {
         this.fieldView = fieldView;
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         add(new MoveTool(model));
@@ -92,10 +93,11 @@ public class Toolbar extends Container implements MouseListener, MouseMotionList
         add(new ZoomOutTool(model));
         add(new ResetView(model));
         add(new SleepTool(model));
-        add(new DriveTool(model));
+        add(new DriveTool(model, props));
         add(new TurnTool(model));
         add(new CustomCommandTool(model));
         fieldView.addMouseListener(this);
         fieldView.addMouseMotionListener(this);
+        fieldView.setToolbar(this);
     }
 }

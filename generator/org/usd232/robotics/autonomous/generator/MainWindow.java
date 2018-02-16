@@ -24,10 +24,10 @@ public class MainWindow extends JFrame {
         getContentPane().add(fieldView, BorderLayout.CENTER);
         SideBar sidebar = new SideBar(model);
         getContentPane().add(sidebar, BorderLayout.WEST);
-        Toolbar toolbar = new Toolbar(model, fieldView);
-        getContentPane().add(toolbar, BorderLayout.NORTH);
         PropertiesBar properties = new PropertiesBar(model);
         getContentPane().add(properties, BorderLayout.EAST);
+        Toolbar toolbar = new Toolbar(model, fieldView, properties);
+        getContentPane().add(toolbar, BorderLayout.NORTH);
         setVisible(true);
     }
 }

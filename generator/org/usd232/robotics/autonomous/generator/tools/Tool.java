@@ -11,8 +11,8 @@ import org.usd232.robotics.autonomous.generator.GameCoordinate;
 import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
 public class Tool extends JToggleButton implements ChangeListener {
-    private static final long    serialVersionUID = -1475960958350342720L;
-    private ThreadLocal<Boolean> insideStateChanged;
+    private static final long      serialVersionUID = -1475960958350342720L;
+    private ThreadLocal<Boolean>   insideStateChanged;
     protected final GeneratorModel model;
 
     @Override
@@ -56,6 +56,13 @@ public class Tool extends JToggleButton implements ChangeListener {
     }
 
     public void onClick(GameCoordinate position) {
+    }
+
+    public void paintOverlay(Graphics g) {
+    }
+    
+    public void repaintOverlay() {
+        getToolbar().getFieldView().repaint();
     }
 
     public void addStep(AutonomousStep step) {
