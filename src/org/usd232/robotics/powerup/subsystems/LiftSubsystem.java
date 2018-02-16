@@ -30,7 +30,7 @@ public class LiftSubsystem extends SubsystemBase {
     }
 
     public enum StepPositions {
-        Scale, Switch, Bottom, Climb
+        Scale, Switch, Bottom
     }
 
     public static void raiseScissor() {

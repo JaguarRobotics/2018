@@ -43,7 +43,6 @@ public class Robot extends IterativeRobot {
      */
     public static final SendableChooser<Alliance>         allianceChooser          = new SendableChooser<Alliance>();
     public static CalibratorData                          calibratorData;
-    public static boolean                                 isTesting                = false;
     public static int                                     amountOfThingsCalibrated = 0;
     /**
      * The command that the robot does for autonomous
@@ -71,10 +70,12 @@ public class Robot extends IterativeRobot {
         try {
             Calibration.init();
             calibratorData = Calibration.readFile();
-            LOG.info(" Bottom " + calibratorData.getLiftBottom() + " Switch " + calibratorData.getLiftSwitch()
-                            + " Scale " + calibratorData.getLiftScale() + " Top " + calibratorData.getLiftClimbTop());
+            LOG.info("Calibration Data:");
+            LOG.info("Bottom: %f", calibratorData.getLiftBottom());
+            LOG.info("Switch: %f", calibratorData.getLiftSwitch());
+            LOG.info("Scale: %f", calibratorData.getLiftScale());
         } catch (Exception e) {
-            LOG.error("Exception in getting calibration file", e);
+            LOG.error("Exception in getting calibration file");
             calibratorData = new CalibratorData();
         }
         Thread thread = new Thread(new LogServer());
@@ -129,7 +130,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         LOG.trace("Autonomous Initalized");
-        Robot.isTesting = false;
         autonomousCommand = new Autonomous();
         autonomousCommand.start();
     }
@@ -152,7 +152,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit() {
         LOG.trace("Teleop Initalized");
-        isTesting = false;
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
@@ -165,7 +164,8 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopPeriodic() {
-        LOG.info("Bottom Switch " + Boolean.toString(IO.bottomLimitSwitch.get()) + " Top Switch " + Boolean.toString(IO.topLimitSwitch.get()));
+        LOG.info("Bottom Switch " + Boolean.toString(IO.bottomLimitSwitch.get()) + " Top Switch "
+                        + Boolean.toString(IO.topLimitSwitch.get()));
         Scheduler.getInstance().run();
     }
 
@@ -188,6 +188,5 @@ public class Robot extends IterativeRobot {
      */
     public void testInit() {
         LOG.trace("Test Initalized");
-        Robot.isTesting = true;
     }
 }

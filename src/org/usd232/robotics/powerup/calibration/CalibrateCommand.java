@@ -39,13 +39,8 @@ public class CalibrateCommand extends CommandBase {
                 Robot.calibratorData.setLiftBottom(liftSubsystem.getPotentiometerValue());
                 Robot.amountOfThingsCalibrated++;
                 LOG.info("Calibrated The Lift Bottom");
-                LOG.info("Go To Height We Climb At");
-            } else if (Robot.amountOfThingsCalibrated == 3) {
-                Robot.calibratorData.setLiftClimbTop(liftSubsystem.getPotentiometerValue());
-                Robot.amountOfThingsCalibrated = 0;
-                Calibration.writeToFile(Robot.calibratorData);
-                LOG.info("Calibrated The Height We Climb At");
                 LOG.info("Calibration Complete");
+                Robot.amountOfThingsCalibrated = 0;
             } else {
             }
         }

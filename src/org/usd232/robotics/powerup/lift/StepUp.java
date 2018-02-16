@@ -52,12 +52,9 @@ public class StepUp extends CommandBase {
     protected void initialize() {
         LOG.info("Lifting Lift to " + stepValue);
         switch (LiftSubsystem.currentPosition) {
-            case Climb:
-                stepValue = 500000000;
-                break;
             case Scale:
-                stepValue = Robot.calibratorData.getLiftClimbTop();
-                LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Climb;
+                stepValue = 500000000;
+                LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Scale;
                 break;
             case Switch:
                 stepValue = Robot.calibratorData.getLiftScale();

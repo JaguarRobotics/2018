@@ -21,20 +21,13 @@ public class CalibratorData implements Serializable {
      * @version 2018
      */
     private double     liftSwitch;
-    /***
+    /**
      * Potentiometer value for the bottom of the lift
      * 
      * @since 2018
      * @version 2018
      */
     private double     liftBottom;
-    /***
-     * Potentiometer value for the Height we need to go to climb to the top
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    private double     liftClimbTop;
 
     public double getLiftScale() {
         return liftScale;
@@ -60,11 +53,4 @@ public class CalibratorData implements Serializable {
         this.liftBottom = liftBottom;
     }
 
-    public double getLiftClimbTop() {
-        return liftClimbTop;
-    }
-
-    public void setLiftClimbTop(double liftClimbTop) {
-        this.liftClimbTop = liftClimbTop;
-    }
 }

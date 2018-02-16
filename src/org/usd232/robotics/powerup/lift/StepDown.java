@@ -55,10 +55,6 @@ public class StepDown extends CommandBase {
     @Override
     protected void initialize() {
         switch (LiftSubsystem.currentPosition) {
-            case Climb:
-                stepValue = Robot.calibratorData.getLiftScale();
-                LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Scale;
-                break;
             case Scale:
                 stepValue = Robot.calibratorData.getLiftSwitch();
                 LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Switch;
