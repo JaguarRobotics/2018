@@ -80,6 +80,10 @@ public class SideList extends Container implements ActionListener, ListSelection
     public int getSelectedIndex() {
         return list.getSelectedIndex();
     }
+    
+    public void setSelectedIndex(int index) {
+        list.setSelectedIndex(index);
+    }
 
     public SideList(String labelName, ListModelBase<?, ?, ?> model, boolean isNamed, boolean canAdd, SideList parent) {
         setPreferredSize(new Dimension(100, 100));

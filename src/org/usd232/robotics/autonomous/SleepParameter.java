@@ -52,7 +52,7 @@ public class SleepParameter implements IAutonomousStepParameter {
      * @since 2018
      */
     public void setMillis(short millis) {
-        if (millis <= 0) {
+        if (millis < 0) {
             throw new IllegalArgumentException("millis must be positive");
         }
         this.millis = millis;

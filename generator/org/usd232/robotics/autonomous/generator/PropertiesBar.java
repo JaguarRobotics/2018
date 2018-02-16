@@ -3,6 +3,7 @@ package org.usd232.robotics.autonomous.generator;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,16 +12,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.usd232.robotics.autonomous.AutonomousModel;
+import org.usd232.robotics.autonomous.AutonomousRoute;
 import org.usd232.robotics.autonomous.AutonomousStep;
 import org.usd232.robotics.autonomous.CustomCommandParameter;
 import org.usd232.robotics.autonomous.DriveParameter;
+import org.usd232.robotics.autonomous.IAutonomousStepParameter;
 import org.usd232.robotics.autonomous.SleepParameter;
 import org.usd232.robotics.autonomous.TurnParameter;
 import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
-public class PropertiesBar extends Container implements ListSelectionListener {
+public class PropertiesBar extends Container implements DocumentListener, ListSelectionListener {
     private static final long serialVersionUID = -1632296736445403910L;
     private JTextField        scaleField;
     private JTextField        startXField;
@@ -29,56 +35,181 @@ public class PropertiesBar extends Container implements ListSelectionListener {
     private JTextField        distanceField;
     private JTextField        angleField;
     private JTextField        commandField;
+    private JTextPane         parameterField;
     private JPanel            stepContainer;
     private GeneratorModel    model;
-    private JTextPane         parameterField;
+    private boolean           ignoreValueChanged;
 
     @Override
-    public void valueChanged(ListSelectionEvent e) {
-        if (e.getSource() == model.localDatabaseView.list) {
-            scaleField.setEnabled(!model.localDatabaseView.isSelectionEmpty());
-        } else if (e.getSource() == model.versionListView.list) {
-            startXField.setEnabled(!model.versionListView.isSelectionEmpty());
-            startYField.setEnabled(!model.versionListView.isSelectionEmpty());
-        } else if (e.getSource() == model.stepListView.list) {
-            String name;
-            if (model.stepListView.isSelectionEmpty()) {
-                name = "empty";
+    public void insertUpdate(DocumentEvent e) {
+        changedUpdate(e);
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        changedUpdate(e);
+    }
+
+    public float parseFloat(String str) {
+        if (str.equals("")) {
+            return 0;
+        } else if (str.endsWith(".")) {
+            str = str.substring(0, str.length() - 1);
+        }
+        return Float.parseFloat(str);
+    }
+
+    public short parseShort(String str) {
+        if (str.equals("")) {
+            return 0;
+        } else {
+            return Short.parseShort(str);
+        }
+    }
+
+    public byte parseByte(String str) {
+        if (str.equals("")) {
+            return 0;
+        } else {
+            return Byte.parseByte(str);
+        }
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        AutonomousModel auto = model.localDatabase.getRawElementAt(model.localDatabaseView.getSelectedIndex()).obj2;
+        if (e.getDocument() == scaleField.getDocument()) {
+            try {
+                auto.setScale(parseFloat(scaleField.getText()));
+            } catch (NumberFormatException ex) {
+                EventQueue.invokeLater(()->scaleField.setText(Float.toString(auto.getScale())));
+            }
+        } else {
+            AutonomousRoute route = model.versionList.getRawElementAt(model.versionListView.getSelectedIndex());
+            if (e.getDocument() == startXField.getDocument()) {
+                try {
+                    route.setStartX(parseFloat(startXField.getText()));
+                } catch (NumberFormatException ex) {
+                    EventQueue.invokeLater(()->startXField.setText(Float.toString(route.getStartX())));
+                }
+            } else if (e.getDocument() == startYField.getDocument()) {
+                try {
+                    route.setStartX(parseFloat(startYField.getText()));
+                } catch (NumberFormatException ex) {
+                    EventQueue.invokeLater(()->startYField.setText(Float.toString(route.getStartX())));
+                }
             } else {
-                AutonomousStep step = model.stepList.getRawElementAt(model.stepListView.getSelectedIndex());
-                switch (step.getType()) {
-                    case CustomCommand: {
-                        name = "custom";
-                        CustomCommandParameter param = (CustomCommandParameter) step.getGenericParameter();
-                        commandField.setText(Byte.toString(param.getCommandID()));
-                        parameterField.setText(param.getParameter());
-                        break;
+                int i = model.stepListView.getSelectedIndex();
+                if (i >= 0) {
+                    AutonomousStep step = model.stepList.getRawElementAt(i);
+                    IAutonomousStepParameter param = step.getGenericParameter();
+                    boolean changed = false;
+                    if (e.getDocument() == timeField.getDocument()) {
+                        SleepParameter p = (SleepParameter) param;
+                        short old = p.getMillis();
+                        try {
+                            p.setMillis(parseShort(timeField.getText()));
+                            changed = changed || p.getMillis() != old;
+                        } catch (NumberFormatException ex) {
+                            EventQueue.invokeLater(()->timeField.setText(Short.toString(p.getMillis())));
+                        }
+                    } else if (e.getDocument() == distanceField.getDocument()) {
+                        DriveParameter p = (DriveParameter) param;
+                        float old = p.getDistance();
+                        try {
+                            p.setDistance(parseFloat(distanceField.getText()));
+                            changed = changed || p.getDistance() != old;
+                        } catch (NumberFormatException ex) {
+                            EventQueue.invokeLater(()->distanceField.setText(Float.toString(p.getDistance())));
+                        }
+                    } else if (e.getDocument() == angleField.getDocument()) {
+                        TurnParameter p = (TurnParameter) param;
+                        float old = p.getAngle();
+                        try {
+                            p.setAngle(parseFloat(angleField.getText()) * (float) (Math.PI / 180.0));
+                            changed = changed || p.getAngle() != old;
+                        } catch (NumberFormatException ex) {
+                            EventQueue.invokeLater(()->angleField
+                                            .setText(Float.toString(p.getAngle() * (float) (180.0 / Math.PI))));
+                        }
+                    } else {
+                        CustomCommandParameter p = (CustomCommandParameter) param;
+                        if (e.getDocument() == commandField.getDocument()) {
+                            byte old = p.getCommandID();
+                            try {
+                                p.setCommandID(parseByte(commandField.getText()));
+                                changed = changed || p.getCommandID() != old;
+                            } catch (NumberFormatException ex) {
+                                EventQueue.invokeLater(()->commandField.setText(Byte.toString(p.getCommandID())));
+                            }
+                        } else if (e.getDocument() == parameterField.getDocument()) {
+                            changed = changed || !parameterField.getText().equals(p.getParameter());
+                            p.setParameter(parameterField.getText());
+                        }
                     }
-                    case Drive: {
-                        name = "drive";
-                        DriveParameter param = (DriveParameter) step.getGenericParameter();
-                        distanceField.setText(Float.toString(param.getDistance()));
-                        break;
-                    }
-                    case Sleep: {
-                        name = "sleep";
-                        SleepParameter param = (SleepParameter) step.getGenericParameter();
-                        timeField.setText(Short.toString(param.getMillis()));
-                        break;
-                    }
-                    case Turn: {
-                        name = "turn";
-                        TurnParameter param = (TurnParameter) step.getGenericParameter();
-                        angleField.setText(Float.toString(param.getAngle()));
-                        break;
-                    }
-                    default: {
-                        name = "empty";
-                        break;
+                    if (changed) {
+                        EventQueue.invokeLater(()-> {
+                            ignoreValueChanged = true;
+                            int vi = model.stepListView.getSelectedIndex();
+                            model.stepList.remove(i);
+                            model.stepList.insert(null, i).setParameter(step.getGenericParameter());
+                            model.stepListView.setSelectedIndex(vi);
+                            ignoreValueChanged = false;
+                        });
                     }
                 }
             }
-            ((CardLayout) stepContainer.getLayout()).show(stepContainer, name);
+        }
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (!ignoreValueChanged) {
+            if (e.getSource() == model.localDatabaseView.list) {
+                scaleField.setEnabled(!model.localDatabaseView.isSelectionEmpty());
+            } else if (e.getSource() == model.versionListView.list) {
+                startXField.setEnabled(!model.versionListView.isSelectionEmpty());
+                startYField.setEnabled(!model.versionListView.isSelectionEmpty());
+            } else if (e.getSource() == model.stepListView.list) {
+                String name;
+                if (model.stepListView.isSelectionEmpty()) {
+                    name = "empty";
+                } else {
+                    AutonomousStep step = model.stepList.getRawElementAt(model.stepListView.getSelectedIndex());
+                    switch (step.getType()) {
+                        case CustomCommand: {
+                            name = "custom";
+                            CustomCommandParameter param = (CustomCommandParameter) step.getGenericParameter();
+                            commandField.setText(Byte.toString(param.getCommandID()));
+                            parameterField.setText(param.getParameter());
+                            break;
+                        }
+                        case Drive: {
+                            name = "drive";
+                            DriveParameter param = (DriveParameter) step.getGenericParameter();
+                            distanceField.setText(Float.toString(param.getDistance()));
+                            break;
+                        }
+                        case Sleep: {
+                            name = "sleep";
+                            SleepParameter param = (SleepParameter) step.getGenericParameter();
+                            timeField.setText(Short.toString(param.getMillis()));
+                            break;
+                        }
+                        case Turn: {
+                            name = "turn";
+                            TurnParameter param = (TurnParameter) step.getGenericParameter();
+                            angleField.setText(Float.toString(param.getAngle() * (float) (180.0 / Math.PI)));
+                            break;
+                        }
+                        default: {
+                            name = "empty";
+                            break;
+                        }
+                    }
+                }
+                ((CardLayout) stepContainer.getLayout()).show(stepContainer, name);
+            }
         }
     }
 
@@ -286,5 +417,13 @@ public class PropertiesBar extends Container implements ListSelectionListener {
         customConfig.add(parameterField, gbc_parameterField);
         springLayout.putConstraint(SpringLayout.WEST, lblCommandParameters, 0, SpringLayout.WEST, lblGeneralParameters);
         add(lblCommandParameters);
+        scaleField.getDocument().addDocumentListener(this);
+        startXField.getDocument().addDocumentListener(this);
+        startYField.getDocument().addDocumentListener(this);
+        timeField.getDocument().addDocumentListener(this);
+        distanceField.getDocument().addDocumentListener(this);
+        angleField.getDocument().addDocumentListener(this);
+        commandField.getDocument().addDocumentListener(this);
+        parameterField.getDocument().addDocumentListener(this);
     }
 }

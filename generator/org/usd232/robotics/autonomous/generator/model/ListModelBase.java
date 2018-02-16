@@ -50,6 +50,14 @@ public abstract class ListModelBase<TElement, TParentElement, TParent extends Li
         onUpdate();
         return element;
     }
+    
+    public TElement insert(String name, int i) {
+        TElement element = create(name);
+        list.add(element);
+        fireIntervalAdded(this, i, i);
+        onUpdate();
+        return element;
+    }
 
     public void remove(int i) {
         onRemove(list.remove(i));
