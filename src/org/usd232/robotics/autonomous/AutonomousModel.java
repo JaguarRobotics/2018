@@ -41,6 +41,12 @@ public class AutonomousModel implements IBufferSerializable {
      * @since 2018
      */
     private short                 year;
+    /**
+     * The scale difference between the units used in this model and inches
+     * 
+     * @since 2018
+     */
+    private float                 scale;
 
     /**
      * {@inheritDoc}
@@ -54,6 +60,7 @@ public class AutonomousModel implements IBufferSerializable {
         }
         ser.put(modelVersion);
         ser.putShort(year);
+        ser.putFloat(scale);
     }
 
     /**
@@ -228,6 +235,27 @@ public class AutonomousModel implements IBufferSerializable {
             throw new IllegalArgumentException("Year cannot be negative");
         }
         this.year = year;
+    }
+
+    /**
+     * Gets the scale difference between the units used in this model and inches
+     * 
+     * @return The scale difference between the units used in this model and inches
+     * @since 2018
+     */
+    public float getScale() {
+        return scale;
+    }
+
+    /**
+     * Sets the scale difference between the units used in this model and inches
+     * 
+     * @param scale
+     *            The scale difference between the units used in this model and inches
+     * @since 2018
+     */
+    public void setScale(float scale) {
+        this.scale = scale;
     }
 
     /**

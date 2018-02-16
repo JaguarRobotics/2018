@@ -36,6 +36,18 @@ public class AutonomousRoute implements IBufferSerializable {
      * @since 2018
      */
     List<AutonomousModel>        models;
+    /**
+     * The x-coordinate that the robot starts at.
+     * 
+     * @since 2018
+     */
+    private float                startX;
+    /**
+     * The y-coordiante that the robot starts at.
+     * 
+     * @since 2018
+     */
+    private float                startY;
 
     /**
      * {@inheritDoc}
@@ -54,6 +66,8 @@ public class AutonomousRoute implements IBufferSerializable {
         for (AutonomousStep step : steps) {
             step.serialize(ser);
         }
+        ser.putFloat(getStartX());
+        ser.putFloat(getStartY());
     }
 
     /**
@@ -75,6 +89,8 @@ public class AutonomousRoute implements IBufferSerializable {
             step.deserialize(ser);
             addStep(step);
         }
+        setStartX(ser.getFloat());
+        setStartY(ser.getFloat());
     }
 
     /**
@@ -172,6 +188,48 @@ public class AutonomousRoute implements IBufferSerializable {
         if (!steps.remove(step)) {
             throw new IllegalArgumentException("step was not contained in route");
         }
+    }
+
+    /**
+     * Gets the x-coordinate that the robot starts at
+     * 
+     * @return The x-coordinate that the robot starts at
+     * @since 2018
+     */
+    public float getStartX() {
+        return startX;
+    }
+
+    /**
+     * Sets the x-coordinate that the robot starts at
+     * 
+     * @param startX
+     *            The x-coordinate that the robot starts at
+     * @since 2018
+     */
+    public void setStartX(float startX) {
+        this.startX = startX;
+    }
+
+    /**
+     * Gets the y-coordinate that the robot starts at
+     * 
+     * @return The y-coordinate that the robot starts at
+     * @since 2018
+     */
+    public float getStartY() {
+        return startY;
+    }
+
+    /**
+     * Sets the y-coordinate that the robot starts at
+     * 
+     * @param startY
+     *            The y-coordinate that the robot starts at
+     * @since 2018
+     */
+    public void setStartY(float startY) {
+        this.startY = startY;
     }
 
     /**
