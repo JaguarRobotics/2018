@@ -30,6 +30,7 @@ public class ManualRaise extends CommandBase {
      * @version 2018
      */
     public ManualRaise() {
+        IO.helpRaiseSolenoid.set(true);
         requires(liftSubsystem);
     }
 
@@ -64,10 +65,7 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (IO.topLimitSwitch.get()) {
-            return true;
-        }
-        return false;
+        return !IO.topLimitSwitch.get();
     }
 
     /**
@@ -79,6 +77,7 @@ public class ManualRaise extends CommandBase {
     @Override
     protected void end() {
         LiftSubsystem.stopScissor();
+        IO.helpRaiseSolenoid.set(false);
     }
 
     /**

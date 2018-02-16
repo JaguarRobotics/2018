@@ -105,6 +105,13 @@ public interface IO extends RobotMap {
      */
     public static final Solenoid        gearShiftSolenoid    = new Solenoid(SOLENOID_GEAR_SHIFT_PORT);
     /**
+     * The solenoid to shift gears
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final Solenoid        helpRaiseSolenoid    = new Solenoid(RAISE_HELPER_SOLENOID_PORT);
+    /**
      * The limit switch that says if the Scissor lift is in bottom position
      * 
      * @since 2018

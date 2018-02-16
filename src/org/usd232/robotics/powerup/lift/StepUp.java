@@ -1,7 +1,7 @@
 package org.usd232.robotics.powerup.lift;
 
 import org.usd232.robotics.powerup.IO;
-import org.usd232.robotics.powerup.calibration.CalibratorData;
+import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
@@ -55,15 +55,15 @@ public class StepUp extends CommandBase {
                 stepValue = 500000000;
                 break;
             case Scale:
-                stepValue = CalibratorData.getLiftClimbTop();
+                stepValue = Robot.calibratorData.getLiftClimbTop();
                 LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Climb;
                 break;
             case Switch:
-                stepValue = CalibratorData.getLiftScale();
+                stepValue = Robot.calibratorData.getLiftScale();
                 LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Scale;
                 break;
             case Bottom:
-                stepValue = CalibratorData.getLiftSwitch();
+                stepValue = Robot.calibratorData.getLiftSwitch();
                 LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Switch;
                 break;
         }
@@ -78,6 +78,7 @@ public class StepUp extends CommandBase {
     @Override
     protected void execute() {
         LiftSubsystem.raiseScissor();
+        IO.helpRaiseSolenoid.set(true);
     }
 
     /**
@@ -89,9 +90,9 @@ public class StepUp extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() >= stepValue) {
+        if (liftSubsystem.getPotentiometerValue() <= stepValue) {
             return true;
-        } else if (IO.topLimitSwitch.get()) {
+        } else if (!IO.topLimitSwitch.get()) {
             return true;
         } else {
             return false;
@@ -106,6 +107,7 @@ public class StepUp extends CommandBase {
      */
     @Override
     protected void end() {
+        IO.helpRaiseSolenoid.set(false);
         LiftSubsystem.stopScissor();
     }
 

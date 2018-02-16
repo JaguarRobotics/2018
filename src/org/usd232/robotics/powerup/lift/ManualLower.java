@@ -73,10 +73,7 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (IO.bottomLimitSwitch.get()) {
-            return true;
-        }
-        return false;
+        return !IO.bottomLimitSwitch.get();
     }
 
     /**

@@ -13,58 +13,58 @@ public class CalibratorData implements Serializable {
      * @since 2018
      * @version 2018
      */
-    private static double     liftScale;
+    private double     liftScale;
     /**
      * Potentiometer value for the switch on the lift
      * 
      * @since 2018
      * @version 2018
      */
-    private static double     liftSwitch;
+    private double     liftSwitch;
     /***
      * Potentiometer value for the bottom of the lift
      * 
      * @since 2018
      * @version 2018
      */
-    private static double     liftBottom;
+    private double     liftBottom;
     /***
      * Potentiometer value for the Height we need to go to climb to the top
      * 
      * @since 2018
      * @version 2018
      */
-    private static double     liftClimbTop;
+    private double     liftClimbTop;
 
-    public static double getLiftScale() {
+    public double getLiftScale() {
         return liftScale;
     }
 
-    public static void setLiftScale(double liftScale) {
-        CalibratorData.liftScale = liftScale;
+    public void setLiftScale(double liftScale) {
+        this.liftScale = liftScale;
     }
 
-    public static double getLiftSwitch() {
+    public double getLiftSwitch() {
         return liftSwitch;
     }
 
-    public static void setLiftSwitch(double liftSwitch) {
-        CalibratorData.liftSwitch = liftSwitch;
+    public void setLiftSwitch(double liftSwitch) {
+        this.liftSwitch = liftSwitch;
     }
 
-    public static double getLiftBottom() {
+    public double getLiftBottom() {
         return liftBottom;
     }
 
-    public static void setLiftBottom(double liftBottom) {
-        CalibratorData.liftBottom = liftBottom;
+    public void setLiftBottom(double liftBottom) {
+        this.liftBottom = liftBottom;
     }
 
-    public static double getLiftClimbTop() {
+    public double getLiftClimbTop() {
         return liftClimbTop;
     }
 
-    public static void setLiftClimbTop(double liftClimbTop) {
-        CalibratorData.liftClimbTop = liftClimbTop;
+    public void setLiftClimbTop(double liftClimbTop) {
+        this.liftClimbTop = liftClimbTop;
     }
 }

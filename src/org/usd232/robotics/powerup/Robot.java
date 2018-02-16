@@ -69,9 +69,13 @@ public class Robot extends IterativeRobot {
         CommandBase.init();
         SmartDashboard.putNumber("Joystick Tolerance", 1);
         try {
+            Calibration.init();
             calibratorData = Calibration.readFile();
+            LOG.info(" Bottom " + calibratorData.getLiftBottom() + " Switch " + calibratorData.getLiftSwitch()
+                            + " Scale " + calibratorData.getLiftScale() + " Top " + calibratorData.getLiftClimbTop());
         } catch (Exception e) {
-            LOG.error("We Have Not Created The Calibration Data File");
+            LOG.error("Exception in getting calibration file", e);
+            calibratorData = new CalibratorData();
         }
         Thread thread = new Thread(new LogServer());
         thread.start();
@@ -172,6 +176,7 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         Scheduler.getInstance().run();
+        CommandBase.driveSubsystem.driveTank(1, 1);
     }
 
     /**

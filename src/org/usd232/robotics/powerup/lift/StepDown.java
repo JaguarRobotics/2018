@@ -1,10 +1,11 @@
 package org.usd232.robotics.powerup.lift;
 
 import org.usd232.robotics.powerup.IO;
-import org.usd232.robotics.powerup.calibration.CalibratorData;
+import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
+import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The command to lower the lift to a specific step
@@ -28,9 +29,9 @@ public class StepDown extends CommandBase {
      * @version 2018
      */
     private double              stepValue = 0;
-    private int                 counter    = 0;
-    private int                 onTime     = 8;
-    private int                 offTime    = 2;
+    private int                 counter   = 0;
+    private int                 onTime    = 5;
+    private int                 offTime   = 5;
 
     /**
      * Lowers the lift of the robot to specified potentiometer value
@@ -54,15 +55,15 @@ public class StepDown extends CommandBase {
     protected void initialize() {
         switch (LiftSubsystem.currentPosition) {
             case Climb:
-                stepValue = CalibratorData.getLiftScale();
+                stepValue = Robot.calibratorData.getLiftScale();
                 LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Scale;
                 break;
             case Scale:
-                stepValue = CalibratorData.getLiftSwitch();
+                stepValue = Robot.calibratorData.getLiftSwitch();
                 LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Switch;
                 break;
             case Switch:
-                stepValue = CalibratorData.getLiftBottom();
+                stepValue = Robot.calibratorData.getLiftBottom();
                 LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Bottom;
                 break;
             case Bottom:
@@ -82,6 +83,8 @@ public class StepDown extends CommandBase {
     protected void execute() {
         if (counter % (onTime + offTime) >= offTime) {
             LiftSubsystem.lowerScissor();
+        } else {
+            LiftSubsystem.liftRelay.set(Relay.Value.kOff);
         }
         counter++;
     }
@@ -95,9 +98,9 @@ public class StepDown extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() <= stepValue) {
+        if (liftSubsystem.getPotentiometerValue() >= stepValue) {
             return true;
-        } else if (IO.bottomLimitSwitch.get()) {
+        } else if (!IO.bottomLimitSwitch.get()) {
             return true;
         } else {
             return false;

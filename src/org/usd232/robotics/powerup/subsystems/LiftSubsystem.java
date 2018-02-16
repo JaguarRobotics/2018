@@ -41,6 +41,7 @@ public class LiftSubsystem extends SubsystemBase {
     public static void lowerScissor() {
         LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
     }
+
     public static void stopScissor() {
         LiftSubsystem.liftRelay.set(Relay.Value.kOff);
     }

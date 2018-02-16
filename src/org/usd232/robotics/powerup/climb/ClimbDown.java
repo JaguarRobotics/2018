@@ -28,6 +28,7 @@ public class ClimbDown extends CommandBase {
     protected void execute() {
         LOG.info("Running Climb Down Execute");
         IO.winchRelay.set(Relay.Value.kReverse);
+        IO.winchRelay.set(Relay.Value.kForward);
     }
 
     @Override
