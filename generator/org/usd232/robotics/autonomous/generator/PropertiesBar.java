@@ -51,7 +51,7 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
     }
 
     public float parseFloat(String str) {
-        if (str.equals("")) {
+        if (str.equals("") || str.equals("-")) {
             return 0;
         } else if (str.endsWith(".")) {
             str = str.substring(0, str.length() - 1);
@@ -60,7 +60,7 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
     }
 
     public short parseShort(String str) {
-        if (str.equals("")) {
+        if (str.equals("") || str.equals("-")) {
             return 0;
         } else {
             return Short.parseShort(str);
@@ -68,7 +68,7 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
     }
 
     public byte parseByte(String str) {
-        if (str.equals("")) {
+        if (str.equals("") || str.equals("-")) {
             return 0;
         } else {
             return Byte.parseByte(str);
@@ -81,6 +81,7 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
         if (e.getDocument() == scaleField.getDocument()) {
             try {
                 auto.setScale(parseFloat(scaleField.getText()));
+                model.localDatabase.onUpdate();
             } catch (NumberFormatException ex) {
                 EventQueue.invokeLater(()->scaleField.setText(Float.toString(auto.getScale())));
             }
@@ -89,12 +90,14 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
             if (e.getDocument() == startXField.getDocument()) {
                 try {
                     route.setStartX(parseFloat(startXField.getText()));
+                    model.localDatabase.onUpdate();
                 } catch (NumberFormatException ex) {
                     EventQueue.invokeLater(()->startXField.setText(Float.toString(route.getStartX())));
                 }
             } else if (e.getDocument() == startYField.getDocument()) {
                 try {
                     route.setStartX(parseFloat(startYField.getText()));
+                    model.localDatabase.onUpdate();
                 } catch (NumberFormatException ex) {
                     EventQueue.invokeLater(()->startYField.setText(Float.toString(route.getStartX())));
                 }
@@ -150,10 +153,9 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
                     if (changed) {
                         EventQueue.invokeLater(()-> {
                             ignoreValueChanged = true;
-                            int vi = model.stepListView.getSelectedIndex();
                             model.stepList.remove(i);
                             model.stepList.insert(null, i).setParameter(step.getGenericParameter());
-                            model.stepListView.setSelectedIndex(vi);
+                            model.stepListView.setSelectedIndex(i);
                             ignoreValueChanged = false;
                         });
                     }
@@ -167,44 +169,54 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
         if (!ignoreValueChanged) {
             if (e.getSource() == model.localDatabaseView.list) {
                 scaleField.setEnabled(!model.localDatabaseView.isSelectionEmpty());
+                scaleField.setText(Float.toString(
+                                model.localDatabase.getRawElementAt(model.localDatabaseView.getSelectedIndex()).obj2
+                                                .getScale()));
             } else if (e.getSource() == model.versionListView.list) {
                 startXField.setEnabled(!model.versionListView.isSelectionEmpty());
                 startYField.setEnabled(!model.versionListView.isSelectionEmpty());
+                AutonomousRoute route = model.versionList.getRawElementAt(model.versionListView.getSelectedIndex());
+                startXField.setText(Float.toString(route.getStartX()));
+                startYField.setText(Float.toString(route.getStartY()));
             } else if (e.getSource() == model.stepListView.list) {
                 String name;
                 if (model.stepListView.isSelectionEmpty()) {
                     name = "empty";
                 } else {
                     AutonomousStep step = model.stepList.getRawElementAt(model.stepListView.getSelectedIndex());
-                    switch (step.getType()) {
-                        case CustomCommand: {
-                            name = "custom";
-                            CustomCommandParameter param = (CustomCommandParameter) step.getGenericParameter();
-                            commandField.setText(Byte.toString(param.getCommandID()));
-                            parameterField.setText(param.getParameter());
-                            break;
-                        }
-                        case Drive: {
-                            name = "drive";
-                            DriveParameter param = (DriveParameter) step.getGenericParameter();
-                            distanceField.setText(Float.toString(param.getDistance()));
-                            break;
-                        }
-                        case Sleep: {
-                            name = "sleep";
-                            SleepParameter param = (SleepParameter) step.getGenericParameter();
-                            timeField.setText(Short.toString(param.getMillis()));
-                            break;
-                        }
-                        case Turn: {
-                            name = "turn";
-                            TurnParameter param = (TurnParameter) step.getGenericParameter();
-                            angleField.setText(Float.toString(param.getAngle() * (float) (180.0 / Math.PI)));
-                            break;
-                        }
-                        default: {
-                            name = "empty";
-                            break;
+                    if (step.getType() == null) {
+                        name = "empty";
+                    } else {
+                        switch (step.getType()) {
+                            case CustomCommand: {
+                                name = "custom";
+                                CustomCommandParameter param = (CustomCommandParameter) step.getGenericParameter();
+                                commandField.setText(Byte.toString(param.getCommandID()));
+                                parameterField.setText(param.getParameter());
+                                break;
+                            }
+                            case Drive: {
+                                name = "drive";
+                                DriveParameter param = (DriveParameter) step.getGenericParameter();
+                                distanceField.setText(Float.toString(param.getDistance()));
+                                break;
+                            }
+                            case Sleep: {
+                                name = "sleep";
+                                SleepParameter param = (SleepParameter) step.getGenericParameter();
+                                timeField.setText(Short.toString(param.getMillis()));
+                                break;
+                            }
+                            case Turn: {
+                                name = "turn";
+                                TurnParameter param = (TurnParameter) step.getGenericParameter();
+                                angleField.setText(Float.toString(param.getAngle() * (float) (180.0 / Math.PI)));
+                                break;
+                            }
+                            default: {
+                                name = "empty";
+                                break;
+                            }
                         }
                     }
                 }

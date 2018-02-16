@@ -46,7 +46,7 @@ public class AutonomousModel implements IBufferSerializable {
      * 
      * @since 2018
      */
-    private float                 scale;
+    private float                 scale        = 1;
 
     /**
      * {@inheritDoc}
@@ -79,6 +79,7 @@ public class AutonomousModel implements IBufferSerializable {
             throw new IllegalStateException("Wrong model version");
         }
         setYear(ser.getShort());
+        setScale(ser.getFloat());
     }
 
     /**

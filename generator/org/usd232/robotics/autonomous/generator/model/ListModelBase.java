@@ -53,7 +53,7 @@ public abstract class ListModelBase<TElement, TParentElement, TParent extends Li
     
     public TElement insert(String name, int i) {
         TElement element = create(name);
-        list.add(element);
+        list.add(i, element);
         fireIntervalAdded(this, i, i);
         onUpdate();
         return element;

@@ -65,22 +65,23 @@ public class AutonomousStep implements IBufferSerializable {
         this.type = type;
         switch (type) {
             case Sleep:
-                if (!(param instanceof SleepParameter)) {
+                if (param == null || !(param instanceof SleepParameter)) {
                     setParameter(new SleepParameter());
                 }
                 break;
             case Drive:
-                if (!(param instanceof DriveParameter)) {
+                if (param == null || !(param instanceof DriveParameter)) {
                     setParameter(new DriveParameter());
                 }
                 break;
             case Turn:
-                if (!(param instanceof TurnParameter)) {
+                if (param == null || !(param instanceof TurnParameter)) {
                     setParameter(new TurnParameter());
                 }
                 break;
             case CustomCommand:
-                if (!(param instanceof CustomCommandParameter)) {
+                if (param == null || !(param instanceof CustomCommandParameter)) {
+                    setParameter(new CustomCommandParameter());
                 }
                 break;
         }

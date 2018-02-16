@@ -20,7 +20,7 @@ public class LocalDatabase
     private boolean           constructing;
 
     @Override
-    protected void onUpdate() {
+    public void onUpdate() {
         if (!constructing) {
             EventQueue.invokeLater(()-> {
                 List<String> oldFiles = new LinkedList<>();
