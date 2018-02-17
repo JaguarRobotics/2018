@@ -13,7 +13,9 @@ public class Logger {
         try {
             byte[] buf = message.getBytes("utf8");
             LogServer.emit(LogServer.serialize(buf, 0, buf.length, System.currentTimeMillis(), level, logger));
-            REAL_STDOUT.printf("[%s] %s%n", level, message);
+            REAL_STDOUT.printf("[%6s] [%32s] %s%n", level,
+                            logger.length() > 32 ? logger.substring(logger.length() - 32, logger.length()) : logger,
+                            message);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
