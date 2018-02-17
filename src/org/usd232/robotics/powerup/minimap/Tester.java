@@ -24,11 +24,10 @@ public class Tester implements Runnable, IMinimapCoordProvider {
     public void run() {
         new MinimapCoordsServer(this).start();
         try {
-            while (true) {
-                x += 0.1;
-                while (x > 10) {
-                    x -= 10;
-                }
+            for (double t = 0; true; t += 0.01) {
+                x = 162 + 108 * Math.cos(t);
+                y = 324 + 216 * Math.sin(t);
+                angle = t;
                 Thread.sleep(10);
             }
         } catch (InterruptedException ex) {
