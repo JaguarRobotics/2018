@@ -65,7 +65,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void robotInit() {
-        CommandBase.init();
         SmartDashboard.putNumber("Joystick Tolerance", 1);
         try {
             Calibration.init();
@@ -78,6 +77,7 @@ public class Robot extends IterativeRobot {
             LOG.error("Exception in getting calibration file");
             calibratorData = new CalibratorData();
         }
+        CommandBase.init();
         Thread thread = new Thread(new LogServer());
         thread.start();
         calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
@@ -164,8 +164,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopPeriodic() {
-        LOG.info("Bottom Switch " + Boolean.toString(IO.bottomLimitSwitch.get()) + " Top Switch "
-                        + Boolean.toString(IO.topLimitSwitch.get()));
         Scheduler.getInstance().run();
     }
 

@@ -30,7 +30,6 @@ public class ManualRaise extends CommandBase {
      * @version 2018
      */
     public ManualRaise() {
-        IO.helpRaiseSolenoid.set(true);
     }
 
     /**
@@ -41,6 +40,7 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void initialize() {
+        IO.helpRaiseSolenoid.set(true);
         LOG.info("Manually Raising Lift");
     }
 

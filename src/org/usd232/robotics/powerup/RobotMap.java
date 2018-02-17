@@ -136,14 +136,14 @@ public interface RobotMap {
      * @since 2017
      * @version 2018
      */
-    public static final int     SOLENOID_GEAR_SHIFT_PORT   = 2;
+    public static final int     SOLENOID_GEAR_SHIFT_PORT   = 7;
     /**
      * The port for the solenoid that helps Raise
      * 
      * @since 2017
      * @version 2018
      */
-    public static final int     RAISE_HELPER_SOLENOID_PORT = 3;
+    public static final int     RAISE_HELPER_SOLENOID_PORT = 2;
     // Limit Switches
     /**
      * The port for the Limit Switch that detects bottom position

@@ -1,11 +1,7 @@
 package org.usd232.robotics.powerup.lift;
 
-import org.usd232.robotics.powerup.IO;
-import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
-import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
-import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The command to lower the lift to a specific step
@@ -15,27 +11,15 @@ import edu.wpi.first.wpilibj.Relay;
  * @version 2018
  */
 public class GoToLevel extends CommandBase {
-
     /**
      * The Logger
      * 
      * @since 2018
      * @version 2018
      */
-    private static final Logger LOG       = new Logger();
-    /**
-     * Value that we are lowering to
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    private int                 counter   = 0;
-    private int                 onTime    = 5;
-    private int                 offTime   = 5;
-    private int              threshold = 5;
-    private double targetPotentiometerValue;
-    private boolean lowering = false;
-    private boolean manualFinished = false;
+    private static final Logger LOG     = new Logger();
+    private int                 counter = 0;
+    private double              targetPotentiometerValue;
 
     /**
      * Lowers the lift of the robot to specified potentiometer value
@@ -45,20 +29,8 @@ public class GoToLevel extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    public GoToLevel(LiftSubsystem.StepPositions target) {
-    	LOG.info("Lowering to the height of the " + target);
-        requires(liftSubsystem);
-        switch (target) {
-	    	case Bottom:
-	    		targetPotentiometerValue = Robot.calibratorData.getLiftBottom();
-	    		break;
-	    	case Switch:
-	    		targetPotentiometerValue = Robot.calibratorData.getLiftSwitch();
-	    		break;
-	    	case Scale:
-	    		targetPotentiometerValue = Robot.calibratorData.getLiftScale();
-	    		break;
-        }
+    public GoToLevel(double targetValue) {
+        this.targetPotentiometerValue = targetValue;
     }
 
     /**
@@ -69,14 +41,18 @@ public class GoToLevel extends CommandBase {
      */
     @Override
     protected void initialize() {
-    	double currentPotentiometerValue = liftSubsystem.getPotentiometerValue();
-    	if(targetPotentiometerValue < currentPotentiometerValue) {
-    		liftSubsystem.raiseScissor();
-    	} else if(targetPotentiometerValue > currentPotentiometerValue) {
-    		liftSubsystem.lowerScissor();
-    		lowering = true;
-    	} else end();
-    	LOG.info("Lowering Lift to potentiometer value of " + targetPotentiometerValue);
+        double currentPotentiometerValue = liftSubsystem.getPotentiometerValue();
+        LOG.info("Current Value Of Potentiometer " + currentPotentiometerValue);
+        if (targetPotentiometerValue <= currentPotentiometerValue) {
+            LOG.info("Raising to the height of " + this.targetPotentiometerValue);
+            Raise raise = new Raise(targetPotentiometerValue);
+            raise.start();
+        } else if (targetPotentiometerValue >= currentPotentiometerValue) {
+            LOG.info("Lowering to the height of " + this.targetPotentiometerValue);
+            Lower lower = new Lower(targetPotentiometerValue);
+            lower.start();
+        }
+        counter = 1;
     }
 
     /**
@@ -87,14 +63,6 @@ public class GoToLevel extends CommandBase {
      */
     @Override
     protected void execute() {
-    	if(lowering) {
-	        if (counter % (onTime + offTime) >= offTime) {
-	            LiftSubsystem.lowerScissor();
-	        } else {
-	            LiftSubsystem.liftRelay.set(Relay.Value.kOff);
-	        }
-	        counter++;
-    	}
     }
 
     /**
@@ -106,7 +74,11 @@ public class GoToLevel extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-    	return Math.abs(liftSubsystem.getPotentiometerValue() - targetPotentiometerValue) < threshold || manualFinished;
+        if(counter == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -117,8 +89,6 @@ public class GoToLevel extends CommandBase {
      */
     @Override
     protected void end() {
-    	manualFinished = true;
-        LiftSubsystem.stopScissor();
     }
 
     /**

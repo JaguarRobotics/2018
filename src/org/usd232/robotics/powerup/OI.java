@@ -9,9 +9,10 @@ import org.usd232.robotics.powerup.intake.DropCube;
 import org.usd232.robotics.powerup.intake.GrabCube;
 import org.usd232.robotics.powerup.intake.LowerIntake;
 import org.usd232.robotics.powerup.intake.RaiseIntake;
+import org.usd232.robotics.powerup.lift.GoToLevel;
 import org.usd232.robotics.powerup.lift.ManualLower;
 import org.usd232.robotics.powerup.lift.ManualRaise;
-import org.usd232.robotics.powerup.lift.Raise;
+import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -27,6 +28,14 @@ import edu.wpi.first.wpilibj.command.Command;
  * @version 2018
  */
 public class OI extends Trigger implements RobotMap {
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG = new Logger();
+
     abstract class Scheduler extends ButtonScheduler {
         @Override
         public void start() {
@@ -46,14 +55,18 @@ public class OI extends Trigger implements RobotMap {
         Joystick1_Button3.whenPressed(new GearShiftHigh());
         Joystick0_Button2.whenPressed(new GearShiftLow());
         Joystick1_Button2.whenPressed(new GearShiftLow());
-        
         ManipulatorXbox_RB.whileHeld(new ManualRaise());
         ManipulatorXbox_LB.whileHeld(new ManualLower());
-        whenPovIs(Manipulator, 0, new Raise(Robot.calibratorData.getLiftScale()));
-        whenPovIs(Manipulator, 6, new Raise(Robot.calibratorData.getLiftSwitch()));
-        whenPovIs(Manipulator, 4, new Raise(Robot.calibratorData.getLiftBottom()));
-        whenGreaterThan(Manipulator, 2, .8, new ClimbDown());
-        whenGreaterThan(Manipulator, 3, .8, new ClimbUp());
+        try {
+            whenPovIs(Manipulator, 0, new GoToLevel(Robot.calibratorData.getLiftScale()));
+            whenPovIs(Manipulator, 6, new GoToLevel(Robot.calibratorData.getLiftSwitch()));
+            whenPovIs(Manipulator, 4, new GoToLevel(Robot.calibratorData.getLiftBottom()));
+            LOG.info("The POV controls were successfuly created");
+        } catch (Exception e) {
+            LOG.info("The POV controls failed to be created");
+        }
+        whileGreaterThan(Manipulator, 2, .8, new ClimbDown());
+        whileGreaterThan(Manipulator, 3, .8, new ClimbUp());
         ManipulatorXbox_Start.whenPressed(new GearShiftHigh());
         ManipulatorXbox_Back.whenPressed(new GearShiftLow());
         ManipulatorXbox_Y.whenPressed(new RaiseIntake());
@@ -137,13 +150,37 @@ public class OI extends Trigger implements RobotMap {
         }.start();
     }
 
+    public void whileGreaterThan(Joystick joystick, int axis, double value, Command command) {
+        new Scheduler() {
+            private boolean pressedLast = joystick.getRawAxis(axis) < value;
+
+            @Override
+            public void execute() {
+                if (joystick.getRawAxis(axis) > value) {
+                    if (!pressedLast) {
+                        pressedLast = true;
+                        command.start();
+                    }
+                } else {
+                    if (pressedLast) {
+                        command.cancel();
+                        pressedLast = false;
+                    }
+                }
+            }
+        }.start();
+    }
+
     public void whenPovIs(Joystick joystick, int valueForCommand, Command command) {
         new Scheduler() {
             @Override
             public void execute() {
                 int currentValue = (int) (((joystick.getPOV() + 22.5) % 360) / 45);
-                if (currentValue == valueForCommand) {
-                    command.start();
+                if (joystick.getPOV() == -1) {
+                } else {
+                    if (currentValue == valueForCommand) {
+                        command.start();
+                    }
                 }
             }
         }.start();

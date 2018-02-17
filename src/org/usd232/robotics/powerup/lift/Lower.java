@@ -41,7 +41,6 @@ public class Lower extends CommandBase {
      * @version 2018
      */
     public Lower(double lowerValue) {
-        requires(liftSubsystem);
         this.lowerValue = lowerValue;
     }
 
@@ -83,9 +82,14 @@ public class Lower extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() <= lowerValue) {
+        if (liftSubsystem.getPotentiometerValue() >= lowerValue) {
             return true;
-        } else if (IO.bottomLimitSwitch.get()) {
+        } else if (!IO.bottomLimitSwitch.get()) {
+            long currentTime = System.currentTimeMillis();
+            long targetTime = currentTime + 1000;
+            while(currentTime <= targetTime) {
+                
+            }
             return true;
         } else {
             return false;

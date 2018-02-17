@@ -24,20 +24,22 @@ public class CalibrateCommand extends CommandBase {
     @Override
     protected void initialize() {
         if (Robot.calibrationSetter.getSelected().equals(RobotMap.CalibrationMode.Calibrating)) {
-            LOG.info("Go To Scale Height");
-            if (Robot.amountOfThingsCalibrated == 0) {
+            if(Robot.amountOfThingsCalibrated == 0) {
+                LOG.info("Go To Scale Height");
+                Robot.amountOfThingsCalibrated++;
+            }
+            if (Robot.amountOfThingsCalibrated == 1) {
                 Robot.calibratorData.setLiftScale(liftSubsystem.getPotentiometerValue());
                 Robot.amountOfThingsCalibrated++;
                 LOG.info("Calibrated The Scale Height");
                 LOG.info("Go To Switch Height");
-            } else if (Robot.amountOfThingsCalibrated == 1) {
+            } else if (Robot.amountOfThingsCalibrated == 2) {
                 Robot.calibratorData.setLiftSwitch(liftSubsystem.getPotentiometerValue());
                 Robot.amountOfThingsCalibrated++;
                 LOG.info("Calibrated The Switch Height");
                 LOG.info("Go To Bottom Height");
-            } else if (Robot.amountOfThingsCalibrated == 2) {
+            } else if (Robot.amountOfThingsCalibrated == 3) {
                 Robot.calibratorData.setLiftBottom(liftSubsystem.getPotentiometerValue());
-                Robot.amountOfThingsCalibrated++;
                 LOG.info("Calibrated The Lift Bottom");
                 Calibration.writeToFile(Robot.calibratorData);
                 LOG.info("Calibration Complete");
