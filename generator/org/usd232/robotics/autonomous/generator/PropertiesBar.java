@@ -31,6 +31,7 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
     private JTextField        scaleField;
     private JTextField        startXField;
     private JTextField        startYField;
+    private JTextField        startAngleField;
     private JTextField        timeField;
     private JTextField        distanceField;
     private JTextField        angleField;
@@ -106,6 +107,14 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
                     model.localDatabase.onUpdate();
                 } catch (NumberFormatException ex) {
                     EventQueue.invokeLater(()->startYField.setText(Float.toString(route.getStartY())));
+                }
+            } else if (e.getDocument() == startAngleField.getDocument()) {
+                try {
+                    route.setStartAngle(parseFloat(startAngleField.getText()) * (float) (Math.PI / 180));
+                    model.localDatabase.onUpdate();
+                } catch (NumberFormatException ex) {
+                    EventQueue.invokeLater(()->startAngleField
+                                    .setText(Float.toString(route.getStartAngle() * (float) (180 / Math.PI))));
                 }
             } else {
                 int i = model.stepListView.getSelectedIndex();
@@ -183,10 +192,12 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
             } else if (e.getSource() == model.versionListView.list) {
                 startXField.setEnabled(!model.versionListView.isSelectionEmpty());
                 startYField.setEnabled(!model.versionListView.isSelectionEmpty());
+                startAngleField.setEnabled(!model.versionListView.isSelectionEmpty());
                 if (!model.versionListView.isSelectionEmpty()) {
                     AutonomousRoute route = model.versionList.getRawElementAt(model.versionListView.getSelectedIndex());
                     startXField.setText(Float.toString(route.getStartX()));
                     startYField.setText(Float.toString(route.getStartY()));
+                    startAngleField.setText(Float.toString(route.getStartAngle() * (float) (180 / Math.PI)));
                 }
             } else if (e.getSource() == model.stepListView.list) {
                 String name;
@@ -254,7 +265,7 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
         GridBagLayout gbl_generalConfig = new GridBagLayout();
         gbl_generalConfig.columnWidths = new int[] { 81, 333, 0 };
         gbl_generalConfig.rowHeights = new int[] { 19, 19, 19, 0 };
-        gbl_generalConfig.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+        gbl_generalConfig.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
         gbl_generalConfig.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
         generalConfig.setLayout(gbl_generalConfig);
         JLabel lblFieldScale = new JLabel("Field Scale:");
@@ -269,7 +280,7 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
         GridBagConstraints gbc_scaleField = new GridBagConstraints();
         gbc_scaleField.anchor = GridBagConstraints.NORTH;
         gbc_scaleField.fill = GridBagConstraints.HORIZONTAL;
-        gbc_scaleField.insets = new Insets(0, 0, 5, 0);
+        gbc_scaleField.insets = new Insets(0, 0, 5, 5);
         gbc_scaleField.gridx = 1;
         gbc_scaleField.gridy = 0;
         generalConfig.add(scaleField, gbc_scaleField);
@@ -286,27 +297,53 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
         GridBagConstraints gbc_startXField = new GridBagConstraints();
         gbc_startXField.anchor = GridBagConstraints.NORTH;
         gbc_startXField.fill = GridBagConstraints.HORIZONTAL;
-        gbc_startXField.insets = new Insets(0, 0, 5, 0);
+        gbc_startXField.insets = new Insets(0, 0, 5, 5);
         gbc_startXField.gridx = 1;
         gbc_startXField.gridy = 1;
         generalConfig.add(startXField, gbc_startXField);
         startXField.setColumns(10);
+        JLabel lblIn_2 = new JLabel("in");
+        GridBagConstraints gbc_lblIn_2 = new GridBagConstraints();
+        gbc_lblIn_2.insets = new Insets(0, 0, 5, 0);
+        gbc_lblIn_2.gridx = 2;
+        gbc_lblIn_2.gridy = 1;
+        generalConfig.add(lblIn_2, gbc_lblIn_2);
         JLabel lblStartingY = new JLabel("Starting Y:");
         GridBagConstraints gbc_lblStartingY = new GridBagConstraints();
         gbc_lblStartingY.anchor = GridBagConstraints.EAST;
-        gbc_lblStartingY.insets = new Insets(0, 0, 0, 5);
+        gbc_lblStartingY.insets = new Insets(0, 0, 5, 5);
         gbc_lblStartingY.gridx = 0;
         gbc_lblStartingY.gridy = 2;
         generalConfig.add(lblStartingY, gbc_lblStartingY);
         startYField = new JTextField();
         startYField.setEnabled(false);
         GridBagConstraints gbc_startYField = new GridBagConstraints();
+        gbc_startYField.insets = new Insets(0, 0, 5, 5);
         gbc_startYField.anchor = GridBagConstraints.NORTH;
         gbc_startYField.fill = GridBagConstraints.HORIZONTAL;
         gbc_startYField.gridx = 1;
         gbc_startYField.gridy = 2;
         generalConfig.add(startYField, gbc_startYField);
         startYField.setColumns(10);
+        JLabel lblIn_1 = new JLabel("in");
+        GridBagConstraints gbc_lblIn_1 = new GridBagConstraints();
+        gbc_lblIn_1.insets = new Insets(0, 0, 5, 0);
+        gbc_lblIn_1.gridx = 2;
+        gbc_lblIn_1.gridy = 2;
+        generalConfig.add(lblIn_1, gbc_lblIn_1);
+        JLabel lblStartingAngle = new JLabel("Starting Angle:");
+        GridBagConstraints gbc_lblStartingAngle = new GridBagConstraints();
+        gbc_lblStartingAngle.anchor = GridBagConstraints.EAST;
+        gbc_lblStartingAngle.insets = new Insets(0, 0, 0, 5);
+        gbc_lblStartingAngle.gridx = 0;
+        gbc_lblStartingAngle.gridy = 3;
+        generalConfig.add(lblStartingAngle, gbc_lblStartingAngle);
+        JLabel lbl2 = new JLabel("°");
+        GridBagConstraints gbc_lbl2 = new GridBagConstraints();
+        gbc_lbl2.anchor = GridBagConstraints.EAST;
+        gbc_lbl2.gridx = 2;
+        gbc_lbl2.gridy = 3;
+        generalConfig.add(lbl2, gbc_lbl2);
         stepContainer = new JPanel();
         springLayout.putConstraint(SpringLayout.WEST, stepContainer, 10, SpringLayout.WEST, this);
         springLayout.putConstraint(SpringLayout.SOUTH, stepContainer, -10, SpringLayout.SOUTH, this);
@@ -345,6 +382,14 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
         sleepConfig.add(lblMs, gbc_lblMs);
         JLabel lblCommandParameters = new JLabel("Command Parameters:");
         springLayout.putConstraint(SpringLayout.NORTH, lblCommandParameters, 6, SpringLayout.SOUTH, generalConfig);
+        startAngleField = new JTextField();
+        GridBagConstraints gbc_startAngleField = new GridBagConstraints();
+        gbc_startAngleField.insets = new Insets(0, 0, 0, 5);
+        gbc_startAngleField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_startAngleField.gridx = 1;
+        gbc_startAngleField.gridy = 3;
+        generalConfig.add(startAngleField, gbc_startAngleField);
+        startAngleField.setColumns(10);
         springLayout.putConstraint(SpringLayout.NORTH, stepContainer, 6, SpringLayout.SOUTH, lblCommandParameters);
         JPanel driveConfig = new JPanel();
         stepContainer.add(driveConfig, "drive");
@@ -442,6 +487,7 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
         scaleField.getDocument().addDocumentListener(this);
         startXField.getDocument().addDocumentListener(this);
         startYField.getDocument().addDocumentListener(this);
+        startAngleField.getDocument().addDocumentListener(this);
         timeField.getDocument().addDocumentListener(this);
         distanceField.getDocument().addDocumentListener(this);
         angleField.getDocument().addDocumentListener(this);

@@ -20,7 +20,7 @@ public class MainWindow extends JFrame {
         setMinimumSize(new Dimension(640, 480));
         setTitle("Autonomous Generator");
         getContentPane().setLayout(new BorderLayout(0, 0));
-        FieldView fieldView = new FieldView();
+        FieldView fieldView = new FieldView(model);
         getContentPane().add(fieldView, BorderLayout.CENTER);
         SideBar sidebar = new SideBar(model);
         getContentPane().add(sidebar, BorderLayout.WEST);

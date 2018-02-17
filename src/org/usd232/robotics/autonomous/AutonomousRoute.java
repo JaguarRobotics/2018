@@ -48,6 +48,12 @@ public class AutonomousRoute implements IBufferSerializable {
      * @since 2018
      */
     private float                startY;
+    /**
+     * The angle that the robot starts at.
+     * 
+     * @since 2018
+     */
+    private float                startAngle;
 
     /**
      * {@inheritDoc}
@@ -68,6 +74,7 @@ public class AutonomousRoute implements IBufferSerializable {
         }
         ser.putFloat(getStartX());
         ser.putFloat(getStartY());
+        ser.putFloat(getStartAngle());
     }
 
     /**
@@ -91,6 +98,7 @@ public class AutonomousRoute implements IBufferSerializable {
         }
         setStartX(ser.getFloat());
         setStartY(ser.getFloat());
+        setStartAngle(ser.getFloat());
     }
 
     /**
@@ -230,6 +238,14 @@ public class AutonomousRoute implements IBufferSerializable {
      */
     public void setStartY(float startY) {
         this.startY = startY;
+    }
+
+    public float getStartAngle() {
+        return startAngle;
+    }
+
+    public void setStartAngle(float startAngle) {
+        this.startAngle = startAngle;
     }
 
     /**
