@@ -26,8 +26,14 @@ public class Logger {
     }
 
     public void log(LogLevel level, Throwable throwable, String message) {
-        log(level, "%s%n%s: %s%n%s", message, throwable.getClass().getName(), throwable.getMessage(),
-                        throwable.getStackTrace());
+        log(level, message);
+        log(level, "%s: %s", throwable.getClass().getName(), throwable.getMessage());
+        for (StackTraceElement element : throwable.getStackTrace()) {
+            log(level, "  at %s", element);
+        }
+        if (throwable.getCause() != null) {
+            log(level, throwable.getCause(), "Caused by:");
+        }
     }
 
     public void log(LogLevel level, Throwable throwable, String format, Object... args) {
@@ -57,11 +63,11 @@ public class Logger {
     public void trace(Throwable throwable) {
         log(LogLevel.TRACE, throwable);
     }
-    
+
     public void enter(String method) {
         trace("ENTER %s", method);
     }
-    
+
     public void leave(String method) {
         trace("LEAVE %s", method);
     }
