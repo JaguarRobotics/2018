@@ -15,6 +15,7 @@ import org.usd232.robotics.powerup.ISpeedFunction;
 import org.usd232.robotics.powerup.drive.Delay;
 import org.usd232.robotics.powerup.drive.DriveForward;
 import org.usd232.robotics.powerup.drive.DriveTurn;
+import org.usd232.robotics.powerup.intake.DropCube;
 import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -74,6 +75,12 @@ public class Autonomous extends CommandGroup {
                             LOG.debug("Driving forward for %fs", param.getParameter());
                             DriveForward cmd = new DriveForward(driveSpeed, Double.MAX_VALUE, 0.1, 0.01);
                             cmd.setTimeoutPublic(Double.parseDouble(param.getParameter()));
+                            addSequential(cmd);
+                            break;
+                        }
+                        case 1: {
+                            LOG.debug("Openning the intake");
+                            addSequential(new DropCube());
                             break;
                         }
                         default:
