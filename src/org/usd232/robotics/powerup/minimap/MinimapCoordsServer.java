@@ -11,7 +11,7 @@ public class MinimapCoordsServer extends Thread {
     private static final Logger   LOG         = new Logger();
     private static final int      PORT        = 5801;
     private static final long     SEND_PERIOD = 50;
-    private static final long     TIMEOUT     = 10000;
+    private static final long     TIMEOUT     = 300000;
     private IMinimapCoordProvider location;
 
     public MinimapCoordsServer(IMinimapCoordProvider location) {

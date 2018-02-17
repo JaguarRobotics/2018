@@ -16,7 +16,7 @@ public class MinimapCoordsClient extends Thread {
                     String.format("roboRIO-%d-FRC.local", TEAM_NUMBER) };
     private static final int      PORT            = 5801;
     private static final long     CONNECT_TIMEOUT = 10000;
-    private static final long     TIMEOUT         = 10000;
+    private static final long     TIMEOUT         = 300000;
     private double                robotX          = 0;
     private double                robotY          = 0;
     private double                robotAngle      = 0;
