@@ -15,6 +15,13 @@ import org.usd232.robotics.powerup.ISpeedFunction;
 import org.usd232.robotics.powerup.drive.Delay;
 import org.usd232.robotics.powerup.drive.DriveForward;
 import org.usd232.robotics.powerup.drive.DriveTurn;
+import org.usd232.robotics.powerup.intake.DropCube;
+import org.usd232.robotics.powerup.intake.GrabCube;
+import org.usd232.robotics.powerup.intake.LowerIntake;
+import org.usd232.robotics.powerup.intake.RaiseIntake;
+import org.usd232.robotics.powerup.lift.GoToLevel;
+import org.usd232.robotics.powerup.lift.Lower;
+import org.usd232.robotics.powerup.lift.Raise;
 import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -70,6 +77,37 @@ public class Autonomous extends CommandGroup {
                 case CustomCommand: {
                     CustomCommandParameter param = (CustomCommandParameter) step.getGenericParameter();
                     switch (param.getCommandID()) {
+                        case 0:
+                            LOG.debug("Dropping cube");
+                            addSequential(new DropCube());
+                            break;
+                        case 1:
+                            LOG.debug("Grabbing cube");
+                            addSequential(new GrabCube());
+                            break;
+                        case 2:
+                            LOG.debug("Lowering intake");
+                            addSequential(new LowerIntake());
+                            break;
+                        case 3:
+                            LOG.debug("Raise intake");
+                            addSequential(new RaiseIntake());
+                            break;
+                        case 4:
+                            double levelD = Double.parseDouble(param.getParameter());
+                            LOG.debug("Going to level");
+                            addSequential(new GoToLevel(levelD));
+                            break;
+                        case 5:
+                            double lowerD = Double.parseDouble(param.getParameter());
+                            LOG.debug("Lowering");
+                            addSequential(new Lower(lowerD));
+                            break;
+                        case 6:
+                            double raiseD = Double.parseDouble(param.getParameter());
+                            LOG.debug("Raise");
+                            addSequential(new Raise(raiseD));
+                            break;
                         default:
                             LOG.error("Unknown command ID %d", param.getCommandID());
                     }
