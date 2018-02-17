@@ -1,6 +1,9 @@
 package org.usd232.robotics.powerup.subsystems;
 
+import org.usd232.robotics.powerup.log.Logger;
+
 public class LocationSubsystem extends SubsystemBase {
+    private static final Logger LOG            = new Logger();
     private static final double WIDTH          = 18;
     private static final double CENTER_OF_MASS = 0.5;
     /**
@@ -40,6 +43,7 @@ public class LocationSubsystem extends SubsystemBase {
     }
 
     public void reset() {
+        LOG.debug("Resetting LocationSubsystem");
         leftDriveEncoder.setDistancePerPulse(Math.PI * DIAMETER / PPR);
         rightDriveEncoder.setDistancePerPulse(Math.PI * DIAMETER / PPR);
         leftDriveEncoder.reset();

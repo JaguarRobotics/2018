@@ -22,13 +22,16 @@ public class DriveForward extends CommandBase {
         double x = locationSubsystem.getX();
         double y = locationSubsystem.getY();
         double highSpeed = speedFunc.calculateSpeed(locationSubsystem.getY() / inches);
-        LOG.debug("(%f, %f)", x, y);
+        LOG.debug("LocationSubsytem is reporting (%f, %f) @ %f", x, y, locationSubsystem.getAngle());
         if (x == 0 || (Math.abs(locationSubsystem.getAngle() - Math.PI / 2) > maxAngle)
                         && Math.signum(x) == Math.signum(locationSubsystem.getAngle() - Math.PI / 2)) {
+            LOG.debug("Therefore, the tank speeds are (%f, %f)", highSpeed, highSpeed);
             driveSubsystem.driveTank(highSpeed, highSpeed);
         } else if (x < 0) {
+            LOG.debug("Therefore, the tank speeds are (%f, %f)", highSpeed + x * correctionPerInch, highSpeed);
             driveSubsystem.driveTank(highSpeed + x * correctionPerInch, highSpeed);
         } else {
+            LOG.debug("Therefore, the tank speeds are (%f, %f)", highSpeed, highSpeed - x * correctionPerInch);
             driveSubsystem.driveTank(highSpeed, highSpeed - x * correctionPerInch);
         }
     }
