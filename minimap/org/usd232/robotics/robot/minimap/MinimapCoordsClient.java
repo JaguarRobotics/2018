@@ -135,9 +135,9 @@ public class MinimapCoordsClient extends Thread {
                 if (socket != null) {
                     socket.receive(packet);
                     ByteBuffer buffer = ByteBuffer.wrap(inbuf);
-                    robotX = buffer.getDouble();
-                    robotY = buffer.getDouble();
-                    robotAngle = buffer.getDouble();
+                    robotX = buffer.getDouble() / 12.0;
+                    robotY = buffer.getDouble() / 12.0;
+                    robotAngle = buffer.getDouble() / 12.0;
                 }
                 Thread.sleep(100);
             }

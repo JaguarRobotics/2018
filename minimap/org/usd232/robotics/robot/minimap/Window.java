@@ -492,7 +492,7 @@ public class Window implements Runnable {
     	GL11.glPushMatrix();
     	
     	GL11.glTranslated(robotX, robotY, 0);
-    	GL11.glRotated(robotAngle, 0, 0, 1);
+    	GL11.glRotated(robotAngle * 180 / Math.PI, 0, 0, 1);
     	
     	GL11.glColor3fv(GREEN);
     	GL11.glBegin(GL11.GL_TRIANGLES);
