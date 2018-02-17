@@ -70,6 +70,12 @@ public class Autonomous extends CommandGroup {
                 case CustomCommand: {
                     CustomCommandParameter param = (CustomCommandParameter) step.getGenericParameter();
                     switch (param.getCommandID()) {
+                        case 0: {
+                            LOG.debug("Driving forward for %fs", param.getParameter());
+                            DriveForward cmd = new DriveForward(driveSpeed, Double.MAX_VALUE, 0.1, 0.01);
+                            cmd.setTimeoutPublic(Double.parseDouble(param.getParameter()));
+                            break;
+                        }
                         default:
                             LOG.error("Unknown command ID %d", param.getCommandID());
                     }

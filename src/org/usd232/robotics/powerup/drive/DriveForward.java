@@ -46,6 +46,10 @@ public class DriveForward extends CommandBase {
         LOG.enter("end");
         driveSubsystem.driveTank(0, 0);
     }
+    
+    public void setTimeoutPublic(double timeout) {
+        setTimeout(timeout);
+    }
 
     public DriveForward(ISpeedFunction speedFunc, double inches, double correctionPerInch, double maxAngle) {
         requires(driveSubsystem);
