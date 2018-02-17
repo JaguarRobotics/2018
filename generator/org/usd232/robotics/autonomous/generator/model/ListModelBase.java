@@ -23,7 +23,7 @@ public abstract class ListModelBase<TElement, TParentElement, TParent extends Li
 
     protected void onRemove(TElement element) {
     }
-    
+
     protected void onUpdate() {
         parent.onUpdate();
     }
@@ -50,7 +50,7 @@ public abstract class ListModelBase<TElement, TParentElement, TParent extends Li
         onUpdate();
         return element;
     }
-    
+
     public TElement insert(String name, int i) {
         TElement element = create(name);
         list.add(i, element);

@@ -106,6 +106,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotPeriodic() {
         CommandBase.locationSubsystem.updateValues();
+        LOG.info("Encoders are at Left %d, Right %d", IO.leftDriveEncoder.get(), IO.rightDriveEncoder.get());
     }
 
     /**

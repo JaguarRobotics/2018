@@ -74,7 +74,7 @@ public class GoToLevel extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if(counter == 1) {
+        if (counter == 1) {
             return true;
         } else {
             return false;

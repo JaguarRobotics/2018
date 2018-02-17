@@ -14,7 +14,6 @@ import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
  * @version 2018
  */
 public class StepUp extends CommandBase {
-
     /**
      * The Logger
      * 

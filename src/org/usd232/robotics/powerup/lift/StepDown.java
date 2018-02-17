@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.Relay;
  * @version 2018
  */
 public class StepDown extends CommandBase {
-
     /**
      * The Logger
      * 

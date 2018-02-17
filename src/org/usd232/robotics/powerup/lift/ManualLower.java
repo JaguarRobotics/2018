@@ -72,10 +72,10 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if(!IO.bottomLimitSwitch.get()) {
+        if (!IO.bottomLimitSwitch.get()) {
             long currentTime = System.currentTimeMillis();
             long targetTime = currentTime + 1000;
-            while(currentTime <= targetTime) {
+            while (currentTime <= targetTime) {
             }
             return true;
         }

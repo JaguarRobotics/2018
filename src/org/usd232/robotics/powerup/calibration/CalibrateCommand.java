@@ -4,6 +4,7 @@ import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.RobotMap;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
+
 /**
  * Command to write the Calibration file
  * 
@@ -23,7 +24,7 @@ public class CalibrateCommand extends CommandBase {
     @Override
     protected void initialize() {
         if (Robot.calibrationSetter.getSelected().equals(RobotMap.CalibrationMode.Calibrating)) {
-            if(Robot.amountOfThingsCalibrated == 0) {
+            if (Robot.amountOfThingsCalibrated == 0) {
                 LOG.info("Go To Scale Height");
                 Robot.amountOfThingsCalibrated++;
             }

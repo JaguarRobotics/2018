@@ -87,8 +87,7 @@ public class Lower extends CommandBase {
         } else if (!IO.bottomLimitSwitch.get()) {
             long currentTime = System.currentTimeMillis();
             long targetTime = currentTime + 1000;
-            while(currentTime <= targetTime) {
-                
+            while (currentTime <= targetTime) {
             }
             return true;
         } else {

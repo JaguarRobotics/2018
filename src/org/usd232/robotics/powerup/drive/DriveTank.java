@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Drives the robot in teleop based on left and right joystick inputs.
  * 
- * @author Nathan Gawith, Kyle K, Cody Moose, Brian Parks, Zach Deibert
+ * @author Zach Diebert, Alex Whipple, Brian Parks
  * @since Always
  * @version 2018
  */
@@ -35,7 +35,14 @@ public class DriveTank extends CommandBase {
      * @version 2018
      */
     double right;
-
+    /**
+     * The minimum power value
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    double minValue = .3;
+    
     @Override
     protected void initialize() {
     }
@@ -48,22 +55,13 @@ public class DriveTank extends CommandBase {
      */
     @Override
     protected void execute() {
-        double powNum = 2;
         double joystickTolerance = SmartDashboard.getNumber("Joystick Tolerance", 1);
         double joystick0 = oi.Joystick0.getY() * joystickTolerance;
         double joystick1 = oi.Joystick1.getY() * joystickTolerance;
-        double adjustedJoystick0 = Math.abs(joystick0);
-        double adjustedJoystick1 = Math.abs(joystick1);
-        double powerJoystick0 = Math.pow(adjustedJoystick0, powNum);
-        double powerJoystick1 = Math.pow(adjustedJoystick1, powNum);
-        if (Math.abs(powerJoystick0) > adjustedJoystick0) {
-            powerJoystick0 = adjustedJoystick0;
-        }
-        if (Math.abs(powerJoystick1) > adjustedJoystick1) {
-            powerJoystick1 = adjustedJoystick1;
-        }
-        left = (powerJoystick0 * (adjustedJoystick0 / joystick0)) / joystickTolerance;
-        right = (powerJoystick1 * (adjustedJoystick1 / joystick1)) / joystickTolerance;
+        double absoluteValueJoystick0 = Math.abs(joystick0);
+        double absoluteValueJoystick1 = Math.abs(joystick1);
+        left = absoluteValueJoystick0 / joystick0 * (absoluteValueJoystick0 * (1 - minValue) + minValue);
+        right = absoluteValueJoystick1 / joystick1 * (absoluteValueJoystick1 * (1 - minValue) + minValue);
         driveSubsystem.driveTank(-left, -right);
     }
 

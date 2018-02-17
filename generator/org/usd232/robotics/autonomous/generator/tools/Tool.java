@@ -60,7 +60,7 @@ public class Tool extends JToggleButton implements ChangeListener {
 
     public void paintOverlay(Graphics g) {
     }
-    
+
     public void repaintOverlay() {
         getToolbar().getFieldView().repaint();
     }

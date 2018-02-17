@@ -4,9 +4,9 @@ import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 
 public class Delay extends CommandBase {
-    private static final Logger  LOG = new Logger();
-    private final long millis;
-    private long       startTime;
+    private static final Logger LOG = new Logger();
+    private final long          millis;
+    private long                startTime;
 
     @Override
     protected void initialize() {
