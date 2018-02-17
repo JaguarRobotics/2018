@@ -27,7 +27,7 @@ public class GeneratorModel {
         parameterListView.removeListSelectionListener(listener);
         stepListView.removeListSelectionListener(listener);
     }
-    
+
     public void addStep(AutonomousStep step) {
         stepList.add(null).setParameter(step.getGenericParameter());
     }

@@ -10,11 +10,12 @@ public class MainWindow extends JFrame {
     private static final long serialVersionUID = 4216453804213565036L;
 
     public static void main(String[] args) {
-        new MainWindow();
+        GeneratorModel model = new GeneratorModel();
+        new MainWindow(model);
+        SyncService.start(model, 1810);
     }
 
-    public MainWindow() {
-        GeneratorModel model = new GeneratorModel();
+    public MainWindow(GeneratorModel model) {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(640, 480));

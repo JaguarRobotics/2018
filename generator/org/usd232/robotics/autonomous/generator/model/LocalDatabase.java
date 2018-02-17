@@ -16,8 +16,9 @@ import net.harawata.appdirs.AppDirsFactory;
 public class LocalDatabase
                 extends ListModelBase<Tuple2<String, AutonomousModel>, Tuple2<String, AutonomousModel>, LocalDatabase> {
     private static final long serialVersionUID = 8675801961143445185L;
-    private final File        dir;
+    public final File         dir;
     private boolean           constructing;
+    public int                updateCount;
 
     @Override
     public void onUpdate() {
@@ -39,6 +40,7 @@ public class LocalDatabase
                 }
             });
         }
+        ++updateCount;
     }
 
     @Override

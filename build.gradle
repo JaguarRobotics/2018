@@ -28,6 +28,7 @@ dependencies {
     compile "edu.wpi.first.wpilibj:wpilibj-java:2018.1.1"
     compile "edu.wpi.first.wpiutil:wpiutil-java:3.0.0"
     generatorCompile "net.harawata:appdirs:1.0.1"
+    generatorCompile "com.jcraft:jsch:0.1.54"
 }
 
 eclipse {
