@@ -76,6 +76,7 @@ public class Robot extends IterativeRobot {
         positionChooser.addObject("Middle", RobotMap.StartingPosition.Two);
         positionChooser.addObject("Right", RobotMap.StartingPosition.Three);
         SmartDashboard.putData("Starting Position", positionChooser);
+        Autonomous.loadDashboard();
     }
 
     /**
