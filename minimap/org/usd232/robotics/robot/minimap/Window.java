@@ -608,5 +608,6 @@ public class Window implements Runnable {
             GLFW.glfwSetWindowPos(id, (vidmode.width() - width.get(0)) / 2, (vidmode.height() - height.get(0)) / 2);
         }
         client = new MinimapCoordsClient();
+        client.start();
     }
 }
