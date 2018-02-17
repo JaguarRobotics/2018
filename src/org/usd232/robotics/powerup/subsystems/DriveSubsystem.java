@@ -9,7 +9,13 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * @since 2017
  */
 public class DriveSubsystem extends SubsystemBase {
-    private static final Logger LOG = new Logger();
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger      LOG        = new Logger();
     /**
      * Class that controls both drive motors
      */
@@ -24,7 +30,6 @@ public class DriveSubsystem extends SubsystemBase {
      *            speed
      */
     public void driveTank(double left, double right) {
-        LOG.debug("Motors are setting to (%f, %f)", left, right);
         robotDrive.tankDrive(left, right);
     }
 

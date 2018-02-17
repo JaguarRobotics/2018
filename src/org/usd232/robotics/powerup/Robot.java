@@ -1,9 +1,14 @@
 package org.usd232.robotics.powerup;
 
+import org.usd232.robotics.powerup.RobotMap.Alliance;
+import org.usd232.robotics.powerup.RobotMap.CalibrationMode;
+import org.usd232.robotics.powerup.RobotMap.StartingPosition;
+import org.usd232.robotics.powerup.calibration.Calibration;
 import org.usd232.robotics.powerup.calibration.CalibratorData;
 import org.usd232.robotics.powerup.commands.Autonomous;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.LogServer;
+import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -17,36 +22,42 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @since Always
  * @version 2018
  */
-@SuppressWarnings("rawtypes")
 public class Robot extends IterativeRobot {
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger                           LOG                      = new Logger();
     /**
      * chooser used on the SmartDashboard to choose the starting position
      * 
      * @since 2017
      */
-    public static final SendableChooser positionChooser          = new SendableChooser();
+    public static final SendableChooser<StartingPosition> positionChooser          = new SendableChooser<StartingPosition>();
     /**
      * Chooser used in SmartDashboard to choose which alliance we are on
      * 
      * @since 2017
      */
-    public static final SendableChooser allianceChooser          = new SendableChooser();
-    public static CalibratorData        calibratorData;
-    public static boolean               isTesting                = false;
-    public static int                   amountOfThingsCalibrated = 0;
+    public static final SendableChooser<Alliance>         allianceChooser          = new SendableChooser<Alliance>();
+    public static CalibratorData                          calibratorData;
+    public static boolean                                 isTesting                = false;
+    public static int                                     amountOfThingsCalibrated = 0;
     /**
      * The command that the robot does for autonomous
      * 
      * @since Always
      * @version 2018
      */
-    private Command                     autonomousCommand;
+    private Command                                       autonomousCommand;
     /**
      * Chooser used in SmartDashboard to choose which alliance we are on
      * 
      * @since 2017
      */
-    public static final SendableChooser calibrationSetter        = new SendableChooser();
+    public static final SendableChooser<CalibrationMode>  calibrationSetter        = new SendableChooser<CalibrationMode>();
 
     /**
      * What runs when the robot is initalized
@@ -57,13 +68,11 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         CommandBase.init();
         SmartDashboard.putNumber("Joystick Tolerance", 1);
-        /*
         try {
             calibratorData = Calibration.readFile();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("We Have Not Created The Calibration Data File");
         }
-        */
         Thread thread = new Thread(new LogServer());
         thread.start();
         calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
@@ -116,6 +125,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void autonomousInit() {
+        LOG.trace("Autonomous Initalized");
         Robot.isTesting = false;
         autonomousCommand = new Autonomous();
         autonomousCommand.start();
@@ -138,6 +148,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopInit() {
+        LOG.trace("Teleop Initalized");
         isTesting = false;
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
@@ -170,6 +181,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testInit() {
+        LOG.trace("Test Initalized");
         Robot.isTesting = true;
     }
 }

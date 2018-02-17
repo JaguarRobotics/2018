@@ -48,6 +48,7 @@ public class Autonomous extends CommandGroup {
      * @version 2018
      */
     public Autonomous() {
+        LOG.trace("Autonmous Started");
         ISpeedFunction speed = t->Math.min(0.8, 9.323308271 * t * t * t - 18.42105263 * t * t + 8.897744361 * t + 0.6);
         AutonomousModel model = null;
         File file = new File(ROUTES_DIR, chooser.getSelected());

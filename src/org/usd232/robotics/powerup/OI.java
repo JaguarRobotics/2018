@@ -1,8 +1,16 @@
 package org.usd232.robotics.powerup;
 
 import org.usd232.robotics.powerup.calibration.CalibrateCommand;
+import org.usd232.robotics.powerup.climb.ClimbDown;
+import org.usd232.robotics.powerup.climb.ClimbUp;
 import org.usd232.robotics.powerup.drive.GearShiftHigh;
 import org.usd232.robotics.powerup.drive.GearShiftLow;
+import org.usd232.robotics.powerup.intake.DropCube;
+import org.usd232.robotics.powerup.intake.GrabCube;
+import org.usd232.robotics.powerup.intake.LowerIntake;
+import org.usd232.robotics.powerup.intake.RaiseIntake;
+import org.usd232.robotics.powerup.lift.ManualLower;
+import org.usd232.robotics.powerup.lift.ManualRaise;
 // import org.usd232.robotics.powerup.lift.ManualLower;
 // import org.usd232.robotics.powerup.lift.ManualRaise;
 import edu.wpi.first.wpilibj.Joystick;
@@ -19,16 +27,22 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI implements RobotMap {
     public OI() {
-        Joystick0_Button1.whenPressed(new CalibrateCommand());
-        Joystick1_Button1.whenPressed(new CalibrateCommand());
+        Joystick0_Button11.whenPressed(new CalibrateCommand());
+        Joystick1_Button11.whenPressed(new CalibrateCommand());
         Joystick0_Button3.whenPressed(new GearShiftHigh());
         Joystick1_Button3.whenPressed(new GearShiftHigh());
         Joystick0_Button2.whenPressed(new GearShiftLow());
         Joystick1_Button2.whenPressed(new GearShiftLow());
-        // Joystick0_Button3.whileHeld(new ManualRaise());
-        // Joystick0_Button3.whileHeld(new ManualLower());
-        // Joystick1_Button3.whileHeld(new ManualRaise());
-        // Joystick1_Button3.whileHeld(new ManualLower());
+        
+        
+        ManipulatorXbox_X.whileHeld(new ClimbDown());
+        ManipulatorXbox_B.whileHeld(new ClimbUp());
+        ManipulatorXbox_Y.whileHeld(new ManualRaise());
+        ManipulatorXbox_A.whileHeld(new ManualLower());
+        ManipulatorXbox_LB.whenPressed(new DropCube());
+        ManipulatorXbox_RB.whenPressed(new GrabCube());
+        ManipulatorXbox_Back.whenPressed(new LowerIntake());
+        ManipulatorXbox_Start.whenPressed(new RaiseIntake());
     }
 
     // The controllers we are using this year
