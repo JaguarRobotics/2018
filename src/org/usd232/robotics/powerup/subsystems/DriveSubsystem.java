@@ -1,5 +1,6 @@
 package org.usd232.robotics.powerup.subsystems;
 
+import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.drive.DriveTank;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -22,6 +23,7 @@ public class DriveSubsystem extends SubsystemBase {
      *            speed
      */
     public void driveTank(double left, double right) {
+        CommandBase.locationSubsystem.setMotorPower((left + right) / 2.0);
         robotDrive.tankDrive(left, right);
     }
 
