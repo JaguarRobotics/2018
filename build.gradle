@@ -1,8 +1,24 @@
+import org.gradle.internal.os.OperatingSystem
+
+switch (OperatingSystem.current()) {
+	case OperatingSystem.WINDOWS:
+		project.ext.lwjglNatives = "natives-windows"
+		break
+	case OperatingSystem.LINUX:
+		project.ext.lwjglNatives = "natives-linux"
+	    break
+	case OperatingSystem.MAC_OS:
+		project.ext.lwjglNatives = "natives-macos"
+		break
+}
+
 apply plugin: "java"
 apply plugin: "eclipse"
 
+project.ext.lwjglVersion = "3.1.5"
+
 repositories {
-	mavenCentral()
+    mavenCentral()
     maven {
         url "http://first.wpi.edu/FRC/roborio/maven/release/"
     }
@@ -19,6 +35,11 @@ sourceSets {
     		srcDirs = [ "generator/" ]
     	}
     }
+    minimap {
+        java {
+            srcDirs = [ "minimap/" ]
+        }
+    }
 }
 
 dependencies {
@@ -27,11 +48,26 @@ dependencies {
     compile "org.opencv:opencv-java:3.2.0"
     compile "edu.wpi.first.wpilibj:wpilibj-java:2018.1.1"
     compile "edu.wpi.first.wpiutil:wpiutil-java:3.0.0"
+    minimapCompile "org.lwjgl:lwjgl:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl-assimp:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl-glfw:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl-openal:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl-opengl:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl-stb:$lwjglVersion"
+	minimapCompile "org.lwjgl:lwjgl:$lwjglVersion:$lwjglNatives"
+	minimapCompile "org.lwjgl:lwjgl-assimp:$lwjglVersion:$lwjglNatives"
+	minimapCompile "org.lwjgl:lwjgl-glfw:$lwjglVersion:$lwjglNatives"
+	minimapCompile "org.lwjgl:lwjgl-openal:$lwjglVersion:$lwjglNatives"
+	minimapCompile "org.lwjgl:lwjgl-opengl:$lwjglVersion:$lwjglNatives"
+	minimapCompile "org.lwjgl:lwjgl-stb:$lwjglVersion:$lwjglNatives"
     generatorCompile "net.harawata:appdirs:1.0.1"
     generatorCompile "com.jcraft:jsch:0.1.54"
 }
 
 eclipse {
+    classpath {
+        plusConfigurations << configurations.minimapCompile
+    }
     project {
         natures "edu.wpi.first.wpilib.plugins.core.nature.FRCProjectNature"
         classpath {
