@@ -62,7 +62,7 @@ public class Autonomous extends CommandGroup {
             LOG.fatal("Unable to load autonomous file", ex);
             return;
         }
-        AutonomousRoute route = model.getRoute(DriverStation.getInstance().getGameSpecificMessage());
+        AutonomousRoute route = model.getRoute("LLL");
         LOG.debug("Autonomous route:");
         for (AutonomousStep step : route.getSteps()) {
             switch (step.getType()) {
