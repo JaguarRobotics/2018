@@ -105,6 +105,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotPeriodic() {
+        Scheduler.getInstance().run();
         CommandBase.locationSubsystem.updateValues();
     }
 
@@ -124,7 +125,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
     }
 
     /**
@@ -146,7 +146,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
     }
 
     /**
@@ -169,7 +168,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
     }
 
     /**
@@ -179,7 +177,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testPeriodic() {
-        Scheduler.getInstance().run();
         CommandBase.driveSubsystem.driveTank(1, 1);
     }
 
