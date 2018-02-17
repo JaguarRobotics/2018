@@ -49,7 +49,10 @@ public class Autonomous extends CommandGroup {
      */
     public Autonomous() {
         LOG.trace("Autonmous Started");
-        ISpeedFunction speed = t->Math.min(0.8, 9.323308271 * t * t * t - 18.42105263 * t * t + 8.897744361 * t + 0.6);
+        ISpeedFunction driveSpeed = t->Math.min(0.8,
+                        9.323308271 * t * t * t - 18.42105263 * t * t + 8.897744361 * t + 0.6);
+        ISpeedFunction turnSpeed = t->Math.min(0.8,
+                        9.674185464 * t * t * t - 18.68421053 * t * t + 8.910025063 * t + 0.6);
         AutonomousModel model = null;
         File file = new File(ROUTES_DIR, chooser.getSelected());
         try (FileInputStream stream = new FileInputStream(file)) {
@@ -76,7 +79,7 @@ public class Autonomous extends CommandGroup {
                     DriveParameter param = (DriveParameter) step.getGenericParameter();
                     double distance = param.getDistance() * model.getScale();
                     LOG.debug("Drive forward in %f", distance);
-                    addSequential(new DriveForward(speed, distance, 0.1, 0.01));
+                    addSequential(new DriveForward(driveSpeed, distance, 0.1, 0.01));
                     break;
                 }
                 case Sleep: {
@@ -88,7 +91,7 @@ public class Autonomous extends CommandGroup {
                 case Turn: {
                     TurnParameter param = (TurnParameter) step.getGenericParameter();
                     LOG.debug("Turn %f rad", param.getAngle());
-                    addSequential(new DriveTurn(speed, param.getAngle()));
+                    addSequential(new DriveTurn(turnSpeed, param.getAngle()));
                     break;
                 }
                 default:

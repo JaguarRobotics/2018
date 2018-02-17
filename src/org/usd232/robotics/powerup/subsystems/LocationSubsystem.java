@@ -65,8 +65,8 @@ public class LocationSubsystem extends SubsystemBase {
         double xPart;
         double yPart;
         if (dtheta == 0) {
-            xPart = 0;
-            yPart = (ds1 + ds2) / 2;
+            xPart = (ds1 + ds2) / 2;
+            yPart = 0;
         } else {
             double coefficient = ((ds1 + ds2) / dtheta - WIDTH) / 2 + WIDTH * CENTER_OF_MASS;
             xPart = -coefficient * Math.sin(dtheta);
