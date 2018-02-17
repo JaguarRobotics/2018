@@ -11,7 +11,7 @@ public class LocationSubsystem extends SubsystemBase implements IMinimapCoordPro
                                                                                       // (min / s) = rad / s
     private static final double ROBOT_MASS           = 130;                           // lbs
     private static final double WHEEL_RADIUS         = 3;                             // in
-    private static final double GEARING_RATIO        = 1.0 / 1.0;                     // motor : wheel
+    private static final double GEARING_RATIO        = 12.25;                         // motor : wheel
     private static final double KINETIC_FRICTION     = 0.6;
     private static final double GRAVITY              = 32.2 * 12.0;                   // (ft / s^2) * (in / ft) = in /
                                                                                       // s^2
