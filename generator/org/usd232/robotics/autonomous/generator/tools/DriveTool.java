@@ -73,7 +73,7 @@ public class DriveTool extends DrawingTool {
             double dx = ptFinal.getX() - ptInitial.getX();
             double dy = ptFinal.getY() - ptInitial.getY();
             float angleDiff = (float) (Math.atan2(dy, dx) - angle[0]);
-            param.setAngle(angleDiff);
+            param.setAngle(-angleDiff);
             angle[0] += angleDiff;
             model.stepList.add(null).setParameter(param);
             distance = (float) Math.sqrt(dx * dx + dy * dy);
@@ -105,7 +105,7 @@ public class DriveTool extends DrawingTool {
                         ++i;
                         break;
                     case Turn:
-                        angle[0] += ((TurnParameter) step.getGenericParameter()).getAngle();
+                        angle[0] -= ((TurnParameter) step.getGenericParameter()).getAngle();
                         break;
                     default:
                         break;

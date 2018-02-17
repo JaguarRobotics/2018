@@ -135,10 +135,11 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
                         DriveParameter p = (DriveParameter) param;
                         float old = p.getDistance();
                         try {
-                            p.setDistance(parseFloat(distanceField.getText()));
+                            p.setDistance(parseFloat(distanceField.getText()) / auto.getScale());
                             changed = changed || p.getDistance() != old;
                         } catch (NumberFormatException ex) {
-                            EventQueue.invokeLater(()->distanceField.setText(Float.toString(p.getDistance())));
+                            EventQueue.invokeLater(()->distanceField
+                                            .setText(Float.toString(p.getDistance() * auto.getScale())));
                         }
                     } else if (e.getDocument() == angleField.getDocument()) {
                         TurnParameter p = (TurnParameter) param;
@@ -204,6 +205,8 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
                 if (model.stepListView.isSelectionEmpty()) {
                     name = "empty";
                 } else {
+                    AutonomousModel auto = model.localDatabase
+                                    .getRawElementAt(model.localDatabaseView.getSelectedIndex()).obj2;
                     AutonomousStep step = model.stepList.getRawElementAt(model.stepListView.getSelectedIndex());
                     if (step.getType() == null) {
                         name = "empty";
@@ -219,7 +222,7 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
                             case Drive: {
                                 name = "drive";
                                 DriveParameter param = (DriveParameter) step.getGenericParameter();
-                                distanceField.setText(Float.toString(param.getDistance()));
+                                distanceField.setText(Float.toString(param.getDistance() * auto.getScale()));
                                 break;
                             }
                             case Sleep: {

@@ -92,7 +92,7 @@ public class FieldView extends Container {
                         g.drawLine(start.x, start.y, end.x, end.y);
                         break;
                     case Turn:
-                        angle += ((TurnParameter) step.getGenericParameter()).getAngle();
+                        angle -= ((TurnParameter) step.getGenericParameter()).getAngle();
                         break;
                     default:
                         break;
