@@ -11,6 +11,7 @@ public class DriveTurn extends CommandBase {
 
     @Override
     protected void initialize() {
+        LOG.enter("initialize");
         locationSubsystem.reset();
     }
 
@@ -28,6 +29,7 @@ public class DriveTurn extends CommandBase {
 
     @Override
     protected void end() {
+        LOG.enter("end");
         driveSubsystem.driveTank(0, 0);
     }
 

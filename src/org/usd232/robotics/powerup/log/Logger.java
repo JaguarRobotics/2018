@@ -57,6 +57,14 @@ public class Logger {
     public void trace(Throwable throwable) {
         log(LogLevel.TRACE, throwable);
     }
+    
+    public void enter(String method) {
+        trace("ENTER %s", method);
+    }
+    
+    public void leave(String method) {
+        trace("LEAVE %s", method);
+    }
 
     public void debug(String message) {
         log(LogLevel.DEBUG, message);

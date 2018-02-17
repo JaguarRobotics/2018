@@ -13,6 +13,7 @@ public class DriveForward extends CommandBase {
 
     @Override
     protected void initialize() {
+        LOG.enter("initialize");
         locationSubsystem.reset();
     }
 
@@ -39,6 +40,7 @@ public class DriveForward extends CommandBase {
 
     @Override
     protected void end() {
+        LOG.enter("end");
         driveSubsystem.driveTank(0, 0);
     }
 
