@@ -1,5 +1,7 @@
 package org.usd232.robotics.autonomous;
 
+import java.nio.ByteBuffer;
+
 /**
  * Represents a single step that the autonomous route must take.
  * 
@@ -7,7 +9,7 @@ package org.usd232.robotics.autonomous;
  * @since 2018
  * @version 2018
  */
-public class AutonomousStep {
+public class AutonomousStep implements IBufferSerializable {
     /**
      * The type of step this is
      * 
@@ -20,6 +22,24 @@ public class AutonomousStep {
      * @since 2018
      */
     private IAutonomousStepParameter param;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void serialize(ByteBuffer ser) {
+        ser.put((byte) getType().ordinal());
+        param.serialize(ser);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deserialize(ByteBuffer ser) {
+        setType(StepType.values()[ser.get()]);
+        param.deserialize(ser);
+    }
 
     /**
      * Gets the type of step this is
@@ -45,17 +65,23 @@ public class AutonomousStep {
         this.type = type;
         switch (type) {
             case Sleep:
-                if (!(param instanceof SleepParameter)) {
+                if (param == null || !(param instanceof SleepParameter)) {
                     setParameter(new SleepParameter());
                 }
                 break;
-            case Bezier:
-                if (!(param instanceof BezierCurve)) {
-                    setParameter(new BezierCurve());
+            case Drive:
+                if (param == null || !(param instanceof DriveParameter)) {
+                    setParameter(new DriveParameter());
+                }
+                break;
+            case Turn:
+                if (param == null || !(param instanceof TurnParameter)) {
+                    setParameter(new TurnParameter());
                 }
                 break;
             case CustomCommand:
-                if (!(param instanceof CustomCommandParameter)) {
+                if (param == null || !(param instanceof CustomCommandParameter)) {
+                    setParameter(new CustomCommandParameter());
                 }
                 break;
         }
@@ -83,13 +109,24 @@ public class AutonomousStep {
             throw new NullPointerException("param cannot be null");
         }
         if (param instanceof SleepParameter) {
-            setType(StepType.Sleep);
+            if (getType() != StepType.Sleep) {
+                setType(StepType.Sleep);
+            }
             this.param = param;
-        } else if (param instanceof BezierCurve) {
-            setType(StepType.Bezier);
+        } else if (param instanceof DriveParameter) {
+            if (getType() != StepType.Drive) {
+                setType(StepType.Drive);
+            }
+            this.param = param;
+        } else if (param instanceof TurnParameter) {
+            if (getType() != StepType.Turn) {
+                setType(StepType.Turn);
+            }
             this.param = param;
         } else if (param instanceof CustomCommandParameter) {
-            setType(StepType.CustomCommand);
+            if (getType() != StepType.CustomCommand) {
+                setType(StepType.CustomCommand);
+            }
             this.param = param;
         } else {
             throw new ClassCastException("Invalid parameter type");

@@ -1,11 +1,14 @@
 package org.usd232.robotics.powerup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.usd232.robotics.powerup.RobotMap.Alliance;
+import org.usd232.robotics.powerup.RobotMap.CalibrationMode;
+import org.usd232.robotics.powerup.RobotMap.StartingPosition;
 import org.usd232.robotics.powerup.calibration.Calibration;
 import org.usd232.robotics.powerup.calibration.CalibratorData;
+import org.usd232.robotics.powerup.commands.Autonomous;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.LogServer;
+import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -20,25 +23,41 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @version 2018
  */
 public class Robot extends IterativeRobot {
-    private static final Logger logger = LoggerFactory.getLogger(Robot.class);
-    public static CalibratorData        calibratorData;
-    public static boolean               isTesting                = false;
-    public static int                   amountOfThingsCalibrated = 0;
     public static MinimapCoordsServer minimapServer;
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger                           LOG                      = new Logger();
+    /**
+     * chooser used on the SmartDashboard to choose the starting position
+     * 
+     * @since 2017
+     */
+    public static final SendableChooser<StartingPosition> positionChooser          = new SendableChooser<StartingPosition>();
+    /**
+     * Chooser used in SmartDashboard to choose which alliance we are on
+     * 
+     * @since 2017
+     */
+    public static final SendableChooser<Alliance>         allianceChooser          = new SendableChooser<Alliance>();
+    public static CalibratorData                          calibratorData;
+    public static int                                     amountOfThingsCalibrated = 0;
     /**
      * The command that the robot does for autonomous
      * 
      * @since Always
      * @version 2018
      */
-    private Command                     autonomousCommand;
+    private Command                                       autonomousCommand;
     /**
      * Chooser used in SmartDashboard to choose which alliance we are on
      * 
      * @since 2017
      */
-    @SuppressWarnings("rawtypes")
-    public static final SendableChooser calibrationSetter        = new SendableChooser();
+    public static final SendableChooser<CalibrationMode>  calibrationSetter        = new SendableChooser<CalibrationMode>();
 
     /**
      * What runs when the robot is initalized
@@ -46,20 +65,33 @@ public class Robot extends IterativeRobot {
      * @since Always
      * @version 2018
      */
-    @SuppressWarnings("unchecked")
     public void robotInit() {
-        CommandBase.init();
         SmartDashboard.putNumber("Joystick Tolerance", 1);
         try {
+            Calibration.init();
             calibratorData = Calibration.readFile();
+            LOG.info("Calibration Data:");
+            LOG.info("Bottom: %f", calibratorData.getLiftBottom());
+            LOG.info("Switch: %f", calibratorData.getLiftSwitch());
+            LOG.info("Scale: %f", calibratorData.getLiftScale());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception in getting calibration file");
+            calibratorData = new CalibratorData();
         }
+        CommandBase.init();
         Thread thread = new Thread(new LogServer());
         thread.start();
         calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
         calibrationSetter.addObject("Calibrating", RobotMap.CalibrationMode.Calibrating);
         SmartDashboard.putData("Calibration Setter", calibrationSetter);
+        allianceChooser.addDefault("Blue", RobotMap.Alliance.Blue);
+        allianceChooser.addObject("Red", RobotMap.Alliance.Red);
+        SmartDashboard.putData("Alliance", allianceChooser);
+        positionChooser.addDefault("Left", RobotMap.StartingPosition.One);
+        positionChooser.addObject("Middle", RobotMap.StartingPosition.Two);
+        positionChooser.addObject("Right", RobotMap.StartingPosition.Three);
+        SmartDashboard.putData("Starting Position", positionChooser);
+        Autonomous.loadDashboard();
         
         try {
 			minimapServer = new MinimapCoordsServer();
@@ -76,7 +108,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotPeriodic() {
-        super.robotPeriodic();
+        CommandBase.locationSubsystem.updateValues();
     }
 
     /**
@@ -105,6 +137,8 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void autonomousInit() {
+        LOG.trace("Autonomous Initalized");
+        autonomousCommand = new Autonomous();
         autonomousCommand.start();
     }
 
@@ -125,8 +159,7 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopInit() {
-        System.out.println("Teleop initialized");
-        isTesting = true;
+        LOG.trace("Teleop Initalized");
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
@@ -149,6 +182,8 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testPeriodic() {
+        Scheduler.getInstance().run();
+        CommandBase.driveSubsystem.driveTank(1, 1);
     }
 
     /**
@@ -158,5 +193,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testInit() {
+        LOG.trace("Test Initalized");
     }
 }

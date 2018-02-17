@@ -1,8 +1,9 @@
 package org.usd232.robotics.powerup.lift;
 
+import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
+import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
-import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The command to raise the lift
@@ -13,12 +14,19 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public class Raise extends CommandBase {
     /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG        = new Logger();
+    /**
      * Value that we are raising to
      * 
      * @since 2018
      * @version 2018
      */
-    private double raiseValue = 0;
+    private double              raiseValue = 0;
 
     /**
      * Raises the lift of the robot to specified potentiometer value
@@ -29,7 +37,6 @@ public class Raise extends CommandBase {
      * @version 2018
      */
     public Raise(double raiseValue) {
-        requires(liftSubsystem);
         this.raiseValue = raiseValue;
     }
 
@@ -41,6 +48,8 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void initialize() {
+        IO.helpRaiseSolenoid.set(true);
+        LOG.info("Raising Lift To " + raiseValue);
     }
 
     /**
@@ -51,7 +60,7 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void execute() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kForward);
+        LiftSubsystem.raiseScissor();
     }
 
     /**
@@ -63,7 +72,11 @@ public class Raise extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() >= raiseValue) {
+        if (liftSubsystem.getPotentiometerValue() <= raiseValue) {
+            LOG.info("Stop For POT");
+            return true;
+        } else if (!IO.topLimitSwitch.get()) {
+            LOG.info("Stop For Switch");
             return true;
         } else {
             return false;
@@ -78,7 +91,8 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
+        LiftSubsystem.stopScissor();
+        IO.helpRaiseSolenoid.set(false);
     }
 
     /**

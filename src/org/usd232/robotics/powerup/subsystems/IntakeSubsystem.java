@@ -12,33 +12,23 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     /**
+     * Drop cube
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public void dropCube() {
+        grabSolenoid.set(true);
+    }
+
+    /**
      * Grabs cube
      * 
      * @since 2018
      * @version 2018
      */
-    public void intakeGrabberIn() {
-        // grabSolenoid.set(true);
-    }
-
-    /**
-     * Releases cube
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    public void intakeGrabberOut() {
-        // grabSolenoid.set(false);
-    }
-
-    /**
-     * Raises power cube
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    public void intakeGrabberUp() {
-        // liftSolenoid.set(true);
+    public void grabCube() {
+        grabSolenoid.set(false);
     }
 
     /**
@@ -47,8 +37,18 @@ public class IntakeSubsystem extends SubsystemBase {
      * @since 2018
      * @version 2018
      */
-    public void intakeGrabberDown() {
-        // liftSolenoid.set(false);
+    public void lowerIntake() {
+        liftSolenoid.set(true);
+    }
+
+    /**
+     * Raises power cube
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public void raiseIntake() {
+        liftSolenoid.set(false);
     }
 
     @Override

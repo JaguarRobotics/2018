@@ -7,47 +7,50 @@ public class CalibratorData implements Serializable {
      * Generated serial version uid
      */
     private static final long serialVersionUID = 5137717876753409990L;
+    /**
+     * Potentiometer value for the scale for the top of the lift
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private double     liftScale;
+    /**
+     * Potentiometer value for the switch on the lift
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private double     liftSwitch;
+    /**
+     * Potentiometer value for the bottom of the lift
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private double     liftBottom;
 
-    public static double getLiftScale() {
+    public double getLiftScale() {
         return liftScale;
     }
 
-    public static void setLiftScale(double liftScale) {
-        CalibratorData.liftScale = liftScale;
+    public void setLiftScale(double liftScale) {
+        this.liftScale = liftScale;
     }
 
-    public static double getLiftSwitch() {
+    public double getLiftSwitch() {
         return liftSwitch;
     }
 
-    public static void setLiftSwitch(double liftSwitch) {
-        CalibratorData.liftSwitch = liftSwitch;
+    public void setLiftSwitch(double liftSwitch) {
+        this.liftSwitch = liftSwitch;
     }
 
-    public static double getLiftBottom() {
+    public double getLiftBottom() {
         return liftBottom;
     }
 
-    public static void setLiftBottom(double liftBottom) {
-        CalibratorData.liftBottom = liftBottom;
+    public void setLiftBottom(double liftBottom) {
+        this.liftBottom = liftBottom;
     }
 
-    private static double liftScale;
-    /**
-     * @return true if potentiometer measures height of scale
-     * @since 2018
-     * @version 2018
-     */
-    private static double liftSwitch;
-    /**
-     * @return true if potentiometer measures height of switch
-     * @since 2018
-     * @version 2018
-     */
-    private static double liftBottom;
-    /**
-     * @return true if potentiometer measures lowest point
-     * @since 2018
-     * @version 2018
-     */
 }

@@ -1,11 +1,23 @@
 package org.usd232.robotics.powerup;
 
 import org.usd232.robotics.powerup.calibration.CalibrateCommand;
-// import org.usd232.robotics.powerup.lift.ManualLower;
-// import org.usd232.robotics.powerup.lift.ManualRaise;
+import org.usd232.robotics.powerup.climb.ClimbDown;
+import org.usd232.robotics.powerup.climb.ClimbUp;
+import org.usd232.robotics.powerup.drive.GearShiftHigh;
+import org.usd232.robotics.powerup.drive.GearShiftLow;
+import org.usd232.robotics.powerup.intake.DropCube;
+import org.usd232.robotics.powerup.intake.GrabCube;
+import org.usd232.robotics.powerup.intake.LowerIntake;
+import org.usd232.robotics.powerup.intake.RaiseIntake;
+import org.usd232.robotics.powerup.lift.GoToLevel;
+import org.usd232.robotics.powerup.lift.ManualLower;
+import org.usd232.robotics.powerup.lift.ManualRaise;
+import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Trigger;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This class is the glue that binds the controls on the physical operator interface to the commands and command groups
@@ -15,14 +27,52 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * @since Always
  * @version 2018
  */
-public class OI implements RobotMap {
+public class OI extends Trigger implements RobotMap {
+    /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG = new Logger();
+
+    abstract class Scheduler extends ButtonScheduler {
+        @Override
+        public void start() {
+            super.start();
+        }
+    }
+
+    @Override
+    public boolean get() {
+        return false;
+    }
+
     public OI() {
-        Joystick0_Button1.whenPressed(new CalibrateCommand());
-        Joystick1_Button1.whenPressed(new CalibrateCommand());
-        // Joystick0_Button3.whileHeld(new ManualRaise());
-        // Joystick0_Button3.whileHeld(new ManualLower());
-        // Joystick1_Button3.whileHeld(new ManualRaise());
-        // Joystick1_Button3.whileHeld(new ManualLower());
+        Joystick0_Button11.whenPressed(new CalibrateCommand());
+        Joystick1_Button11.whenPressed(new CalibrateCommand());
+        Joystick0_Button3.whenPressed(new GearShiftHigh());
+        Joystick1_Button3.whenPressed(new GearShiftHigh());
+        Joystick0_Button2.whenPressed(new GearShiftLow());
+        Joystick1_Button2.whenPressed(new GearShiftLow());
+        ManipulatorXbox_RB.whileHeld(new ManualRaise());
+        ManipulatorXbox_LB.whileHeld(new ManualLower());
+        try {
+            whenPovIs(Manipulator, 0, new GoToLevel(Robot.calibratorData.getLiftScale()));
+            whenPovIs(Manipulator, 6, new GoToLevel(Robot.calibratorData.getLiftSwitch()));
+            whenPovIs(Manipulator, 4, new GoToLevel(Robot.calibratorData.getLiftBottom()));
+            LOG.info("The POV controls were successfuly created");
+        } catch (Exception e) {
+            LOG.info("The POV controls failed to be created");
+        }
+        whileGreaterThan(Manipulator, 2, .8, new ClimbDown());
+        whileGreaterThan(Manipulator, 3, .8, new ClimbUp());
+        ManipulatorXbox_Start.whenPressed(new GearShiftHigh());
+        ManipulatorXbox_Back.whenPressed(new GearShiftLow());
+        ManipulatorXbox_Y.whenPressed(new RaiseIntake());
+        ManipulatorXbox_A.whenPressed(new LowerIntake());
+        ManipulatorXbox_X.whenPressed(new GrabCube());
+        ManipulatorXbox_B.whenPressed(new DropCube());
     }
 
     // The controllers we are using this year
@@ -63,4 +113,76 @@ public class OI implements RobotMap {
     public final Button   ManipulatorXbox_Start  = new JoystickButton(Manipulator, 8);
     public final Button   ManipulatorXbox_LStick = new JoystickButton(Manipulator, 9);
     public final Button   ManipulatorXbox_RStick = new JoystickButton(Manipulator, 10);
+
+    public void whenLessThan(Joystick joystick, int axis, double value, Command command) {
+        new Scheduler() {
+            private boolean pressedLast = joystick.getRawAxis(axis) < value;
+
+            @Override
+            public void execute() {
+                if (joystick.getRawAxis(axis) < value) {
+                    if (!pressedLast) {
+                        pressedLast = true;
+                        command.start();
+                    }
+                } else {
+                    pressedLast = false;
+                }
+            }
+        }.start();
+    }
+
+    public void whenGreaterThan(Joystick joystick, int axis, double value, Command command) {
+        new Scheduler() {
+            private boolean pressedLast = joystick.getRawAxis(axis) > value;
+
+            @Override
+            public void execute() {
+                if (joystick.getRawAxis(axis) > value) {
+                    if (!pressedLast) {
+                        pressedLast = true;
+                        command.start();
+                    }
+                } else {
+                    pressedLast = false;
+                }
+            }
+        }.start();
+    }
+
+    public void whileGreaterThan(Joystick joystick, int axis, double value, Command command) {
+        new Scheduler() {
+            private boolean pressedLast = joystick.getRawAxis(axis) < value;
+
+            @Override
+            public void execute() {
+                if (joystick.getRawAxis(axis) > value) {
+                    if (!pressedLast) {
+                        pressedLast = true;
+                        command.start();
+                    }
+                } else {
+                    if (pressedLast) {
+                        command.cancel();
+                        pressedLast = false;
+                    }
+                }
+            }
+        }.start();
+    }
+
+    public void whenPovIs(Joystick joystick, int valueForCommand, Command command) {
+        new Scheduler() {
+            @Override
+            public void execute() {
+                int currentValue = (int) (((joystick.getPOV() + 22.5) % 360) / 45);
+                if (joystick.getPOV() == -1) {
+                } else {
+                    if (currentValue == valueForCommand) {
+                        command.start();
+                    }
+                }
+            }
+        }.start();
+    }
 }

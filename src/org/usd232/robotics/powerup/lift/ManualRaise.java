@@ -1,8 +1,9 @@
 package org.usd232.robotics.powerup.lift;
 
+import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
+import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
-import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The command to raise the lift
@@ -13,6 +14,14 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public class ManualRaise extends CommandBase {
     /**
+     * The Logger
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    private static final Logger LOG = new Logger();
+
+    /**
      * Raises the lift
      * 
      * @param raiseValue
@@ -21,7 +30,6 @@ public class ManualRaise extends CommandBase {
      * @version 2018
      */
     public ManualRaise() {
-        requires(liftSubsystem);
     }
 
     /**
@@ -32,6 +40,8 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void initialize() {
+        IO.helpRaiseSolenoid.set(true);
+        LOG.info("Manually Raising Lift");
     }
 
     /**
@@ -42,7 +52,7 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void execute() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kForward);
+        LiftSubsystem.raiseScissor();
     }
 
     /**
@@ -54,7 +64,7 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        return false;
+        return !IO.topLimitSwitch.get();
     }
 
     /**
@@ -65,7 +75,8 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
+        LiftSubsystem.stopScissor();
+        IO.helpRaiseSolenoid.set(false);
     }
 
     /**

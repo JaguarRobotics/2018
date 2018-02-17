@@ -7,8 +7,7 @@ package org.usd232.robotics.powerup;
  * @version 2018
  */
 public interface RobotMap {
-    // PWMs
-    // Need to add motor types
+    // Motors and Encoders
     /**
      * The port for the left motor
      * 
@@ -66,7 +65,7 @@ public interface RobotMap {
      * @version 2018
      */
     public static final int     RIGHT_ENCODER_CHANNEL_B    = 3;
-    // Relay
+    // Relays
     /**
      * The port for the lift relay
      * 
@@ -75,13 +74,13 @@ public interface RobotMap {
      */
     public static final int     LIFT_RELAY_PORT            = 0;
     /**
-     * The port for the whinch relay
+     * The port for the Winch Relay
      * 
      * @since 2018
      * @version 2018
      */
-    public static final int     WHINCH_RELAY_PORT          = 1;
-    // Analog Ports
+    public static final int     WINCH_RELAY_PORT           = 1;
+    // Gyro and Potentiometer
     /**
      * The port for the potentiometer
      * 
@@ -103,70 +102,63 @@ public interface RobotMap {
      * @since 2017
      * @version 2018
      */
-    public static final int     LEFT_JOYSTICK_PORT         = 1;
+    public static final int     LEFT_JOYSTICK_PORT         = 0;
     /**
      * The port for the right joystick
      * 
      * @since 2017
      * @version 2018
      */
-    public static final int     RIGHT_JOYSTICK_PORT        = 2;
+    public static final int     RIGHT_JOYSTICK_PORT        = 1;
     /**
      * The port for the manipulator
      * 
      * @since 2017
      * @version 2018
      */
-    public static final int     MANIPULATOR_JOYSTICK_PORT  = 3;
-    // Robot Design
+    public static final int     MANIPULATOR_JOYSTICK_PORT  = 2;
+    // Solenoids
     /**
-     * The width of the robot
+     * The port for the solenoid that grabs the cube
      * 
-     * @since 2017
-     * @version 2018
+     * @since 2018
      */
-    public static final double  ROBOT_WIDTH                = 16;
+    public static final int     INTAKE_GRAB_SOLENOID       = 0;            // Changed for test
+    /**
+     * The port for the solenoid that lifts the intake system
+     * 
+     * @since 2018
+     */
+    public static final int     INTAKE_LIFT_SOLENOID       = 1;            // Changed for test
     /**
      * The port for the solenoid that shifts gears
      * 
      * @since 2017
      * @version 2018
      */
-    public static final int     SOLENOID_GEAR_SHIFT_PORT   = 0;
-    // Cutoff Values for potentiometers
+    public static final int     SOLENOID_GEAR_SHIFT_PORT   = 7;
     /**
-     * The potentiometer value for the height of the portal
+     * The port for the solenoid that helps Raise
+     * 
+     * @since 2017
+     * @version 2018
+     */
+    public static final int     RAISE_HELPER_SOLENOID_PORT = 2;
+    // Limit Switches
+    /**
+     * The port for the Limit Switch that detects bottom position
      * 
      * @since 2018
      * @version 2018
      */
-    public static final int     PORTAL_POTENTIOMETER_VALUE = 0;
+    public static final int     BOTTOM_LIMIT_SWITCH_PORT   = 5;
     /**
-     * The potentiometer value for the height of the scale
+     * The port for the Limit Switch that detects top position
      * 
      * @since 2018
      * @version 2018
      */
-    public static final int     SCALE_POTENTIOMETER_VALUE  = 0;
-    /**
-     * The potentiometer value for the height of the switch
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    public static final int     SWITCH_POTENTIOMETER_VALUE = 0;
-    /**
-     * The port for the solenoid that grabs the cube
-     * 
-     * @since 2018
-     */
-    public static final int     INTAKE_GRAB_SOLENOID       = 1;
-    /**
-     * The port for the solenoid that lifts the intake system
-     * 
-     * @since 2018
-     */
-    public static final int     INTAKE_LIFT_SOLENOID       = 2;
+    public static final int     TOP_LIMIT_SWITCH_PORT      = 4;
 
     /**
      * The enum constants for the gears that the robot could be in
@@ -186,5 +178,25 @@ public interface RobotMap {
      */
     public enum CalibrationMode {
         Calibrating, NotCalibrating
+    }
+
+    /**
+     * enum constants for what our alliance is
+     * 
+     * @since 2017
+     * @version 2018
+     */
+    public enum Alliance {
+        Red, Blue
+    }
+
+    /**
+     * enum constants for robot starting position
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public enum StartingPosition {
+        One, Two, Three
     }
 }
