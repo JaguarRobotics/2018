@@ -1,5 +1,6 @@
 package org.usd232.robotics.powerup.log;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -7,13 +8,26 @@ import java.util.Arrays;
 public class Logger {
     private static final String[]    EXCLUDED_CLASSES = { Logger.class.getName(), Thread.class.getName() };
     private static final PrintStream REAL_STDOUT      = System.out;
+    private static final PrintStream LOG_FILE;
     private final String             logger;
+    static {
+        PrintStream log = null;
+        try {
+            log = new PrintStream(new FileOutputStream("/home/lvuser/robot.log", true));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        LOG_FILE = log;
+    }
 
     public void log(LogLevel level, String message) {
         try {
             byte[] buf = message.getBytes("utf8");
             LogServer.emit(LogServer.serialize(buf, 0, buf.length, System.currentTimeMillis(), level, logger));
             REAL_STDOUT.printf("[%6s] [%32s] %s%n", level,
+                            logger.length() > 32 ? logger.substring(logger.length() - 32, logger.length()) : logger,
+                            message);
+            LOG_FILE.printf("[%6s] [%32s] %s%n", level,
                             logger.length() > 32 ? logger.substring(logger.length() - 32, logger.length()) : logger,
                             message);
         } catch (IOException ex) {
