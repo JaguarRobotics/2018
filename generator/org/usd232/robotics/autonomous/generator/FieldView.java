@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import javax.swing.ImageIcon;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import org.usd232.robotics.autonomous.AutonomousRoute;
 import org.usd232.robotics.autonomous.AutonomousStep;
 import org.usd232.robotics.autonomous.DriveParameter;
@@ -17,12 +19,17 @@ import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 import org.usd232.robotics.autonomous.generator.tools.Tool;
 import org.usd232.robotics.autonomous.generator.tools.Toolbar;
 
-public class FieldView extends Container {
+public class FieldView extends Container implements ListSelectionListener {
     private static final long serialVersionUID = -6766487415290825938L;
     private Image             image;
     private AffineTransform   imageTransformation;
     private Toolbar           toolbar;
     private GeneratorModel    model;
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        repaint();
+    }
 
     public Dimension getImageSize() {
         double maxWidth = ((double) getWidth()) / (double) image.getWidth(this);
@@ -136,5 +143,6 @@ public class FieldView extends Container {
                                         .getImage();
         imageTransformation = new AffineTransform();
         resetTransformation();
+        model.addListSelectionListener(this);
     }
 }
