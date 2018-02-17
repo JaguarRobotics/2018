@@ -3,7 +3,6 @@ package org.usd232.robotics.powerup.calibration;
 import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
-
 /**
  * Command to write the Calibration file
  * 

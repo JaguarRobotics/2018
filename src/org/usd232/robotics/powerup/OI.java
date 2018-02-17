@@ -2,7 +2,6 @@ package org.usd232.robotics.powerup;
 
 import org.usd232.robotics.powerup.calibration.CalibrateCommand;
 import org.usd232.robotics.powerup.climb.ClimbDown;
-import org.usd232.robotics.powerup.climb.ClimbStop;
 import org.usd232.robotics.powerup.climb.ClimbUp;
 import org.usd232.robotics.powerup.drive.GearShiftHigh;
 import org.usd232.robotics.powerup.drive.GearShiftLow;

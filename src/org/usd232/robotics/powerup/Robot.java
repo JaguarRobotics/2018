@@ -1,6 +1,5 @@
 package org.usd232.robotics.powerup;
 
-import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.RobotMap.Alliance;
 import org.usd232.robotics.powerup.RobotMap.CalibrationMode;
 import org.usd232.robotics.powerup.RobotMap.StartingPosition;
@@ -9,6 +8,7 @@ import org.usd232.robotics.powerup.calibration.CalibratorData;
 import org.usd232.robotics.powerup.commands.Autonomous;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.LogServer;
+import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -85,6 +85,7 @@ public class Robot extends IterativeRobot {
         positionChooser.addObject("Middle", RobotMap.StartingPosition.Two);
         positionChooser.addObject("Right", RobotMap.StartingPosition.Three);
         SmartDashboard.putData("Starting Position", positionChooser);
+        Autonomous.loadDashboard();
     }
 
     /**

@@ -2,17 +2,10 @@ apply plugin: "java"
 apply plugin: "eclipse"
 
 repositories {
+	mavenCentral()
     maven {
         url "http://first.wpi.edu/FRC/roborio/maven/release/"
     }
-}
-
-dependencies {
-    compile "edu.wpi.first.cscore:cscore-java:1.1.0"
-    compile "edu.wpi.first.ntcore:ntcore-java:4.0.0"
-    compile "org.opencv:opencv-java:3.2.0"
-    compile "edu.wpi.first.wpilibj:wpilibj-java:2018.1.1"
-    compile "edu.wpi.first.wpiutil:wpiutil-java:3.0.0"
 }
 
 sourceSets {
@@ -28,8 +21,21 @@ sourceSets {
     }
 }
 
+dependencies {
+    compile "edu.wpi.first.cscore:cscore-java:1.1.0"
+    compile "edu.wpi.first.ntcore:ntcore-java:4.0.0"
+    compile "org.opencv:opencv-java:3.2.0"
+    compile "edu.wpi.first.wpilibj:wpilibj-java:2018.1.1"
+    compile "edu.wpi.first.wpiutil:wpiutil-java:3.0.0"
+    generatorCompile "net.harawata:appdirs:1.0.1"
+    generatorCompile "com.jcraft:jsch:0.1.54"
+}
+
 eclipse {
     project {
         natures "edu.wpi.first.wpilib.plugins.core.nature.FRCProjectNature"
+        classpath {
+        	plusConfigurations << configurations.generatorCompile
+        }
     }
 }
