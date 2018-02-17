@@ -60,6 +60,7 @@ public class Autonomous extends CommandGroup {
             return;
         }
         AutonomousRoute route = model.getRoute(DriverStation.getInstance().getGameSpecificMessage());
+        LOG.debug("Autonomous route:");
         for (AutonomousStep step : route.getSteps()) {
             switch (step.getType()) {
                 case CustomCommand: {
@@ -72,16 +73,20 @@ public class Autonomous extends CommandGroup {
                 }
                 case Drive: {
                     DriveParameter param = (DriveParameter) step.getGenericParameter();
-                    addSequential(new DriveForward(speed, param.getDistance(), 0.1, 0.01));
+                    double distance = param.getDistance() * model.getScale();
+                    LOG.debug("Drive forward in %f", distance);
+                    addSequential(new DriveForward(speed, distance, 0.1, 0.01));
                     break;
                 }
                 case Sleep: {
                     SleepParameter param = (SleepParameter) step.getGenericParameter();
+                    LOG.debug("Sleep for %d ms", param.getMillis());
                     addSequential(new Delay(param.getMillis()));
                     break;
                 }
                 case Turn: {
                     TurnParameter param = (TurnParameter) step.getGenericParameter();
+                    LOG.debug("Turn %f rad", param.getAngle());
                     addSequential(new DriveTurn(speed, param.getAngle()));
                     break;
                 }
