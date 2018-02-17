@@ -43,7 +43,6 @@ public class Calibration extends IterativeRobot {
      */
     public static void writeToFile(CalibratorData data) {
         try {
-            f = new File("/home/lvuser/CalibrationSettings.txt");
             if (!f.exists()) {
                 f.createNewFile();
                 LOG.info("Created A New Calibration File");
@@ -75,5 +74,8 @@ public class Calibration extends IterativeRobot {
             LOG.error(e, "Could Not Read The File");
         }
         return null;
+    }
+    public static void init() {
+        f = new File("/home/lvuser/CalibrationSettings.txt");
     }
 }

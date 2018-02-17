@@ -1,19 +1,16 @@
 package org.usd232.robotics.powerup.lift;
 
-import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
-import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
-import edu.wpi.first.wpilibj.Relay;
 
 /**
- * The command to lower the lift
+ * The command to lower the lift to a specific step
  * 
- * @author Brian, Alex Whipple
+ * @author Brian
  * @since 2018
  * @version 2018
  */
-public class ManualLower extends CommandBase {
+public class GoToLevel extends CommandBase {
     /**
      * The Logger
      * 
@@ -22,18 +19,18 @@ public class ManualLower extends CommandBase {
      */
     private static final Logger LOG     = new Logger();
     private int                 counter = 0;
-    private int                 onTime  = 5;
-    private int                 offTime = 5;
+    private double              targetPotentiometerValue;
 
     /**
-     * Lowers the lift
+     * Lowers the lift of the robot to specified potentiometer value
      * 
      * @param lowerValue
      *            the value the robot the lift to
      * @since 2018
      * @version 2018
      */
-    public ManualLower() {
+    public GoToLevel(double targetValue) {
+        this.targetPotentiometerValue = targetValue;
     }
 
     /**
@@ -44,7 +41,18 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected void initialize() {
-        LOG.info("Manually Lowering Lift");
+        double currentPotentiometerValue = liftSubsystem.getPotentiometerValue();
+        LOG.info("Current Value Of Potentiometer " + currentPotentiometerValue);
+        if (targetPotentiometerValue <= currentPotentiometerValue) {
+            LOG.info("Raising to the height of " + this.targetPotentiometerValue);
+            Raise raise = new Raise(targetPotentiometerValue);
+            raise.start();
+        } else if (targetPotentiometerValue >= currentPotentiometerValue) {
+            LOG.info("Lowering to the height of " + this.targetPotentiometerValue);
+            Lower lower = new Lower(targetPotentiometerValue);
+            lower.start();
+        }
+        counter = 1;
     }
 
     /**
@@ -55,31 +63,22 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected void execute() {
-        if (counter % (onTime + offTime) >= offTime) {
-            LiftSubsystem.lowerScissor();
-        } else {
-            LiftSubsystem.liftRelay.set(Relay.Value.kOff);
-        }
-        counter++;
     }
 
     /**
-     * Checks if it's done
+     * Checks if the potentiometer value has reached the target value
      * 
-     * @return returns false
+     * @return true if potentiometer value is lower than or equal to targetValue
      * @since 2018
      * @version 2018
      */
     @Override
     protected boolean isFinished() {
-        if(!IO.bottomLimitSwitch.get()) {
-            long currentTime = System.currentTimeMillis();
-            long targetTime = currentTime + 1000;
-            while(currentTime <= targetTime) {
-            }
+        if(counter == 1) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -90,7 +89,6 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.stopScissor();
     }
 
     /**

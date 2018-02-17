@@ -4,7 +4,6 @@ import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
-import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The command to raise the lift
@@ -38,7 +37,6 @@ public class Raise extends CommandBase {
      * @version 2018
      */
     public Raise(double raiseValue) {
-        requires(liftSubsystem);
         this.raiseValue = raiseValue;
     }
 
@@ -50,6 +48,7 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void initialize() {
+        IO.helpRaiseSolenoid.set(true);
         LOG.info("Raising Lift To " + raiseValue);
     }
 
@@ -61,9 +60,7 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void execute() {
-        if (!IO.topLimitSwitch.get()) {
-            LiftSubsystem.liftRelay.set(Relay.Value.kForward);
-        }
+        LiftSubsystem.raiseScissor();
     }
 
     /**
@@ -75,9 +72,11 @@ public class Raise extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() >= raiseValue) {
+        if (liftSubsystem.getPotentiometerValue() <= raiseValue) {
+            LOG.info("Stop For POT");
             return true;
-        } else if (IO.topLimitSwitch.get()) {
+        } else if (!IO.topLimitSwitch.get()) {
+            LOG.info("Stop For Switch");
             return true;
         } else {
             return false;
@@ -92,7 +91,8 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
+        LiftSubsystem.stopScissor();
+        IO.helpRaiseSolenoid.set(false);
     }
 
     /**

@@ -43,7 +43,6 @@ public class Robot extends IterativeRobot {
      */
     public static final SendableChooser<Alliance>         allianceChooser          = new SendableChooser<Alliance>();
     public static CalibratorData                          calibratorData;
-    public static boolean                                 isTesting                = false;
     public static int                                     amountOfThingsCalibrated = 0;
     /**
      * The command that the robot does for autonomous
@@ -66,13 +65,19 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void robotInit() {
-        CommandBase.init();
         SmartDashboard.putNumber("Joystick Tolerance", 1);
         try {
+            Calibration.init();
             calibratorData = Calibration.readFile();
+            LOG.info("Calibration Data:");
+            LOG.info("Bottom: %f", calibratorData.getLiftBottom());
+            LOG.info("Switch: %f", calibratorData.getLiftSwitch());
+            LOG.info("Scale: %f", calibratorData.getLiftScale());
         } catch (Exception e) {
-            LOG.error("We Have Not Created The Calibration Data File");
+            LOG.error("Exception in getting calibration file");
+            calibratorData = new CalibratorData();
         }
+        CommandBase.init();
         Thread thread = new Thread(new LogServer());
         thread.start();
         calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
@@ -126,7 +131,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         LOG.trace("Autonomous Initalized");
-        Robot.isTesting = false;
         autonomousCommand = new Autonomous();
         autonomousCommand.start();
     }
@@ -149,7 +153,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit() {
         LOG.trace("Teleop Initalized");
-        isTesting = false;
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
@@ -172,6 +175,8 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testPeriodic() {
+        Scheduler.getInstance().run();
+        CommandBase.driveSubsystem.driveTank(1, 1);
     }
 
     /**
@@ -182,6 +187,5 @@ public class Robot extends IterativeRobot {
      */
     public void testInit() {
         LOG.trace("Test Initalized");
-        Robot.isTesting = true;
     }
 }

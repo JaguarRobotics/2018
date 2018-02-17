@@ -28,6 +28,9 @@ public class Lower extends CommandBase {
      * @version 2018
      */
     private double              lowerValue = 0;
+    private int                 counter    = 0;
+    private int                 onTime     = 5;
+    private int                 offTime    = 5;
 
     /**
      * Lowers the lift of the robot to specified potentiometer value
@@ -38,7 +41,6 @@ public class Lower extends CommandBase {
      * @version 2018
      */
     public Lower(double lowerValue) {
-        requires(liftSubsystem);
         this.lowerValue = lowerValue;
     }
 
@@ -61,9 +63,14 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void execute() {
-        if (!IO.bottomLimitSwitch.get()) {
-            LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
+        if (counter % (onTime + offTime) >= offTime) {
+            if (!IO.bottomLimitSwitch.get()) {
+                LiftSubsystem.lowerScissor();
+            }
+        } else {
+            LiftSubsystem.liftRelay.set(Relay.Value.kOff);
         }
+        counter++;
     }
 
     /**
@@ -75,9 +82,14 @@ public class Lower extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() <= lowerValue) {
+        if (liftSubsystem.getPotentiometerValue() >= lowerValue) {
             return true;
-        } else if (IO.bottomLimitSwitch.get()) {
+        } else if (!IO.bottomLimitSwitch.get()) {
+            long currentTime = System.currentTimeMillis();
+            long targetTime = currentTime + 1000;
+            while(currentTime <= targetTime) {
+                
+            }
             return true;
         } else {
             return false;
@@ -92,7 +104,7 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
+        LiftSubsystem.stopScissor();
     }
 
     /**

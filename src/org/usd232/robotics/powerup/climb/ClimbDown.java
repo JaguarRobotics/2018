@@ -13,7 +13,8 @@ import edu.wpi.first.wpilibj.Relay;
  * @version 2018
  */
 public class ClimbDown extends CommandBase {
-    private static final Logger  LOG = new Logger();
+    private static final Logger LOG = new Logger();
+
     /**
      * Makes Robot Climb Down With The Winch
      * 
@@ -27,8 +28,9 @@ public class ClimbDown extends CommandBase {
     protected void execute() {
         LOG.info("Running Climb Down Execute");
         IO.winchRelay.set(Relay.Value.kReverse);
+        IO.winchRelay.set(Relay.Value.kForward);
     }
-    
+
     @Override
     protected void end() {
         IO.winchRelay.stopMotor();
@@ -38,6 +40,7 @@ public class ClimbDown extends CommandBase {
     protected void interrupted() {
         IO.winchRelay.stopMotor();
     }
+
     @Override
     protected boolean isFinished() {
         return false;
