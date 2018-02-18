@@ -186,6 +186,31 @@ public class Logger {
         log(LogLevel.FATAL, throwable);
     }
 
+    public void uncaught(Throwable throwable) {
+        fatal(throwable, "Uncaught exception");
+    }
+
+    public void catchAll(UnsafeRunnable code) {
+        try {
+            code.run();
+        } catch (Throwable t) {
+            uncaught(t);
+        }
+    }
+
+    public <T> T catchAll(UnsafeFunction<T> code, T def) {
+        try {
+            return code.run();
+        } catch (Throwable t) {
+            uncaught(t);
+            return def;
+        }
+    }
+
+    public <T> T catchAll(UnsafeFunction<T> code) {
+        return catchAll(code, null);
+    }
+
     public String getName() {
         return logger;
     }
