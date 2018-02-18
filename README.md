@@ -3,7 +3,7 @@
 ## Autonomous Generator
 The following numbers represent different commands in the auto generator
 ### Custom Commands
-2018 Specific Commands
+2018 Specific Commands<br/>
 (0) Drop Cube<br/>
 (1) Grab Cube<br/>
 (2) Lower Intake<br/>
