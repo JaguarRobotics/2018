@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 
 public class Printer extends OutputStream {
+    private static final Logger   LOG              = new Logger();
     private static final String[] EXCLUDED_CLASSES = { Printer.class.getName(), PrintStream.class.getName() };
     private OutputStream          parent;
     private LogServer             logServer;
@@ -18,13 +19,20 @@ public class Printer extends OutputStream {
 
     @Override
     public void write(byte[] b, int off, int len) throws IOException {
-        parent.write(b, off, len);
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        int i;
-        for (i = stackTrace.length - 1; i >= 0
-                        && Arrays.binarySearch(EXCLUDED_CLASSES, stackTrace[i].getClassName()) < 0; --i);
-        logServer.write(LogServer.serialize(b, off, len, System.currentTimeMillis(), level,
-                        stackTrace[i + 1].getClassName()));
+        try {
+            parent.write(b, off, len);
+            StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+            int i;
+            for (i = stackTrace.length - 1; i >= 0
+                            && Arrays.binarySearch(EXCLUDED_CLASSES, stackTrace[i].getClassName()) < 0; --i);
+            logServer.write(LogServer.serialize(b, off, len, System.currentTimeMillis(), level,
+                            stackTrace[i + 1].getClassName()));
+        } catch (Throwable t) {
+            LOG.uncaught(t);
+            if (t instanceof IOException) {
+                throw (IOException) t;
+            }
+        }
     }
 
     @Override
@@ -33,7 +41,9 @@ public class Printer extends OutputStream {
     }
 
     static {
-        Arrays.sort(EXCLUDED_CLASSES);
+        LOG.catchAll(()-> {
+            Arrays.sort(EXCLUDED_CLASSES);
+        });
     }
 
     public Printer(OutputStream parent, LogServer logServer, LogLevel level) {
