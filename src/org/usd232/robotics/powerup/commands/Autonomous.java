@@ -60,7 +60,7 @@ public class Autonomous extends CommandGroup {
             stream.read(buffer);
             model = new AutonomousModel(new String(buffer));
         } catch (IOException ex) {
-            LOG.fatal("Unable to load autonomous file", ex);
+            LOG.fatal(ex, "Unable to load autonomous file");
             return;
         }
         AutonomousRoute route = model.getRoute(DriverStation.getInstance().getGameSpecificMessage());
