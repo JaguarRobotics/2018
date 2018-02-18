@@ -36,8 +36,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @version 2018
  */
 public class Autonomous extends CommandGroup {
-    private static final Logger            LOG        = new Logger();
-    private static final String            ROUTES_DIR = "/home/lvuser/routes";
+    private static final Logger            LOG         = new Logger();
+    private static final String            ROUTES_DIR  = "/home/lvuser/routes";
+    private static final double            DRIVE_SPEED = 0.8;
     private static SendableChooser<String> chooser;
 
     public static void loadDashboard() {
@@ -56,8 +57,6 @@ public class Autonomous extends CommandGroup {
      */
     public Autonomous() {
         LOG.trace("Autonmous Started");
-        ISpeedFunction driveSpeed = t->Math.min(0.8,
-                        9.323308271 * t * t * t - 18.42105263 * t * t + 8.897744361 * t + 0.6);
         ISpeedFunction turnSpeed = t->Math.min(0.8,
                         9.674185464 * t * t * t - 18.68421053 * t * t + 8.910025063 * t + 0.6);
         AutonomousModel model = null;
@@ -117,7 +116,7 @@ public class Autonomous extends CommandGroup {
                     DriveParameter param = (DriveParameter) step.getGenericParameter();
                     double distance = param.getDistance() * model.getScale();
                     LOG.debug("Drive forward in %f", distance);
-                    addSequential(new DriveForward(driveSpeed, distance, 0.1, 0.01));
+                    addSequential(new DriveForward(DRIVE_SPEED, distance, 0.1, 0.01));
                     break;
                 }
                 case Sleep: {
