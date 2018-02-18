@@ -58,6 +58,10 @@ public abstract class CommandBase extends Command implements RobotMap {
      */
     public static LocationSubsystem locationSubsystem;
 
+    public CommandBase(double timeout) {
+        super(timeout);
+    }
+
     /**
      * This is the class that is the base of the commands and initializes the subsystems
      * 
