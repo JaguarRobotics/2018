@@ -21,6 +21,7 @@ public class LocationSubsystem extends SubsystemBase implements IMinimapCoordPro
     private double              lastTheta;
     private double              x;
     private double              y;
+    private double              speed;
     private double              theta;
 
     public LocationSubsystem() {
@@ -37,6 +38,10 @@ public class LocationSubsystem extends SubsystemBase implements IMinimapCoordPro
 
     public double getY() {
         return y;
+    }
+
+    public double getSpeed() {
+        return speed;
     }
 
     public double getAngle() {
@@ -79,6 +84,7 @@ public class LocationSubsystem extends SubsystemBase implements IMinimapCoordPro
         }
         double sin = Math.sin(theta);
         double cos = Math.cos(theta);
+        speed = Math.sqrt(xPart * xPart + yPart * yPart);
         x += xPart * cos + yPart * sin;
         y += xPart * sin + yPart * cos;
     }
