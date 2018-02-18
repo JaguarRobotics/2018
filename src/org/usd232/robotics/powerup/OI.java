@@ -49,70 +49,72 @@ public class OI extends Trigger implements RobotMap {
     }
 
     public OI() {
-        Joystick0_Button11.whenPressed(new CalibrateCommand());
-        Joystick1_Button11.whenPressed(new CalibrateCommand());
-        Joystick0_Button3.whenPressed(new GearShiftHigh());
-        Joystick1_Button3.whenPressed(new GearShiftHigh());
-        Joystick0_Button2.whenPressed(new GearShiftLow());
-        Joystick1_Button2.whenPressed(new GearShiftLow());
-        ManipulatorXbox_RB.whileHeld(new ManualRaise());
-        ManipulatorXbox_LB.whileHeld(new ManualLower());
-        try {
-            whenPovIs(Manipulator, 0, new GoToLevel(Robot.calibratorData.getLiftScale()));
-            whenPovIs(Manipulator, 6, new GoToLevel(Robot.calibratorData.getLiftSwitch()));
-            whenPovIs(Manipulator, 4, new GoToLevel(Robot.calibratorData.getLiftBottom()));
-            LOG.info("The POV controls were successfuly created");
-        } catch (Exception e) {
-            LOG.info("The POV controls failed to be created");
-        }
-        whileGreaterThan(Manipulator, 2, .8, new ClimbDown());
-        whileGreaterThan(Manipulator, 3, .8, new ClimbUp());
-        ManipulatorXbox_Start.whenPressed(new GearShiftHigh());
-        ManipulatorXbox_Back.whenPressed(new GearShiftLow());
-        ManipulatorXbox_Y.whenPressed(new RaiseIntake());
-        ManipulatorXbox_A.whenPressed(new LowerIntake());
-        ManipulatorXbox_X.whenPressed(new GrabCube());
-        ManipulatorXbox_B.whenPressed(new DropCube());
+        LOG.catchAll(()-> {
+            Joystick0_Button11.whenPressed(new CalibrateCommand());
+            Joystick1_Button11.whenPressed(new CalibrateCommand());
+            Joystick0_Button3.whenPressed(new GearShiftHigh());
+            Joystick1_Button3.whenPressed(new GearShiftHigh());
+            Joystick0_Button2.whenPressed(new GearShiftLow());
+            Joystick1_Button2.whenPressed(new GearShiftLow());
+            ManipulatorXbox_RB.whileHeld(new ManualRaise());
+            ManipulatorXbox_LB.whileHeld(new ManualLower());
+            try {
+                whenPovIs(Manipulator, 0, new GoToLevel(Robot.calibratorData.getLiftScale()));
+                whenPovIs(Manipulator, 6, new GoToLevel(Robot.calibratorData.getLiftSwitch()));
+                whenPovIs(Manipulator, 4, new GoToLevel(Robot.calibratorData.getLiftBottom()));
+                LOG.info("The POV controls were successfuly created");
+            } catch (Exception e) {
+                LOG.info("The POV controls failed to be created");
+            }
+            whileGreaterThan(Manipulator, 2, .8, new ClimbDown());
+            whileGreaterThan(Manipulator, 3, .8, new ClimbUp());
+            ManipulatorXbox_Start.whenPressed(new GearShiftHigh());
+            ManipulatorXbox_Back.whenPressed(new GearShiftLow());
+            ManipulatorXbox_Y.whenPressed(new RaiseIntake());
+            ManipulatorXbox_A.whenPressed(new LowerIntake());
+            ManipulatorXbox_X.whenPressed(new GrabCube());
+            ManipulatorXbox_B.whenPressed(new DropCube());
+        });
     }
 
     // The controllers we are using this year
-    public final Joystick Joystick0              = new Joystick(LEFT_JOYSTICK_PORT);
-    public final Joystick Joystick1              = new Joystick(RIGHT_JOYSTICK_PORT);
-    public final Joystick Manipulator            = new Joystick(MANIPULATOR_JOYSTICK_PORT);
+    public final Joystick Joystick0              = LOG.catchAll(()->new Joystick(LEFT_JOYSTICK_PORT));
+    public final Joystick Joystick1              = LOG.catchAll(()->new Joystick(RIGHT_JOYSTICK_PORT));
+    public final Joystick Manipulator            = LOG.catchAll(()->new Joystick(MANIPULATOR_JOYSTICK_PORT));
     // Buttons here are as labeled on the controllers.
-    public final Button   Joystick0_Button1      = new JoystickButton(Joystick0, 1);
-    public final Button   Joystick0_Button2      = new JoystickButton(Joystick0, 2);
-    public final Button   Joystick0_Button3      = new JoystickButton(Joystick0, 3);
-    public final Button   Joystick0_Button4      = new JoystickButton(Joystick0, 4);
-    public final Button   Joystick0_Button5      = new JoystickButton(Joystick0, 5);
-    public final Button   Joystick0_Button6      = new JoystickButton(Joystick0, 6);
-    public final Button   Joystick0_Button7      = new JoystickButton(Joystick0, 7);
-    public final Button   Joystick0_Button8      = new JoystickButton(Joystick0, 8);
-    public final Button   Joystick0_Button9      = new JoystickButton(Joystick0, 9);
-    public final Button   Joystick0_Button10     = new JoystickButton(Joystick0, 10);
-    public final Button   Joystick0_Button11     = new JoystickButton(Joystick0, 11);
-    public final Button   Joystick1_Button1      = new JoystickButton(Joystick1, 1);
-    public final Button   Joystick1_Button2      = new JoystickButton(Joystick1, 2);
-    public final Button   Joystick1_Button3      = new JoystickButton(Joystick1, 3);
-    public final Button   Joystick1_Button4      = new JoystickButton(Joystick1, 4);
-    public final Button   Joystick1_Button5      = new JoystickButton(Joystick1, 5);
-    public final Button   Joystick1_Button6      = new JoystickButton(Joystick1, 6);
-    public final Button   Joystick1_Button7      = new JoystickButton(Joystick1, 7);
-    public final Button   Joystick1_Button8      = new JoystickButton(Joystick1, 8);
-    public final Button   Joystick1_Button9      = new JoystickButton(Joystick1, 9);
-    public final Button   Joystick1_Button10     = new JoystickButton(Joystick1, 10);
-    public final Button   Joystick1_Button11     = new JoystickButton(Joystick1, 11);
+    public final Button   Joystick0_Button1      = LOG.catchAll(()->new JoystickButton(Joystick0, 1));
+    public final Button   Joystick0_Button2      = LOG.catchAll(()->new JoystickButton(Joystick0, 2));
+    public final Button   Joystick0_Button3      = LOG.catchAll(()->new JoystickButton(Joystick0, 3));
+    public final Button   Joystick0_Button4      = LOG.catchAll(()->new JoystickButton(Joystick0, 4));
+    public final Button   Joystick0_Button5      = LOG.catchAll(()->new JoystickButton(Joystick0, 5));
+    public final Button   Joystick0_Button6      = LOG.catchAll(()->new JoystickButton(Joystick0, 6));
+    public final Button   Joystick0_Button7      = LOG.catchAll(()->new JoystickButton(Joystick0, 7));
+    public final Button   Joystick0_Button8      = LOG.catchAll(()->new JoystickButton(Joystick0, 8));
+    public final Button   Joystick0_Button9      = LOG.catchAll(()->new JoystickButton(Joystick0, 9));
+    public final Button   Joystick0_Button10     = LOG.catchAll(()->new JoystickButton(Joystick0, 10));
+    public final Button   Joystick0_Button11     = LOG.catchAll(()->new JoystickButton(Joystick0, 11));
+    public final Button   Joystick1_Button1      = LOG.catchAll(()->new JoystickButton(Joystick1, 1));
+    public final Button   Joystick1_Button2      = LOG.catchAll(()->new JoystickButton(Joystick1, 2));
+    public final Button   Joystick1_Button3      = LOG.catchAll(()->new JoystickButton(Joystick1, 3));
+    public final Button   Joystick1_Button4      = LOG.catchAll(()->new JoystickButton(Joystick1, 4));
+    public final Button   Joystick1_Button5      = LOG.catchAll(()->new JoystickButton(Joystick1, 5));
+    public final Button   Joystick1_Button6      = LOG.catchAll(()->new JoystickButton(Joystick1, 6));
+    public final Button   Joystick1_Button7      = LOG.catchAll(()->new JoystickButton(Joystick1, 7));
+    public final Button   Joystick1_Button8      = LOG.catchAll(()->new JoystickButton(Joystick1, 8));
+    public final Button   Joystick1_Button9      = LOG.catchAll(()->new JoystickButton(Joystick1, 9));
+    public final Button   Joystick1_Button10     = LOG.catchAll(()->new JoystickButton(Joystick1, 10));
+    public final Button   Joystick1_Button11     = LOG.catchAll(()->new JoystickButton(Joystick1, 11));
     // Xbox Controls
-    public final Button   ManipulatorXbox_A      = new JoystickButton(Manipulator, 1);
-    public final Button   ManipulatorXbox_B      = new JoystickButton(Manipulator, 2);
-    public final Button   ManipulatorXbox_X      = new JoystickButton(Manipulator, 3);
-    public final Button   ManipulatorXbox_Y      = new JoystickButton(Manipulator, 4);
-    public final Button   ManipulatorXbox_LB     = new JoystickButton(Manipulator, 5);
-    public final Button   ManipulatorXbox_RB     = new JoystickButton(Manipulator, 6);
-    public final Button   ManipulatorXbox_Back   = new JoystickButton(Manipulator, 7);
-    public final Button   ManipulatorXbox_Start  = new JoystickButton(Manipulator, 8);
-    public final Button   ManipulatorXbox_LStick = new JoystickButton(Manipulator, 9);
-    public final Button   ManipulatorXbox_RStick = new JoystickButton(Manipulator, 10);
+    public final Button   ManipulatorXbox_A      = LOG.catchAll(()->new JoystickButton(Manipulator, 1));
+    public final Button   ManipulatorXbox_B      = LOG.catchAll(()->new JoystickButton(Manipulator, 2));
+    public final Button   ManipulatorXbox_X      = LOG.catchAll(()->new JoystickButton(Manipulator, 3));
+    public final Button   ManipulatorXbox_Y      = LOG.catchAll(()->new JoystickButton(Manipulator, 4));
+    public final Button   ManipulatorXbox_LB     = LOG.catchAll(()->new JoystickButton(Manipulator, 5));
+    public final Button   ManipulatorXbox_RB     = LOG.catchAll(()->new JoystickButton(Manipulator, 6));
+    public final Button   ManipulatorXbox_Back   = LOG.catchAll(()->new JoystickButton(Manipulator, 7));
+    public final Button   ManipulatorXbox_Start  = LOG.catchAll(()->new JoystickButton(Manipulator, 8));
+    public final Button   ManipulatorXbox_LStick = LOG.catchAll(()->new JoystickButton(Manipulator, 9));
+    public final Button   ManipulatorXbox_RStick = LOG.catchAll(()->new JoystickButton(Manipulator, 10));
 
     public void whenLessThan(Joystick joystick, int axis, double value, Command command) {
         new Scheduler() {

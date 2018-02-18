@@ -11,26 +11,34 @@ public class DriveTurn extends CommandBase {
 
     @Override
     protected void initialize() {
-        LOG.enter("initialize");
-        locationSubsystem.reset();
+        LOG.catchAll(()-> {
+            LOG.enter("initialize");
+            locationSubsystem.reset();
+        });
     }
 
     @Override
     protected void execute() {
-        double highSpeed = speedFunc.calculateSpeed(locationSubsystem.getAngle() / angle);
-        LOG.debug("Turning to %f (currently at %f)", angle, locationSubsystem.getAngle());
-        driveSubsystem.driveTank(highSpeed, -highSpeed);
+        LOG.catchAll(()-> {
+            double highSpeed = speedFunc.calculateSpeed(locationSubsystem.getAngle() / angle);
+            LOG.debug("Turning to %f (currently at %f)", angle, locationSubsystem.getAngle());
+            driveSubsystem.driveTank(highSpeed, -highSpeed);
+        });
     }
 
     @Override
     protected boolean isFinished() {
-        return Math.signum(locationSubsystem.getAngle() - angle) == Math.signum(angle);
+        return LOG.catchAll(()-> {
+            return Math.signum(locationSubsystem.getAngle() - angle) == Math.signum(angle);
+        }, true);
     }
 
     @Override
     protected void end() {
-        LOG.enter("end");
-        driveSubsystem.driveTank(0, 0);
+        LOG.catchAll(()-> {
+            LOG.enter("end");
+            driveSubsystem.driveTank(0, 0);
+        });
     }
 
     public DriveTurn(ISpeedFunction speedFunc, double angle) {

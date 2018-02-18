@@ -25,8 +25,10 @@ public class DropCube extends CommandBase {
 
     @Override
     protected void initialize() {
-        intakeSubsystem.dropCube();
-        LOG.info("Dropped Cube");
+        LOG.catchAll(()-> {
+            intakeSubsystem.dropCube();
+            LOG.info("Dropped Cube");
+        });
     }
 
     @Override

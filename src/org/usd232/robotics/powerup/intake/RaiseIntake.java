@@ -25,8 +25,10 @@ public class RaiseIntake extends CommandBase {
 
     @Override
     protected void initialize() {
-        intakeSubsystem.raiseIntake();
-        LOG.info("Intake Raised");
+        LOG.catchAll(()-> {
+            intakeSubsystem.raiseIntake();
+            LOG.info("Intake Raised");
+        });
     }
 
     @Override

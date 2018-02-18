@@ -45,37 +45,39 @@ public class LogServer implements Runnable {
 
     @Override
     public void run() {
-        try {
-            System.setOut(new PrintStream(new Printer(System.out, this, LogLevel.STDOUT), false, "UTF-8"));
-        } catch (UnsupportedEncodingException ex) {
-            ex.printStackTrace();
-            System.setOut(new PrintStream(new Printer(System.out, this, LogLevel.STDOUT), false));
-        }
-        try {
-            System.setErr(new PrintStream(new Printer(System.err, this, LogLevel.STDERR), false, "UTF-8"));
-        } catch (UnsupportedEncodingException ex) {
-            ex.printStackTrace();
-            System.setErr(new PrintStream(new Printer(System.err, this, LogLevel.STDERR), false));
-        }
-        ServerSocketFactory serverSocketFactory = ServerSocketFactory.getDefault();
-        ServerSocket serverSocket = null;
-        try {
-            serverSocket = serverSocketFactory.createServerSocket(PORT_NUM);
-        } catch (IOException ignored) {
-            System.err.println("Unable to create server");
-            System.exit(-1);
-        }
-        LOG.info("LogServer running on port %s", PORT_NUM);
-        while (true) {
-            Socket socket = null;
+        LOG.catchAll(()-> {
             try {
-                socket = serverSocket.accept();
-                socketList.add(socket);
-                LOG.info("Socket at %s has successfully connected.", socket.getInetAddress());
-            } catch (IOException ex) {
+                System.setOut(new PrintStream(new Printer(System.out, this, LogLevel.STDOUT), false, "UTF-8"));
+            } catch (UnsupportedEncodingException ex) {
                 ex.printStackTrace();
+                System.setOut(new PrintStream(new Printer(System.out, this, LogLevel.STDOUT), false));
             }
-        }
+            try {
+                System.setErr(new PrintStream(new Printer(System.err, this, LogLevel.STDERR), false, "UTF-8"));
+            } catch (UnsupportedEncodingException ex) {
+                ex.printStackTrace();
+                System.setErr(new PrintStream(new Printer(System.err, this, LogLevel.STDERR), false));
+            }
+            ServerSocketFactory serverSocketFactory = ServerSocketFactory.getDefault();
+            ServerSocket serverSocket = null;
+            try {
+                serverSocket = serverSocketFactory.createServerSocket(PORT_NUM);
+            } catch (IOException ignored) {
+                System.err.println("Unable to create server");
+                System.exit(-1);
+            }
+            LOG.info("LogServer running on port %s", PORT_NUM);
+            while (true) {
+                Socket socket = null;
+                try {
+                    socket = serverSocket.accept();
+                    socketList.add(socket);
+                    LOG.info("Socket at %s has successfully connected.", socket.getInetAddress());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     public LogServer() {

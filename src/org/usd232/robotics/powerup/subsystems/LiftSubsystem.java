@@ -1,6 +1,5 @@
 package org.usd232.robotics.powerup.subsystems;
 
-import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.Relay;
 
 /**
@@ -11,13 +10,6 @@ import edu.wpi.first.wpilibj.Relay;
  * @version 2018
  */
 public class LiftSubsystem extends SubsystemBase {
-    /**
-     * The Logger
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    private static final Logger LOG             = new Logger();
     public static StepPositions currentPosition = StepPositions.Bottom;
 
     @Override

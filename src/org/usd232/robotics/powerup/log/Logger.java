@@ -14,7 +14,7 @@ public class Logger {
         PrintStream log = null;
         try {
             log = new PrintStream(new FileOutputStream("/home/lvuser/robot.log", true));
-        } catch (IOException ex) {
+        } catch (Throwable ex) {
             ex.printStackTrace();
         }
         LOG_FILE = log;
@@ -186,17 +186,47 @@ public class Logger {
         log(LogLevel.FATAL, throwable);
     }
 
+    public void uncaught(Throwable throwable) {
+        fatal(throwable, "Uncaught exception");
+    }
+
+    public void catchAll(UnsafeRunnable code) {
+        try {
+            code.run();
+        } catch (Throwable t) {
+            uncaught(t);
+        }
+    }
+
+    public <T> T catchAll(UnsafeFunction<T> code, T def) {
+        try {
+            return code.run();
+        } catch (Throwable t) {
+            uncaught(t);
+            return def;
+        }
+    }
+
+    public <T> T catchAll(UnsafeFunction<T> code) {
+        return catchAll(code, null);
+    }
+
     public String getName() {
         return logger;
     }
 
     private static String getLogger() {
-        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
-            if (Arrays.binarySearch(EXCLUDED_CLASSES, element.getClassName()) < 0) {
-                return element.getClassName();
+        try {
+            for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
+                if (Arrays.binarySearch(EXCLUDED_CLASSES, element.getClassName()) < 0) {
+                    return element.getClassName();
+                }
             }
+            System.err.println("Logger cannot be the only class on the stack");
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
-        throw new RuntimeException("Logger cannot be the only class on the stack");
+        return "Unknown";
     }
 
     static {

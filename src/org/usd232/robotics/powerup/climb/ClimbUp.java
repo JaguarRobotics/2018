@@ -26,19 +26,25 @@ public class ClimbUp extends CommandBase {
 
     @Override
     protected void execute() {
-        LOG.info("Running Climb Up Execute");
-        IO.winchRelay.set(Relay.Value.kForward);
+        LOG.catchAll(()-> {
+            LOG.info("Running Climb Up Execute");
+            IO.winchRelay.set(Relay.Value.kForward);
+        });
         IO.winchRelay.set(Relay.Value.kReverse);
     }
 
     @Override
     protected void end() {
-        IO.winchRelay.stopMotor();
+        LOG.catchAll(()-> {
+            IO.winchRelay.stopMotor();
+        });
     }
 
     @Override
     protected void interrupted() {
-        IO.winchRelay.stopMotor();
+        LOG.catchAll(()-> {
+            IO.winchRelay.stopMotor();
+        });
     }
 
     @Override

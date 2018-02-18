@@ -39,8 +39,10 @@ public class GearShiftLow extends CommandBase {
      * @version 2018
      */
     protected void initialize() {
-        DriveSubsystem.gearShiftLow();
-        LOG.info("Shifted Into Low Gear");
+        LOG.catchAll(()-> {
+            DriveSubsystem.gearShiftLow();
+            LOG.info("Shifted Into Low Gear");
+        });
     }
 
     @Override
@@ -73,7 +75,9 @@ public class GearShiftLow extends CommandBase {
      * @version 2018
      */
     protected void end() {
-        SmartDashboard.putString("Gear", Gear.Low.toString());
+        LOG.catchAll(()-> {
+            SmartDashboard.putString("Gear", Gear.Low.toString());
+        });
     }
 
     @Override

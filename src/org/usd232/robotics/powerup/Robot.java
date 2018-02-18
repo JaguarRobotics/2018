@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @version 2018
  */
 public class Robot extends IterativeRobot {
-    public static MinimapCoordsServer                     minimapServer;
     /**
      * The Logger
      * 
@@ -32,18 +31,21 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     private static final Logger                           LOG                      = new Logger();
+    public static MinimapCoordsServer                     minimapServer;
     /**
      * chooser used on the SmartDashboard to choose the starting position
      * 
      * @since 2017
      */
-    public static final SendableChooser<StartingPosition> positionChooser          = new SendableChooser<StartingPosition>();
+    public static final SendableChooser<StartingPosition> positionChooser          = LOG
+                    .catchAll(()->new SendableChooser<StartingPosition>());
     /**
      * Chooser used in SmartDashboard to choose which alliance we are on
      * 
      * @since 2017
      */
-    public static final SendableChooser<Alliance>         allianceChooser          = new SendableChooser<Alliance>();
+    public static final SendableChooser<Alliance>         allianceChooser          = LOG
+                    .catchAll(()->new SendableChooser<Alliance>());
     public static CalibratorData                          calibratorData;
     public static int                                     amountOfThingsCalibrated = 0;
     /**
@@ -58,7 +60,8 @@ public class Robot extends IterativeRobot {
      * 
      * @since 2017
      */
-    public static final SendableChooser<CalibrationMode>  calibrationSetter        = new SendableChooser<CalibrationMode>();
+    public static final SendableChooser<CalibrationMode>  calibrationSetter        = LOG
+                    .catchAll(()->new SendableChooser<CalibrationMode>());
 
     /**
      * What runs when the robot is initalized
@@ -67,34 +70,36 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void robotInit() {
-        SmartDashboard.putNumber("Joystick Tolerance", 1);
-        try {
-            Calibration.init();
-            calibratorData = Calibration.readFile();
-            LOG.info("Calibration Data:");
-            LOG.info("Bottom: %f", calibratorData.getLiftBottom());
-            LOG.info("Switch: %f", calibratorData.getLiftSwitch());
-            LOG.info("Scale: %f", calibratorData.getLiftScale());
-        } catch (Exception e) {
-            LOG.error("Exception in getting calibration file");
-            calibratorData = new CalibratorData();
-        }
-        CommandBase.init();
-        Thread thread = new Thread(new LogServer());
-        thread.start();
-        calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
-        calibrationSetter.addObject("Calibrating", RobotMap.CalibrationMode.Calibrating);
-        SmartDashboard.putData("Calibration Setter", calibrationSetter);
-        allianceChooser.addDefault("Blue", RobotMap.Alliance.Blue);
-        allianceChooser.addObject("Red", RobotMap.Alliance.Red);
-        SmartDashboard.putData("Alliance", allianceChooser);
-        positionChooser.addDefault("Left", RobotMap.StartingPosition.One);
-        positionChooser.addObject("Middle", RobotMap.StartingPosition.Two);
-        positionChooser.addObject("Right", RobotMap.StartingPosition.Three);
-        SmartDashboard.putData("Starting Position", positionChooser);
-        Autonomous.loadDashboard();
-        minimapServer = new MinimapCoordsServer(CommandBase.locationSubsystem);
-        minimapServer.start();
+        LOG.catchAll(()-> {
+            SmartDashboard.putNumber("Joystick Tolerance", 1);
+            try {
+                Calibration.init();
+                calibratorData = Calibration.readFile();
+                LOG.info("Calibration Data:");
+                LOG.info("Bottom: %f", calibratorData.getLiftBottom());
+                LOG.info("Switch: %f", calibratorData.getLiftSwitch());
+                LOG.info("Scale: %f", calibratorData.getLiftScale());
+            } catch (Exception e) {
+                LOG.error("Exception in getting calibration file");
+                calibratorData = new CalibratorData();
+            }
+            CommandBase.init();
+            Thread thread = new Thread(new LogServer());
+            thread.start();
+            calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
+            calibrationSetter.addObject("Calibrating", RobotMap.CalibrationMode.Calibrating);
+            SmartDashboard.putData("Calibration Setter", calibrationSetter);
+            allianceChooser.addDefault("Blue", RobotMap.Alliance.Blue);
+            allianceChooser.addObject("Red", RobotMap.Alliance.Red);
+            SmartDashboard.putData("Alliance", allianceChooser);
+            positionChooser.addDefault("Left", RobotMap.StartingPosition.One);
+            positionChooser.addObject("Middle", RobotMap.StartingPosition.Two);
+            positionChooser.addObject("Right", RobotMap.StartingPosition.Three);
+            SmartDashboard.putData("Starting Position", positionChooser);
+            Autonomous.loadDashboard();
+            minimapServer = new MinimapCoordsServer(CommandBase.locationSubsystem);
+            minimapServer.start();
+        });
     }
 
     /**
@@ -105,7 +110,9 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotPeriodic() {
-        CommandBase.locationSubsystem.updateValues();
+        LOG.catchAll(()-> {
+            CommandBase.locationSubsystem.updateValues();
+        });
     }
 
     /**
@@ -124,7 +131,9 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        LOG.catchAll(()-> {
+            Scheduler.getInstance().run();
+        });
     }
 
     /**
@@ -134,9 +143,11 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void autonomousInit() {
-        LOG.trace("Autonomous Initalized");
-        autonomousCommand = new Autonomous();
-        autonomousCommand.start();
+        LOG.catchAll(()-> {
+            LOG.trace("Autonomous Initalized");
+            autonomousCommand = new Autonomous();
+            autonomousCommand.start();
+        });
     }
 
     /**
@@ -146,7 +157,9 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        LOG.catchAll(()-> {
+            Scheduler.getInstance().run();
+        });
     }
 
     /**
@@ -156,10 +169,12 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopInit() {
-        LOG.trace("Teleop Initalized");
-        if (autonomousCommand != null) {
-            autonomousCommand.cancel();
-        }
+        LOG.catchAll(()-> {
+            LOG.trace("Teleop Initalized");
+            if (autonomousCommand != null) {
+                autonomousCommand.cancel();
+            }
+        });
     }
 
     /**
@@ -169,7 +184,9 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        LOG.catchAll(()-> {
+            Scheduler.getInstance().run();
+        });
     }
 
     /**
@@ -179,8 +196,10 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testPeriodic() {
-        Scheduler.getInstance().run();
-        CommandBase.driveSubsystem.driveTank(1, 1);
+        LOG.catchAll(()-> {
+            Scheduler.getInstance().run();
+            CommandBase.driveSubsystem.driveTank(1, 1);
+        });
     }
 
     /**
@@ -190,6 +209,8 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     public void testInit() {
-        LOG.trace("Test Initalized");
+        LOG.catchAll(()-> {
+            LOG.trace("Test Initalized");
+        });
     }
 }
