@@ -41,18 +41,20 @@ public class GoToLevel extends CommandBase {
      */
     @Override
     protected void initialize() {
-        double currentPotentiometerValue = liftSubsystem.getPotentiometerValue();
-        LOG.info("Current Value Of Potentiometer " + currentPotentiometerValue);
-        if (targetPotentiometerValue <= currentPotentiometerValue) {
-            LOG.info("Raising to the height of " + this.targetPotentiometerValue);
-            Raise raise = new Raise(targetPotentiometerValue);
-            raise.start();
-        } else if (targetPotentiometerValue >= currentPotentiometerValue) {
-            LOG.info("Lowering to the height of " + this.targetPotentiometerValue);
-            Lower lower = new Lower(targetPotentiometerValue);
-            lower.start();
-        }
-        counter = 1;
+        LOG.catchAll(()-> {
+            double currentPotentiometerValue = liftSubsystem.getPotentiometerValue();
+            LOG.info("Current Value Of Potentiometer " + currentPotentiometerValue);
+            if (targetPotentiometerValue <= currentPotentiometerValue) {
+                LOG.info("Raising to the height of " + this.targetPotentiometerValue);
+                Raise raise = new Raise(targetPotentiometerValue);
+                raise.start();
+            } else if (targetPotentiometerValue >= currentPotentiometerValue) {
+                LOG.info("Lowering to the height of " + this.targetPotentiometerValue);
+                Lower lower = new Lower(targetPotentiometerValue);
+                lower.start();
+            }
+            counter = 1;
+        });
     }
 
     /**
@@ -74,11 +76,13 @@ public class GoToLevel extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if(counter == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return LOG.catchAll(()-> {
+            if (counter == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }, true);
     }
 
     /**
@@ -99,6 +103,8 @@ public class GoToLevel extends CommandBase {
      */
     @Override
     protected void interrupted() {
-        end();
+        LOG.catchAll(()-> {
+            end();
+        });
     }
 }

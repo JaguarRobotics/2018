@@ -39,8 +39,10 @@ public class GearShiftHigh extends CommandBase {
      * @version 2018
      */
     protected void initialize() {
-        DriveSubsystem.gearShiftHigh();
-        LOG.info("Shifted Into High Gear");
+        LOG.catchAll(()-> {
+            DriveSubsystem.gearShiftHigh();
+            LOG.info("Shifted Into High Gear");
+        });
     }
 
     @Override
@@ -73,7 +75,9 @@ public class GearShiftHigh extends CommandBase {
      * @version 2018
      */
     protected void end() {
-        SmartDashboard.putString("Gear", Gear.High.toString());
+        LOG.catchAll(()-> {
+            SmartDashboard.putString("Gear", Gear.High.toString());
+        });
     }
 
     @Override

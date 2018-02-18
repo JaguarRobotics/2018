@@ -26,19 +26,25 @@ public class ClimbDown extends CommandBase {
 
     @Override
     protected void execute() {
-        LOG.info("Running Climb Down Execute");
-        IO.winchRelay.set(Relay.Value.kReverse);
-        IO.winchRelay.set(Relay.Value.kForward);
+        LOG.catchAll(()-> {
+            LOG.info("Running Climb Down Execute");
+            IO.winchRelay.set(Relay.Value.kReverse);
+            IO.winchRelay.set(Relay.Value.kForward);
+        });
     }
 
     @Override
     protected void end() {
-        IO.winchRelay.stopMotor();
+        LOG.catchAll(()-> {
+            IO.winchRelay.stopMotor();
+        });
     }
 
     @Override
     protected void interrupted() {
-        IO.winchRelay.stopMotor();
+        LOG.catchAll(()-> {
+            IO.winchRelay.stopMotor();
+        });
     }
 
     @Override

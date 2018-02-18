@@ -48,8 +48,10 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void initialize() {
-        IO.helpRaiseSolenoid.set(true);
-        LOG.info("Raising Lift To " + raiseValue);
+        LOG.catchAll(()-> {
+            IO.helpRaiseSolenoid.set(true);
+            LOG.info("Raising Lift To " + raiseValue);
+        });
     }
 
     /**
@@ -60,7 +62,9 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void execute() {
-        LiftSubsystem.raiseScissor();
+        LOG.catchAll(()-> {
+            LiftSubsystem.raiseScissor();
+        });
     }
 
     /**
@@ -72,15 +76,17 @@ public class Raise extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() <= raiseValue) {
-            LOG.info("Stop For POT");
-            return true;
-        } else if (!IO.topLimitSwitch.get()) {
-            LOG.info("Stop For Switch");
-            return true;
-        } else {
-            return false;
-        }
+        return LOG.catchAll(()-> {
+            if (liftSubsystem.getPotentiometerValue() <= raiseValue) {
+                LOG.info("Stop For POT");
+                return true;
+            } else if (!IO.topLimitSwitch.get()) {
+                LOG.info("Stop For Switch");
+                return true;
+            } else {
+                return false;
+            }
+        }, true);
     }
 
     /**
@@ -91,8 +97,10 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.stopScissor();
-        IO.helpRaiseSolenoid.set(false);
+        LOG.catchAll(()-> {
+            LiftSubsystem.stopScissor();
+            IO.helpRaiseSolenoid.set(false);
+        });
     }
 
     /**
@@ -103,6 +111,8 @@ public class Raise extends CommandBase {
      */
     @Override
     protected void interrupted() {
-        end();
+        LOG.catchAll(()-> {
+            end();
+        });
     }
 }

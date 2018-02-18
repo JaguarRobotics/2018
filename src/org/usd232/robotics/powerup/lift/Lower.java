@@ -52,7 +52,9 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void initialize() {
-        LOG.info("Lowering Lift to " + lowerValue);
+        LOG.catchAll(()-> {
+            LOG.info("Lowering Lift to " + lowerValue);
+        });
     }
 
     /**
@@ -63,14 +65,16 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void execute() {
-        if (counter % (onTime + offTime) >= offTime) {
-            if (!IO.bottomLimitSwitch.get()) {
-                LiftSubsystem.lowerScissor();
+        LOG.catchAll(()-> {
+            if (counter % (onTime + offTime) >= offTime) {
+                if (!IO.bottomLimitSwitch.get()) {
+                    LiftSubsystem.lowerScissor();
+                }
+            } else {
+                LiftSubsystem.liftRelay.set(Relay.Value.kOff);
             }
-        } else {
-            LiftSubsystem.liftRelay.set(Relay.Value.kOff);
-        }
-        counter++;
+            counter++;
+        });
     }
 
     /**
@@ -82,18 +86,19 @@ public class Lower extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() >= lowerValue) {
-            return true;
-        } else if (!IO.bottomLimitSwitch.get()) {
-            long currentTime = System.currentTimeMillis();
-            long targetTime = currentTime + 1000;
-            while(currentTime <= targetTime) {
-                
+        return LOG.catchAll(()-> {
+            if (liftSubsystem.getPotentiometerValue() >= lowerValue) {
+                return true;
+            } else if (!IO.bottomLimitSwitch.get()) {
+                long currentTime = System.currentTimeMillis();
+                long targetTime = currentTime + 1000;
+                while (currentTime <= targetTime) {
+                }
+                return true;
+            } else {
+                return false;
             }
-            return true;
-        } else {
-            return false;
-        }
+        }, true);
     }
 
     /**
@@ -104,7 +109,9 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.stopScissor();
+        LOG.catchAll(()-> {
+            LiftSubsystem.stopScissor();
+        });
     }
 
     /**
@@ -115,6 +122,8 @@ public class Lower extends CommandBase {
      */
     @Override
     protected void interrupted() {
-        end();
+        LOG.catchAll(()-> {
+            end();
+        });
     }
 }

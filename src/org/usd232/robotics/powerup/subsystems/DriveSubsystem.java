@@ -1,6 +1,7 @@
 package org.usd232.robotics.powerup.subsystems;
 
 import org.usd232.robotics.powerup.drive.DriveTank;
+import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
@@ -8,10 +9,12 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * @since 2017
  */
 public class DriveSubsystem extends SubsystemBase {
+    private static final Logger      LOG        = new Logger();
     /**
      * Class that controls both drive motors
      */
-    private static DifferentialDrive robotDrive = new DifferentialDrive(leftDriveMotor, rightDriveMotor);
+    private static DifferentialDrive robotDrive = LOG
+                    .catchAll(()->new DifferentialDrive(leftDriveMotor, rightDriveMotor));
 
     /**
      * Drives the robot based on left and right speeds. Calls adjusted driving when 1 or -1
@@ -50,6 +53,8 @@ public class DriveSubsystem extends SubsystemBase {
      * Sets the default command of the subsystem.
      */
     public void initDefaultCommand() {
-        setDefaultCommand(new DriveTank());
+        LOG.catchAll(()-> {
+            setDefaultCommand(new DriveTank());
+        });
     }
 }

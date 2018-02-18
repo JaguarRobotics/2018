@@ -26,8 +26,10 @@ public class ClimbStop extends CommandBase {
 
     @Override
     protected void execute() {
-        LOG.info("Running Climb Stop Execute");
-        IO.winchRelay.set(Relay.Value.kOff);
+        LOG.catchAll(()-> {
+            LOG.info("Running Climb Stop Execute");
+            IO.winchRelay.set(Relay.Value.kOff);
+        });
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.usd232.robotics.powerup.drive;
 
 import org.usd232.robotics.powerup.commands.CommandBase;
+import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -11,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @version 2018
  */
 public class DriveTank extends CommandBase {
+    private static final Logger LOG = new Logger();
+
     /**
      * Drives the robot in teleop based on left and right joystick inputs.
      * 
@@ -48,23 +51,25 @@ public class DriveTank extends CommandBase {
      */
     @Override
     protected void execute() {
-        double powNum = 2;
-        double joystickTolerance = SmartDashboard.getNumber("Joystick Tolerance", 1);
-        double joystick0 = oi.Joystick0.getY() * joystickTolerance;
-        double joystick1 = oi.Joystick1.getY() * joystickTolerance;
-        double adjustedJoystick0 = Math.abs(joystick0);
-        double adjustedJoystick1 = Math.abs(joystick1);
-        double powerJoystick0 = Math.pow(adjustedJoystick0, powNum);
-        double powerJoystick1 = Math.pow(adjustedJoystick1, powNum);
-        if (Math.abs(powerJoystick0) > adjustedJoystick0) {
-            powerJoystick0 = adjustedJoystick0;
-        }
-        if (Math.abs(powerJoystick1) > adjustedJoystick1) {
-            powerJoystick1 = adjustedJoystick1;
-        }
-        left = (powerJoystick0 * (adjustedJoystick0 / joystick0)) / joystickTolerance;
-        right = (powerJoystick1 * (adjustedJoystick1 / joystick1)) / joystickTolerance;
-        driveSubsystem.driveTank(-left, -right);
+        LOG.catchAll(()-> {
+            double powNum = 2;
+            double joystickTolerance = SmartDashboard.getNumber("Joystick Tolerance", 1);
+            double joystick0 = oi.Joystick0.getY() * joystickTolerance;
+            double joystick1 = oi.Joystick1.getY() * joystickTolerance;
+            double adjustedJoystick0 = Math.abs(joystick0);
+            double adjustedJoystick1 = Math.abs(joystick1);
+            double powerJoystick0 = Math.pow(adjustedJoystick0, powNum);
+            double powerJoystick1 = Math.pow(adjustedJoystick1, powNum);
+            if (Math.abs(powerJoystick0) > adjustedJoystick0) {
+                powerJoystick0 = adjustedJoystick0;
+            }
+            if (Math.abs(powerJoystick1) > adjustedJoystick1) {
+                powerJoystick1 = adjustedJoystick1;
+            }
+            left = (powerJoystick0 * (adjustedJoystick0 / joystick0)) / joystickTolerance;
+            right = (powerJoystick1 * (adjustedJoystick1 / joystick1)) / joystickTolerance;
+            driveSubsystem.driveTank(-left, -right);
+        });
     }
 
     /**

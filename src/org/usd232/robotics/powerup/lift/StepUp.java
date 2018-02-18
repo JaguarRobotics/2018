@@ -14,7 +14,6 @@ import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
  * @version 2018
  */
 public class StepUp extends CommandBase {
-
     /**
      * The Logger
      * 
@@ -50,21 +49,23 @@ public class StepUp extends CommandBase {
      */
     @Override
     protected void initialize() {
-        LOG.info("Lifting Lift to " + stepValue);
-        switch (LiftSubsystem.currentPosition) {
-            case Scale:
-                stepValue = 500000000;
-                LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Scale;
-                break;
-            case Switch:
-                stepValue = Robot.calibratorData.getLiftScale();
-                LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Scale;
-                break;
-            case Bottom:
-                stepValue = Robot.calibratorData.getLiftSwitch();
-                LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Switch;
-                break;
-        }
+        LOG.catchAll(()-> {
+            LOG.info("Lifting Lift to " + stepValue);
+            switch (LiftSubsystem.currentPosition) {
+                case Scale:
+                    stepValue = 500000000;
+                    LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Scale;
+                    break;
+                case Switch:
+                    stepValue = Robot.calibratorData.getLiftScale();
+                    LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Scale;
+                    break;
+                case Bottom:
+                    stepValue = Robot.calibratorData.getLiftSwitch();
+                    LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Switch;
+                    break;
+            }
+        });
     }
 
     /**
@@ -75,8 +76,10 @@ public class StepUp extends CommandBase {
      */
     @Override
     protected void execute() {
-        LiftSubsystem.raiseScissor();
-        IO.helpRaiseSolenoid.set(true);
+        LOG.catchAll(()-> {
+            LiftSubsystem.raiseScissor();
+            IO.helpRaiseSolenoid.set(true);
+        });
     }
 
     /**
@@ -88,13 +91,15 @@ public class StepUp extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() <= stepValue) {
-            return true;
-        } else if (!IO.topLimitSwitch.get()) {
-            return true;
-        } else {
-            return false;
-        }
+        return LOG.catchAll(()-> {
+            if (liftSubsystem.getPotentiometerValue() <= stepValue) {
+                return true;
+            } else if (!IO.topLimitSwitch.get()) {
+                return true;
+            } else {
+                return false;
+            }
+        }, true);
     }
 
     /**
@@ -105,8 +110,10 @@ public class StepUp extends CommandBase {
      */
     @Override
     protected void end() {
-        IO.helpRaiseSolenoid.set(false);
-        LiftSubsystem.stopScissor();
+        LOG.catchAll(()-> {
+            IO.helpRaiseSolenoid.set(false);
+            LiftSubsystem.stopScissor();
+        });
     }
 
     /**
@@ -117,6 +124,8 @@ public class StepUp extends CommandBase {
      */
     @Override
     protected void interrupted() {
-        end();
+        LOG.catchAll(()-> {
+            end();
+        });
     }
 }

@@ -40,8 +40,10 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void initialize() {
-        IO.helpRaiseSolenoid.set(true);
-        LOG.info("Manually Raising Lift");
+        LOG.catchAll(()-> {
+            IO.helpRaiseSolenoid.set(true);
+            LOG.info("Manually Raising Lift");
+        });
     }
 
     /**
@@ -52,7 +54,9 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void execute() {
-        LiftSubsystem.raiseScissor();
+        LOG.catchAll(()-> {
+            LiftSubsystem.raiseScissor();
+        });
     }
 
     /**
@@ -64,7 +68,9 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        return !IO.topLimitSwitch.get();
+        return LOG.catchAll(()-> {
+            return !IO.topLimitSwitch.get();
+        }, true);
     }
 
     /**
@@ -75,8 +81,10 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.stopScissor();
-        IO.helpRaiseSolenoid.set(false);
+        LOG.catchAll(()-> {
+            LiftSubsystem.stopScissor();
+            IO.helpRaiseSolenoid.set(false);
+        });
     }
 
     /**
@@ -87,6 +95,8 @@ public class ManualRaise extends CommandBase {
      */
     @Override
     protected void interrupted() {
-        end();
+        LOG.catchAll(()-> {
+            end();
+        });
     }
 }

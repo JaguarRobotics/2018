@@ -25,8 +25,10 @@ public class LowerIntake extends CommandBase {
 
     @Override
     protected void initialize() {
-        intakeSubsystem.lowerIntake();
-        LOG.info("Intake Lowered");
+        LOG.catchAll(()-> {
+            intakeSubsystem.lowerIntake();
+            LOG.info("Intake Lowered");
+        });
     }
 
     @Override

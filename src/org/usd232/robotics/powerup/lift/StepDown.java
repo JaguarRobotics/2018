@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.Relay;
  * @version 2018
  */
 public class StepDown extends CommandBase {
-
     /**
      * The Logger
      * 
@@ -54,20 +53,22 @@ public class StepDown extends CommandBase {
      */
     @Override
     protected void initialize() {
-        switch (LiftSubsystem.currentPosition) {
-            case Scale:
-                stepValue = Robot.calibratorData.getLiftSwitch();
-                LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Switch;
-                break;
-            case Switch:
-                stepValue = Robot.calibratorData.getLiftBottom();
-                LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Bottom;
-                break;
-            case Bottom:
-                stepValue = -500000000;
-                break;
-        }
-        LOG.info("Lowering Lift to " + stepValue);
+        LOG.catchAll(()-> {
+            switch (LiftSubsystem.currentPosition) {
+                case Scale:
+                    stepValue = Robot.calibratorData.getLiftSwitch();
+                    LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Switch;
+                    break;
+                case Switch:
+                    stepValue = Robot.calibratorData.getLiftBottom();
+                    LiftSubsystem.currentPosition = LiftSubsystem.StepPositions.Bottom;
+                    break;
+                case Bottom:
+                    stepValue = -500000000;
+                    break;
+            }
+            LOG.info("Lowering Lift to " + stepValue);
+        });
     }
 
     /**
@@ -78,12 +79,14 @@ public class StepDown extends CommandBase {
      */
     @Override
     protected void execute() {
-        if (counter % (onTime + offTime) >= offTime) {
-            LiftSubsystem.lowerScissor();
-        } else {
-            LiftSubsystem.liftRelay.set(Relay.Value.kOff);
-        }
-        counter++;
+        LOG.catchAll(()-> {
+            if (counter % (onTime + offTime) >= offTime) {
+                LiftSubsystem.lowerScissor();
+            } else {
+                LiftSubsystem.liftRelay.set(Relay.Value.kOff);
+            }
+            counter++;
+        });
     }
 
     /**
@@ -95,13 +98,15 @@ public class StepDown extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if (liftSubsystem.getPotentiometerValue() >= stepValue) {
-            return true;
-        } else if (!IO.bottomLimitSwitch.get()) {
-            return true;
-        } else {
-            return false;
-        }
+        return LOG.catchAll(()-> {
+            if (liftSubsystem.getPotentiometerValue() >= stepValue) {
+                return true;
+            } else if (!IO.bottomLimitSwitch.get()) {
+                return true;
+            } else {
+                return false;
+            }
+        }, true);
     }
 
     /**
@@ -112,7 +117,9 @@ public class StepDown extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.stopScissor();
+        LOG.catchAll(()-> {
+            LiftSubsystem.stopScissor();
+        });
     }
 
     /**
@@ -123,6 +130,8 @@ public class StepDown extends CommandBase {
      */
     @Override
     protected void interrupted() {
-        end();
+        LOG.catchAll(()-> {
+            end();
+        });
     }
 }

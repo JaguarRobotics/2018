@@ -44,7 +44,9 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected void initialize() {
-        LOG.info("Manually Lowering Lift");
+        LOG.catchAll(()-> {
+            LOG.info("Manually Lowering Lift");
+        });
     }
 
     /**
@@ -55,12 +57,14 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected void execute() {
-        if (counter % (onTime + offTime) >= offTime) {
-            LiftSubsystem.lowerScissor();
-        } else {
-            LiftSubsystem.liftRelay.set(Relay.Value.kOff);
-        }
-        counter++;
+        LOG.catchAll(()-> {
+            if (counter % (onTime + offTime) >= offTime) {
+                LiftSubsystem.lowerScissor();
+            } else {
+                LiftSubsystem.liftRelay.set(Relay.Value.kOff);
+            }
+            counter++;
+        });
     }
 
     /**
@@ -72,14 +76,16 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        if(!IO.bottomLimitSwitch.get()) {
-            long currentTime = System.currentTimeMillis();
-            long targetTime = currentTime + 1000;
-            while(currentTime <= targetTime) {
+        return LOG.catchAll(()-> {
+            if (!IO.bottomLimitSwitch.get()) {
+                long currentTime = System.currentTimeMillis();
+                long targetTime = currentTime + 1000;
+                while (currentTime <= targetTime) {
+                }
+                return true;
             }
-            return true;
-        }
-        return false;
+            return false;
+        }, true);
     }
 
     /**
@@ -90,7 +96,9 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected void end() {
-        LiftSubsystem.stopScissor();
+        LOG.catchAll(()-> {
+            LiftSubsystem.stopScissor();
+        });
     }
 
     /**
@@ -101,6 +109,8 @@ public class ManualLower extends CommandBase {
      */
     @Override
     protected void interrupted() {
-        end();
+        LOG.catchAll(()-> {
+            end();
+        });
     }
 }
