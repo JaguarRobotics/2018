@@ -80,7 +80,7 @@ public class SideList extends Container implements ActionListener, ListSelection
     public int getSelectedIndex() {
         return list.getSelectedIndex();
     }
-    
+
     public void setSelectedIndex(int index) {
         list.setSelectedIndex(index);
     }

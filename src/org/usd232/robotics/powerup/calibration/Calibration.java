@@ -75,6 +75,7 @@ public class Calibration extends IterativeRobot {
         }
         return null;
     }
+
     public static void init() {
         f = new File("/home/lvuser/CalibrationSettings.txt");
     }

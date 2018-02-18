@@ -7,7 +7,7 @@ import org.usd232.robotics.autonomous.generator.model.GeneratorModel;
 
 public class SideBar extends Container {
     private static final long serialVersionUID = -8431322197209139145L;
-    
+
     public SideBar(GeneratorModel model) {
         setPreferredSize(new Dimension(320, 400));
         setLayout(new GridLayout(4, 1, 0, 0));

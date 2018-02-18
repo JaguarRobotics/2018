@@ -23,7 +23,8 @@ public class StepList extends ListModelBase<AutonomousStep, AutonomousRoute, Ver
             }
             case Drive: {
                 DriveParameter param = (DriveParameter) obj.getGenericParameter();
-                return String.format("Drive forward %.1f inches", param.getDistance() * parent.parentElement.obj2.getScale());
+                return String.format("Drive forward %.1f inches",
+                                param.getDistance() * parent.parentElement.obj2.getScale());
             }
             case Sleep: {
                 SleepParameter param = (SleepParameter) obj.getGenericParameter();

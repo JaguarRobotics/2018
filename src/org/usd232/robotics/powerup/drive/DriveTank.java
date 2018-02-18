@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Drives the robot in teleop based on left and right joystick inputs.
  * 
- * @author Nathan Gawith, Kyle K, Cody Moose, Brian Parks, Zach Deibert
+ * @author Zach Diebert, Alex Whipple, Brian Parks
  * @since Always
  * @version 2018
  */
@@ -38,13 +38,32 @@ public class DriveTank extends CommandBase {
      * @version 2018
      */
     double right;
+    /**
+     * The minimum power value
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    double minValue      = .3;
+    /**
+     * How far the input "dead zone" extends from 0
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    double deadZone      = 0.1;
+    /**
+     * Scaling factor to allow the "dead zone" to be a cube root function that curves into
+     */
+    double deadZoneScale = minValue / Math.cbrt(deadZone);
 
     @Override
     protected void initialize() {
     }
 
     /**
-     * Drives the robot with joysticks exponentially (PowNum is the power that it raises it to) to give it more control
+     * Drives the robot with an initial cube root function in the "dead zone" that curves rather cleanly into a linear
+     * scale of the joystick inputs
      * 
      * @since 2017
      * @version 2018
@@ -52,24 +71,25 @@ public class DriveTank extends CommandBase {
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            double powNum = 2;
             double joystickTolerance = SmartDashboard.getNumber("Joystick Tolerance", 1);
             double joystick0 = oi.Joystick0.getY() * joystickTolerance;
             double joystick1 = oi.Joystick1.getY() * joystickTolerance;
-            double adjustedJoystick0 = Math.abs(joystick0);
-            double adjustedJoystick1 = Math.abs(joystick1);
-            double powerJoystick0 = Math.pow(adjustedJoystick0, powNum);
-            double powerJoystick1 = Math.pow(adjustedJoystick1, powNum);
-            if (Math.abs(powerJoystick0) > adjustedJoystick0) {
-                powerJoystick0 = adjustedJoystick0;
-            }
-            if (Math.abs(powerJoystick1) > adjustedJoystick1) {
-                powerJoystick1 = adjustedJoystick1;
-            }
-            left = (powerJoystick0 * (adjustedJoystick0 / joystick0)) / joystickTolerance;
-            right = (powerJoystick1 * (adjustedJoystick1 / joystick1)) / joystickTolerance;
+            left = scaleInput(joystick0);
+            right = scaleInput(joystick1);
             driveSubsystem.driveTank(-left, -right);
         });
+    }
+
+    private double scaleInput(double input) {
+        double output = 0;
+        double absoluteInput = Math.abs(input);
+        if (absoluteInput < deadZone) {
+            output = Math.cbrt(input) * deadZoneScale;
+        } else {
+            output = absoluteInput / input
+                            * (((1 - minValue) / (1 - deadZone)) * (absoluteInput - deadZone) + minValue);
+        }
+        return output;
     }
 
     /**

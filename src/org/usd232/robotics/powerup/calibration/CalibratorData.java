@@ -13,21 +13,21 @@ public class CalibratorData implements Serializable {
      * @since 2018
      * @version 2018
      */
-    private double     liftScale;
+    private double            liftScale;
     /**
      * Potentiometer value for the switch on the lift
      * 
      * @since 2018
      * @version 2018
      */
-    private double     liftSwitch;
+    private double            liftSwitch;
     /**
      * Potentiometer value for the bottom of the lift
      * 
      * @since 2018
      * @version 2018
      */
-    private double     liftBottom;
+    private double            liftBottom;
 
     public double getLiftScale() {
         return liftScale;
@@ -52,5 +52,4 @@ public class CalibratorData implements Serializable {
     public void setLiftBottom(double liftBottom) {
         this.liftBottom = liftBottom;
     }
-
 }
