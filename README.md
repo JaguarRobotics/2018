@@ -10,10 +10,10 @@ The following numbers represent different commands in the auto generator
 (3) Raise Intake<br/>
 (4) Go to Level<br/>
 (5) Lower Scissor Lift<br/>
-(6) Raise Scissor Lift<br/>
+(6) Raise Scissor Lift
 
 ### Predefined Commands
-These commands should always be there, and are not year specific.
-Drive 
-Sleep
+These commands should always be there, and are not year specific.<br/>
+Drive <br/>
+Sleep <br/>
 Turn
