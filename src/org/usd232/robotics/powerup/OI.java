@@ -1,6 +1,7 @@
 package org.usd232.robotics.powerup;
 
 import org.usd232.robotics.powerup.calibration.CalibrateCommand;
+import org.usd232.robotics.powerup.calibration.FrictionCalibrationCommand;
 import org.usd232.robotics.powerup.climb.ClimbDown;
 import org.usd232.robotics.powerup.climb.ClimbUp;
 import org.usd232.robotics.powerup.drive.GearShiftHigh;
@@ -52,6 +53,8 @@ public class OI extends Trigger implements RobotMap {
         LOG.catchAll(()-> {
             Joystick0_Button11.whenPressed(new CalibrateCommand());
             Joystick1_Button11.whenPressed(new CalibrateCommand());
+            Joystick0_Button10.whenPressed(new FrictionCalibrationCommand());
+            Joystick1_Button10.whenPressed(new FrictionCalibrationCommand());
             Joystick0_Button3.whenPressed(new GearShiftHigh());
             Joystick1_Button3.whenPressed(new GearShiftHigh());
             Joystick0_Button2.whenPressed(new GearShiftLow());
