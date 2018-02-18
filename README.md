@@ -4,13 +4,13 @@
 The following numbers represent different commands in the auto generator
 ### Custom Commands
 2018 Specific Commands
-(0) Drop Cube
-(1) Grab Cube
-(2) Lower Intake
-(3) Raise Intake
-(4) Go to Level
-(5) Lower Scissor Lift
-(6) Raise Scissor Lift
+(0) Drop Cube<br/>
+(1) Grab Cube<br/>
+(2) Lower Intake<br/>
+(3) Raise Intake<br/>
+(4) Go to Level<br/>
+(5) Lower Scissor Lift<br/>
+(6) Raise Scissor Lift<br/>
 
 ### Predefined Commands
 These commands should always be there, and are not year specific.
