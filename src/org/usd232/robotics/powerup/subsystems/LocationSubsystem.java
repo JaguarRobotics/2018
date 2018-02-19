@@ -82,8 +82,8 @@ public class LocationSubsystem extends SubsystemBase {
 
     public void reset() {
         LOG.warn("Resetting LocationSubsystem");
-        leftDriveEncoder.setDistancePerPulse(TEST_TICKS / TEST_INCHES);
-        rightDriveEncoder.setDistancePerPulse(TEST_TICKS / TEST_INCHES);
+        leftDriveEncoder.setDistancePerPulse(TEST_INCHES / TEST_TICKS);
+        rightDriveEncoder.setDistancePerPulse(TEST_INCHES / TEST_TICKS);
         leftDriveEncoder.reset();
         rightDriveEncoder.reset();
         lastTime = System.currentTimeMillis();
