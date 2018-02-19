@@ -15,7 +15,8 @@ public class LocationSubsystem extends SubsystemBase {
         private WeakReference<Context> ref;
 
         private void updateValues(double ds1, double ds2, double dtheta, double theta) {
-            this.theta = theta - angleOffset;
+            theta -= angleOffset;
+            this.theta = theta;
             double xPart;
             double yPart;
             if (dtheta == 0) {
@@ -23,7 +24,7 @@ public class LocationSubsystem extends SubsystemBase {
                 yPart = 0;
             } else {
                 double coefficient = ((ds1 + ds2) / dtheta - WIDTH) / 2 + WIDTH * CENTER_OF_MASS;
-                xPart = -coefficient * Math.sin(dtheta);
+                xPart = coefficient * Math.sin(dtheta);
                 yPart = coefficient * (1 - Math.cos(dtheta));
             }
             double sin = Math.sin(theta);
@@ -56,14 +57,16 @@ public class LocationSubsystem extends SubsystemBase {
         public Context() {
             ref = new WeakReference<Context>(this);
             contexts.add(ref);
+            angleOffset = gyro.getAngle() * Math.PI / 180 - Math.PI / 2;
         }
     }
 
-    private static final Logger          LOG            = new Logger();
-    private static final double          WIDTH          = 18;
-    private static final double          CENTER_OF_MASS = 0.5;
-    private static final double          TEST_INCHES    = 146;
-    private static final double          TEST_TICKS     = 2961;
+    private static final Logger          LOG             = new Logger();
+    private static final double          WIDTH           = 18;
+    private static final double          CENTER_OF_MASS  = 0.5;
+    private static final double          TEST_INCHES     = 146;
+    private static final double          TEST_TICKS      = 2961;
+    private static final double          TICKS_PER_PULSE = 1;
     private double                       lastS1;
     private double                       lastS2;
     private double                       lastTheta;
@@ -82,8 +85,8 @@ public class LocationSubsystem extends SubsystemBase {
 
     public void reset() {
         LOG.warn("Resetting LocationSubsystem");
-        leftDriveEncoder.setDistancePerPulse(TEST_INCHES / TEST_TICKS);
-        rightDriveEncoder.setDistancePerPulse(TEST_INCHES / TEST_TICKS);
+        leftDriveEncoder.setDistancePerPulse(TICKS_PER_PULSE * TEST_INCHES / TEST_TICKS);
+        rightDriveEncoder.setDistancePerPulse(TICKS_PER_PULSE * TEST_INCHES / TEST_TICKS);
         leftDriveEncoder.reset();
         rightDriveEncoder.reset();
         lastTime = System.currentTimeMillis();
@@ -91,8 +94,8 @@ public class LocationSubsystem extends SubsystemBase {
 
     @SuppressWarnings("unchecked")
     public void updateValues() {
-        double s1 = -leftDriveEncoder.getDistance();
-        double s2 = -rightDriveEncoder.getDistance();
+        double s1 = leftDriveEncoder.getDistance();
+        double s2 = rightDriveEncoder.getDistance();
         double theta = gyro.getAngle() * Math.PI / 180;
         double ds1 = s1 - lastS1;
         double ds2 = s2 - lastS2;
