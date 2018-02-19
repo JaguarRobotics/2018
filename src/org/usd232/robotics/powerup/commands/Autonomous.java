@@ -12,6 +12,7 @@ import org.usd232.robotics.autonomous.DriveParameter;
 import org.usd232.robotics.autonomous.SleepParameter;
 import org.usd232.robotics.autonomous.TurnParameter;
 import org.usd232.robotics.powerup.ISpeedFunction;
+import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.drive.Delay;
 import org.usd232.robotics.powerup.drive.DriveForward;
 import org.usd232.robotics.powerup.drive.DriveTurn;
@@ -93,9 +94,23 @@ public class Autonomous extends CommandGroup {
                             addSequential(new RaiseIntake());
                             break;
                         case 4:
-                            double levelD = Double.parseDouble(param.getParameter());
-                            LOG.debug("Going to level");
-                            addSequential(new GoToLevel(levelD));
+                            String level = param.getParameter().toLowerCase();
+                            switch (level) {
+                                case "scale":
+                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftScale()));
+                                    LOG.debug("Going to scale");
+                                    break;
+                                case "switch":
+                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftSwitch()));
+                                    LOG.debug("Going to switch");
+                                    break;
+                                case "bottom":
+                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftBottom()));
+                                    LOG.debug("Going to the bottom");
+                                    break;
+                                default:
+                                    throw new IllegalArgumentException("Unknown parameter " + level);
+                            }
                             break;
                         case 5:
                             double lowerD = Double.parseDouble(param.getParameter());
