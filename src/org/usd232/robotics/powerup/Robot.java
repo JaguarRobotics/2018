@@ -98,7 +98,7 @@ public class Robot extends IterativeRobot {
             positionChooser.addObject("Right", RobotMap.StartingPosition.Three);
             SmartDashboard.putData("Starting Position", positionChooser);
             Autonomous.loadDashboard();
-            minimapServer = new MinimapCoordsServer(CommandBase.locationSubsystem);
+            minimapServer = new MinimapCoordsServer(CommandBase.locationSubsystem.new Context());
             minimapServer.start();
         });
     }
