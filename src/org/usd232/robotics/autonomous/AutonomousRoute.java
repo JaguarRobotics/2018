@@ -3,7 +3,6 @@ package org.usd232.robotics.autonomous;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import edu.wpi.first.wpilibj.DriverStation;
 
@@ -109,7 +108,9 @@ public class AutonomousRoute implements IBufferSerializable {
      * @since 2018
      */
     public Collection<String> getSupportedConfigurations() {
-        return Collections.unmodifiableList(supportedConfigurations);
+        List<String> list = new ArrayList<>();
+        list.addAll(supportedConfigurations);
+        return list;
     }
 
     /**
@@ -162,7 +163,9 @@ public class AutonomousRoute implements IBufferSerializable {
      * @since 2018
      */
     public Collection<AutonomousStep> getSteps() {
-        return Collections.unmodifiableList(steps);
+        List<AutonomousStep> list = new ArrayList<>();
+        list.addAll(steps);
+        return list;
     }
 
     /**
