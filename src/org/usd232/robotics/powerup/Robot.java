@@ -114,7 +114,6 @@ public class Robot extends IterativeRobot {
         LOG.catchAll(()-> {
             Scheduler.getInstance().run();
             CommandBase.locationSubsystem.updateValues();
-            LOG.info("Encoders are at Left %d, Right %d", IO.leftDriveEncoder.get(), IO.rightDriveEncoder.get());
         });
     }
 
