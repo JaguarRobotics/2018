@@ -43,7 +43,6 @@ public class FrictionCalibrationCommand extends CommandGroup {
         }
 
         public DriveCommand() {
-            super(ACCELERATE_TIME);
             requires(driveSubsystem);
         }
     }
