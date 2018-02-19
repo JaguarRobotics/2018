@@ -117,6 +117,7 @@ public interface RobotMap {
      * @version 2018
      */
     public static final int     MANIPULATOR_JOYSTICK_PORT  = 2;
+    public static final int     CALIBRATION_JOYSTICK_PORT  = 5;
     // Solenoids
     /**
      * The port for the solenoid that grabs the cube
