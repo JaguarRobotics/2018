@@ -5,14 +5,16 @@ import org.usd232.robotics.powerup.RobotMap;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.drive.DriveTurn;
 import org.usd232.robotics.powerup.log.Logger;
+import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class FrictionCalibrationCommand extends CommandGroup {
-    private static final Logger LOG             = new Logger();
-    private static final double ACCELERATE_TIME = 5;
-    private static final double SPEED_CUTOFF    = 0.01;
-    private static final int    MAX_SAMPLES     = 1;
-    private static final double TURN_SPEED      = 0.6;
+    private static final Logger       LOG             = new Logger();
+    private static final double       ACCELERATE_TIME = 5;
+    private static final double       SPEED_CUTOFF    = 0.01;
+    private static final int          MAX_SAMPLES     = 1;
+    private static final double       TURN_SPEED      = 0.6;
+    private LocationSubsystem.Context location;
 
     private class DriveCommand extends CommandBase {
         @Override
@@ -55,7 +57,7 @@ public class FrictionCalibrationCommand extends CommandGroup {
         protected void initialize() {
             LOG.catchAll(()-> {
                 startTime = System.currentTimeMillis();
-                startSpeed = locationSubsystem.getSpeed();
+                startSpeed = location.getSpeed();
             });
         }
 
@@ -69,7 +71,7 @@ public class FrictionCalibrationCommand extends CommandGroup {
         @Override
         protected boolean isFinished() {
             return LOG.catchAll(()-> {
-                return locationSubsystem.getSpeed() < SPEED_CUTOFF;
+                return location.getSpeed() < SPEED_CUTOFF;
             }, true);
         }
 
@@ -129,6 +131,7 @@ public class FrictionCalibrationCommand extends CommandGroup {
     }
 
     public FrictionCalibrationCommand() {
+        location = CommandBase.locationSubsystem.new Context();
         DriveCommand drive = new DriveCommand();
         MeasureCommand measure = new MeasureCommand();
         DriveTurn turn = new DriveTurn(t->TURN_SPEED, Math.PI);

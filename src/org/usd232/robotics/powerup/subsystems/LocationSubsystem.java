@@ -62,14 +62,8 @@ public class LocationSubsystem extends SubsystemBase {
     private static final Logger          LOG            = new Logger();
     private static final double          WIDTH          = 18;
     private static final double          CENTER_OF_MASS = 0.5;
-    /**
-     * Diameter of pulleys, used for encoder calculations. (in inches)
-     */
-    private static final double          DIAMETER       = 6;
-    /**
-     * pulses per rotation for the encoders.
-     */
-    private static final int             PPR            = 400 * 3;
+    private static final double          TEST_INCHES    = 146;
+    private static final double          TEST_TICKS     = 2961;
     private double                       lastS1;
     private double                       lastS2;
     private double                       lastTheta;
@@ -88,8 +82,8 @@ public class LocationSubsystem extends SubsystemBase {
 
     public void reset() {
         LOG.warn("Resetting LocationSubsystem");
-        leftDriveEncoder.setDistancePerPulse(Math.PI * DIAMETER / PPR);
-        rightDriveEncoder.setDistancePerPulse(Math.PI * DIAMETER / PPR);
+        leftDriveEncoder.setDistancePerPulse(TEST_TICKS / TEST_INCHES);
+        rightDriveEncoder.setDistancePerPulse(TEST_TICKS / TEST_INCHES);
         leftDriveEncoder.reset();
         rightDriveEncoder.reset();
         lastTime = System.currentTimeMillis();
@@ -98,7 +92,7 @@ public class LocationSubsystem extends SubsystemBase {
     @SuppressWarnings("unchecked")
     public void updateValues() {
         double s1 = -leftDriveEncoder.getDistance();
-        double s2 = rightDriveEncoder.getDistance();
+        double s2 = -rightDriveEncoder.getDistance();
         double theta = gyro.getAngle() * Math.PI / 180;
         double ds1 = s1 - lastS1;
         double ds2 = s2 - lastS2;
