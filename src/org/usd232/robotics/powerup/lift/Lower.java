@@ -1,6 +1,7 @@
 package org.usd232.robotics.powerup.lift;
 
 import org.usd232.robotics.powerup.IO;
+import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
@@ -85,6 +86,9 @@ public class Lower extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
+            if (liftSubsystem.getPotentiometerValue() <= Robot.calibratorData.getLiftBottom()) {
+                return true;
+            }
             if (liftSubsystem.getPotentiometerValue() <= lowerValue) {
                 return true;
             } else if (!IO.bottomLimitSwitch.get()) {
