@@ -8,9 +8,11 @@ The following numbers represent different commands in the auto generator
 (1) Grab Cube<br/>
 (2) Lower Intake<br/>
 (3) Raise Intake<br/>
-(4) Go to Level<br/>
+(4) Go to Middle<br/>
 (5) Lower Scissor Lift<br/>
-(6) Raise Scissor Lift
+(6) Raise Scissor Lift<br/>
+(7) Go to Top<br/>
+(8) Go to Bottom<br/>
 
 ### Predefined Commands
 These commands should always be there, and are not year specific.<br/>
