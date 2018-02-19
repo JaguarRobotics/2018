@@ -109,7 +109,7 @@ public class AutonomousRoute implements IBufferSerializable {
      * @since 2018
      */
     public Collection<String> getSupportedConfigurations() {
-        return Collections.unmodifiableCollection(supportedConfigurations);
+        return Collections.unmodifiableList(supportedConfigurations);
     }
 
     /**
@@ -162,7 +162,7 @@ public class AutonomousRoute implements IBufferSerializable {
      * @since 2018
      */
     public Collection<AutonomousStep> getSteps() {
-        return Collections.unmodifiableCollection(steps);
+        return Collections.unmodifiableList(steps);
     }
 
     /**
