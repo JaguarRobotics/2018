@@ -1,6 +1,7 @@
 package org.usd232.robotics.powerup.lift;
 
 import org.usd232.robotics.powerup.IO;
+import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
@@ -20,10 +21,10 @@ public class LowerToBottom extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    private static final Logger LOG       = new Logger();
-    private int                 counter    = 0;
-    private int                 onTime     = 5;
-    private int                 offTime    = 5;
+    private static final Logger LOG     = new Logger();
+    private int                 counter = 0;
+    private int                 onTime  = 5;
+    private int                 offTime = 5;
 
     /**
      * Lowers the lift of the robot to its limit switch at the bottom height
@@ -48,7 +49,7 @@ public class LowerToBottom extends CommandBase {
      */
     @Override
     protected void execute() {
-        LOG.catchAll(()-> {  
+        LOG.catchAll(()-> {
             if (counter % (onTime + offTime) >= offTime) {
                 LiftSubsystem.lowerScissor();
             } else {
@@ -67,6 +68,9 @@ public class LowerToBottom extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
+            if (IO.scissorPotentiometer.get() <= Robot.calibratorData.getLiftBottom()) {
+                return true;
+            }
             return !IO.bottomLimitSwitch.get();
         }, true);
     }
