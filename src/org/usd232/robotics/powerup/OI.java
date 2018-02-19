@@ -117,16 +117,16 @@ public class OI extends Trigger implements RobotMap {
     public final Button   ManipulatorXbox_Start  = LOG.catchAll(()->new JoystickButton(Manipulator, 8));
     public final Button   ManipulatorXbox_LStick = LOG.catchAll(()->new JoystickButton(Manipulator, 9));
     public final Button   ManipulatorXbox_RStick = LOG.catchAll(()->new JoystickButton(Manipulator, 10));
-    public final Button   CalibratorXbox_A       = LOG.catchAll(()->new JoystickButton(Manipulator, 1));
-    public final Button   CalibratorXbox_B       = LOG.catchAll(()->new JoystickButton(Manipulator, 2));
-    public final Button   CalibratorXbox_X       = LOG.catchAll(()->new JoystickButton(Manipulator, 3));
-    public final Button   CalibratorXbox_Y       = LOG.catchAll(()->new JoystickButton(Manipulator, 4));
-    public final Button   CalibratorXbox_LB      = LOG.catchAll(()->new JoystickButton(Manipulator, 5));
-    public final Button   CalibratorXbox_RB      = LOG.catchAll(()->new JoystickButton(Manipulator, 6));
-    public final Button   CalibratorXbox_Back    = LOG.catchAll(()->new JoystickButton(Manipulator, 7));
-    public final Button   CalibratorXbox_Start   = LOG.catchAll(()->new JoystickButton(Manipulator, 8));
-    public final Button   CalibratorXBox_LStick  = LOG.catchAll(()->new JoystickButton(Manipulator, 9));
-    public final Button   CalibratorXbox_RStick  = LOG.catchAll(()->new JoystickButton(Manipulator, 10));
+    public final Button   CalibratorXbox_A       = LOG.catchAll(()->new JoystickButton(Calibrator, 1));
+    public final Button   CalibratorXbox_B       = LOG.catchAll(()->new JoystickButton(Calibrator, 2));
+    public final Button   CalibratorXbox_X       = LOG.catchAll(()->new JoystickButton(Calibrator, 3));
+    public final Button   CalibratorXbox_Y       = LOG.catchAll(()->new JoystickButton(Calibrator, 4));
+    public final Button   CalibratorXbox_LB      = LOG.catchAll(()->new JoystickButton(Calibrator, 5));
+    public final Button   CalibratorXbox_RB      = LOG.catchAll(()->new JoystickButton(Calibrator, 6));
+    public final Button   CalibratorXbox_Back    = LOG.catchAll(()->new JoystickButton(Calibrator, 7));
+    public final Button   CalibratorXbox_Start   = LOG.catchAll(()->new JoystickButton(Calibrator, 8));
+    public final Button   CalibratorXBox_LStick  = LOG.catchAll(()->new JoystickButton(Calibrator, 9));
+    public final Button   CalibratorXbox_RStick  = LOG.catchAll(()->new JoystickButton(Calibrator, 10));
 
     public void whenLessThan(Joystick joystick, int axis, double value, Command command) {
         new Scheduler() {
