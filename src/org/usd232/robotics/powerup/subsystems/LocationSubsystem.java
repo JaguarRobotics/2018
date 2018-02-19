@@ -7,14 +7,8 @@ public class LocationSubsystem extends SubsystemBase implements IMinimapCoordPro
     private static final Logger LOG            = new Logger();
     private static final double WIDTH          = 18;
     private static final double CENTER_OF_MASS = 0.5;
-    /**
-     * Diameter of pulleys, used for encoder calculations. (in inches)
-     */
-    private static final double DIAMETER       = 6;
-    /**
-     * pulses per rotation for the encoders.
-     */
-    private static final int    PPR            = 400 * 3;
+    private static final double TEST_INCHES    = 146;
+    private static final double TEST_TICKS     = 2961;
     private double              angleOffset;
     private double              lastS1;
     private double              lastS2;
@@ -23,6 +17,7 @@ public class LocationSubsystem extends SubsystemBase implements IMinimapCoordPro
     private double              y;
     private double              speed;
     private double              theta;
+    private long                lastTime;
 
     public LocationSubsystem() {
         reset();
@@ -50,8 +45,8 @@ public class LocationSubsystem extends SubsystemBase implements IMinimapCoordPro
 
     public void reset() {
         LOG.debug("Resetting LocationSubsystem");
-        leftDriveEncoder.setDistancePerPulse(Math.PI * DIAMETER / PPR);
-        rightDriveEncoder.setDistancePerPulse(Math.PI * DIAMETER / PPR);
+        leftDriveEncoder.setDistancePerPulse(TEST_TICKS / TEST_INCHES);
+        rightDriveEncoder.setDistancePerPulse(TEST_TICKS / TEST_INCHES);
         leftDriveEncoder.reset();
         rightDriveEncoder.reset();
         angleOffset = gyro.getAngle() * Math.PI / 180 - Math.PI / 2;
@@ -60,11 +55,12 @@ public class LocationSubsystem extends SubsystemBase implements IMinimapCoordPro
         lastS1 = 0;
         lastS2 = 0;
         lastTheta = Math.PI / 2;
+        lastTime = System.currentTimeMillis();
     }
 
     public void updateValues() {
         double s1 = -leftDriveEncoder.getDistance();
-        double s2 = rightDriveEncoder.getDistance();
+        double s2 = -rightDriveEncoder.getDistance();
         theta = gyro.getAngle() * Math.PI / 180 - angleOffset;
         double ds1 = s1 - lastS1;
         double ds2 = s2 - lastS2;
@@ -84,9 +80,13 @@ public class LocationSubsystem extends SubsystemBase implements IMinimapCoordPro
         }
         double sin = Math.sin(theta);
         double cos = Math.cos(theta);
-        speed = Math.sqrt(xPart * xPart + yPart * yPart);
         x += xPart * cos + yPart * sin;
         y += xPart * sin + yPart * cos;
+        long time = System.currentTimeMillis();
+        double dt = ((double) (time - lastTime)) / 1000.0;
+        lastTime = time;
+        double ds = (ds1 + ds2) / 2.0;
+        speed = ds / dt;
     }
 
     /**
