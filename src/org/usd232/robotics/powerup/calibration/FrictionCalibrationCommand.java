@@ -1,7 +1,6 @@
 package org.usd232.robotics.powerup.calibration;
 
 import org.usd232.robotics.powerup.Robot;
-import org.usd232.robotics.powerup.RobotMap;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.drive.DriveTurn;
 import org.usd232.robotics.powerup.log.Logger;
@@ -102,9 +101,6 @@ public class FrictionCalibrationCommand extends CommandGroup {
         LOG.catchAll(()-> {
             totalAcceleration = 0;
             trials = 0;
-            if (!Robot.calibrationSetter.getSelected().equals(RobotMap.CalibrationMode.Calibrating)) {
-                cancel();
-            }
         });
     }
 
