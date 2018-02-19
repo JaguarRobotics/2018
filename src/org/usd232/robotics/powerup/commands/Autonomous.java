@@ -22,7 +22,9 @@ import org.usd232.robotics.powerup.intake.LowerIntake;
 import org.usd232.robotics.powerup.intake.RaiseIntake;
 import org.usd232.robotics.powerup.lift.GoToLevel;
 import org.usd232.robotics.powerup.lift.Lower;
+import org.usd232.robotics.powerup.lift.LowerToBottom;
 import org.usd232.robotics.powerup.lift.Raise;
+import org.usd232.robotics.powerup.lift.RaiseToSwitch;
 import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -94,23 +96,7 @@ public class Autonomous extends CommandGroup {
                             addSequential(new RaiseIntake());
                             break;
                         case 4:
-                            String level = param.getParameter().toLowerCase();
-                            switch (level) {
-                                case "scale":
-                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftScale()));
-                                    LOG.debug("Going to scale");
-                                    break;
-                                case "switch":
-                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftSwitch()));
-                                    LOG.debug("Going to switch");
-                                    break;
-                                case "bottom":
-                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftBottom()));
-                                    LOG.debug("Going to the bottom");
-                                    break;
-                                default:
-                                    throw new IllegalArgumentException("Unknown parameter " + level);
-                            }
+                            addSequential(new GoToLevel(Robot.calibratorData.getLiftSwitch()));
                             break;
                         case 5:
                             double lowerD = Double.parseDouble(param.getParameter());
@@ -121,6 +107,14 @@ public class Autonomous extends CommandGroup {
                             double raiseD = Double.parseDouble(param.getParameter());
                             LOG.debug("Raise");
                             addSequential(new Raise(raiseD));
+                            break;
+                        case 7:
+                            LOG.debug("Raise to limit switch");
+                            addSequential(new RaiseToSwitch());
+                            break;
+                        case 8:
+                            LOG.debug("Lower to limit switch");
+                            addSequential(new LowerToBottom());
                             break;
                         default:
                             LOG.error("Unknown command ID %d", param.getCommandID());
