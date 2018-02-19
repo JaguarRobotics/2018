@@ -7,7 +7,7 @@ public abstract class IntakeCommandBase extends CommandBase {
     private static final Logger LOG = new Logger();
     private long                endTime;
     private long                timeout;
-    
+
     protected abstract void doIt();
 
     @Override
