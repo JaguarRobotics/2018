@@ -1,6 +1,7 @@
 package org.usd232.robotics.powerup.lift;
 
 import org.usd232.robotics.powerup.IO;
+import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
@@ -77,11 +78,10 @@ public class ManualLower extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
+            if (liftSubsystem.getPotentiometerValue() <= Robot.calibratorData.getLiftBottom()) {
+                return true;
+            }
             if (!IO.bottomLimitSwitch.get()) {
-                long currentTime = System.currentTimeMillis();
-                long targetTime = currentTime + 1000;
-                while (currentTime <= targetTime) {
-                }
                 return true;
             }
             return false;
