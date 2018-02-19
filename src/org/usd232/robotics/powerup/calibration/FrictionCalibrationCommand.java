@@ -11,7 +11,7 @@ public class FrictionCalibrationCommand extends CommandGroup {
     private static final Logger LOG             = new Logger();
     private static final double ACCELERATE_TIME = 5;
     private static final double SPEED_CUTOFF    = 0.01;
-    private static final int    MAX_SAMPLES     = 100;
+    private static final int    MAX_SAMPLES     = 1;
     private static final double TURN_SPEED      = 0.6;
 
     private class DriveCommand extends CommandBase {
