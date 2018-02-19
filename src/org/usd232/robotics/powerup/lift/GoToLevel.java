@@ -44,10 +44,10 @@ public class GoToLevel extends CommandBase {
         LOG.catchAll(()-> {
             double currentPotentiometerValue = liftSubsystem.getPotentiometerValue();
             LOG.info("Current Value Of Potentiometer " + currentPotentiometerValue);
-            if (targetPotentiometerValue <= currentPotentiometerValue) {
+            if (targetPotentiometerValue >= currentPotentiometerValue) {
                 LOG.info("Raising to the height of " + this.targetPotentiometerValue);
                 command = new Raise(targetPotentiometerValue);
-            } else if (targetPotentiometerValue >= currentPotentiometerValue) {
+            } else if (targetPotentiometerValue <= currentPotentiometerValue) {
                 LOG.info("Lowering to the height of " + this.targetPotentiometerValue);
                 command = new Lower(targetPotentiometerValue);
             }
