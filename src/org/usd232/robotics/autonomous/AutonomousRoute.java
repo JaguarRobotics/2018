@@ -2,7 +2,6 @@ package org.usd232.robotics.autonomous;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import edu.wpi.first.wpilibj.DriverStation;
 
@@ -59,14 +58,14 @@ public class AutonomousRoute implements IBufferSerializable {
      */
     @Override
     public void serialize(ByteBuffer ser) {
-        Collection<String> configs = getSupportedConfigurations();
+        List<String> configs = getSupportedConfigurations();
         ser.put((byte) configs.size());
         for (String config : configs) {
             byte[] buffer = config.getBytes();
             ser.put((byte) buffer.length);
             ser.put(buffer);
         }
-        Collection<AutonomousStep> steps = getSteps();
+        List<AutonomousStep> steps = getSteps();
         ser.put((byte) steps.size());
         for (AutonomousStep step : steps) {
             step.serialize(ser);
@@ -107,7 +106,7 @@ public class AutonomousRoute implements IBufferSerializable {
      * @see DriverStation#getGameSpecificMessage()
      * @since 2018
      */
-    public Collection<String> getSupportedConfigurations() {
+    public List<String> getSupportedConfigurations() {
         List<String> list = new ArrayList<>();
         list.addAll(supportedConfigurations);
         return list;
@@ -162,7 +161,7 @@ public class AutonomousRoute implements IBufferSerializable {
      * @return The list of all the steps that this autonomous route contains
      * @since 2018
      */
-    public Collection<AutonomousStep> getSteps() {
+    public List<AutonomousStep> getSteps() {
         List<AutonomousStep> list = new ArrayList<>();
         list.addAll(steps);
         return list;
