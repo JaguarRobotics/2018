@@ -17,6 +17,7 @@ public class DriveForward extends CommandBase {
     protected void initialize() {
         LOG.catchAll(()-> {
             LOG.enter("initialize");
+            location = locationSubsystem.new Context();
         });
     }
 
@@ -58,7 +59,6 @@ public class DriveForward extends CommandBase {
 
     public DriveForward(ISpeedFunction speedFunc, double inches, double correctionPerInch, double maxAngle) {
         requires(driveSubsystem);
-        location = locationSubsystem.new Context();
         this.speedFunc = speedFunc;
         this.inches = inches;
         this.correctionPerInch = correctionPerInch;
