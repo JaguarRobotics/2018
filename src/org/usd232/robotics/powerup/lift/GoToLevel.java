@@ -17,9 +17,9 @@ public class GoToLevel extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    private static final Logger LOG     = new Logger();
-    private int                 counter = 0;
+    private static final Logger LOG = new Logger();
     private double              targetPotentiometerValue;
+    private CommandBase         command;
 
     /**
      * Lowers the lift of the robot to specified potentiometer value
@@ -46,14 +46,12 @@ public class GoToLevel extends CommandBase {
             LOG.info("Current Value Of Potentiometer " + currentPotentiometerValue);
             if (targetPotentiometerValue <= currentPotentiometerValue) {
                 LOG.info("Raising to the height of " + this.targetPotentiometerValue);
-                Raise raise = new Raise(targetPotentiometerValue);
-                raise.start();
+                command = new Raise(targetPotentiometerValue);
             } else if (targetPotentiometerValue >= currentPotentiometerValue) {
                 LOG.info("Lowering to the height of " + this.targetPotentiometerValue);
-                Lower lower = new Lower(targetPotentiometerValue);
-                lower.start();
+                command = new Lower(targetPotentiometerValue);
             }
-            counter = 1;
+            command.initializePublic();
         });
     }
 
@@ -65,6 +63,9 @@ public class GoToLevel extends CommandBase {
      */
     @Override
     protected void execute() {
+        LOG.catchAll(()-> {
+            command.executePublic();
+        });
     }
 
     /**
@@ -77,10 +78,10 @@ public class GoToLevel extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
-            if (counter == 1) {
-                return true;
-            } else {
+            if (command == null) {
                 return false;
+            } else {
+                return command.isFinishedPublic();
             }
         }, true);
     }
@@ -93,6 +94,10 @@ public class GoToLevel extends CommandBase {
      */
     @Override
     protected void end() {
+        LOG.catchAll(()-> {
+            command.endPublic();
+            command = null;
+        });
     }
 
     /**

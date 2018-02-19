@@ -25,11 +25,11 @@ public class LiftSubsystem extends SubsystemBase {
     }
 
     public static void raiseScissor() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kForward);
+        LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
     }
 
     public static void lowerScissor() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
+        LiftSubsystem.liftRelay.set(Relay.Value.kForward);
     }
 
     public static void stopScissor() {

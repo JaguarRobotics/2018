@@ -57,8 +57,7 @@ public class Autonomous extends CommandGroup {
      */
     public Autonomous() {
         LOG.trace("Autonmous Started");
-        ISpeedFunction driveSpeed = t->Math.min(0.8,
-                        9.323308271 * t * t * t - 18.42105263 * t * t + 8.897744361 * t + 0.6);
+        ISpeedFunction driveSpeed = t->0.6;
         ISpeedFunction turnSpeed = t->Math.min(0.8,
                         9.674185464 * t * t * t - 18.68421053 * t * t + 8.910025063 * t + 0.6);
         AutonomousModel model = null;

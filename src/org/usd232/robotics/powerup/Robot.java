@@ -1,7 +1,6 @@
 package org.usd232.robotics.powerup;
 
 import org.usd232.robotics.powerup.RobotMap.Alliance;
-import org.usd232.robotics.powerup.RobotMap.CalibrationMode;
 import org.usd232.robotics.powerup.RobotMap.StartingPosition;
 import org.usd232.robotics.powerup.calibration.Calibration;
 import org.usd232.robotics.powerup.calibration.CalibratorData;
@@ -55,13 +54,6 @@ public class Robot extends IterativeRobot {
      * @version 2018
      */
     private Command                                       autonomousCommand;
-    /**
-     * Chooser used in SmartDashboard to choose which alliance we are on
-     * 
-     * @since 2017
-     */
-    public static final SendableChooser<CalibrationMode>  calibrationSetter        = LOG
-                    .catchAll(()->new SendableChooser<CalibrationMode>());
 
     /**
      * What runs when the robot is initalized
@@ -79,6 +71,7 @@ public class Robot extends IterativeRobot {
                 LOG.info("Bottom: %f", calibratorData.getLiftBottom());
                 LOG.info("Switch: %f", calibratorData.getLiftSwitch());
                 LOG.info("Scale: %f", calibratorData.getLiftScale());
+                LOG.info("Friction: %f", calibratorData.getFrictionalAcceleration());
             } catch (Exception e) {
                 LOG.error("Exception in getting calibration file");
                 calibratorData = new CalibratorData();
@@ -86,9 +79,6 @@ public class Robot extends IterativeRobot {
             CommandBase.init();
             Thread thread = new Thread(new LogServer());
             thread.start();
-            calibrationSetter.addDefault("Not Calibrating", RobotMap.CalibrationMode.NotCalibrating);
-            calibrationSetter.addObject("Calibrating", RobotMap.CalibrationMode.Calibrating);
-            SmartDashboard.putData("Calibration Setter", calibrationSetter);
             allianceChooser.addDefault("Blue", RobotMap.Alliance.Blue);
             allianceChooser.addObject("Red", RobotMap.Alliance.Red);
             SmartDashboard.putData("Alliance", allianceChooser);
@@ -113,7 +103,6 @@ public class Robot extends IterativeRobot {
         LOG.catchAll(()-> {
             Scheduler.getInstance().run();
             CommandBase.locationSubsystem.updateValues();
-            LOG.info("Encoders are at Left %d, Right %d", IO.leftDriveEncoder.get(), IO.rightDriveEncoder.get());
         });
     }
 

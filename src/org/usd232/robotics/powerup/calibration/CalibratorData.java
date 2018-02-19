@@ -28,6 +28,7 @@ public class CalibratorData implements Serializable {
      * @version 2018
      */
     private double            liftBottom;
+    private double            frictionalAcceleration;
 
     public double getLiftScale() {
         return liftScale;
@@ -51,5 +52,13 @@ public class CalibratorData implements Serializable {
 
     public void setLiftBottom(double liftBottom) {
         this.liftBottom = liftBottom;
+    }
+
+    public double getFrictionalAcceleration() {
+        return frictionalAcceleration;
+    }
+
+    public void setFrictionalAcceleration(double frictionalAcceleration) {
+        this.frictionalAcceleration = frictionalAcceleration;
     }
 }

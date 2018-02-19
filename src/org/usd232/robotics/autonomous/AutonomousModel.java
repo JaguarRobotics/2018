@@ -136,7 +136,7 @@ public class AutonomousModel implements IBufferSerializable {
      * @since 2018
      */
     public Collection<AutonomousRoute> getRoutes() {
-        return Collections.unmodifiableCollection(routes);
+        return Collections.unmodifiableList(routes);
     }
 
     /**
