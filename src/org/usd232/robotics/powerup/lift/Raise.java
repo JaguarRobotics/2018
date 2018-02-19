@@ -77,7 +77,7 @@ public class Raise extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
-            if (liftSubsystem.getPotentiometerValue() <= raiseValue) {
+            if (liftSubsystem.getPotentiometerValue() >= raiseValue) {
                 LOG.info("Stop For POT");
                 return true;
             } else if (!IO.topLimitSwitch.get()) {

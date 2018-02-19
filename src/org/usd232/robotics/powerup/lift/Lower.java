@@ -67,9 +67,7 @@ public class Lower extends CommandBase {
     protected void execute() {
         LOG.catchAll(()-> {
             if (counter % (onTime + offTime) >= offTime) {
-                if (!IO.bottomLimitSwitch.get()) {
-                    LiftSubsystem.lowerScissor();
-                }
+                LiftSubsystem.lowerScissor();
             } else {
                 LiftSubsystem.liftRelay.set(Relay.Value.kOff);
             }
@@ -87,13 +85,9 @@ public class Lower extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
-            if (liftSubsystem.getPotentiometerValue() >= lowerValue) {
+            if (liftSubsystem.getPotentiometerValue() <= lowerValue) {
                 return true;
             } else if (!IO.bottomLimitSwitch.get()) {
-                long currentTime = System.currentTimeMillis();
-                long targetTime = currentTime + 1000;
-                while (currentTime <= targetTime) {
-                }
                 return true;
             } else {
                 return false;
