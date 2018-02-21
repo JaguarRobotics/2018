@@ -3,10 +3,9 @@ package org.usd232.robotics.powerup.lift;
 import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
-import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
 
 /**
- * The command to raise the lift
+ * The command to raise the lift.
  * 
  * @author Brian, Matthew
  * @since 2018
@@ -14,14 +13,14 @@ import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
  */
 public class Raise extends CommandBase {
     /**
-     * The Logger
+     * The Logger.
      * 
      * @since 2018
      * @version 2018
      */
     private static final Logger LOG        = new Logger();
     /**
-     * Value that we are raising to
+     * Value that we are raising to.
      * 
      * @since 2018
      * @version 2018
@@ -29,7 +28,7 @@ public class Raise extends CommandBase {
     private double              raiseValue = 0;
 
     /**
-     * Raises the lift of the robot to specified potentiometer value
+     * Raises the lift of the robot to specified potentiometer value.
      * 
      * @param raiseValue
      *            the value the robot the lift to
@@ -41,10 +40,7 @@ public class Raise extends CommandBase {
     }
 
     /**
-     * What happens on initialize, does nothing
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void initialize() {
@@ -55,24 +51,17 @@ public class Raise extends CommandBase {
     }
 
     /**
-     * What happens while the command is running, moves the motor
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            LiftSubsystem.raiseScissor();
+            liftSubsystem.raiseScissor();
         });
     }
 
     /**
-     * Checks if the potentiometer value has reached the target value
-     * 
-     * @return true if potentiometer value is greater than or equal to targetValue
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected boolean isFinished() {
@@ -80,7 +69,7 @@ public class Raise extends CommandBase {
             if (liftSubsystem.getPotentiometerValue() >= raiseValue) {
                 LOG.info("Stop For POT");
                 return true;
-            } else if (!IO.topLimitSwitch.get()) {
+            } else if (!liftSubsystem.getTopLimitSwitch()) {
                 LOG.info("Stop For Switch");
                 return true;
             } else {
@@ -90,24 +79,17 @@ public class Raise extends CommandBase {
     }
 
     /**
-     * Turns off the motor when the command ends
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void end() {
         LOG.catchAll(()-> {
-            LiftSubsystem.stopScissor();
-            IO.helpRaiseSolenoid.set(false);
+            liftSubsystem.stopScissor();
         });
     }
 
     /**
-     * Runs end if the command is interrupted
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void interrupted() {

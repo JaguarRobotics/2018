@@ -1,14 +1,10 @@
 package org.usd232.robotics.powerup.lift;
 
-import org.usd232.robotics.powerup.IO;
-import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
-import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
-import edu.wpi.first.wpilibj.Relay;
 
 /**
- * The command to lower the lift
+ * The command to lower the lift manually.
  * 
  * @author Brian, Alex Whipple
  * @since 2018
@@ -16,72 +12,40 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public class ManualLower extends CommandBase {
     /**
-     * The Logger
+     * The Logger.
      * 
      * @since 2018
      * @version 2018
      */
-    private static final Logger LOG     = new Logger();
-    private int                 counter = 0;
-    private int                 onTime  = 5;
-    private int                 offTime = 5;
+    private static final Logger LOG = new Logger();
 
     /**
-     * Lowers the lift
-     * 
-     * @param lowerValue
-     *            the value the robot the lift to
-     * @since 2018
-     * @version 2018
-     */
-    public ManualLower() {
-    }
-
-    /**
-     * What happens on initialize, does nothing
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void initialize() {
         LOG.catchAll(()-> {
-            LOG.info("Manually Lowering Lift");
+            LOG.info("Manually lowering lift");
         });
     }
 
     /**
-     * What happens while the command is running, moves the motor
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            if (counter % (onTime + offTime) >= offTime) {
-                LiftSubsystem.lowerScissor();
-            } else {
-                LiftSubsystem.liftRelay.set(Relay.Value.kOff);
-            }
-            counter++;
+            liftSubsystem.lowerScissor();
         });
     }
 
     /**
-     * Checks if it's done
-     * 
-     * @return returns false
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
-            if (liftSubsystem.getPotentiometerValue() <= Robot.calibratorData.getLiftBottom()) {
-                return true;
-            }
-            if (!IO.bottomLimitSwitch.get()) {
+            if (!liftSubsystem.getBottomSwitch()) {
                 return true;
             }
             return false;
@@ -89,23 +53,17 @@ public class ManualLower extends CommandBase {
     }
 
     /**
-     * Turns off the motor when the command ends
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void end() {
         LOG.catchAll(()-> {
-            LiftSubsystem.stopScissor();
+            liftSubsystem.stopScissor();
         });
     }
 
     /**
-     * Runs end if the command is interrupted
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void interrupted() {

@@ -3,10 +3,9 @@ package org.usd232.robotics.powerup.lift;
 import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
-import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
 
 /**
- * The command to raise the lift
+ * The command to raise the lift manually.
  * 
  * @author Brian, Matthew
  * @since 2018
@@ -14,7 +13,7 @@ import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
  */
 public class ManualRaise extends CommandBase {
     /**
-     * The Logger
+     * The Logger.
      * 
      * @since 2018
      * @version 2018
@@ -22,21 +21,7 @@ public class ManualRaise extends CommandBase {
     private static final Logger LOG = new Logger();
 
     /**
-     * Raises the lift
-     * 
-     * @param raiseValue
-     *            the value the robot the lift to
-     * @since 2018
-     * @version 2018
-     */
-    public ManualRaise() {
-    }
-
-    /**
-     * What happens on initialize, does nothing
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void initialize() {
@@ -47,51 +32,37 @@ public class ManualRaise extends CommandBase {
     }
 
     /**
-     * What happens while the command is running, moves the motor
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            LiftSubsystem.raiseScissor();
+            liftSubsystem.raiseScissor();
         });
     }
 
     /**
-     * Checks if it's done
-     * 
-     * @return false
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
-            return !IO.topLimitSwitch.get();
+            return !liftSubsystem.getTopLimitSwitch();
         }, true);
     }
 
     /**
-     * Turns off the motor when the command ends
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void end() {
         LOG.catchAll(()-> {
-            LiftSubsystem.stopScissor();
-            IO.helpRaiseSolenoid.set(false);
+            liftSubsystem.stopScissor();
         });
     }
 
     /**
-     * Runs end if the command is interrupted
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void interrupted() {
