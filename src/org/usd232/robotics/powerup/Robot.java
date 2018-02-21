@@ -18,37 +18,50 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * The first class that is called to set everything up
  * 
- * @author Everyone
- * @since Always
+ * @author Brian, Zach, Cody
+ * @since 2018
  * @version 2018
  */
 public class Robot extends IterativeRobot {
     /**
-     * The Logger
+     * The Logger to use in the Robot class.
      * 
      * @since 2018
      * @version 2018
      */
-    private static final Logger                           LOG                      = new Logger();
+    private static final Logger                           LOG             = new Logger();
+    /**
+     * The server for the minimap project that sends the coords back and forth.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     public static MinimapCoordsServer                     minimapServer;
     /**
-     * chooser used on the SmartDashboard to choose the starting position
+     * chooser used on the SmartDashboard to choose the starting position.
      * 
      * @since 2017
+     * @version 2018
      */
-    public static final SendableChooser<StartingPosition> positionChooser          = LOG
+    public static final SendableChooser<StartingPosition> positionChooser = LOG
                     .catchAll(()->new SendableChooser<StartingPosition>());
     /**
-     * Chooser used in SmartDashboard to choose which alliance we are on
+     * Chooser used in SmartDashboard to choose which alliance we are on.
      * 
      * @since 2017
+     * @version 2018
      */
-    public static final SendableChooser<Alliance>         allianceChooser          = LOG
+    public static final SendableChooser<Alliance>         allianceChooser = LOG
                     .catchAll(()->new SendableChooser<Alliance>());
-    public static CalibratorData                          calibratorData;
-    public static int                                     amountOfThingsCalibrated = 0;
     /**
-     * The command that the robot does for autonomous
+     * The data that is saved to the robot for the calibration.
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static CalibratorData                          calibratorData;
+    /**
+     * The command that the robot does for autonomous.
      * 
      * @since Always
      * @version 2018
@@ -56,14 +69,10 @@ public class Robot extends IterativeRobot {
     private Command                                       autonomousCommand;
 
     /**
-     * What runs when the robot is initalized
-     * 
-     * @since Always
-     * @version 2018
+     * {@inheritDoc}
      */
     public void robotInit() {
         LOG.catchAll(()-> {
-            SmartDashboard.putNumber("Joystick Tolerance", 1);
             try {
                 Calibration.init();
                 calibratorData = Calibration.readFile();
@@ -93,10 +102,7 @@ public class Robot extends IterativeRobot {
     }
 
     /**
-     * What the robot does repeatedly while existing
-     * 
-     * @since Always
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     public void robotPeriodic() {
@@ -107,28 +113,19 @@ public class Robot extends IterativeRobot {
     }
 
     /**
-     * What runs when the robot is disabled
-     * 
-     * @since Always
-     * @version 2018
+     * {@inheritDoc}
      */
     public void disabledInit() {
     }
 
     /**
-     * What the robot does repeatedly while disabled
-     * 
-     * @since Always
-     * @version 2018
+     * {@inheritDoc}
      */
     public void disabledPeriodic() {
     }
 
     /**
-     * What autonomous does on start
-     * 
-     * @since Always
-     * @version 2018
+     * {@inheritDoc}
      */
     public void autonomousInit() {
         LOG.catchAll(()-> {
@@ -139,19 +136,13 @@ public class Robot extends IterativeRobot {
     }
 
     /**
-     * What the robot constantly does while in autonomous
-     * 
-     * @since Always
-     * @version 2018
+     * {@inheritDoc}
      */
     public void autonomousPeriodic() {
     }
 
     /**
-     * This function is called when teleop starts
-     * 
-     * @since Always
-     * @version 2018
+     * {@inheritDoc}
      */
     public void teleopInit() {
         LOG.catchAll(()-> {
@@ -163,19 +154,13 @@ public class Robot extends IterativeRobot {
     }
 
     /**
-     * This function is called repeatedly during teleop
-     * 
-     * @since Always
-     * @version 2018
+     * {@inheritDoc}
      */
     public void teleopPeriodic() {
     }
 
     /**
-     * This function is called repeatedly while in test mode
-     * 
-     * @since Always
-     * @version 2018
+     * {@inheritDoc}
      */
     public void testPeriodic() {
         LOG.catchAll(()-> {
@@ -184,10 +169,7 @@ public class Robot extends IterativeRobot {
     }
 
     /**
-     * This function is called whenever test is enabled
-     * 
-     * @since Always
-     * @version 2018
+     * {@inheritDoc}
      */
     public void testInit() {
         LOG.catchAll(()-> {

@@ -11,7 +11,7 @@ import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
- * This class contains the writeToFile and the readFile methods for the calibration
+ * This class imports and exports calibration data.
  * 
  * @author Brian
  * @since 2018
@@ -26,7 +26,7 @@ public class Calibration extends IterativeRobot {
      */
     private static final Logger LOG = new Logger();
     /**
-     * This is the file that we save / look for
+     * This is the file that we save / look for.
      * 
      * @since 2018
      * @version 2018
@@ -34,10 +34,10 @@ public class Calibration extends IterativeRobot {
     private static File         f;
 
     /**
-     * Writes the Object of the CalibratorData to a file to be read and used later
+     * Writes the Object of the CalibratorData to a file to be read and used later.
      * 
      * @param data
-     *            The current CallibratorData Object right after calibration
+     *            The current CallibratorData Object right after calibration.
      * @since 2018
      * @version 2018
      */
@@ -61,7 +61,7 @@ public class Calibration extends IterativeRobot {
     /**
      * Reads the File that got saved of the CalibratorData object.
      * 
-     * @return Returns the CalibratorData object that was saved in the past
+     * @return Returns the CalibratorData object that was saved in the past.
      * @throws IOException
      * @throws ClassNotFoundException
      * @since 2018

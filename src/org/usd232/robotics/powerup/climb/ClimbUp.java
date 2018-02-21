@@ -1,52 +1,57 @@
 package org.usd232.robotics.powerup.climb;
 
-import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
-import edu.wpi.first.wpilibj.Relay;
 
 /**
- * Makes The Robot Climb Up VIA A Winch
+ * Makes the robot climb up via a winch.
  *
  * @author Brian Parks
  * @since 2018
  * @version 2018
  */
 public class ClimbUp extends CommandBase {
-    private static final Logger LOG = new Logger();
-
     /**
-     * Makes Robot Climb Up With The Winch
+     * The Logger.
      * 
      * @since 2018
      * @version 2018
      */
-    public ClimbUp() {
-    }
+    private static final Logger LOG = new Logger();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            LOG.info("Running Climb Up Execute");
-            IO.winchRelay.set(Relay.Value.kForward);
+            liftSubsystem.climbUp();
         });
-        IO.winchRelay.set(Relay.Value.kReverse);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void end() {
         LOG.catchAll(()-> {
-            IO.winchRelay.stopMotor();
+            liftSubsystem.stopClimbing();
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void interrupted() {
         LOG.catchAll(()-> {
-            IO.winchRelay.stopMotor();
+            end();
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected boolean isFinished() {
         return false;

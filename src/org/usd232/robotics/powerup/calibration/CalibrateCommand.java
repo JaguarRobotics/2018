@@ -5,7 +5,7 @@ import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 
 /**
- * Command to write the Calibration file
+ * Command that allows us to create calibration data.
  * 
  * @author Brian
  * @since 2018
@@ -20,39 +20,42 @@ public class CalibrateCommand extends CommandBase {
      */
     private static final Logger LOG = new Logger();
 
+    /**
+     * This sets our calibration data.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     @Override
     protected void initialize() {
         LOG.catchAll(()-> {
-            if (Robot.amountOfThingsCalibrated == 0) {
+            if (liftSubsystem.amountOfThingsCalibrated == 0) {
                 LOG.info("Go To Scale Height");
-                Robot.amountOfThingsCalibrated++;
+                liftSubsystem.amountOfThingsCalibrated++;
             }
-            if (Robot.amountOfThingsCalibrated == 1) {
+            if (liftSubsystem.amountOfThingsCalibrated == 1) {
                 Robot.calibratorData.setLiftScale(liftSubsystem.getPotentiometerValue());
-                Robot.amountOfThingsCalibrated++;
+                liftSubsystem.amountOfThingsCalibrated++;
                 LOG.info("Calibrated The Scale Height at " + liftSubsystem.getPotentiometerValue());
                 LOG.info("Go To Switch Height");
-            } else if (Robot.amountOfThingsCalibrated == 2) {
+            } else if (liftSubsystem.amountOfThingsCalibrated == 2) {
                 Robot.calibratorData.setLiftSwitch(liftSubsystem.getPotentiometerValue());
-                Robot.amountOfThingsCalibrated++;
+                liftSubsystem.amountOfThingsCalibrated++;
                 LOG.info("Calibrated The Switch Height at " + liftSubsystem.getPotentiometerValue());
                 LOG.info("Go To Bottom Height");
-            } else if (Robot.amountOfThingsCalibrated == 3) {
+            } else if (liftSubsystem.amountOfThingsCalibrated == 3) {
                 Robot.calibratorData.setLiftBottom(liftSubsystem.getPotentiometerValue());
                 LOG.info("Calibrated The Lift Bottom at " + liftSubsystem.getPotentiometerValue());
                 Calibration.writeToFile(Robot.calibratorData);
                 LOG.info("Calibration Complete");
-                Robot.amountOfThingsCalibrated = 0;
+                liftSubsystem.amountOfThingsCalibrated = 0;
             } else {
             }
         });
     }
 
     /**
-     * Always finishes immediately
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected boolean isFinished() {

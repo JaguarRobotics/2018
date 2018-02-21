@@ -38,7 +38,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @version 2018
      */
     public void lowerIntake() {
-        liftSolenoid.set(true);
+        raiseIntakeSolenoid.set(true);
     }
 
     /**
@@ -48,7 +48,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @version 2018
      */
     public void raiseIntake() {
-        liftSolenoid.set(false);
+        raiseIntakeSolenoid.set(false);
     }
 
     @Override

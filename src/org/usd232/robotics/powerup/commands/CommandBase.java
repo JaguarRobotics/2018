@@ -10,74 +10,100 @@ import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This is a class that establishes hierarchy and the ridiculous need to javadoc everything
+ * This is a class that initializes the subsystems
  * 
- * @author Nathan Gawith
+ * @author Brian Parks, Zach Diebert
+ * @since 2018
+ * @version 2018
  */
 public abstract class CommandBase extends Command implements RobotMap {
     /**
-     * The Logger
+     * The Logger.
      * 
      * @since 2018
      * @version 2018
      */
     private static final Logger     LOG = new Logger();
     /**
-     * This creates the oi
+     * This is the OI.
      * 
      * @since Always
      * @version 2018
      */
     public static OI                oi;
     /**
-     * This creates the drive subsystem
+     * This is the drive subsystem.
      * 
      * @since Always
      * @version 2018
      */
     public static DriveSubsystem    driveSubsystem;
     /**
-     * This creates the intake subsystem
+     * This is the intake subsystem.
      * 
      * @since 2018
      * @version 2018
      */
     public static IntakeSubsystem   intakeSubsystem;
     /**
-     * This creates the lift subsystem
+     * This is the lift subsystem.
      * 
      * @since 2018
      * @version 2018
      */
     public static LiftSubsystem     liftSubsystem;
     /**
-     * This creates the Tracking subsystem
+     * This is the location subsystem.
      * 
      * @since 2018
      * @version 2018
      */
     public static LocationSubsystem locationSubsystem;
 
+    /**
+     * Public initialize command for commands to use if needed.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     public void initializePublic() {
         initialize();
     }
 
+    /**
+     * Public execute command for commands to use if needed.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     public void executePublic() {
         execute();
     }
 
+    /**
+     * Public isFinished command for commands to use if needed.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     public boolean isFinishedPublic() {
         return isFinished();
     }
 
+    /**
+     * Public end command for commands to use if needed.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     public void endPublic() {
         end();
     }
 
     /**
-     * This method intializes all of the subsystems
+     * This method initializes all of the subsystems.
      * 
-     * @since Always
+     * @since 2018
      * @version 2018
      */
     public static void init() {

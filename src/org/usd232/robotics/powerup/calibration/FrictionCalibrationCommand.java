@@ -8,14 +8,60 @@ import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class FrictionCalibrationCommand extends CommandGroup {
+    /**
+     * The logger.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private static final Logger       LOG             = new Logger();
+    /**
+     * The time in seconds to accelerate the robot.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private static final double       ACCELERATE_TIME = 5;
+    /**
+     * The cutoff value of the speed.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private static final double       SPEED_CUTOFF    = 0.01;
+    /**
+     * The amount of data samples to collect.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private static final int          MAX_SAMPLES     = 1;
+    /**
+     * The speed to turn the robot at.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private static final double       TURN_SPEED      = 0.6;
+    /**
+     * The context of the location subsystem (Where the robot is)
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private LocationSubsystem.Context location;
 
+    /**
+     * Drives the robot forward for getting the amount of friction.
+     * 
+     * @author Zach
+     * @since 2018
+     * @version 2018
+     */
     private class DriveCommand extends CommandBase {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected void initialize() {
             LOG.catchAll(()-> {
@@ -23,6 +69,9 @@ public class FrictionCalibrationCommand extends CommandGroup {
             });
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected void execute() {
             LOG.catchAll(()-> {
@@ -30,11 +79,17 @@ public class FrictionCalibrationCommand extends CommandGroup {
             });
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected boolean isFinished() {
             return false;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected void end() {
             LOG.catchAll(()-> {
@@ -42,15 +97,43 @@ public class FrictionCalibrationCommand extends CommandGroup {
             });
         }
 
+        /**
+         * The constructor of the drive command for frictional calibration.
+         * 
+         * @since 2018
+         * @version 2018
+         */
         public DriveCommand() {
             requires(driveSubsystem);
         }
     }
 
+    /**
+     * Measures the total acceleration after shutting the motors off
+     * 
+     * @author Zach
+     * @since 2018
+     * @version 2018
+     */
     private class MeasureCommand extends CommandBase {
+        /**
+         * The start time of the command.
+         * 
+         * @since 2018
+         * @version 2018
+         */
         private long   startTime;
+        /**
+         * The speed at the time of the command.
+         * 
+         * @since 2018
+         * @version 2018
+         */
         private double startSpeed;
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected void initialize() {
             LOG.catchAll(()-> {
@@ -59,6 +142,9 @@ public class FrictionCalibrationCommand extends CommandGroup {
             });
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected void execute() {
             LOG.catchAll(()-> {
@@ -66,6 +152,9 @@ public class FrictionCalibrationCommand extends CommandGroup {
             });
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected boolean isFinished() {
             return LOG.catchAll(()-> {
@@ -73,6 +162,9 @@ public class FrictionCalibrationCommand extends CommandGroup {
             }, true);
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected void end() {
             LOG.catchAll(()-> {
@@ -86,15 +178,36 @@ public class FrictionCalibrationCommand extends CommandGroup {
             });
         }
 
+        /**
+         * Constructor for the command to measure the acceleration of the robot
+         * 
+         * @since 2018
+         * @version 2018
+         */
         public MeasureCommand() {
             requires(driveSubsystem);
             requires(locationSubsystem);
         }
     }
 
+    /**
+     * The total acceleration of the robot.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private double totalAcceleration;
+    /**
+     * The amount of trials completed for getting the acceleration
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private int    trials;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void initialize() {
         LOG.catchAll(()-> {
@@ -103,6 +216,9 @@ public class FrictionCalibrationCommand extends CommandGroup {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void interrupted() {
         LOG.catchAll(()-> {
@@ -118,6 +234,9 @@ public class FrictionCalibrationCommand extends CommandGroup {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void end() {
         LOG.catchAll(()-> {
@@ -125,6 +244,12 @@ public class FrictionCalibrationCommand extends CommandGroup {
         });
     }
 
+    /**
+     * The constructor for the command to calculate the friction between the robot and the ground
+     * 
+     * @since 2018
+     * @version 2018
+     */
     public FrictionCalibrationCommand() {
         location = CommandBase.locationSubsystem.new Context();
         DriveCommand drive = new DriveCommand();

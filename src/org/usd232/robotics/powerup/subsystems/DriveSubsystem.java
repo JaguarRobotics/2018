@@ -29,27 +29,6 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     /**
-     * @return whether extended. If true, extended.
-     */
-    public static boolean getGearShift() {
-        return gearShiftSolenoid.get();
-    }
-
-    /**
-     * Extends solenoid to shift gears on wheels.
-     */
-    public static void gearShiftHigh() {
-        gearShiftSolenoid.set(true);
-    }
-
-    /**
-     * Retracts solenoid to shift back gear on wheels.
-     */
-    public static void gearShiftLow() {
-        gearShiftSolenoid.set(false);
-    }
-
-    /**
      * Sets the default command of the subsystem.
      */
     public void initDefaultCommand() {
