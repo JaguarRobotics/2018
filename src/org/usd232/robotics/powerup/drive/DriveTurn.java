@@ -15,6 +15,7 @@ public class DriveTurn extends CommandBase {
     protected void initialize() {
         LOG.catchAll(()-> {
             LOG.enter("initialize");
+            location = locationSubsystem.new Context();
         });
     }
 
@@ -44,7 +45,6 @@ public class DriveTurn extends CommandBase {
 
     public DriveTurn(ISpeedFunction speedFunc, double angle) {
         requires(driveSubsystem);
-        location = locationSubsystem.new Context();
         this.speedFunc = speedFunc;
         this.angle = angle + Math.PI / 2;
     }

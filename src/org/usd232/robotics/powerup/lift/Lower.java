@@ -64,6 +64,9 @@ public class Lower extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
+            if (liftSubsystem.getPotentiometerValue() <= Robot.calibratorData.getLiftBottom()) {
+                return true;
+            }
             if (liftSubsystem.getPotentiometerValue() <= lowerValue) {
                 return true;
             } else if (!liftSubsystem.getBottomSwitch()) {

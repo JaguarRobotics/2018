@@ -11,6 +11,7 @@ import org.usd232.robotics.powerup.intake.RaiseIntake;
 import org.usd232.robotics.powerup.lift.GoToLevel;
 import org.usd232.robotics.powerup.lift.ManualLower;
 import org.usd232.robotics.powerup.lift.ManualRaise;
+import org.usd232.robotics.powerup.lift.RaiseToSwitch;
 import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -42,7 +43,7 @@ public class OI extends Trigger implements RobotMap {
             ManipulatorXbox_RB.whileHeld(new ManualRaise());
             ManipulatorXbox_LB.whileHeld(new ManualLower());
             try {
-                whenPovIs(Manipulator, 0, new GoToLevel(Robot.calibratorData.getLiftScale()));
+                whenPovIs(Manipulator, 0, new RaiseToSwitch());
                 whenPovIs(Manipulator, 6, new GoToLevel(Robot.calibratorData.getLiftSwitch()));
                 whenPovIs(Manipulator, 4, new GoToLevel(Robot.calibratorData.getLiftBottom()));
                 LOG.info("The POV controls were successfuly created");

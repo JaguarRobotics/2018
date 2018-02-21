@@ -39,7 +39,7 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
     private JTextPane         parameterField;
     private JPanel            stepContainer;
     private GeneratorModel    model;
-    private boolean           ignoreValueChanged;
+    private boolean           ignoreEvents;
 
     @Override
     public void insertUpdate(DocumentEvent e) {
@@ -84,167 +84,184 @@ public class PropertiesBar extends Container implements DocumentListener, ListSe
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        AutonomousModel auto = model.localDatabase.getRawElementAt(model.localDatabaseView.getSelectedIndex()).obj2;
-        if (e.getDocument() == scaleField.getDocument()) {
+        if (!ignoreEvents) {
+            ignoreEvents = true;
             try {
-                auto.setScale(parseFloat(scaleField.getText()));
-                model.localDatabase.onUpdate();
-            } catch (NumberFormatException ex) {
-                EventQueue.invokeLater(()->scaleField.setText(Float.toString(auto.getScale())));
-            }
-        } else {
-            AutonomousRoute route = model.versionList.getRawElementAt(model.versionListView.getSelectedIndex());
-            if (e.getDocument() == startXField.getDocument()) {
-                try {
-                    route.setStartX(parseFloat(startXField.getText()));
-                    model.localDatabase.onUpdate();
-                } catch (NumberFormatException ex) {
-                    EventQueue.invokeLater(()->startXField.setText(Float.toString(route.getStartX())));
-                }
-            } else if (e.getDocument() == startYField.getDocument()) {
-                try {
-                    route.setStartY(parseFloat(startYField.getText()));
-                    model.localDatabase.onUpdate();
-                } catch (NumberFormatException ex) {
-                    EventQueue.invokeLater(()->startYField.setText(Float.toString(route.getStartY())));
-                }
-            } else if (e.getDocument() == startAngleField.getDocument()) {
-                try {
-                    route.setStartAngle(parseFloat(startAngleField.getText()) * (float) (Math.PI / 180));
-                    model.localDatabase.onUpdate();
-                } catch (NumberFormatException ex) {
-                    EventQueue.invokeLater(()->startAngleField
-                                    .setText(Float.toString(route.getStartAngle() * (float) (180 / Math.PI))));
-                }
-            } else {
-                int i = model.stepListView.getSelectedIndex();
-                if (i >= 0) {
-                    AutonomousStep step = model.stepList.getRawElementAt(i);
-                    IAutonomousStepParameter param = step.getGenericParameter();
-                    boolean changed = false;
-                    if (e.getDocument() == timeField.getDocument()) {
-                        SleepParameter p = (SleepParameter) param;
-                        short old = p.getMillis();
+                AutonomousModel auto = model.localDatabase
+                                .getRawElementAt(model.localDatabaseView.getSelectedIndex()).obj2;
+                if (e.getDocument() == scaleField.getDocument()) {
+                    try {
+                        auto.setScale(parseFloat(scaleField.getText()));
+                        model.localDatabase.onUpdate();
+                    } catch (NumberFormatException ex) {
+                        EventQueue.invokeLater(()->scaleField.setText(Float.toString(auto.getScale())));
+                    }
+                } else {
+                    AutonomousRoute route = model.versionList.getRawElementAt(model.versionListView.getSelectedIndex());
+                    if (e.getDocument() == startXField.getDocument()) {
                         try {
-                            p.setMillis(parseShort(timeField.getText()));
-                            changed = changed || p.getMillis() != old;
+                            route.setStartX(parseFloat(startXField.getText()));
+                            model.localDatabase.onUpdate();
                         } catch (NumberFormatException ex) {
-                            EventQueue.invokeLater(()->timeField.setText(Short.toString(p.getMillis())));
+                            EventQueue.invokeLater(()->startXField.setText(Float.toString(route.getStartX())));
                         }
-                    } else if (e.getDocument() == distanceField.getDocument()) {
-                        DriveParameter p = (DriveParameter) param;
-                        float old = p.getDistance();
+                    } else if (e.getDocument() == startYField.getDocument()) {
                         try {
-                            p.setDistance(parseFloat(distanceField.getText()) / auto.getScale());
-                            changed = changed || p.getDistance() != old;
+                            route.setStartY(parseFloat(startYField.getText()));
+                            model.localDatabase.onUpdate();
                         } catch (NumberFormatException ex) {
-                            EventQueue.invokeLater(()->distanceField
-                                            .setText(Float.toString(p.getDistance() * auto.getScale())));
+                            EventQueue.invokeLater(()->startYField.setText(Float.toString(route.getStartY())));
                         }
-                    } else if (e.getDocument() == angleField.getDocument()) {
-                        TurnParameter p = (TurnParameter) param;
-                        float old = p.getAngle();
+                    } else if (e.getDocument() == startAngleField.getDocument()) {
                         try {
-                            p.setAngle(parseFloat(angleField.getText()) * (float) (Math.PI / 180.0));
-                            changed = changed || p.getAngle() != old;
+                            route.setStartAngle(parseFloat(startAngleField.getText()) * (float) (Math.PI / 180));
+                            model.localDatabase.onUpdate();
                         } catch (NumberFormatException ex) {
-                            EventQueue.invokeLater(()->angleField
-                                            .setText(Float.toString(p.getAngle() * (float) (180.0 / Math.PI))));
+                            EventQueue.invokeLater(()->startAngleField
+                                            .setText(Float.toString(route.getStartAngle() * (float) (180 / Math.PI))));
                         }
                     } else {
-                        CustomCommandParameter p = (CustomCommandParameter) param;
-                        if (e.getDocument() == commandField.getDocument()) {
-                            byte old = p.getCommandID();
-                            try {
-                                p.setCommandID(parseByte(commandField.getText()));
-                                changed = changed || p.getCommandID() != old;
-                            } catch (NumberFormatException ex) {
-                                EventQueue.invokeLater(()->commandField.setText(Byte.toString(p.getCommandID())));
+                        int i = model.stepListView.getSelectedIndex();
+                        if (i >= 0) {
+                            AutonomousStep step = model.stepList.getRawElementAt(i);
+                            IAutonomousStepParameter param = step.getGenericParameter();
+                            boolean changed = false;
+                            if (e.getDocument() == timeField.getDocument()) {
+                                SleepParameter p = (SleepParameter) param;
+                                short old = p.getMillis();
+                                try {
+                                    p.setMillis(parseShort(timeField.getText()));
+                                    changed = changed || p.getMillis() != old;
+                                } catch (NumberFormatException ex) {
+                                    EventQueue.invokeLater(()->timeField.setText(Short.toString(p.getMillis())));
+                                }
+                            } else if (e.getDocument() == distanceField.getDocument()) {
+                                DriveParameter p = (DriveParameter) param;
+                                float old = p.getDistance();
+                                try {
+                                    p.setDistance(parseFloat(distanceField.getText()) / auto.getScale());
+                                    changed = changed || p.getDistance() != old;
+                                } catch (NumberFormatException ex) {
+                                    EventQueue.invokeLater(()->distanceField
+                                                    .setText(Float.toString(p.getDistance() * auto.getScale())));
+                                }
+                            } else if (e.getDocument() == angleField.getDocument()) {
+                                TurnParameter p = (TurnParameter) param;
+                                float old = p.getAngle();
+                                try {
+                                    p.setAngle(parseFloat(angleField.getText()) * (float) (Math.PI / 180.0));
+                                    changed = changed || p.getAngle() != old;
+                                } catch (NumberFormatException ex) {
+                                    EventQueue.invokeLater(()->angleField
+                                                    .setText(Float.toString(p.getAngle() * (float) (180.0 / Math.PI))));
+                                }
+                            } else {
+                                CustomCommandParameter p = (CustomCommandParameter) param;
+                                if (e.getDocument() == commandField.getDocument()) {
+                                    byte old = p.getCommandID();
+                                    try {
+                                        p.setCommandID(parseByte(commandField.getText()));
+                                        changed = changed || p.getCommandID() != old;
+                                    } catch (NumberFormatException ex) {
+                                        EventQueue.invokeLater(
+                                                        ()->commandField.setText(Byte.toString(p.getCommandID())));
+                                    }
+                                } else if (e.getDocument() == parameterField.getDocument()) {
+                                    changed = changed || !parameterField.getText().equals(p.getParameter());
+                                    p.setParameter(parameterField.getText());
+                                }
                             }
-                        } else if (e.getDocument() == parameterField.getDocument()) {
-                            changed = changed || !parameterField.getText().equals(p.getParameter());
-                            p.setParameter(parameterField.getText());
+                            if (changed) {
+                                EventQueue.invokeLater(()-> {
+                                    ignoreEvents = true;
+                                    try {
+                                        model.stepList.remove(i);
+                                        model.stepList.insert(null, i).setParameter(step.getGenericParameter());
+                                        model.stepListView.setSelectedIndex(i);
+                                    } finally {
+                                        ignoreEvents = false;
+                                    }
+                                });
+                            }
                         }
                     }
-                    if (changed) {
-                        EventQueue.invokeLater(()-> {
-                            ignoreValueChanged = true;
-                            model.stepList.remove(i);
-                            model.stepList.insert(null, i).setParameter(step.getGenericParameter());
-                            model.stepListView.setSelectedIndex(i);
-                            ignoreValueChanged = false;
-                        });
-                    }
                 }
+            } finally {
+                ignoreEvents = false;
             }
         }
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (!ignoreValueChanged) {
-            if (e.getSource() == model.localDatabaseView.list) {
-                scaleField.setEnabled(!model.localDatabaseView.isSelectionEmpty());
-                if (scaleField.isEnabled()) {
-                    scaleField.setText(Float.toString(
-                                    model.localDatabase.getRawElementAt(model.localDatabaseView.getSelectedIndex()).obj2
-                                                    .getScale()));
-                }
-            } else if (e.getSource() == model.versionListView.list) {
-                startXField.setEnabled(!model.versionListView.isSelectionEmpty());
-                startYField.setEnabled(!model.versionListView.isSelectionEmpty());
-                startAngleField.setEnabled(!model.versionListView.isSelectionEmpty());
-                if (!model.versionListView.isSelectionEmpty()) {
-                    AutonomousRoute route = model.versionList.getRawElementAt(model.versionListView.getSelectedIndex());
-                    startXField.setText(Float.toString(route.getStartX()));
-                    startYField.setText(Float.toString(route.getStartY()));
-                    startAngleField.setText(Float.toString(route.getStartAngle() * (float) (180 / Math.PI)));
-                }
-            } else if (e.getSource() == model.stepListView.list) {
-                String name;
-                if (model.stepListView.isSelectionEmpty()) {
-                    name = "empty";
-                } else {
-                    AutonomousModel auto = model.localDatabase
-                                    .getRawElementAt(model.localDatabaseView.getSelectedIndex()).obj2;
-                    AutonomousStep step = model.stepList.getRawElementAt(model.stepListView.getSelectedIndex());
-                    if (step.getType() == null) {
+        if (!ignoreEvents) {
+            ignoreEvents = true;
+            try {
+                if (e.getSource() == model.localDatabaseView.list) {
+                    scaleField.setEnabled(!model.localDatabaseView.isSelectionEmpty());
+                    if (scaleField.isEnabled()) {
+                        scaleField.setText(Float.toString(model.localDatabase
+                                        .getRawElementAt(model.localDatabaseView.getSelectedIndex()).obj2.getScale()));
+                    }
+                } else if (e.getSource() == model.versionListView.list) {
+                    startXField.setEnabled(!model.versionListView.isSelectionEmpty());
+                    startYField.setEnabled(!model.versionListView.isSelectionEmpty());
+                    startAngleField.setEnabled(!model.versionListView.isSelectionEmpty());
+                    if (!model.versionListView.isSelectionEmpty()) {
+                        AutonomousRoute route = model.versionList
+                                        .getRawElementAt(model.versionListView.getSelectedIndex());
+                        startXField.setText(Float.toString(route.getStartX()));
+                        startYField.setText(Float.toString(route.getStartY()));
+                        startAngleField.setText(Float.toString(route.getStartAngle() * (float) (180 / Math.PI)));
+                    }
+                } else if (e.getSource() == model.stepListView.list) {
+                    String name;
+                    if (model.stepListView.isSelectionEmpty()) {
                         name = "empty";
                     } else {
-                        switch (step.getType()) {
-                            case CustomCommand: {
-                                name = "custom";
-                                CustomCommandParameter param = (CustomCommandParameter) step.getGenericParameter();
-                                commandField.setText(Byte.toString(param.getCommandID()));
-                                parameterField.setText(param.getParameter());
-                                break;
-                            }
-                            case Drive: {
-                                name = "drive";
-                                DriveParameter param = (DriveParameter) step.getGenericParameter();
-                                distanceField.setText(Float.toString(param.getDistance() * auto.getScale()));
-                                break;
-                            }
-                            case Sleep: {
-                                name = "sleep";
-                                SleepParameter param = (SleepParameter) step.getGenericParameter();
-                                timeField.setText(Short.toString(param.getMillis()));
-                                break;
-                            }
-                            case Turn: {
-                                name = "turn";
-                                TurnParameter param = (TurnParameter) step.getGenericParameter();
-                                angleField.setText(Float.toString(param.getAngle() * (float) (180.0 / Math.PI)));
-                                break;
-                            }
-                            default: {
-                                name = "empty";
-                                break;
+                        AutonomousModel auto = model.localDatabase
+                                        .getRawElementAt(model.localDatabaseView.getSelectedIndex()).obj2;
+                        AutonomousStep step = model.stepList.getRawElementAt(model.stepListView.getSelectedIndex());
+                        if (step.getType() == null) {
+                            name = "empty";
+                        } else {
+                            switch (step.getType()) {
+                                case CustomCommand: {
+                                    name = "custom";
+                                    CustomCommandParameter param = (CustomCommandParameter) step.getGenericParameter();
+                                    commandField.setText(Byte.toString(param.getCommandID()));
+                                    parameterField.setText(param.getParameter());
+                                    break;
+                                }
+                                case Drive: {
+                                    name = "drive";
+                                    DriveParameter param = (DriveParameter) step.getGenericParameter();
+                                    distanceField.setText(Float.toString(param.getDistance() * auto.getScale()));
+                                    break;
+                                }
+                                case Sleep: {
+                                    name = "sleep";
+                                    SleepParameter param = (SleepParameter) step.getGenericParameter();
+                                    timeField.setText(Short.toString(param.getMillis()));
+                                    break;
+                                }
+                                case Turn: {
+                                    name = "turn";
+                                    TurnParameter param = (TurnParameter) step.getGenericParameter();
+                                    angleField.setText(Float.toString(param.getAngle() * (float) (180.0 / Math.PI)));
+                                    break;
+                                }
+                                default: {
+                                    name = "empty";
+                                    break;
+                                }
                             }
                         }
                     }
+                    ((CardLayout) stepContainer.getLayout()).show(stepContainer, name);
                 }
-                ((CardLayout) stepContainer.getLayout()).show(stepContainer, name);
+            } finally {
+                ignoreEvents = false;
             }
         }
     }
