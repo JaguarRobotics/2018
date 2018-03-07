@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+* {
+    user-select: none;
+}
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+.app-flex-static {
+    flex-grow: 0;
+}
+.app-flex-grow {
+    flex-grow: 1;
+}

@@ -1,0 +1,12 @@
+.toolbar {
+    width: 100vw;
+    height: 50px;
+    background-color: #EFEFEF;
+    display: flex;
+}
+.toolbar .tools {
+    flex-grow: 0;
+}
+.toolbar .padding {
+    flex-grow: 1;
+}
