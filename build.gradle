@@ -30,11 +30,6 @@ sourceSets {
             srcDirs = [ "src/" ]
         }
     }
-    generator {
-    	java {
-    		srcDirs = [ "generator/" ]
-    	}
-    }
     minimap {
         java {
             srcDirs = [ "minimap/" ]
@@ -60,8 +55,6 @@ dependencies {
 	minimapCompile "org.lwjgl:lwjgl-openal:$lwjglVersion:$lwjglNatives"
 	minimapCompile "org.lwjgl:lwjgl-opengl:$lwjglVersion:$lwjglNatives"
 	minimapCompile "org.lwjgl:lwjgl-stb:$lwjglVersion:$lwjglNatives"
-    generatorCompile "net.harawata:appdirs:1.0.1"
-    generatorCompile "com.jcraft:jsch:0.1.54"
 }
 
 eclipse {
@@ -70,8 +63,5 @@ eclipse {
     }
     project {
         natures "edu.wpi.first.wpilib.plugins.core.nature.FRCProjectNature"
-        classpath {
-        	plusConfigurations << configurations.generatorCompile
-        }
     }
 }
