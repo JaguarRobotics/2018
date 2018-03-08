@@ -3,7 +3,7 @@ package org.usd232.robotics.powerup.subsystems;
 /**
  * Handles manipulation of power cube
  * 
- * @author Evan
+ * @author Evan, Brian
  * @since 2018
  * @version 2018
  */

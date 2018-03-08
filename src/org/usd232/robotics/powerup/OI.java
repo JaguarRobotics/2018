@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class OI extends Trigger implements RobotMap {
     /**
-     * The Logger
+     * The Logger.
      * 
      * @since 2018
      * @version 2018

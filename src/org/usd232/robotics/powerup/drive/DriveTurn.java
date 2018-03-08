@@ -19,6 +19,9 @@ public class DriveTurn extends CommandBase {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
@@ -28,6 +31,9 @@ public class DriveTurn extends CommandBase {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
@@ -35,6 +41,9 @@ public class DriveTurn extends CommandBase {
         }, true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void end() {
         LOG.catchAll(()-> {
@@ -43,6 +52,14 @@ public class DriveTurn extends CommandBase {
         });
     }
 
+    /**
+     * Turns the robot at a specified angle.
+     * 
+     * @param speedFunc
+     *            The function of the speed that the robot should be moving at.
+     * @param angle
+     *            The angle to turn the robot to.
+     */
     public DriveTurn(ISpeedFunction speedFunc, double angle) {
         requires(driveSubsystem);
         this.speedFunc = speedFunc;

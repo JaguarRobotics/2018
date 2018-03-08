@@ -6,13 +6,52 @@ import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 
 public class DriveForward extends CommandBase {
+    /**
+     * The logger.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private static final Logger       LOG = new Logger();
+    /**
+     * The amount of inches to drive forward
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private final double              inches;
+    /**
+     * The amount the robot correct per inch
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private final double              correctionPerInch;
+    /**
+     * The function for the robot speed
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private final ISpeedFunction      speedFunc;
+    /**
+     * The max angle that the robot can get off by
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private final double              maxAngle;
+    /**
+     * The location of the robot
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private LocationSubsystem.Context location;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void initialize() {
         LOG.catchAll(()-> {
@@ -21,6 +60,9 @@ public class DriveForward extends CommandBase {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
@@ -42,6 +84,9 @@ public class DriveForward extends CommandBase {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
@@ -49,6 +94,9 @@ public class DriveForward extends CommandBase {
         }, true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void end() {
         LOG.catchAll(()-> {
@@ -57,6 +105,18 @@ public class DriveForward extends CommandBase {
         });
     }
 
+    /**
+     * Drives the robot forward.
+     * 
+     * @param speedFunc
+     *            The function that the robot uses to calculate its speed at a certain spot.
+     * @param inches
+     *            The amount of inches for the robot to go.
+     * @param correctionPerInch
+     *            The amount that the robot can correct per inch that it moves.
+     * @param maxAngle
+     *            The maximum angle that the robot can get off by.
+     */
     public DriveForward(ISpeedFunction speedFunc, double inches, double correctionPerInch, double maxAngle) {
         requires(driveSubsystem);
         this.speedFunc = speedFunc;

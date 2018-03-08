@@ -34,15 +34,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * The class that sets up the routes to run in autonomous
  * 
- * @author Zach Deibert
+ * @author Zach Deibert, Brian Parks
  * @since 2018
  * @version 2018
  */
 public class Autonomous extends CommandGroup {
+    /**
+     * The logger.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private static final Logger            LOG        = new Logger();
+    /**
+     * The directory we save the auto routes to.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private static final String            ROUTES_DIR = "/home/lvuser/routes";
+    /**
+     * The sendable chooser where we select the auto route.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private static SendableChooser<String> chooser;
-
+    /**
+     * Loads the routes to the smart dashboard
+     */
     public static void loadDashboard() {
         chooser = new SendableChooser<>();
         for (String file : new File(ROUTES_DIR).list()) {

@@ -57,16 +57,8 @@ public class DriveTank extends CommandBase {
      */
     double deadZoneScale = minValue / Math.cbrt(deadZone);
 
-    @Override
-    protected void initialize() {
-    }
-
     /**
-     * Drives the robot with an initial cube root function in the "dead zone" that curves rather cleanly into a linear
-     * scale of the joystick inputs
-     * 
-     * @since 2017
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void execute() {
@@ -80,6 +72,13 @@ public class DriveTank extends CommandBase {
         });
     }
 
+    /**
+     * Scales the input of the joysticks.
+     * 
+     * @param input
+     *            The input of the joysticks.
+     * @return The scaled value that the robot should drive at.
+     */
     private double scaleInput(double input) {
         double output = 0;
         double absoluteInput = Math.abs(input);
@@ -93,34 +92,10 @@ public class DriveTank extends CommandBase {
     }
 
     /**
-     * Determines if the command is done which is never is because driving is never done
-     * 
-     * @since Always
-     * @version 2018
-     * @return false because driving is never done
+     * {@inheritDoc}
      */
     @Override
     protected boolean isFinished() {
         return false;
-    }
-
-    /**
-     * What happens when the command ends
-     * 
-     * @since Always
-     * @version 2018
-     */
-    @Override
-    protected void end() {
-    }
-
-    /**
-     * What happens if the command is interrupted
-     * 
-     * @since Always
-     * @version 2018
-     */
-    @Override
-    protected void interrupted() {
     }
 }

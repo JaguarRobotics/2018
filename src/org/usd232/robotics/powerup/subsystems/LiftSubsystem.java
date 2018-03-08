@@ -27,14 +27,28 @@ public class LiftSubsystem extends SubsystemBase {
     protected void initDefaultCommand() {
     }
 
+    /**
+     * Gets the potentiometer value.
+     * 
+     * @return THe potentiometer value.
+     * @since 2018
+     */
     public double getPotentiometerValue() {
         return scissorPotentiometer.get();
     }
-
+    /**
+     * Raises the scissor lift.
+     * 
+     * @since 2018
+     */
     public void raiseScissor() {
         liftRelay.set(Relay.Value.kReverse);
     }
-
+    /**
+     * Lowers the scissor lift.
+     * 
+     * @since 2018
+     */
     public void lowerScissor() {
         if (counter % (onTime + offTime) >= offTime) {
             liftRelay.set(Value.kForward);
@@ -43,28 +57,52 @@ public class LiftSubsystem extends SubsystemBase {
         }
         counter++;
     }
-
+    /**
+     * Stops the scissor lift.
+     * 
+     * @since 2018
+     */
     public void stopScissor() {
         liftRelay.set(Relay.Value.kOff);
         IO.helpRaiseSolenoid.set(false);
     }
-
+    /**
+     * Makes the robot climb up.
+     * 
+     * @since 2018
+     */
     public void climbUp() {
         climbRelay.set(Value.kForward);
     }
-
+    /**
+     * Makes the robot climb down
+     * 
+     * @since 2018
+     */
     public void climbDown() {
         climbRelay.set(Value.kReverse);
     }
-
+    /**
+     * Stops the robot from climbing
+     */
     public void stopClimbing() {
         climbRelay.set(Value.kOff);
     }
-
+    /**
+     * Gets the bottom limit switch.
+     * 
+     * @return the bottom limit switch value
+     * @since 2018
+     */
     public boolean getBottomSwitch() {
         return bottomLimitSwitch.get();
     }
-
+    /**
+     * Gets the top limit switch.
+     * 
+     * @return the top limit switch value
+     * @since 2018
+     */
     public boolean getTopLimitSwitch() {
         return topLimitSwitch.get();
     }

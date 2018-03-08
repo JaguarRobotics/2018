@@ -1,7 +1,7 @@
 package org.usd232.robotics.powerup;
 
 /**
- * Maps the ports and other values we need for the robot where we can change stuff if wiring gets messed up
+ * Maps the ports and other values we need for the robot where we can change stuff if wiring gets messed up.
  * 
  * @since 2017
  * @version 2018

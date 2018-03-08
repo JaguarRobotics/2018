@@ -3,7 +3,6 @@ package org.usd232.robotics.powerup.lift;
 import org.usd232.robotics.powerup.IO;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
-import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
 
 /**
  * The command to raise the lift based on hitting the limit switch
@@ -19,7 +18,7 @@ public class RaiseToSwitch extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    private static final Logger LOG       = new Logger();
+    private static final Logger LOG = new Logger();
 
     /**
      * Raises the lift of the robot to its limit switch at the max height
@@ -30,6 +29,9 @@ public class RaiseToSwitch extends CommandBase {
     public RaiseToSwitch() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void initialize() {
         LOG.catchAll(()-> {
@@ -38,50 +40,38 @@ public class RaiseToSwitch extends CommandBase {
     }
 
     /**
-     * What happens while the command is running, moves the motor
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void execute() {
-        LOG.catchAll(()-> {  
-            LiftSubsystem.raiseScissor();
+        LOG.catchAll(()-> {
+            liftSubsystem.raiseScissor();
         });
     }
 
     /**
-     * Returns true when the limit switch is tripped
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
-            return !IO.topLimitSwitch.get();
+            return !liftSubsystem.getTopLimitSwitch();
         }, true);
     }
 
     /**
-     * Turns off the motor when the command ends
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void end() {
         LOG.catchAll(()-> {
-            LiftSubsystem.stopScissor();
+            liftSubsystem.stopScissor();
             IO.helpRaiseSolenoid.set(false);
         });
     }
 
     /**
-     * Runs end if the command is interrupted
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void interrupted() {
