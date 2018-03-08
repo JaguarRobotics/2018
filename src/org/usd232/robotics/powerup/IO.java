@@ -20,106 +20,97 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
  * @version 2018
  */
 public interface IO extends RobotMap {
-    public static final Logger          this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class = new Logger();
-    // Motors and Encoders
+    public static final Logger          DO_NOT_USE_THIS_LOGGER = new Logger();
     /**
-     * The left drive motor
+     * The left drive motor.
      * 
      * @since 2018
      * @version 2018
      */
-    public static final SpeedController leftDriveMotor                                                                  = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final SpeedController leftDriveMotor         = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->IOFactory.motor(LEFT_DRIVE_MOTOR_PORT, LEFT_DRIVE_MOTOR_TYPE));
     /**
-     * The right drive motor
+     * The right drive motor.
      * 
      * @since 2018
      * @version 2018
      */
-    public static final SpeedController rightDriveMotor                                                                 = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final SpeedController rightDriveMotor        = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->IOFactory.motor(RIGHT_DRIVE_MOTOR_PORT, RIGHT_DRIVE_MOTOR_TYPE));
     /**
-     * The encoder on the left drive motor
+     * The encoder on the left drive motor.
      * 
      * @since 2018
      * @version 2018
      */
-    public static final Encoder         leftDriveEncoder                                                                = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final Encoder         leftDriveEncoder       = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new OversampledEncoder(LEFT_ENCODER_CHANNEL_A, LEFT_ENCODER_CHANNEL_B));
     /**
-     * The encoder on the right drive motor
+     * The encoder on the right drive motor.
      * 
      * @since 2018
      * @version 2018
      */
-    public static final Encoder         rightDriveEncoder                                                               = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final Encoder         rightDriveEncoder      = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new OversampledEncoder(RIGHT_ENCODER_CHANNEL_A, RIGHT_ENCODER_CHANNEL_B));
     // Gyros and Potentiometers
     /**
-     * The analog gyroscope
+     * The gyroscope in the SPI port on the RIO.
      * 
      * @since 2018
      * @version 2018
      */
-    public static final Gyro            gyro                                                                            = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final Gyro            gyro                   = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new ADXRS450_Gyro());
     /**
-     * The potentiometer that measures the height of the scissor lift
+     * The potentiometer that measures the height of the scissor lift.
      * 
      * @since 2018
      * @version 2018
      */
-    public static final Potentiometer   scissorPotentiometer                                                            = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final Potentiometer   scissorPotentiometer   = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new AnalogPotentiometer(POTENTIOMETER_PORT, 360, 0));
-    /**
-     * The motor for the lift of the robot
-     * 
-     * @since 2018
-     * @version 2018
-     */
     // Relays
     /**
-     * The Winch For The Climber
+     * The relay for the climbing winch.
      * 
      * @since 2018
      * @version 2018
      */
-    public static final Relay           winchRelay                                                                      = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final Relay           climbRelay             = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new Relay(WINCH_RELAY_PORT));
-    public static final Relay           liftRelay                                                                       = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
-                    .catchAll(()->new Relay(LIFT_RELAY_PORT));
     /**
-     * Grabs and releases cube
+     * The relay for the scissor lift.
      * 
      * @since 2018
      * @version 2018
      */
-    // Solenoids
-    public static final Solenoid        grabSolenoid                                                                    = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final Relay           liftRelay              = DO_NOT_USE_THIS_LOGGER
+                    .catchAll(()->new Relay(LIFT_RELAY_PORT));
+    // Pneumatics
+    /**
+     * Grabs and releases cube.
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final Solenoid        grabSolenoid           = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new Solenoid(INTAKE_GRAB_SOLENOID));
     /**
-     * Raises and lowers power cube
+     * Raises and lowers power cube.
      * 
      * @since 2018
      * @version 2018
      */
-    public static final Solenoid        liftSolenoid                                                                    = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final Solenoid        raiseIntakeSolenoid    = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new Solenoid(INTAKE_LIFT_SOLENOID));
     /**
-     * The solenoid to shift gears
+     * The solenoid that helps the scissor lift with an extra boost to get up.
      * 
      * @since 2018
      * @version 2018
      */
-    public static final Solenoid        gearShiftSolenoid                                                               = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
-                    .catchAll(()->new Solenoid(SOLENOID_GEAR_SHIFT_PORT));
-    /**
-     * The solenoid to shift gears
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    public static final Solenoid        helpRaiseSolenoid                                                               = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final Solenoid        helpRaiseSolenoid      = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new Solenoid(RAISE_HELPER_SOLENOID_PORT));
     /**
      * The limit switch that says if the Scissor lift is in bottom position
@@ -128,7 +119,7 @@ public interface IO extends RobotMap {
      * @version 2018
      */
     // Limit Switches
-    public static final DigitalInput    bottomLimitSwitch                                                               = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final DigitalInput    bottomLimitSwitch      = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new DigitalInput(BOTTOM_LIMIT_SWITCH_PORT));
     /**
      * The limit switch that says if the Scissor lift is in top position
@@ -136,6 +127,6 @@ public interface IO extends RobotMap {
      * @since 2018
      * @version 2018
      */
-    public static final DigitalInput    topLimitSwitch                                                                  = this_is_a_private_variable_but_really_not_so_do_not_use_it_outside_the_IO_class
+    public static final DigitalInput    topLimitSwitch         = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new DigitalInput(TOP_LIMIT_SWITCH_PORT));
 }

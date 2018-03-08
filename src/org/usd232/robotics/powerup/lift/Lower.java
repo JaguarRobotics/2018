@@ -1,13 +1,11 @@
 package org.usd232.robotics.powerup.lift;
 
-import org.usd232.robotics.powerup.IO;
+import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
-import org.usd232.robotics.powerup.subsystems.LiftSubsystem;
-import edu.wpi.first.wpilibj.Relay;
 
 /**
- * The command to lower the lift
+ * The command to lower the lift.
  * 
  * @author Brian, Alex Whipple
  * @since 2018
@@ -15,22 +13,19 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public class Lower extends CommandBase {
     /**
-     * The Logger
+     * The Logger.
      * 
      * @since 2018
      * @version 2018
      */
     private static final Logger LOG        = new Logger();
     /**
-     * Value that we are lowering to
+     * Value that we are lowering to.
      * 
      * @since 2018
      * @version 2018
      */
     private double              lowerValue = 0;
-    private int                 counter    = 0;
-    private int                 onTime     = 5;
-    private int                 offTime    = 5;
 
     /**
      * Lowers the lift of the robot to specified potentiometer value
@@ -45,10 +40,7 @@ public class Lower extends CommandBase {
     }
 
     /**
-     * What happens on initialize, does nothing
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void initialize() {
@@ -58,36 +50,27 @@ public class Lower extends CommandBase {
     }
 
     /**
-     * What happens while the command is running, moves the motor
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            if (counter % (onTime + offTime) >= offTime) {
-                LiftSubsystem.lowerScissor();
-            } else {
-                LiftSubsystem.liftRelay.set(Relay.Value.kOff);
-            }
-            counter++;
+            liftSubsystem.lowerScissor();
         });
     }
 
     /**
-     * Checks if the potentiometer value has reached the target value
-     * 
-     * @return true if potentiometer value is lower than or equal to targetValue
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
+            if (liftSubsystem.getPotentiometerValue() <= Robot.calibratorData.getLiftBottom()) {
+                return true;
+            }
             if (liftSubsystem.getPotentiometerValue() <= lowerValue) {
                 return true;
-            } else if (!IO.bottomLimitSwitch.get()) {
+            } else if (!liftSubsystem.getBottomSwitch()) {
                 return true;
             } else {
                 return false;
@@ -96,23 +79,17 @@ public class Lower extends CommandBase {
     }
 
     /**
-     * Turns off the motor when the command ends
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void end() {
         LOG.catchAll(()-> {
-            LiftSubsystem.stopScissor();
+            liftSubsystem.stopScissor();
         });
     }
 
     /**
-     * Runs end if the command is interrupted
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void interrupted() {

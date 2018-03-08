@@ -1,6 +1,8 @@
 package org.usd232.robotics.powerup.subsystems;
 
+import org.usd232.robotics.powerup.IO;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 
 /**
  * The subsystem for the Lift
@@ -10,29 +12,98 @@ import edu.wpi.first.wpilibj.Relay;
  * @version 2018
  */
 public class LiftSubsystem extends SubsystemBase {
-    public static StepPositions currentPosition = StepPositions.Bottom;
+    private int counter                  = 0;
+    private int onTime                   = 5;
+    private int offTime                  = 5;
+    /**
+     * Static variable for the amount of things that have been calibrated for the POT
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public int  amountOfThingsCalibrated = 0;
 
     @Override
     protected void initDefaultCommand() {
     }
 
+    /**
+     * Gets the potentiometer value.
+     * 
+     * @return THe potentiometer value.
+     * @since 2018
+     */
     public double getPotentiometerValue() {
         return scissorPotentiometer.get();
     }
-
-    public enum StepPositions {
-        Bottom, Switch, Scale
+    /**
+     * Raises the scissor lift.
+     * 
+     * @since 2018
+     */
+    public void raiseScissor() {
+        liftRelay.set(Relay.Value.kReverse);
     }
-
-    public static void raiseScissor() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kReverse);
+    /**
+     * Lowers the scissor lift.
+     * 
+     * @since 2018
+     */
+    public void lowerScissor() {
+        if (counter % (onTime + offTime) >= offTime) {
+            liftRelay.set(Value.kForward);
+        } else {
+            stopScissor();
+        }
+        counter++;
     }
-
-    public static void lowerScissor() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kForward);
+    /**
+     * Stops the scissor lift.
+     * 
+     * @since 2018
+     */
+    public void stopScissor() {
+        liftRelay.set(Relay.Value.kOff);
+        IO.helpRaiseSolenoid.set(false);
     }
-
-    public static void stopScissor() {
-        LiftSubsystem.liftRelay.set(Relay.Value.kOff);
+    /**
+     * Makes the robot climb up.
+     * 
+     * @since 2018
+     */
+    public void climbUp() {
+        climbRelay.set(Value.kForward);
+    }
+    /**
+     * Makes the robot climb down
+     * 
+     * @since 2018
+     */
+    public void climbDown() {
+        climbRelay.set(Value.kReverse);
+    }
+    /**
+     * Stops the robot from climbing
+     */
+    public void stopClimbing() {
+        climbRelay.set(Value.kOff);
+    }
+    /**
+     * Gets the bottom limit switch.
+     * 
+     * @return the bottom limit switch value
+     * @since 2018
+     */
+    public boolean getBottomSwitch() {
+        return bottomLimitSwitch.get();
+    }
+    /**
+     * Gets the top limit switch.
+     * 
+     * @return the top limit switch value
+     * @since 2018
+     */
+    public boolean getTopLimitSwitch() {
+        return topLimitSwitch.get();
     }
 }

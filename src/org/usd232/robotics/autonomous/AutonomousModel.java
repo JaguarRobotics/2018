@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import edu.wpi.first.wpilibj.DriverStation;
 
@@ -136,7 +135,9 @@ public class AutonomousModel implements IBufferSerializable {
      * @since 2018
      */
     public Collection<AutonomousRoute> getRoutes() {
-        return Collections.unmodifiableList(routes);
+        List<AutonomousRoute> list = new ArrayList<>();
+        list.addAll(routes);
+        return routes;
     }
 
     /**

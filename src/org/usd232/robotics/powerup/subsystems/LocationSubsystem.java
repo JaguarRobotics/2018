@@ -6,14 +6,64 @@ import java.util.List;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.minimap.IMinimapCoordProvider;
 
+/**
+ * Subsystem that we use to track the current location data of the robot.
+ * 
+ * @author Zach
+ * @since 2018
+ */
 public class LocationSubsystem extends SubsystemBase {
+    /**
+     * Stores the variables so that we can reset this and not lose all of the data.
+     * 
+     * @author Zach
+     * @since 2018
+     */
     public class Context implements IMinimapCoordProvider {
+        /**
+         * The X position.
+         * 
+         * @since 2018
+         */
         private double                 x;
+        /**
+         * The Y position.
+         * 
+         * @since 2018
+         */
         private double                 y;
+        /**
+         * The angle of the robot.
+         * 
+         * @since 2018
+         */
         private double                 theta;
+        /**
+         * The angle offset.
+         * 
+         * @since 2018
+         */
         private double                 angleOffset;
+        /**
+         * Reference to this object. ("this" but as a weak reference)
+         * 
+         * @since 2018
+         */
         private WeakReference<Context> ref;
 
+        /**
+         * Updates the values of the robots location.
+         * 
+         * @param ds1
+         *            Change in arc length one.
+         * @param ds2
+         *            Change in arc length two.
+         * @param dtheta
+         *            The change in theta.
+         * @param theta
+         *            The theta of the robot
+         * @since 2018
+         */
         private void updateValues(double ds1, double ds2, double dtheta, double theta) {
             theta -= angleOffset;
             this.theta = theta;
@@ -33,27 +83,55 @@ public class LocationSubsystem extends SubsystemBase {
             y += xPart * sin + yPart * cos;
         }
 
+        /**
+         * Gets the X of the robot.
+         * 
+         * @since 2018
+         */
         public double getX() {
             return x;
         }
 
+        /**
+         * Gets the Y of the robot.
+         * 
+         * @since 2018
+         */
         public double getY() {
             return y;
         }
 
+        /**
+         * Gets the angle of the robot.
+         * 
+         * @since 2018
+         */
         public double getAngle() {
             return theta;
         }
 
+        /**
+         * Gets the speed of the robot.
+         * 
+         * @since 2018
+         */
         public double getSpeed() {
             return speed;
         }
 
+        /**
+         * {inheritDoc}
+         */
         @Override
         protected void finalize() throws Throwable {
             contexts.remove(ref);
         }
 
+        /**
+         * Constructor
+         * 
+         * @since 2018
+         */
         public Context() {
             ref = new WeakReference<Context>(this);
             contexts.add(ref);
@@ -61,19 +139,84 @@ public class LocationSubsystem extends SubsystemBase {
         }
     }
 
+    /**
+     * The logger of the robot.
+     * 
+     * @since 2018
+     */
     private static final Logger          LOG             = new Logger();
+    /**
+     * The width of the robot.
+     * 
+     * @since 2018
+     */
     private static final double          WIDTH           = 18;
+    /**
+     * The center of the mass.
+     * 
+     * @since 2018
+     */
     private static final double          CENTER_OF_MASS  = 0.5;
+    /**
+     * Amount of inches we used to figure out amount of ticks per pulse
+     * 
+     * @since 2018
+     */
     private static final double          TEST_INCHES     = 146;
+    /**
+     * Amount of ticks we used to figure out amount of ticks per pulse
+     * 
+     * @since 2018
+     */
     private static final double          TEST_TICKS      = 2961;
+    /**
+     * The amount of ticks per pulse.
+     * 
+     * @since 2018
+     */
     private static final double          TICKS_PER_PULSE = 1;
+    /**
+     * The last arc length #1.
+     * 
+     * @since 2018
+     */
     private double                       lastS1;
+    /**
+     * The last arc length #2.
+     * 
+     * @since 2018
+     */
     private double                       lastS2;
+    /**
+     * The last angle of the robot.
+     * 
+     * @since 2018
+     */
     private double                       lastTheta;
+    /**
+     * The last time of the robot.
+     * 
+     * @since 2018
+     */
     private long                         lastTime;
+    /**
+     * The speed of the robot
+     * 
+     * @since 2018
+     */
     private double                       speed;
+    /**
+     * A list of the references of the robot.
+     * 
+     * @since 2018
+     */
     private List<WeakReference<Context>> contexts;
 
+    /**
+     * Its the constructor -.-
+     * 
+     * @since 2018
+     */
     public LocationSubsystem() {
         contexts = new LinkedList<WeakReference<Context>>();
         reset();
@@ -83,6 +226,11 @@ public class LocationSubsystem extends SubsystemBase {
     protected void initDefaultCommand() {
     }
 
+    /**
+     * Resets the subsystem
+     * 
+     * @since 2018
+     */
     public void reset() {
         LOG.warn("Resetting LocationSubsystem");
         leftDriveEncoder.setDistancePerPulse(TICKS_PER_PULSE * TEST_INCHES / TEST_TICKS);
@@ -92,6 +240,11 @@ public class LocationSubsystem extends SubsystemBase {
         lastTime = System.currentTimeMillis();
     }
 
+    /**
+     * Updates the values of the drive subsystem.
+     * 
+     * @since 2018
+     */
     @SuppressWarnings("unchecked")
     public void updateValues() {
         double s1 = leftDriveEncoder.getDistance();

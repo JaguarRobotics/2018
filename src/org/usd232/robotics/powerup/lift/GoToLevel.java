@@ -4,7 +4,7 @@ import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 
 /**
- * The command to lower the lift to a specific step
+ * The command to take the lift to a specific step.
  * 
  * @author Brian
  * @since 2018
@@ -12,17 +12,29 @@ import org.usd232.robotics.powerup.log.Logger;
  */
 public class GoToLevel extends CommandBase {
     /**
-     * The Logger
+     * The Logger.
      * 
      * @since 2018
      * @version 2018
      */
     private static final Logger LOG = new Logger();
+    /**
+     * The target potentiometer value to go to on the robot.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private double              targetPotentiometerValue;
+    /**
+     * The command that the robot runs based on where the robot is.
+     * 
+     * @since 2018
+     * @version 2018
+     */
     private CommandBase         command;
 
     /**
-     * Lowers the lift of the robot to specified potentiometer value
+     * Takes the lift of the robot to specified potentiometer value
      * 
      * @param lowerValue
      *            the value the robot the lift to
@@ -34,10 +46,7 @@ public class GoToLevel extends CommandBase {
     }
 
     /**
-     * What happens on initialize, does nothing
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void initialize() {
@@ -56,10 +65,7 @@ public class GoToLevel extends CommandBase {
     }
 
     /**
-     * What happens while the command is running, moves the motor
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void execute() {
@@ -69,11 +75,7 @@ public class GoToLevel extends CommandBase {
     }
 
     /**
-     * Checks if the potentiometer value has reached the target value
-     * 
-     * @return true if potentiometer value is lower than or equal to targetValue
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected boolean isFinished() {
@@ -87,10 +89,7 @@ public class GoToLevel extends CommandBase {
     }
 
     /**
-     * Turns off the motor when the command ends
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void end() {
@@ -101,10 +100,7 @@ public class GoToLevel extends CommandBase {
     }
 
     /**
-     * Runs end if the command is interrupted
-     * 
-     * @since 2018
-     * @version 2018
+     * {@inheritDoc}
      */
     @Override
     protected void interrupted() {

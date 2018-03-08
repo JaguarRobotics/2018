@@ -5,7 +5,7 @@ import org.usd232.robotics.powerup.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The base class for all of the subsystems
+ * This is the base class for all of the subsystems.
  * 
  * @author Zach Deibert
  * @since 2017
