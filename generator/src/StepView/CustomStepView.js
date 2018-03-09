@@ -26,6 +26,9 @@ export default class CustomStepView extends React.Component {
         if (config.customCommands[this.props.step.arg.id].data && config.customCommands[this.props.step.arg.id].data.type) {
             switch (config.customCommands[this.props.step.arg.id].data.type) {
                 case "select":
+                    if (!this.props.step.arg.data) {
+                        this.props.step.arg.data = config.customCommands[this.props.step.arg.id].data.values[0];
+                    }
                     args = (
                         <div>
                             <label className="label">
