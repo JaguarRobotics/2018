@@ -1,0 +1,65 @@
+.sidebar {
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    margin-left: -320px;
+    transition: margin-left 0.25s;
+}
+.sidebar.active {
+    margin-left: 0;
+}
+.sidebar .container, .sidebar .resize {
+    background-color: #EFEFEF;
+    display: inline-block;
+}
+.sidebar .container {
+    position: absolute;
+    width: 320px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar .resize {
+    position: absolute;
+    left: 320px;
+    top: 0;
+    width: 48px;
+    height: 48px;
+    border-left: 1px solid #AFAFAF;
+}
+.sidebar .container label {
+    flex-grow: 0;
+}
+.sidebar .container .step-container {
+    background: #FFFFFF;
+    margin: 10px;
+    flex-grow: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid #AFAFAF;
+}
+.sidebar .container .step-container .steps {
+    min-height: 100%;
+}
+.sidebar .trashcan {
+    position: absolute;
+    z-index: 1;
+    right: 20px;
+    bottom: 20px;
+    border-radius: 10px;
+}
+.sidebar .trashcan-1 {
+    background-color: #EFEFEF;
+}
+.sidebar .trashcan-2 {
+    background-color: #7F0000;
+}
+.sidebar .trashcan img {
+    display: none;
+}
+.sidebar .trashcan-1 .delete {
+    display: block;
+}
+.sidebar .trashcan-2 .really-delete {
+    display: block;
+}

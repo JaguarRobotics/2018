@@ -20,6 +20,7 @@ import ZoomInWhite from "./images/ic_zoom_in_white_24dp_2x.png";
 import ZoomOutBlack from "./images/ic_zoom_out_black_24dp_2x.png";
 import ZoomOutWhite from "./images/ic_zoom_out_white_24dp_2x.png";
 import "./Toolbar.css";
+import AutonomousStep from "./AutonomousStep";
 
 const ZOOM_FACTOR = 1.1;
 
@@ -54,6 +55,24 @@ export default class Toolbar extends React.Component {
                 this.props.transform.scaleY /= ZOOM_FACTOR;
                 this.props.transform.fireUpdate();
                 setTimeout(this.handleClick.bind(this, 0), 100);
+                break;
+            case Toolbar.TOOLS.Sleep:
+                if (this.props.routes.selected && this.props.routes.selected.selectedVersion) {
+                    const step = new AutonomousStep(AutonomousStep.Type.Sleep, 1000);
+                    const steps = this.props.routes.selected.selectedVersion.steps;
+                    if (this.props.routes.selected.selectedVersion.selectedStep) {
+                        const i = steps.indexOf(this.props.routes.selected.selectedVersion.selectedStep);
+                        this.props.routes.selected.selectedVersion.steps = steps.slice(0, i);
+                        this.props.routes.selected.selectedVersion.steps.push(step);
+                        this.props.routes.selected.selectedVersion.steps.push(...steps.slice(i));
+                    } else {
+                        steps.push(step);
+                    }
+                    this.props.routes.fireUpdate();
+                    setTimeout(this.handleClick.bind(this, 0), 100);
+                } else {
+                    tool = 0;
+                }
                 break;
             default:
                 break;

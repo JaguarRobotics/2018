@@ -10,6 +10,10 @@ body {
     flex-direction: column;
     height: 100vh;
 }
+.app-main {
+    display: flex;
+    height: 100%;
+}
 .app-flex-static {
     flex-grow: 0;
 }

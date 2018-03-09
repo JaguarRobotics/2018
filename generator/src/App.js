@@ -1,6 +1,7 @@
 import React from "react";
 import ControlBar from "./ControlBar";
 import Toolbar from "./Toolbar";
+import Sidebar from "./Sidebar";
 import FieldView from "./FieldView";
 import ViewTransformation from "./ViewTransformation";
 import RouteCollection from "./RouteCollection";
@@ -30,12 +31,19 @@ export default class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <div className="app-flex-static">
+                <div className="app-flex-static app-top">
                     <ControlBar routes={this.routes} />
                     <Toolbar transform={this.transform} routes={this.routes} />
                 </div>
                 <div className="app-flex-grow">
-                    <FieldView transform={this.transform} routes={this.routes} />
+                    <div className="app-main">
+                        <div className="app-flex-static">
+                            <Sidebar routes={this.routes} />
+                        </div>
+                        <div className="app-flex-grow">
+                            <FieldView transform={this.transform} routes={this.routes} />
+                        </div>
+                    </div>
                 </div>
             </div>
         );

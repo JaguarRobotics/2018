@@ -3,6 +3,7 @@
     height: 50px;
     background-color: #EFEFEF;
     display: flex;
+    border-bottom: 1px solid #AFAFAF;
 }
 .toolbar .tools {
     flex-grow: 0;

@@ -5,11 +5,12 @@ export default class AutonomousVersion {
         this.match = match;
         if (clone) {
             this.supports = clone.supports.slice(0);
-            this.steps = clone.steps.map(step => new AutonomousStep(step));
+            this.steps = clone.steps.map(step => new AutonomousStep(null, null, step));
         } else {
             this.supports = [];
             this.steps = [];
         }
+        this.selectedStep = null;
     }
 
     toPlainObject() {

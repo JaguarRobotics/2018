@@ -145,7 +145,7 @@ export default class ControlBar extends React.Component {
                                 {version}
                             </option>
                         ))).concat(
-                            <option value={-2}>+ Add</option>
+                            <option value={-2} key="add">+ Add</option>
                         )}
                     </select>
                 </div>

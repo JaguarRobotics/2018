@@ -1,20 +1,25 @@
 export default class AutonomousStep {
-    constructor(clone = null) {
+    constructor(type, arg, clone = null) {
         if (clone) {
-
+            this.type = clone.type;
+            this.arg = JSON.parse(JSON.stringify(clone.arg));
         } else {
-
+            this.type = type;
+            this.arg = arg;
         }
     }
 
     toPlainObject() {
         return {
-
+            "type": this.type,
+            "arg": this.arg
         };
     }
 }
 
-AutonomousStep.SLEEP = 1;
-AutonomousStep.LINE = 2;
-AutonomousStep.ROTATE = 3;
-AutonomousStep.CUSTOM = 4;
+AutonomousStep.Type = {
+    "Sleep": 1,
+    "Line": 2,
+    "Rotate": 3,
+    "Custom": 4
+};
