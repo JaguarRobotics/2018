@@ -1,6 +1,10 @@
 import React from "react";
 import AutonomousStep from "./AutonomousStep";
 import SleepStepView from "./StepView/SleepStepView";
+import LineStepView from "./StepView/LineStepView";
+import RotateStepView from "./StepView/RotateStepView";
+import CustomStepView from "./StepView/CustomStepView";
+import config from "./game/config.json";
 import "./StepView.css";
 
 export default class StepView extends React.Component {
@@ -13,16 +17,16 @@ export default class StepView extends React.Component {
                 body = <SleepStepView step={this.props.step} routes={this.props.routes} />;
                 break;
             case AutonomousStep.Type.Line:
-                title = `Drive forward for ${this.props.step.arg} in`;
-                body = null;
+                title = `Drive ${this.props.step.arg >= 0 ? "forward" : "backward"} for ${Math.abs(this.props.step.arg)} in.`;
+                body = <LineStepView step={this.props.step} routes={this.props.routes} />;
                 break;
             case AutonomousStep.Type.Rotate:
-                title = `Turn ${this.props.step.arg} deg`;
-                body = null;
+                title = `Turn ${Math.abs(this.props.step.arg)}\u00b0 ${this.props.step.arg >= 0 ? "left" : "right"}`;
+                body = <RotateStepView step={this.props.step} routes={this.props.routes} />;
                 break;
             case AutonomousStep.Type.Custom:
-                title = `Custom step`;
-                body = null;
+                title = `${config.customCommands.find(cmd => cmd.id === this.props.step.arg.id).name}`;
+                body = <CustomStepView step={this.props.step} routes={this.props.routes} />;
                 break;
             default:
                 title = null;

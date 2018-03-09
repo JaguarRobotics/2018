@@ -19,6 +19,7 @@ import ZoomInBlack from "./images/ic_zoom_in_black_24dp_2x.png";
 import ZoomInWhite from "./images/ic_zoom_in_white_24dp_2x.png";
 import ZoomOutBlack from "./images/ic_zoom_out_black_24dp_2x.png";
 import ZoomOutWhite from "./images/ic_zoom_out_white_24dp_2x.png";
+import config from "./game/config.json";
 import "./Toolbar.css";
 import AutonomousStep from "./AutonomousStep";
 
@@ -30,6 +31,19 @@ export default class Toolbar extends React.Component {
         this.state = {
             "selectedTool": 0
         };
+    }
+
+    addStep(step) {
+        const steps = this.props.routes.selected.selectedVersion.steps;
+        if (this.props.routes.selected.selectedVersion.selectedStep) {
+            const i = steps.indexOf(this.props.routes.selected.selectedVersion.selectedStep);
+            this.props.routes.selected.selectedVersion.steps = steps.slice(0, i);
+            this.props.routes.selected.selectedVersion.steps.push(step);
+            this.props.routes.selected.selectedVersion.steps.push(...steps.slice(i));
+        } else {
+            steps.push(step);
+        }
+        this.props.routes.fireUpdate();
     }
 
     handleClick(tool) {
@@ -58,17 +72,33 @@ export default class Toolbar extends React.Component {
                 break;
             case Toolbar.TOOLS.Sleep:
                 if (this.props.routes.selected && this.props.routes.selected.selectedVersion) {
-                    const step = new AutonomousStep(AutonomousStep.Type.Sleep, 1000);
-                    const steps = this.props.routes.selected.selectedVersion.steps;
-                    if (this.props.routes.selected.selectedVersion.selectedStep) {
-                        const i = steps.indexOf(this.props.routes.selected.selectedVersion.selectedStep);
-                        this.props.routes.selected.selectedVersion.steps = steps.slice(0, i);
-                        this.props.routes.selected.selectedVersion.steps.push(step);
-                        this.props.routes.selected.selectedVersion.steps.push(...steps.slice(i));
-                    } else {
-                        steps.push(step);
-                    }
-                    this.props.routes.fireUpdate();
+                    this.addStep(new AutonomousStep(AutonomousStep.Type.Sleep, 1000));
+                    setTimeout(this.handleClick.bind(this, 0), 100);
+                } else {
+                    tool = 0;
+                }
+                break;
+            case Toolbar.TOOLS.Line:
+                if (this.props.routes.selected && this.props.routes.selected.selectedVersion) {
+                    this.addStep(new AutonomousStep(AutonomousStep.Type.Line, 12));
+                    setTimeout(this.handleClick.bind(this, 0), 100);
+                } else {
+                    tool = 0;
+                }
+                break;
+            case Toolbar.TOOLS.Rotate:
+                if (this.props.routes.selected && this.props.routes.selected.selectedVersion) {
+                    this.addStep(new AutonomousStep(AutonomousStep.Type.Rotate, 90));
+                    setTimeout(this.handleClick.bind(this, 0), 100);
+                } else {
+                    tool = 0;
+                }
+                break;
+            case Toolbar.TOOLS.Custom:
+                if (this.props.routes.selected && this.props.routes.selected.selectedVersion) {
+                    this.addStep(new AutonomousStep(AutonomousStep.Type.Custom, {
+                        "id": config.customCommands[0].id
+                    }));
                     setTimeout(this.handleClick.bind(this, 0), 100);
                 } else {
                     tool = 0;

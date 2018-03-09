@@ -27,7 +27,7 @@
             "name": "Go To ...",
             "id": 4,
             "data": {
-                "type": "enum",
+                "type": "select",
                 "name": "Level",
                 "values": [
                     "scale",
@@ -40,16 +40,18 @@
             "name": "Lower",
             "id": 5,
             "data": {
-                "type": "double",
-                "name": "Pot Value"
+                "type": "number",
+                "name": "Pot Value",
+                "unit": ""
             }
         },
         {
             "name": "Raise",
             "id": 6,
             "data": {
-                "type": "double",
-                "name": "Pot Value"
+                "type": "number",
+                "name": "Pot Value",
+                "unit": ""
             }
         }
     ]

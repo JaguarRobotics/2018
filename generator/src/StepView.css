@@ -28,6 +28,9 @@
 .step input {
     flex-grow: 1;
 }
+.step select {
+    width: 100%;
+}
 .step .unit {
     flex-grow: 0;
     margin-left: 10px;
