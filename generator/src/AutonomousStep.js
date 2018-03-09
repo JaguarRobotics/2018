@@ -43,7 +43,7 @@ export default class AutonomousStep {
                     } else {
                         str = proto.data;
                     }
-                    ser.putShort(proto.data.length);
+                    ser.putShort(str.length);
                     for (let i = 0; i < str.length; ++i) {
                         ser.put(str.charCodeAt(i));
                     }
