@@ -86,7 +86,7 @@ public interface RobotMap {
      * @since 2018
      * @version 2018
      */
-    public static final int     WINCH_MOTOR_PORT           = 2;
+    public static final int     WINCH_MOTOR_PORT           = 3;
     // Gyro and Potentiometer
     /**
      * The port for the potentiometer.
