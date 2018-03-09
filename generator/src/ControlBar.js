@@ -17,15 +17,16 @@ export default class ControlBar extends React.Component {
             case this.matchSelect:
                 switch (value) {
                     case -2:
-                        const str = prompt("Please enter a match name:");
-                        if (str) {
-                            this.props.routes.selected = this.props.routes.addMatch(str);
-                            this.setState({
-                                "matchValue": this.props.routes.getMatchNames().indexOf(str),
-                                "versionValue": -1
-                            });
-                            this.props.routes.fireUpdate();
-                        }
+                        this.props.prompt("Please enter a match name:", str => {
+                            if (str) {
+                                this.props.routes.selected = this.props.routes.addMatch(str);
+                                this.setState({
+                                    "matchValue": this.props.routes.getMatchNames().indexOf(str),
+                                    "versionValue": -1
+                                });
+                                this.props.routes.fireUpdate();
+                            }
+                        });
                         break;
                     case -3:
                         this.props.routes.removeMatch(this.props.routes.getMatchNames()[this.state.matchValue]);
@@ -75,11 +76,12 @@ export default class ControlBar extends React.Component {
             case this.dataSelect:
                 switch (value) {
                     case -2:
-                        const str = prompt("Please the supported game data:");
-                        if (str) {
-                            this.props.routes.selected.selectedVersion.supports.push(str);
-                            this.props.routes.fireUpdate();
-                        }
+                        this.props.prompt("Please enter the supported game data:", str => {
+                            if (str) {
+                                this.props.routes.selected.selectedVersion.supports.push(str);
+                                this.props.routes.fireUpdate();
+                            }
+                        });
                         break;
                     default:
                         this.props.routes.selected.selectedVersion.supports.splice(value, 1);
