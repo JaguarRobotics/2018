@@ -19,6 +19,7 @@ export default class CustomStepView extends React.Component {
 
     handleChangeRaw(ev) {
         this.props.step.arg.data = ev.target.value;
+        this.props.routes.fireUpdate();
     }
 
     render() {
@@ -27,7 +28,10 @@ export default class CustomStepView extends React.Component {
             switch (config.customCommands[this.props.step.arg.id].data.type) {
                 case "select":
                     if (!this.props.step.arg.data) {
-                        this.props.step.arg.data = config.customCommands[this.props.step.arg.id].data.values[0];
+                        setTimeout(() => {
+                            this.props.step.arg.data = config.customCommands[this.props.step.arg.id].data.values[0];
+                            this.props.routes.fireUpdate();
+                        });
                     }
                     args = (
                         <div>
