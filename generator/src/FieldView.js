@@ -1,5 +1,6 @@
 import React from "react";
 import Toolbar from "./Toolbar";
+import Robot from "./Robot";
 import field from "./game/field.png";
 import "./FieldView.css";
 
@@ -9,6 +10,7 @@ export default class FieldView extends React.Component {
         this.handleDragStart = this.handleDragStart.bind(this);
         this.handleDragOver = this.handleDragOver.bind(this);
         this.handleDrop = this.handleDrop.bind(this);
+        this.dragFunc = null;
     }
 
     reset() {
@@ -41,22 +43,24 @@ export default class FieldView extends React.Component {
         this.props.transform.onReset = null;
     }
 
-    handleDragStart(ev) {
+    handleDragStart(ev, func) {
+        ev.dataTransfer.setData("text", "");
+        this.dragFunc = null;
         switch (this.props.transform.tool) {
             case Toolbar.TOOLS.Move:
                 this.lastX = ev.clientX;
                 this.lastY = ev.clientY;
-                ev.dataTransfer.setData("text", "");
                 break;
             default:
+                this.dragFunc = func;
                 break;
         }
     }
 
     handleDragOver(ev) {
+        ev.preventDefault();
         switch (this.props.transform.tool) {
             case Toolbar.TOOLS.Move:
-                ev.preventDefault();
                 const dx = ev.clientX - this.lastX;
                 const dy = ev.clientY - this.lastY;
                 this.lastX = ev.clientX;
@@ -66,18 +70,15 @@ export default class FieldView extends React.Component {
                 this.props.transform.fireUpdate();
                 break;
             default:
+                if (this.dragFunc) {
+                    this.dragFunc(ev);
+                }
                 break;
         }
     }
 
     handleDrop(ev) {
-        switch (this.props.transform.tool) {
-            case Toolbar.TOOLS.Move:
-                ev.preventDefault();
-                break;
-            default:
-                break;
-        }
+        ev.preventDefault();
     }
 
     render() {
@@ -94,6 +95,10 @@ export default class FieldView extends React.Component {
                          "height": `${this.props.transform.scaleY}px`,
                          "transform": `rotate(-${this.props.transform.rotation}deg)`
                      }}>
+                    <Robot routes={this.props.routes}
+                           fieldWidth={this.props.transform.scaleX}
+                           fieldHeight={this.props.transform.scaleY}
+                           onDragStart={this.handleDragStart} />
                     <div className="cover"
                          onDragStart={this.handleDragStart}
                          draggable />

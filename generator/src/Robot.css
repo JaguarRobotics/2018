@@ -1,0 +1,8 @@
+.robot {
+    background-color: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    z-index: 2;
+    border-color: #FFFFFF;
+    border-style: solid;
+    box-sizing: content-box;
+}
