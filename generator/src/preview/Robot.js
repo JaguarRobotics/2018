@@ -8,6 +8,7 @@ export default class Robot extends React.Component {
         super(props);
         this.handleDragStart = this.handleDragStart.bind(this);
         this.handleDragOver = this.handleDragOver.bind(this);
+        this.handleDoubleClick = this.handleDoubleClick.bind(this);
     }
 
     handleDragStart(ev) {
@@ -26,6 +27,11 @@ export default class Robot extends React.Component {
         this.props.routes.fireUpdate();
     }
 
+    handleDoubleClick() {
+        this.props.routes.selected.startAngle = 180 - this.props.routes.selected.startAngle;
+        this.props.routes.fireUpdate();
+    }
+
     render() {
         return this.props.routes.selected ? (
             <div className="robot"
@@ -34,8 +40,10 @@ export default class Robot extends React.Component {
                      "height": `${config.robot.size.frame[1] / config.scale * this.props.fieldWidth}px`,
                      "borderSize": `${config.robot.size.bumpers / config.scale * this.props.fieldWidth}px`,
                      "left": `${this.props.routes.selected.startX / config.scale * this.props.fieldWidth}px`,
-                     "top": `${this.props.routes.selected.startY / config.scale * this.props.fieldWidth}px`
+                     "top": `${this.props.routes.selected.startY / config.scale * this.props.fieldWidth}px`,
+                     "transform": `rotate(${this.props.routes.selected.startAngle}deg)`
                  }}
+                 onDoubleClick={this.handleDoubleClick}
                  onDragStart={this.handleDragStart}
                  draggable>
                 {this.props.routes.selected.selectedVersion && (
