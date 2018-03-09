@@ -9,6 +9,7 @@ public class DriveTurn extends CommandBase {
     private static final Logger       LOG = new Logger();
     private final ISpeedFunction      speedFunc;
     private final double              angle;
+    private final double              sign;
     private LocationSubsystem.Context location;
 
     @Override
@@ -27,7 +28,7 @@ public class DriveTurn extends CommandBase {
         LOG.catchAll(()-> {
             double highSpeed = speedFunc.calculateSpeed(location.getAngle() / angle);
             LOG.debug("Turning to %f (currently at %f)", angle, location.getAngle());
-            driveSubsystem.driveTank(highSpeed, -highSpeed);
+            driveSubsystem.driveTank(sign * highSpeed, sign * -highSpeed);
         });
     }
 
@@ -63,6 +64,8 @@ public class DriveTurn extends CommandBase {
     public DriveTurn(ISpeedFunction speedFunc, double angle) {
         requires(driveSubsystem);
         this.speedFunc = speedFunc;
-        this.angle = angle + Math.PI / 2;
+        angle += Math.PI / 2;
+        sign = Math.signum(angle);
+        this.angle = Math.abs(angle);
     }
 }

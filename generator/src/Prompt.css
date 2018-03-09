@@ -1,0 +1,39 @@
+.prompt {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+}
+.prompt .container {
+    position: fixed;
+    width: 320px;
+    left: 50%;
+    margin-left: -160px;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.prompt .padding {
+    flex-grow: 1;
+}
+.prompt .box {
+    background-color: #EFEFEF;
+    flex-grow: 0;
+    box-shadow: 0 0 20px 2px #000000;
+    padding: 10px;
+}
+.prompt input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+.prompt .btns {
+    width: 100%;
+    display: flex;
+}
+.prompt .btns input, .prompt .btns button {
+    flex-grow: 0;
+}

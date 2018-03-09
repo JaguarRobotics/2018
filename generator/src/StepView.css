@@ -1,0 +1,38 @@
+.step {
+    padding: 5px;
+    border-bottom: 1px solid #AFAFAF;
+}
+.step .title {
+    font-weight: bold;
+}
+.step:hover {
+    background-color: #EFEFEF;
+}
+.step.active .title {
+    font-style: italic;
+}
+.step .body {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.5s;
+}
+.step.active .body {
+    height: auto;
+}
+.step .label {
+    font-size: 0.75em;
+}
+.step .input {
+    display: flex;
+}
+.step input {
+    flex-grow: 1;
+}
+.step select {
+    width: 100%;
+}
+.step .unit {
+    flex-grow: 0;
+    margin-left: 10px;
+    line-height: 29px;
+}

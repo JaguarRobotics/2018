@@ -1,0 +1,19 @@
+.control-bar {
+    background-color: #EFEFEF;
+    height: 50px;
+    width: 100vw;
+    display: flex;
+}
+.control-bar .controls {
+    flex-grow: 0;
+}
+.control-bar .padding {
+    flex-grow: 1;
+}
+.control-bar label {
+    font-size: 0.75em;
+    display: block;
+}
+.control-bar select {
+    width: 200px;
+}

@@ -1,0 +1,60 @@
+{
+    "year": 2018,
+    "scale": 470,
+    "team": 1810,
+    "robot": {
+        "size": {
+            "frame": [ 24.5, 22.5 ],
+            "bumpers": 4
+        }
+    },
+    "customCommands": [
+        {
+            "name": "Drop Cube",
+            "id": 0
+        },
+        {
+            "name": "Grab Cube",
+            "id": 1
+        },
+        {
+            "name": "Lower Intake",
+            "id": 2
+        },
+        {
+            "name": "Raise Intake",
+            "id": 3
+        },
+        {
+            "name": "Go To ...",
+            "id": 4,
+            "data": {
+                "type": "select",
+                "name": "Level",
+                "values": [
+                    "scale",
+                    "switch",
+                    "bottom"
+                ]
+            }
+        },
+        {
+            "name": "Lower",
+            "id": 5,
+            "data": {
+                "type": "number",
+                "name": "Pot Value",
+                "unit": ""
+            }
+        },
+        {
+            "name": "Raise",
+            "id": 6,
+            "data": {
+                "type": "number",
+                "name": "Pot Value",
+                "unit": ""
+            }
+        }
+    ]
+}
