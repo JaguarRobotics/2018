@@ -14,7 +14,6 @@ export default class ByteBuffer {
     }
 
     putShort(value) {
-        console.log(value);
         this.view.setInt16(this.off, value, false);
         this.off += 2;
     }
