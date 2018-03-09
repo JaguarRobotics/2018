@@ -11,6 +11,7 @@ public class DriveForward extends CommandBase {
     private final double              correctionPerInch;
     private final ISpeedFunction      speedFunc;
     private final double              maxAngle;
+    private final double              sign;
     private LocationSubsystem.Context location;
 
     @Override
@@ -30,13 +31,13 @@ public class DriveForward extends CommandBase {
             if (x == 0 || (Math.abs(location.getAngle() - Math.PI / 2) > maxAngle)
                             && Math.signum(x) == Math.signum(location.getAngle() - Math.PI / 2)) {
                 LOG.debug("Therefore, the tank speeds are (%f, %f)", highSpeed, highSpeed);
-                driveSubsystem.driveTank(highSpeed, highSpeed);
+                driveSubsystem.driveTank(sign * highSpeed, sign * highSpeed);
             } else if (x < 0) {
                 LOG.debug("Therefore, the tank speeds are (%f, %f)", highSpeed + x * correctionPerInch, highSpeed);
-                driveSubsystem.driveTank(highSpeed + x * correctionPerInch, highSpeed);
+                driveSubsystem.driveTank(sign * (highSpeed + x * correctionPerInch), sign * highSpeed);
             } else {
                 LOG.debug("Therefore, the tank speeds are (%f, %f)", highSpeed, highSpeed - x * correctionPerInch);
-                driveSubsystem.driveTank(highSpeed, highSpeed - x * correctionPerInch);
+                driveSubsystem.driveTank(sign * highSpeed, sign * (highSpeed - x * correctionPerInch));
             }
         });
     }
@@ -44,7 +45,7 @@ public class DriveForward extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
-            return location.getY() >= inches;
+            return sign * location.getY() >= inches;
         }, true);
     }
 
@@ -60,7 +61,8 @@ public class DriveForward extends CommandBase {
         requires(driveSubsystem);
         location = locationSubsystem.new Context();
         this.speedFunc = speedFunc;
-        this.inches = inches;
+        this.sign = Math.signum(inches);
+        this.inches = Math.abs(inches);
         this.correctionPerInch = correctionPerInch;
         this.maxAngle = maxAngle;
     }
