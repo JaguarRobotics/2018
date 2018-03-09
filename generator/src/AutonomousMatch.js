@@ -4,8 +4,8 @@ export default class AutonomousMatch {
     constructor(routes, clone = null) {
         this.routes = routes;
         if (clone) {
-            this.startX = 0;
-            this.startY = 0;
+            this.startX = clone.startX;
+            this.startY = clone.startY;
             this.versions = clone.versions.map(version => new AutonomousVersion(this, version));
         } else {
             this.startX = 0;
