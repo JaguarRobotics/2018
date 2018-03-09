@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
@@ -77,8 +78,8 @@ public interface IO extends RobotMap {
      * @since 2018
      * @version 2018
      */
-    public static final SpeedController           climbMotor             = DO_NOT_USE_THIS_LOGGER
-                    .catchAll(()->IOFactory.motor(WINCH_MOTOR_PORT, WINCH_MOTOR_TYPE));
+    public static final Victor           climbMotor             = DO_NOT_USE_THIS_LOGGER
+                    .catchAll(()-> new Victor(WINCH_MOTOR_PORT));
     /**
      * The relay for the scissor lift.
      * 
