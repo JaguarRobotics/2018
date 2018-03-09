@@ -1,5 +1,6 @@
 import React from "react";
-import config from "./game/config.json";
+import Step from "./Step";
+import config from "../game/config.json";
 import "./Robot.css";
 
 export default class Robot extends React.Component {
@@ -36,7 +37,15 @@ export default class Robot extends React.Component {
                      "top": `${this.props.routes.selected.startY / config.scale * this.props.fieldWidth}px`
                  }}
                  onDragStart={this.handleDragStart}
-                 draggable />
+                 draggable>
+                {this.props.routes.selected.selectedVersion && (
+                    <Step routes={this.props.routes}
+                        steps={this.props.routes.selected.selectedVersion.steps}
+                        i={0}
+                        fieldWidth={this.props.fieldWidth}
+                        fieldHeight={this.props.fieldHeight} />
+                )}
+            </div>
         ) : (
             <div />
         );

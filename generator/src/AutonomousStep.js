@@ -39,7 +39,7 @@ export default class AutonomousStep {
                 if (proto.data) {
                     let str;
                     if (proto.data.type) {
-                        str = this.arg.data;
+                        str = this.arg.data || "";
                     } else {
                         str = proto.data;
                     }

@@ -1,6 +1,6 @@
 import React from "react";
 import Toolbar from "./Toolbar";
-import Robot from "./Robot";
+import Robot from "./preview/Robot";
 import field from "./game/field.png";
 import "./FieldView.css";
 

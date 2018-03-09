@@ -5,7 +5,7 @@
     "robot": {
         "size": {
             "frame": [ 24.5, 22.5 ],
-            "bumbers": 4
+            "bumpers": 4
         }
     },
     "customCommands": [

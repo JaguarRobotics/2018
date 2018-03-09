@@ -6,3 +6,12 @@
     border-style: solid;
     box-sizing: content-box;
 }
+.robot * {
+    position: absolute;
+    display: inline-block;
+    top: 0;
+}
+.robot > * {
+    left: 50%;
+    top: 50%;
+}

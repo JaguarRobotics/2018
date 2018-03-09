@@ -27,7 +27,7 @@ export default class RotateStepView extends React.Component {
                 <label className="label">Angle:</label>
                 <div className="input">
                     <input type="number" value={Math.abs(this.props.step.arg)} onChange={this.handleAngleChange} />
-                    <label className="unit">in.</label>
+                    <label className="unit">&deg;</label>
                 </div>
                 <label className="label">Direction:</label>
                 <select value={this.sign(this.props.step.arg)} onChange={this.handleDirectionChange}>

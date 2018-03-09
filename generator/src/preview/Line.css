@@ -1,0 +1,5 @@
+.line {
+    height: 0;
+    border: 1px solid #FF0000;
+    margin-top: -1px;
+}
