@@ -72,7 +72,7 @@ public class LiftSubsystem extends SubsystemBase {
      * @since 2018
      */
     public void climbUp() {
-        climbRelay.set(Value.kForward);
+        climbMotor.set(1);
     }
     /**
      * Makes the robot climb down
@@ -80,13 +80,13 @@ public class LiftSubsystem extends SubsystemBase {
      * @since 2018
      */
     public void climbDown() {
-        climbRelay.set(Value.kReverse);
+    climbMotor.set(-1);
     }
     /**
      * Stops the robot from climbing
      */
     public void stopClimbing() {
-        climbRelay.set(Value.kOff);
+        climbMotor.set(0);
     }
     /**
      * Gets the bottom limit switch.

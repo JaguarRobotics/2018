@@ -74,12 +74,19 @@ public interface RobotMap {
      */
     public static final int     LIFT_RELAY_PORT            = 0;
     /**
-     * The port for the Winch Relay.
+     * The type of the winch motor.
+     * 
+     * @since 2017
+     * @version 2018
+     */
+    public static final MotorID WINCH_MOTOR_TYPE      = MotorID.Victor;
+    /**
+     * The port for the Winch motor.
      * 
      * @since 2018
      * @version 2018
      */
-    public static final int     WINCH_RELAY_PORT           = 1;
+    public static final int     WINCH_MOTOR_PORT           = 2;
     // Gyro and Potentiometer
     /**
      * The port for the potentiometer.

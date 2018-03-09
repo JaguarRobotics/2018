@@ -77,8 +77,8 @@ public interface IO extends RobotMap {
      * @since 2018
      * @version 2018
      */
-    public static final Relay           climbRelay             = DO_NOT_USE_THIS_LOGGER
-                    .catchAll(()->new Relay(WINCH_RELAY_PORT));
+    public static final SpeedController           climbMotor             = DO_NOT_USE_THIS_LOGGER
+                    .catchAll(()->IOFactory.motor(WINCH_MOTOR_PORT, WINCH_MOTOR_TYPE));
     /**
      * The relay for the scissor lift.
      * 
