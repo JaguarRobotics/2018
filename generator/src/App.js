@@ -26,6 +26,11 @@ export default class App extends React.Component {
     handleUpdate() {
         this.forceUpdate();
         localStorage.routes = this.routes.toString();
+        if (window.doSave) {
+            this.routes.getMatchNames().forEach(name => {
+                window.doSave(btoa(name), this.routes.getMatch(name).toSerialString());
+            });
+        }
     }
 
     render() {
