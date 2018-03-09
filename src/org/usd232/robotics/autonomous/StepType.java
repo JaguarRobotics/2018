@@ -26,7 +26,7 @@ public enum StepType {
      * The robot should turn a certain angle.
      * 
      * @see TurnParameter
-     * @sine 2018
+     * @since 2018
      */
     Turn,
     /**
