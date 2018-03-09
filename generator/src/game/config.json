@@ -1,6 +1,7 @@
 {
     "year": 2018,
     "scale": 470,
+    "team": 1810,
     "robot": {
         "size": {
             "frame": [ 24.5, 22.5 ],
