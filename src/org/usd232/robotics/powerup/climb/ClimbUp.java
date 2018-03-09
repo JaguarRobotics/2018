@@ -26,7 +26,6 @@ public class ClimbUp extends CommandBase {
     protected void execute() {
         LOG.catchAll(()-> {
             liftSubsystem.climbUp();
-            liftSubsystem.lowerScissor();
         });
     }
 

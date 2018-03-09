@@ -77,7 +77,7 @@ public class LiftSubsystem extends SubsystemBase {
 	 * @since 2018
 	 */
 	public void climbUp() {
-		
+		climbMotor.set(1);
 	}
 
 	/**
