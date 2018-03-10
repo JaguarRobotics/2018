@@ -38,7 +38,7 @@ public class DriveTurn extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
-            return Math.signum(location.getAngle() - angle) == Math.signum(angle);
+            return sign * Math.signum(location.getAngle() - angle) == Math.signum(angle);
         }, true);
     }
 
