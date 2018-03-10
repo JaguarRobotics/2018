@@ -47,6 +47,7 @@ function startService(host) {
     }).then(() =>
         sftp.mkdir("/home/lvuser/routes", true)
     ).then(() => {
+		console.log(`Connected to ${host}.`);
         let isUpdating = false;
         let updateQueue = {};
         update = (name, value) => {
@@ -76,7 +77,7 @@ electron.ipcMain.on("data", (sender, name, value) => {
     updates.forEach(func => func(name, value));
 });
 
-startService(`10.${config.team / 100}.${config.team % 100}.2`);
+startService(`10.${(config.team - (config.team % 100)) / 100}.${config.team % 100}.2`);
 startService("172.22.11.2");
 startService(`roboRIO-${config.team}-FRC.lan`);
 startService(`roboRIO-${config.team}-FRC.frc-field.local`);
