@@ -21,7 +21,7 @@ export default class StepView extends React.Component {
                 body = <LineStepView step={this.props.step} routes={this.props.routes} />;
                 break;
             case AutonomousStep.Type.Rotate:
-                title = `Turn ${Math.abs(this.props.step.arg)}\u00b0 ${this.props.step.arg >= 0 ? "left" : "right"}`;
+                title = `Turn ${Math.abs(this.props.step.arg)}\u00b0 ${this.props.step.arg >= 0 ? "right" : "left"}`;
                 body = <RotateStepView step={this.props.step} routes={this.props.routes} />;
                 break;
             case AutonomousStep.Type.Custom:
