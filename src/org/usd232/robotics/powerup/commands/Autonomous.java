@@ -116,7 +116,21 @@ public class Autonomous extends CommandGroup {
                             addSequential(new RaiseIntake());
                             break;
                         case 4:
-                            addSequential(new GoToLevel(Robot.calibratorData.getLiftSwitch()));
+                            LOG.debug(String.format("Going to level %s", param.getParameter()));
+                            switch (param.getParameter()) {
+                                case "bottom":
+                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftBottom()));
+                                    break;
+                                case "switch":
+                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftSwitch()));
+                                    break;
+                                case "scale":
+                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftScale()));
+                                    break;
+                                default:
+                                    LOG.error("Unknown level");
+                                    break;
+                            }
                             break;
                         case 5:
                             double lowerD = Double.parseDouble(param.getParameter());
