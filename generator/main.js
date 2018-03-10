@@ -70,6 +70,7 @@ function startService(host) {
             }
         };
         updates.push(update);
+        mainWindow.webContents.send("update");
     }).catch(error);
 }
 

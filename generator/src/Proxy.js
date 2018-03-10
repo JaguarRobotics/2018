@@ -1,19 +1,17 @@
 const debug = false;
 
-let callback;
-
 if (window.electron) {
-    callback = window.electron.ipcRenderer.send.bind(window.electron.ipcRenderer, "data");
+    window.doSave = window.electron.ipcRenderer.send.bind(window.electron.ipcRenderer, "data");
+    window.addUpdateListener = window.electron.ipcRenderer.on.bind(window.electron.ipcRenderer, "update");
 } else {
-    callback = () => {};
+    window.doSave = () => {};
+    window.addUpdateListener = () => {};
 }
 
 if (debug) {
-    const parent = callback;
-    callback = (name, value) => {
+    const parent = window.doSave;
+    window.doSave = (name, value) => {
         console.log(`Saved data - Name: ${name}, Value: ${value}`);
         parent(name, value);
     };
 }
-
-window.doSave = callback;

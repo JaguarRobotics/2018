@@ -21,7 +21,8 @@ export default class App extends React.Component {
             }
         }
         this.routes = new RouteCollection(json);
-        this.routes.onUpdate = this.handleUpdate.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.routes.onUpdate = this.handleUpdate;
         this.state = {
             "prompt": {
                 "message": null,
@@ -30,6 +31,7 @@ export default class App extends React.Component {
             }
         };
         this.handlePrompt = this.handlePrompt.bind(this);
+        window.addUpdateListener(this.handleUpdate);
     }
 
     handleUpdate() {
