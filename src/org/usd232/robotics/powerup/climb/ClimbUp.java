@@ -18,6 +18,20 @@ public class ClimbUp extends CommandBase {
      * @version 2018
      */
     private static final Logger LOG = new Logger();
+    /**
+     * The speed to climb up at.
+     * 
+     * @since 2018
+     */
+    private static double speed = 1;
+    /**
+     * Makes the robot climb up given the value of the trigger.
+     * 
+     * @since 2018
+     */
+    public ClimbUp(double axisValue) {
+    	speed = axisValue;
+    }
 
     /**
      * {@inheritDoc}
@@ -25,7 +39,7 @@ public class ClimbUp extends CommandBase {
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            liftSubsystem.climbUp();
+            liftSubsystem.climbUp(speed);
         });
     }
 

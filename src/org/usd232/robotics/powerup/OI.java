@@ -50,8 +50,8 @@ public class OI extends Trigger implements RobotMap {
             } catch (Exception e) {
                 LOG.info("The POV controls failed to be created");
             }
-            whileGreaterThan(Manipulator, 2, .8, new ClimbDown());
-            whileGreaterThan(Manipulator, 3, .8, new ClimbUp());
+            whileGreaterThan(Manipulator, 2, .8, new ClimbUp(Manipulator.getRawAxis(2)));
+            whileGreaterThan(Manipulator, 3, .8, new ClimbDown(-Manipulator.getRawAxis(3)));
             ManipulatorXbox_Y.whenPressed(new RaiseIntake());
             ManipulatorXbox_A.whenPressed(new LowerIntake());
             ManipulatorXbox_X.whenPressed(new GrabCube());

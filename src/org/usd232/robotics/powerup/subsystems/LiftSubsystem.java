@@ -74,19 +74,21 @@ public class LiftSubsystem extends SubsystemBase {
 	/**
 	 * Makes the robot climb up.
 	 * 
+	 * @param speed The speed to move the motor at
 	 * @since 2018
 	 */
-	public void climbUp() {
-		climbMotor.set(1);
+	public void climbUp(double speed) {
+		climbMotor.set(speed);
 	}
 
 	/**
 	 * Makes the robot climb down
 	 * 
+	 * @param speed The speed to move the motor at
 	 * @since 2018
 	 */
-	public void climbDown() {
-		climbMotor.set(-1);
+	public void climbDown(double speed) {
+		climbMotor.set(speed);
 	}
 
 	/**
