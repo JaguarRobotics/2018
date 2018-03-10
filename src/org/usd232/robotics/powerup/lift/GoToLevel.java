@@ -1,5 +1,7 @@
 package org.usd232.robotics.powerup.lift;
 
+import java.util.function.Supplier;
+
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 
@@ -24,7 +26,7 @@ public class GoToLevel extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    private double              targetPotentiometerValue;
+    private Supplier<Double>              targetPotentiometerValue;
     /**
      * The command that the robot runs based on where the robot is.
      * 
@@ -41,7 +43,7 @@ public class GoToLevel extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    public GoToLevel(double targetValue) {
+    public GoToLevel(Supplier<Double> targetValue) {
         this.targetPotentiometerValue = targetValue;
     }
 
@@ -53,12 +55,12 @@ public class GoToLevel extends CommandBase {
         LOG.catchAll(()-> {
             double currentPotentiometerValue = liftSubsystem.getPotentiometerValue();
             LOG.info("Current Value Of Potentiometer " + currentPotentiometerValue);
-            if (targetPotentiometerValue >= currentPotentiometerValue) {
-                LOG.info("Raising to the height of " + this.targetPotentiometerValue);
-                command = new Raise(targetPotentiometerValue);
-            } else if (targetPotentiometerValue <= currentPotentiometerValue) {
-                LOG.info("Lowering to the height of " + this.targetPotentiometerValue);
-                command = new Lower(targetPotentiometerValue);
+            if (targetPotentiometerValue.get() >= currentPotentiometerValue) {
+                LOG.info("Raising to the height of " + this.targetPotentiometerValue.get());
+                command = new Raise(targetPotentiometerValue.get());
+            } else if (targetPotentiometerValue.get() <= currentPotentiometerValue) {
+                LOG.info("Lowering to the height of " + this.targetPotentiometerValue.get());
+                command = new Lower(targetPotentiometerValue.get());
             }
             command.initializePublic();
         });

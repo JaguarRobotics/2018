@@ -44,8 +44,8 @@ public class OI extends Trigger implements RobotMap {
             ManipulatorXbox_LB.whileHeld(new ManualLower());
             try {
                 whenPovIs(Manipulator, 0, new RaiseToSwitch());
-                whenPovIs(Manipulator, 6, new GoToLevel(Robot.calibratorData.getLiftSwitch()));
-                whenPovIs(Manipulator, 4, new GoToLevel(Robot.calibratorData.getLiftBottom()));
+                whenPovIs(Manipulator, 6, new GoToLevel(()->Robot.calibratorData.getLiftSwitch()));
+                whenPovIs(Manipulator, 4, new GoToLevel(()->Robot.calibratorData.getLiftBottom()));
                 LOG.info("The POV controls were successfuly created");
             } catch (Exception e) {
                 LOG.info("The POV controls failed to be created");

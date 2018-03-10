@@ -119,13 +119,13 @@ public class Autonomous extends CommandGroup {
                             LOG.debug(String.format("Going to level %s", param.getParameter()));
                             switch (param.getParameter()) {
                                 case "bottom":
-                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftBottom()));
+                                    addSequential(new GoToLevel(()->Robot.calibratorData.getLiftBottom()));
                                     break;
                                 case "switch":
-                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftSwitch()));
+                                    addSequential(new GoToLevel(()->Robot.calibratorData.getLiftSwitch()));
                                     break;
                                 case "scale":
-                                    addSequential(new GoToLevel(Robot.calibratorData.getLiftScale()));
+                                    addSequential(new GoToLevel(()->Robot.calibratorData.getLiftScale()));
                                     break;
                                 default:
                                     LOG.error("Unknown level");
