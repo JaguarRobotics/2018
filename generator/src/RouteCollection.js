@@ -33,13 +33,18 @@ export default class RouteCollection {
         }
     }
 
-    addMatch(name) {
-        this.matches[name] = new AutonomousMatch(this);
+    addMatch(name, clone = null) {
+        this.matches[name] = new AutonomousMatch(this, clone);
         return this.matches[name];
     }
 
     removeMatch(name) {
         delete this.matches[name];
+    }
+
+    renameMatch(oldName, newName) {
+        this.matches[newName] = this.matches[oldName];
+        delete this.matches[oldName];
     }
 
     getMatchNames() {
