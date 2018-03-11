@@ -11,7 +11,7 @@ import org.usd232.robotics.powerup.log.Logger;
  * @since 2018
  * @version 2018
  */
-public class RaiseToSwitch extends CommandBase {
+public class RaiseToScale extends CommandBase {
     /**
      * The Logger
      * 
@@ -26,7 +26,7 @@ public class RaiseToSwitch extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    public RaiseToSwitch() {
+    public RaiseToScale() {
     }
 
     /**

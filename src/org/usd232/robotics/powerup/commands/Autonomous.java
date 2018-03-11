@@ -24,7 +24,7 @@ import org.usd232.robotics.powerup.lift.GoToLevel;
 import org.usd232.robotics.powerup.lift.Lower;
 import org.usd232.robotics.powerup.lift.LowerToBottom;
 import org.usd232.robotics.powerup.lift.Raise;
-import org.usd232.robotics.powerup.lift.RaiseToSwitch;
+import org.usd232.robotics.powerup.lift.RaiseToScale;
 import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -144,7 +144,7 @@ public class Autonomous extends CommandGroup {
                             break;
                         case 7:
                             LOG.debug("Raise to limit switch");
-                            addSequential(new RaiseToSwitch());
+                            addSequential(new RaiseToScale());
                             break;
                         case 8:
                             LOG.debug("Lower to limit switch");
