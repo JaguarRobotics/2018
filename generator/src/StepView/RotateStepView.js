@@ -32,10 +32,10 @@ export default class RotateStepView extends React.Component {
                 <label className="label">Direction:</label>
                 <select value={this.sign(this.props.step.arg)} onChange={this.handleDirectionChange}>
                     <option value={1}>
-                        Left
+                        Right
                     </option>
                     <option value={-1}>
-                        Right
+                        Left
                     </option>
                 </select>
             </div>
