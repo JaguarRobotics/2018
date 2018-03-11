@@ -55,8 +55,8 @@ export default class AutonomousMatch {
         this.routes.fireUpdate();
     }
 
-    addVersion() {
-        const version = new AutonomousVersion(this);
+    addVersion(clone = null) {
+        const version = new AutonomousVersion(this, clone);
         this.versions.push(version);
         return version;
     }

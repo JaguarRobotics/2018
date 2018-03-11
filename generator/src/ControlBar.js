@@ -37,6 +37,26 @@ export default class ControlBar extends React.Component {
                         });
                         this.props.routes.fireUpdate();
                         break;
+                    case -4:
+                        this.props.prompt("Please enter duplicated match name:", str => {
+                            if (str) {
+                                this.props.routes.selected = this.props.routes.addMatch(str, this.props.routes.selected.toPlainObject());
+                                this.setState({
+                                    "matchValue": this.props.routes.getMatchNames().indexOf(str),
+                                    "versionValue": -1
+                                });
+                                this.props.routes.fireUpdate();
+                            }
+                        });
+                        break;
+                    case -5:
+                        this.props.prompt("Please enter new match name:", str => {
+                            if (str) {
+                                this.props.routes.renameMatch(this.props.routes.getMatchNames()[this.state.matchValue], str);
+                                this.props.routes.fireUpdate();
+                            }
+                        });
+                        break;
                     default:
                         this.props.routes.selected = this.props.routes.getMatch(this.props.routes.getMatchNames()[value]);
                         this.setState({
@@ -61,6 +81,13 @@ export default class ControlBar extends React.Component {
                         this.props.routes.selected.selectedVersion = null;
                         this.setState({
                             "versionValue": -1
+                        });
+                        this.props.routes.fireUpdate();
+                        break;
+                    case -4:
+                        this.props.routes.selected.selectedVersion = this.props.routes.selected.addVersion(this.props.routes.selected.selectedVersion.toPlainObject());
+                        this.setState({
+                            "versionValue": this.props.routes.selected.versions.length - 1
                         });
                         this.props.routes.fireUpdate();
                         break;
@@ -109,11 +136,23 @@ export default class ControlBar extends React.Component {
                         <option value={-2}>
                             + Add
                         </option>
-                        {this.props.routes.selected && (
-                            <option value={-3}>
-                                - Remove "{this.props.routes.getMatchNames()[this.state.matchValue]}"
-                            </option>
-                        )}
+                        {this.props.routes.selected && [
+                            (
+                                <option value={-4} key="duplicate">
+                                    + Duplicate "{this.props.routes.getMatchNames()[this.state.matchValue]}"
+                                </option>
+                            ),
+                            (
+                                <option value={-5} key="rename">
+                                    | Rename "{this.props.routes.getMatchNames()[this.state.matchValue]}"
+                                </option>
+                            ),
+                            (
+                                <option value={-3} key="remove">
+                                    - Remove "{this.props.routes.getMatchNames()[this.state.matchValue]}"
+                                </option>
+                            )
+                        ]}
                     </select>
                 </div>
                 <div className="padding" />
@@ -127,13 +166,19 @@ export default class ControlBar extends React.Component {
                                 Version #{i + 1}
                             </option>
                         ))).concat([
-                            <option value={-2} key="add">+ Add</option>,
-                            this.props.routes.selected.selectedVersion && (
+                            <option value={-2} key="add">+ Add</option>
+                        ]).concat(this.props.routes.selected.selectedVersion ? [
+                            (
+                                <option value={-4} key="duplicate">
+                                    + Duplicate version #{this.state.versionValue + 1}
+                                </option>
+                            ),
+                            (
                                 <option value={-3} key="remove">
                                     - Remove version #{this.state.versionValue + 1}
                                 </option>
                             )
-                        ])}
+                        ] : [])}
                     </select>
                 </div>
                 <div className="padding" />
