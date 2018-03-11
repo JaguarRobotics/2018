@@ -26,9 +26,9 @@ public class DriveTurn extends CommandBase {
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            double highSpeed = speedFunc.calculateSpeed((location.getAngle() - Math.PI / 2) / angle);
+            double highSpeed = speedFunc.calculateSpeed(Math.abs((location.getAngle() - Math.PI / 2) / angle));
             LOG.debug("Turning to %f (currently at %f)", angle, location.getAngle());
-            driveSubsystem.driveTank(sign * -highSpeed, sign * highSpeed);
+            driveSubsystem.driveTank(sign * highSpeed, sign * -highSpeed);
         });
     }
 
