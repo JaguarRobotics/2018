@@ -81,7 +81,7 @@ public class Autonomous extends CommandGroup {
         LOG.trace("Autonmous Started");
         ISpeedFunction driveSpeed = t->0.6;
         ISpeedFunction turnSpeed = t->Math.min(0.8,
-                        9.674185464 * t * t * t - 18.68421053 * t * t + 8.910025063 * t + 0.6);
+                        9.674185464 * t * t * t - 18.68421053 * t * t + 8.910025063 * t + 0.55);
         AutonomousModel model = null;
         File file = new File(ROUTES_DIR, chooser.getSelected());
         try (FileInputStream stream = new FileInputStream(file)) {
