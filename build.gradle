@@ -22,6 +22,9 @@ repositories {
     maven {
         url "http://first.wpi.edu/FRC/roborio/maven/release/"
     }
+    maven {
+        url "http://dev.imjac.in/maven/"
+    }
 }
 
 sourceSets {
@@ -43,6 +46,7 @@ dependencies {
     compile "org.opencv:opencv-java:3.2.0"
     compile "edu.wpi.first.wpilibj:wpilibj-java:2018.1.1"
     compile "edu.wpi.first.wpiutil:wpiutil-java:3.0.0"
+    compile "jaci.pathfinder:Pathfinder-Java:1.8"
     minimapCompile "org.lwjgl:lwjgl:$lwjglVersion"
 	minimapCompile "org.lwjgl:lwjgl-assimp:$lwjglVersion"
 	minimapCompile "org.lwjgl:lwjgl-glfw:$lwjglVersion"
