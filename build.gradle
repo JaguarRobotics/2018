@@ -70,3 +70,10 @@ eclipse {
         natures "edu.wpi.first.wpilib.plugins.core.nature.FRCProjectNature"
     }
 }
+
+task copyToLib(type: Copy) {
+	into System.properties["user.home"] + "/wpilib/user/java/lib"
+	from configurations.runtime
+}
+
+tasks["eclipse"].dependsOn copyToLib
