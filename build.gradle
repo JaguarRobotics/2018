@@ -47,6 +47,7 @@ dependencies {
     compile "edu.wpi.first.wpilibj:wpilibj-java:2018.1.1"
     compile "edu.wpi.first.wpiutil:wpiutil-java:3.0.0"
     compile "jaci.pathfinder:Pathfinder-Java:1.8"
+    compile "org.apache.commons:commons-lang3:3.7"
     minimapCompile "org.lwjgl:lwjgl:$lwjglVersion"
 	minimapCompile "org.lwjgl:lwjgl-assimp:$lwjglVersion"
 	minimapCompile "org.lwjgl:lwjgl-glfw:$lwjglVersion"
