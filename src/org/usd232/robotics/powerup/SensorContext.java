@@ -3,6 +3,7 @@ package org.usd232.robotics.powerup;
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
+import org.usd232.robotics.powerup.log.Logger;
 
 public class SensorContext implements IO {
     private static final List<WeakReference<SensorContext>> CONTEXTS = new LinkedList<>();
@@ -16,6 +17,7 @@ public class SensorContext implements IO {
     private double                                          encoderLeft;
     private double                                          encoderRight;
     private double                                          gyro;
+    private static final Logger    LOG              = new Logger();
 
     public double getEncoderLeft() {
         return encoderLeft;
@@ -30,8 +32,8 @@ public class SensorContext implements IO {
     }
 
     private void updateInstance() {
-        encoderLeft = absoluteEncoderLeft - encoderLeftOffset;
-        encoderRight = absoluteEncoderRight - encoderRightOffset;
+        encoderLeft = IO.leftDriveEncoder.get() - encoderLeftOffset;
+        encoderRight = IO.rightDriveEncoder.get() - encoderRightOffset;
         gyro = absoluteGyro - gyroOffset;
     }
 
@@ -55,6 +57,7 @@ public class SensorContext implements IO {
 
     public SensorContext() {
         that = new WeakReference<>(this);
+        CONTEXTS.add(that);
         encoderLeftOffset = absoluteEncoderLeft;
         encoderRightOffset = absoluteEncoderRight;
         gyroOffset = absoluteGyro;

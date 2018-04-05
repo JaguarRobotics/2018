@@ -1,5 +1,7 @@
 package org.usd232.robotics.powerup;
 
+import java.net.URL;
+import java.net.URLClassLoader;
 import org.usd232.robotics.powerup.RobotMap.Alliance;
 import org.usd232.robotics.powerup.RobotMap.StartingPosition;
 import org.usd232.robotics.powerup.calibration.Calibration;
@@ -98,6 +100,10 @@ public class Robot extends IterativeRobot {
             Autonomous.loadDashboard();
             minimapServer = new MinimapCoordsServer(CommandBase.locationSubsystem.new Context());
             minimapServer.start();
+            URLClassLoader cl = (URLClassLoader)ClassLoader.getSystemClassLoader();
+            for(URL url : cl.getURLs()) {
+                LOG.debug(url.getFile());
+            }
         });
     }
 
@@ -109,6 +115,7 @@ public class Robot extends IterativeRobot {
         LOG.catchAll(()-> {
             Scheduler.getInstance().run();
             CommandBase.locationSubsystem.updateValues();
+            SensorContext.update();
         });
     }
 

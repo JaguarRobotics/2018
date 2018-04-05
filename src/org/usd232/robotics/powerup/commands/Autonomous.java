@@ -16,6 +16,7 @@ import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.drive.Delay;
 import org.usd232.robotics.powerup.drive.DriveForward;
 import org.usd232.robotics.powerup.drive.DriveTurn;
+import org.usd232.robotics.powerup.drive.PathfinderDrive;
 import org.usd232.robotics.powerup.intake.DropCube;
 import org.usd232.robotics.powerup.intake.GrabCube;
 import org.usd232.robotics.powerup.intake.LowerIntake;
@@ -79,7 +80,9 @@ public class Autonomous extends CommandGroup {
      */
     public Autonomous() {
         LOG.trace("Autonmous Started");
-        ISpeedFunction driveSpeed = t->0.6;
+        addSequential(PathfinderDrive.test());
+        LOG.trace("Sequentially added");
+        /*ISpeedFunction driveSpeed = t->0.6;
         ISpeedFunction turnSpeed = t->Math.min(0.8,
                         9.674185464 * t * t * t - 18.68421053 * t * t + 8.910025063 * t + 0.6);
         AutonomousModel model = null;
@@ -177,6 +180,6 @@ public class Autonomous extends CommandGroup {
                 default:
                     LOG.error("Unknown step type %s", step.getType());
             }
-        }
+        }*/
     }
 }
