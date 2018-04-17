@@ -6,11 +6,12 @@ import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 
 public class DriveTurn extends CommandBase {
-    private static final Logger       LOG = new Logger();
-    private final ISpeedFunction      speedFunc;
-    private final double              angle;
-    private final double              sign;
-    private LocationSubsystem.Context location;
+	private static final Logger LOG = new Logger();
+	private final ISpeedFunction speedFunc;
+	private final double angle;
+	private final double sign;
+	private final double KP = .5;
+	private LocationSubsystem.Context location;
 
     @Override
     protected void initialize() {
@@ -43,16 +44,17 @@ public class DriveTurn extends CommandBase {
         }, true);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void end() {
-        LOG.catchAll(()-> {
-            LOG.enter("end");
-            driveSubsystem.driveTank(0, 0);
-        });
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected boolean isFinished() {
+		return LOG.catchAll(() -> {
+			// return Math.signum(location.getAngle() - sign * angle - Math.PI / 2) == sign;
+			// return Math.abs(location.getAngle() - Math.PI / 2) >= angle;
+			return Math.abs(angle - location.getAngle()) <= Math.PI/36;
+		}, true);
+	}
 
     /**
      * Turns the robot at a specified angle.
