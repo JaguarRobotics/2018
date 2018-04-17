@@ -44,18 +44,6 @@ public class DriveTurn extends CommandBase {
         }, true);
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected boolean isFinished() {
-		return LOG.catchAll(() -> {
-			// return Math.signum(location.getAngle() - sign * angle - Math.PI / 2) == sign;
-			// return Math.abs(location.getAngle() - Math.PI / 2) >= angle;
-			return Math.abs(angle - location.getAngle()) <= Math.PI/36;
-		}, true);
-	}
-
     /**
      * Turns the robot at a specified angle.
      * 
