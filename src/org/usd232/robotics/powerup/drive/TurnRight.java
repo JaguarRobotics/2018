@@ -5,8 +5,9 @@ import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 
 public class TurnRight extends CommandBase {
-    private static final Logger       LOG = new Logger();
-    private final double      speed;
+    private static final Logger       LOG          = new Logger();
+    private final double              speed;
+    private final double              CUTOFF_SPEED = .4;
     private final double              angle;
     private LocationSubsystem.Context location;
 
@@ -25,6 +26,9 @@ public class TurnRight extends CommandBase {
     protected void execute() {
         LOG.catchAll(()-> {
             double highSpeed = speed;
+            if (location.getAngle() >= ((Math.PI / 2) + angle / 2)) {
+                highSpeed = CUTOFF_SPEED;
+            }
             LOG.debug("Turning to %f (currently at %f)", angle, location.getAngle());
             driveSubsystem.driveTank(highSpeed, -highSpeed);
         });
@@ -36,7 +40,7 @@ public class TurnRight extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
-            return Math.signum(location.getAngle() - angle) == 1;
+            return location.getAngle() >= (Math.PI / 2) + angle / 2;
         }, true);
     }
 
