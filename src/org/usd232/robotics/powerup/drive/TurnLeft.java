@@ -1,15 +1,13 @@
 package org.usd232.robotics.powerup.drive;
 
-import org.usd232.robotics.powerup.ISpeedFunction;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 
-public class DriveTurn extends CommandBase {
+public class TurnLeft extends CommandBase {
     private static final Logger       LOG = new Logger();
-    private final ISpeedFunction      speedFunc;
+    private final double              speed;
     private final double              angle;
-    private final double              sign;
     private LocationSubsystem.Context location;
 
     @Override
@@ -26,9 +24,9 @@ public class DriveTurn extends CommandBase {
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            double highSpeed = speedFunc.calculateSpeed(location.getAngle() / angle);
+            double highSpeed = speed;
             LOG.debug("Turning to %f (currently at %f)", angle, location.getAngle());
-            driveSubsystem.driveTank(sign * highSpeed, sign * -highSpeed);
+            driveSubsystem.driveTank(-highSpeed, highSpeed);
         });
     }
 
@@ -38,8 +36,7 @@ public class DriveTurn extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
-            LOG.debug("%f", Math.signum(location.getAngle() - angle));
-            return Math.signum(location.getAngle() - angle) == 1;
+            return location.getAngle() <= (Math.PI / 2) - angle/2;
         }, true);
     }
 
@@ -51,6 +48,7 @@ public class DriveTurn extends CommandBase {
         LOG.catchAll(()-> {
             LOG.enter("end");
             driveSubsystem.driveTank(0, 0);
+            location = null;
         });
     }
 
@@ -62,11 +60,11 @@ public class DriveTurn extends CommandBase {
      * @param angle
      *            The angle to turn the robot to.
      */
-    public DriveTurn(ISpeedFunction speedFunc, double angle) {
+    public TurnLeft(double speed, double angle) {
+        LOG.enter("Entered Turn Left");
         requires(driveSubsystem);
-        this.speedFunc = speedFunc;
-        sign = Math.signum(angle);
-        angle += Math.PI / 2;
+        this.speed = speed;
+        angle -= Math.PI / 2;
         this.angle = Math.abs(angle);
     }
 }

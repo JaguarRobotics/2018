@@ -1,6 +1,5 @@
 package org.usd232.robotics.powerup.drive;
 
-import org.usd232.robotics.powerup.ISpeedFunction;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
@@ -33,7 +32,7 @@ public class DriveForward extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    private final ISpeedFunction      speedFunc;
+    private final double      highSpeed;
     /**
      * The max angle that the robot can get off by
      * 
@@ -41,6 +40,11 @@ public class DriveForward extends CommandBase {
      * @version 2018
      */
     private final double              maxAngle;
+    /**
+     * Sign of the direction of the robot
+     * 
+     * @since 2018
+     */
     private final double              sign;
     /**
      * The location of the robot
@@ -56,8 +60,8 @@ public class DriveForward extends CommandBase {
     @Override
     protected void initialize() {
         LOG.catchAll(()-> {
+            location = locationSubsystem.createContext();
             LOG.enter("initialize");
-            location = locationSubsystem.new Context();
         });
     }
 
@@ -69,7 +73,6 @@ public class DriveForward extends CommandBase {
         LOG.catchAll(()-> {
             double x = location.getX();
             double y = location.getY();
-            double highSpeed = speedFunc.calculateSpeed(location.getY() / inches);
             LOG.debug("LocationSubsytem is reporting (%f, %f) @ %f", x, y, location.getAngle());
             if (x == 0 || (Math.abs(location.getAngle() - Math.PI / 2) > maxAngle)
                             && Math.signum(x) == Math.signum(location.getAngle() - Math.PI / 2)) {
@@ -109,7 +112,7 @@ public class DriveForward extends CommandBase {
     /**
      * Drives the robot forward.
      * 
-     * @param speedFunc
+     * @param driveSpeed
      *            The function that the robot uses to calculate its speed at a certain spot.
      * @param inches
      *            The amount of inches for the robot to go.
@@ -118,9 +121,9 @@ public class DriveForward extends CommandBase {
      * @param maxAngle
      *            The maximum angle that the robot can get off by.
      */
-    public DriveForward(ISpeedFunction speedFunc, double inches, double correctionPerInch, double maxAngle) {
+    public DriveForward(double driveSpeed, double inches, double correctionPerInch, double maxAngle) {
         requires(driveSubsystem);
-        this.speedFunc = speedFunc;
+        this.highSpeed = driveSpeed;
         this.sign = Math.signum(inches);
         this.inches = Math.abs(inches);
         this.correctionPerInch = correctionPerInch;

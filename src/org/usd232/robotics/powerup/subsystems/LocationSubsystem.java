@@ -162,13 +162,13 @@ public class LocationSubsystem extends SubsystemBase {
      * 
      * @since 2018
      */
-    private static final double          TEST_INCHES     = 146;
+    private static final double          TEST_INCHES     = 18.84;
     /**
      * Amount of ticks we used to figure out amount of ticks per pulse
      * 
      * @since 2018
      */
-    private static final double          TEST_TICKS      = 2961;
+    private static final double          TEST_TICKS      = 1200;
     /**
      * The amount of ticks per pulse.
      * 
@@ -233,8 +233,8 @@ public class LocationSubsystem extends SubsystemBase {
      */
     public void reset() {
         LOG.warn("Resetting LocationSubsystem");
-        leftDriveEncoder.setDistancePerPulse(TICKS_PER_PULSE * TEST_INCHES / TEST_TICKS);
-        rightDriveEncoder.setDistancePerPulse(TICKS_PER_PULSE * TEST_INCHES / TEST_TICKS);
+        leftDriveEncoder.setDistancePerPulse(1);
+        rightDriveEncoder.setDistancePerPulse(1);
         leftDriveEncoder.reset();
         rightDriveEncoder.reset();
         lastTime = System.currentTimeMillis();
@@ -247,8 +247,8 @@ public class LocationSubsystem extends SubsystemBase {
      */
     @SuppressWarnings("unchecked")
     public void updateValues() {
-        double s1 = leftDriveEncoder.getDistance();
-        double s2 = rightDriveEncoder.getDistance();
+        double s1 = (leftDriveEncoder.getDistance()/TEST_TICKS)*TEST_INCHES;
+        double s2 = (-rightDriveEncoder.getDistance()/TEST_TICKS)*TEST_INCHES;
         double theta = gyro.getAngle() * Math.PI / 180;
         double ds1 = s1 - lastS1;
         double ds2 = s2 - lastS2;
@@ -269,5 +269,9 @@ public class LocationSubsystem extends SubsystemBase {
         lastTime = time;
         double ds = (ds1 + ds2) / 2.0;
         speed = ds / dt;
+    }
+
+    public Context createContext() {
+        return new Context();
     }
 }
