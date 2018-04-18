@@ -1,16 +1,15 @@
 package org.usd232.robotics.powerup.drive;
 
-import org.usd232.robotics.powerup.ISpeedFunction;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 
-public class DriveTurn extends CommandBase {
-	private static final Logger LOG = new Logger();
-	private final ISpeedFunction speedFunc;
-	private final double angle;
-	private final double sign;
-	private LocationSubsystem.Context location;
+public class TurnRight extends CommandBase {
+    private static final Logger       LOG          = new Logger();
+    private final double              speed;
+    private final double              CUTOFF_SPEED = .4;
+    private final double              angle;
+    private LocationSubsystem.Context location;
 
     @Override
     protected void initialize() {
@@ -26,9 +25,12 @@ public class DriveTurn extends CommandBase {
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            double highSpeed = speedFunc.calculateSpeed(Math.abs((location.getAngle() - Math.PI / 2) / angle));
+            double highSpeed = speed;
+            if (location.getAngle() >= ((Math.PI / 2) + angle / 2)) {
+                highSpeed = CUTOFF_SPEED;
+            }
             LOG.debug("Turning to %f (currently at %f)", angle, location.getAngle());
-            driveSubsystem.driveTank(sign * highSpeed, sign * -highSpeed);
+            driveSubsystem.driveTank(highSpeed, -highSpeed);
         });
     }
 
@@ -38,9 +40,20 @@ public class DriveTurn extends CommandBase {
     @Override
     protected boolean isFinished() {
         return LOG.catchAll(()-> {
-            LOG.debug("%f", Math.signum(location.getAngle() - angle));
-            return Math.signum(location.getAngle() - angle) == 1;
+            return location.getAngle() >= (Math.PI / 2) + angle / 2;
         }, true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void end() {
+        LOG.catchAll(()-> {
+            LOG.enter("end");
+            driveSubsystem.driveTank(0, 0);
+            location = null;
+        });
     }
 
     /**
@@ -51,10 +64,9 @@ public class DriveTurn extends CommandBase {
      * @param angle
      *            The angle to turn the robot to.
      */
-    public DriveTurn(ISpeedFunction speedFunc, double angle) {
+    public TurnRight(double speed, double angle) {
         requires(driveSubsystem);
-        this.speedFunc = speedFunc;
-        sign = Math.signum(angle);
+        this.speed = speed;
         angle += Math.PI / 2;
         this.angle = Math.abs(angle);
     }

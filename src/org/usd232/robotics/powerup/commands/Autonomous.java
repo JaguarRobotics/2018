@@ -11,11 +11,11 @@ import org.usd232.robotics.autonomous.CustomCommandParameter;
 import org.usd232.robotics.autonomous.DriveParameter;
 import org.usd232.robotics.autonomous.SleepParameter;
 import org.usd232.robotics.autonomous.TurnParameter;
-import org.usd232.robotics.powerup.ISpeedFunction;
 import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.drive.Delay;
 import org.usd232.robotics.powerup.drive.DriveForward;
-import org.usd232.robotics.powerup.drive.DriveTurn;
+import org.usd232.robotics.powerup.drive.TurnLeft;
+import org.usd232.robotics.powerup.drive.TurnRight;
 import org.usd232.robotics.powerup.intake.DropCube;
 import org.usd232.robotics.powerup.intake.GrabCube;
 import org.usd232.robotics.powerup.intake.LowerIntake;
@@ -60,6 +60,7 @@ public class Autonomous extends CommandGroup {
      * @version 2018
      */
     private static SendableChooser<String> chooser;
+
     /**
      * Loads the routes to the smart dashboard
      */
@@ -79,9 +80,11 @@ public class Autonomous extends CommandGroup {
      */
     public Autonomous() {
         LOG.trace("Autonmous Started");
-        ISpeedFunction driveSpeed = t->0.6;
-        ISpeedFunction turnSpeed = t->Math.min(0.8,
-                        9.674185464 * t * t * t - 18.68421053 * t * t + 8.910025063 * t + 0.5);
+//        ISpeedFunction driveSpeed = t->0.6;
+//        ISpeedFunction turnSpeed = t->Math.min(0.8,
+//                        9.674185464 * t * t * t - 18.68421053 * t * t + 8.910025063 * t + 0.6);
+        double driveSpeed = .7;
+        double turnSpeed = .6;
         AutonomousModel model = null;
         File file = new File(ROUTES_DIR, chooser.getSelected());
         try (FileInputStream stream = new FileInputStream(file)) {
@@ -95,6 +98,7 @@ public class Autonomous extends CommandGroup {
         AutonomousRoute route = model.getRoute(DriverStation.getInstance().getGameSpecificMessage());
         LOG.debug("Autonomous route:");
         for (AutonomousStep step : route.getSteps()) {
+            addSequential(new Delay(500));
             switch (step.getType()) {
                 case CustomCommand: {
                     CustomCommandParameter param = (CustomCommandParameter) step.getGenericParameter();
@@ -171,7 +175,11 @@ public class Autonomous extends CommandGroup {
                 case Turn: {
                     TurnParameter param = (TurnParameter) step.getGenericParameter();
                     LOG.debug("Turn %f rad", param.getAngle());
-                    addSequential(new DriveTurn(turnSpeed, param.getAngle()));
+                    if (param.getAngle() < 0) {
+                        addSequential(new TurnLeft(turnSpeed, param.getAngle()));
+                    } else {
+                        addSequential(new TurnRight(turnSpeed, param.getAngle()));
+                    }
                     break;
                 }
                 default:

@@ -52,9 +52,6 @@ public class DriveParameter implements IAutonomousStepParameter {
      * @sinec 2018
      */
     public void setDistance(float distance) {
-        if (distance < 0) {
-            throw new IllegalArgumentException("Distance must not be negative");
-        }
         this.distance = distance;
     }
 }
