@@ -79,7 +79,7 @@ public interface RobotMap {
      * @since 2017
      * @version 2018
      */
-    public static final MotorID WINCH_MOTOR_TYPE      = MotorID.Victor;
+    public static final MotorID WINCH_MOTOR_TYPE           = MotorID.Victor;
     /**
      * The port for the Winch motor.
      * 

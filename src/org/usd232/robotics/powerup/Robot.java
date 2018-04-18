@@ -70,7 +70,6 @@ public class Robot extends IterativeRobot {
                 LOG.info("Bottom: %f", calibratorData.getLiftBottom());
                 LOG.info("Switch: %f", calibratorData.getLiftSwitch());
                 LOG.info("Scale: %f", calibratorData.getLiftScale());
-                LOG.info("Friction: %f", calibratorData.getFrictionalAcceleration());
             } catch (Exception e) {
                 LOG.error("Exception in getting calibration file!");
                 calibratorData = new CalibratorData();

@@ -1,7 +1,6 @@
 package org.usd232.robotics.powerup;
 
 import org.usd232.robotics.powerup.calibration.CalibrateCommand;
-import org.usd232.robotics.powerup.calibration.FrictionCalibrationCommand;
 import org.usd232.robotics.powerup.climb.ClimbDown;
 import org.usd232.robotics.powerup.climb.ClimbUp;
 import org.usd232.robotics.powerup.intake.DropCube;
@@ -39,7 +38,6 @@ public class OI extends Trigger implements RobotMap {
     public OI() {
         LOG.catchAll(()-> {
             CalibratorXbox_A.whenPressed(new CalibrateCommand());
-            CalibratorXbox_B.whenPressed(new FrictionCalibrationCommand());
             ManipulatorXbox_RB.whileHeld(new ManualRaise());
             ManipulatorXbox_LB.whileHeld(new ManualLower());
             try {

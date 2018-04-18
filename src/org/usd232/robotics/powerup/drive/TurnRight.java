@@ -14,7 +14,6 @@ public class TurnRight extends CommandBase {
     @Override
     protected void initialize() {
         LOG.catchAll(()-> {
-            LOG.enter("initialize");
             location = locationSubsystem.createContext();
         });
     }
@@ -25,12 +24,12 @@ public class TurnRight extends CommandBase {
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            double highSpeed = speed;
+            double speed = this.speed;
             if (location.getAngle() >= ((Math.PI / 2) + angle / 2)) {
-                highSpeed = CUTOFF_SPEED;
+                speed = CUTOFF_SPEED;
             }
             LOG.debug("Turning to %f (currently at %f)", angle, location.getAngle());
-            driveSubsystem.driveTank(highSpeed, -highSpeed);
+            driveSubsystem.driveTank(speed, -speed);
         });
     }
 
@@ -50,7 +49,6 @@ public class TurnRight extends CommandBase {
     @Override
     protected void end() {
         LOG.catchAll(()-> {
-            LOG.enter("end");
             driveSubsystem.driveTank(0, 0);
             location = null;
         });

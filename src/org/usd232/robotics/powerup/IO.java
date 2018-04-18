@@ -39,6 +39,22 @@ public interface IO extends RobotMap {
     public static final SpeedController rightDriveMotor        = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->IOFactory.motor(RIGHT_DRIVE_MOTOR_PORT, RIGHT_DRIVE_MOTOR_TYPE));
     /**
+     * The motor for the climbing winch.
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final Victor          climbMotor             = DO_NOT_USE_THIS_LOGGER
+                    .catchAll(()->new Victor(WINCH_MOTOR_PORT));
+    /**
+     * The relay for the scissor lift.
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final Relay           liftRelay              = DO_NOT_USE_THIS_LOGGER
+                    .catchAll(()->new Relay(LIFT_RELAY_PORT));
+    /**
      * The encoder on the left drive motor.
      * 
      * @since 2018
@@ -54,7 +70,6 @@ public interface IO extends RobotMap {
      */
     public static final Encoder         rightDriveEncoder      = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new OversampledEncoder(RIGHT_ENCODER_CHANNEL_A, RIGHT_ENCODER_CHANNEL_B));
-    // Gyros and Potentiometers
     /**
      * The gyroscope in the SPI port on the RIO.
      * 
@@ -71,24 +86,6 @@ public interface IO extends RobotMap {
      */
     public static final Potentiometer   scissorPotentiometer   = DO_NOT_USE_THIS_LOGGER
                     .catchAll(()->new AnalogPotentiometer(POTENTIOMETER_PORT, 360, 0));
-    // Relays
-    /**
-     * The relay for the climbing winch.
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    public static final Victor           climbMotor             = DO_NOT_USE_THIS_LOGGER
-                    .catchAll(()-> new Victor(WINCH_MOTOR_PORT));
-    /**
-     * The relay for the scissor lift.
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    public static final Relay           liftRelay              = DO_NOT_USE_THIS_LOGGER
-                    .catchAll(()->new Relay(LIFT_RELAY_PORT));
-    // Pneumatics
     /**
      * Grabs and releases cube.
      * 

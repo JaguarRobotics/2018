@@ -15,12 +15,14 @@ public class Printer extends OutputStream {
     private static final Logger   LOG              = new Logger();
     /**
      * The classes excluded from the stacktrace detection.
+     * 
      * @since 2018
      * @version 2018
      */
     private static final String[] EXCLUDED_CLASSES = { Printer.class.getName(), PrintStream.class.getName() };
     /**
      * The parent output stream.
+     * 
      * @version 2018
      * @since 2018
      */
@@ -36,6 +38,7 @@ public class Printer extends OutputStream {
      * The level to log.
      */
     private LogLevel              level;
+
     @Override
     public void write(int b) throws IOException {
         write(new byte[] { (byte) b }, 0, 1);
@@ -69,11 +72,16 @@ public class Printer extends OutputStream {
             Arrays.sort(EXCLUDED_CLASSES);
         });
     }
+
     /**
      * The printer.
-     * @param parent The parent output stream
-     * @param logServer The log server.
-     * @param level The level of log.
+     * 
+     * @param parent
+     *            The parent output stream
+     * @param logServer
+     *            The log server.
+     * @param level
+     *            The level of log.
      */
     public Printer(OutputStream parent, LogServer logServer, LogLevel level) {
         this.parent = parent;

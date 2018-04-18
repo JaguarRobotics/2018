@@ -39,7 +39,6 @@ public class Delay extends CommandBase {
     @Override
     protected void initialize() {
         LOG.catchAll(()-> {
-            LOG.enter("initialize");
             startTime = System.currentTimeMillis();
         });
     }
@@ -66,7 +65,9 @@ public class Delay extends CommandBase {
 
     /**
      * Delays the robot for a specified amount of time.
-     * @param millis Amount of miliseconds to have the robot pause for.
+     * 
+     * @param millis
+     *            Amount of miliseconds to have the robot pause for.
      */
     public Delay(long millis) {
         this.millis = millis;

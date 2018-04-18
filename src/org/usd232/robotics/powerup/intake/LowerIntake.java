@@ -36,6 +36,7 @@ public class LowerIntake extends IntakeCommandBase {
         intakeSubsystem.lowerIntake();
         LOG.info("Intake Lowered");
     }
+
     /**
      * Command to Lower the intake.
      * 

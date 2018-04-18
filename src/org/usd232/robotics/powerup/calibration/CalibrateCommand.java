@@ -13,8 +13,8 @@ import org.usd232.robotics.powerup.log.Logger;
  */
 public class CalibrateCommand extends CommandBase {
     /**
-     * The Logger
-     * .
+     * The Logger .
+     * 
      * @since 2018
      * @version 2018
      */

@@ -11,7 +11,7 @@ public class DriveForward extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    private static final Logger       LOG = new Logger();
+    private static final Logger       LOG          = new Logger();
     /**
      * The amount of inches to drive forward
      * 
@@ -32,7 +32,7 @@ public class DriveForward extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    private double      highSpeed;
+    private double                    highSpeed;
     /**
      * The max angle that the robot can get off by
      * 
@@ -53,7 +53,7 @@ public class DriveForward extends CommandBase {
      * @version 2018
      */
     private LocationSubsystem.Context location;
-    private final double CUTOFF_SPEED = .5;
+    private final double              CUTOFF_SPEED = .5;
 
     /**
      * {@inheritDoc}
@@ -75,7 +75,7 @@ public class DriveForward extends CommandBase {
             double x = location.getX();
             double y = location.getY();
             LOG.debug("LocationSubsytem is reporting (%f, %f) @ %f", x, y, location.getAngle());
-            if(y >= inches * .75) {
+            if (y >= inches * .75) {
                 highSpeed = CUTOFF_SPEED;
             }
             if (x == 0 || (Math.abs(location.getAngle() - Math.PI / 2) > maxAngle)

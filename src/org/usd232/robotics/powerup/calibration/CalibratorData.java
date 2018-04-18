@@ -28,13 +28,6 @@ public class CalibratorData implements Serializable {
      * @version 2018
      */
     private double            liftBottom;
-    /**
-     * The value of frictional acceleration.
-     * 
-     * @since 2018
-     * @version 2018
-     */
-    private double            frictionalAcceleration;
 
     /**
      * Gets the scale value.
@@ -91,24 +84,5 @@ public class CalibratorData implements Serializable {
      */
     public void setLiftBottom(double liftBottom) {
         this.liftBottom = liftBottom;
-    }
-
-    /**
-     * Gets the calibrated frictional acceleration.
-     * 
-     * @return the calibrated frictional acceleration.
-     */
-    public double getFrictionalAcceleration() {
-        return frictionalAcceleration;
-    }
-
-    /**
-     * Sets the calibrated frictional acceleration.
-     * 
-     * @param the
-     *            frictional acceleration.
-     */
-    public void setFrictionalAcceleration(double frictionalAcceleration) {
-        this.frictionalAcceleration = frictionalAcceleration;
     }
 }

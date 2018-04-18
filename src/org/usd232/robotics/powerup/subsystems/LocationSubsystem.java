@@ -10,14 +10,14 @@ import org.usd232.robotics.powerup.minimap.IMinimapCoordProvider;
 /**
  * Subsystem that we use to track the current location data of the robot.
  * 
- * @author Zach
+ * @author Zach, Brian
  * @since 2018
  */
 public class LocationSubsystem extends SubsystemBase {
     /**
      * Stores the variables so that we can reset this and not lose all of the data.
      * 
-     * @author Zach
+     * @author Zach, Brian
      * @since 2018
      */
     public class Context implements IMinimapCoordProvider {
@@ -224,7 +224,7 @@ public class LocationSubsystem extends SubsystemBase {
     }
 
     /**
-     * Resets the subsystem
+     * Resets the subsystem.
      * 
      * @since 2018
      */

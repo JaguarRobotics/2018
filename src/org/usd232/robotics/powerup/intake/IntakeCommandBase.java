@@ -54,9 +54,12 @@ public abstract class IntakeCommandBase extends CommandBase {
             return System.currentTimeMillis() > endTime;
         }, true);
     }
+
     /**
      * The intake command base.
-     * @param timeout the timeout value of the command
+     * 
+     * @param timeout
+     *            the timeout value of the command
      */
     public IntakeCommandBase(long timeout) {
         requires(intakeSubsystem);

@@ -1,7 +1,6 @@
 package org.usd232.robotics.powerup.lift;
 
 import java.util.function.Supplier;
-
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 
@@ -26,7 +25,7 @@ public class GoToLevel extends CommandBase {
      * @since 2018
      * @version 2018
      */
-    private Supplier<Double>              targetPotentiometerValue;
+    private Supplier<Double>    targetPotentiometerValue;
     /**
      * The command that the robot runs based on where the robot is.
      * 

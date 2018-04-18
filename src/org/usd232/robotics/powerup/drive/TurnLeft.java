@@ -1,20 +1,20 @@
 package org.usd232.robotics.powerup.drive;
 
+import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.commands.CommandBase;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.subsystems.LocationSubsystem;
 
 public class TurnLeft extends CommandBase {
-    private static final Logger       LOG          = new Logger();
+    private static final Logger       LOG = new Logger();
     private final double              speed;
     private final double              angle;
-    private final double              CUTOFF_SPEED = .4;
+    private double                    SLOW_SPEED_TURN;
     private LocationSubsystem.Context location;
 
     @Override
     protected void initialize() {
         LOG.catchAll(()-> {
-            LOG.enter("initialize");
             location = locationSubsystem.createContext();
         });
     }
@@ -25,12 +25,12 @@ public class TurnLeft extends CommandBase {
     @Override
     protected void execute() {
         LOG.catchAll(()-> {
-            double highSpeed = speed;
+            double speed = this.speed;
             if (location.getAngle() <= ((Math.PI / 2) - angle / 2) / 2) {
-                highSpeed = CUTOFF_SPEED;
+                speed = SLOW_SPEED_TURN;
             }
             LOG.debug("Turning to %f (currently at %f)", angle, location.getAngle());
-            driveSubsystem.driveTank(-highSpeed, highSpeed);
+            driveSubsystem.driveTank(-speed, speed);
         });
     }
 
@@ -50,7 +50,6 @@ public class TurnLeft extends CommandBase {
     @Override
     protected void end() {
         LOG.catchAll(()-> {
-            LOG.enter("end");
             driveSubsystem.driveTank(0, 0);
             location = null;
         });
@@ -67,6 +66,7 @@ public class TurnLeft extends CommandBase {
     public TurnLeft(double speed, double angle) {
         LOG.enter("Entered Turn Left");
         requires(driveSubsystem);
+        this.SLOW_SPEED_TURN = Robot.preferences.getDouble("SLOW_SPEED_TURN", .45);
         this.speed = speed;
         angle -= Math.PI / 2;
         this.angle = Math.abs(angle);
