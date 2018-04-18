@@ -101,10 +101,12 @@ public class CalibratorData implements Serializable {
     public double getFrictionalAcceleration() {
         return frictionalAcceleration;
     }
+
     /**
      * Sets the calibrated frictional acceleration.
      * 
-     * @param the frictional acceleration.
+     * @param the
+     *            frictional acceleration.
      */
     public void setFrictionalAcceleration(double frictionalAcceleration) {
         this.frictionalAcceleration = frictionalAcceleration;

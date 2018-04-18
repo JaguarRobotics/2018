@@ -3,6 +3,7 @@ package org.usd232.robotics.powerup.subsystems;
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
+import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.minimap.IMinimapCoordProvider;
 
@@ -144,31 +145,31 @@ public class LocationSubsystem extends SubsystemBase {
      * 
      * @since 2018
      */
-    private static final Logger          LOG             = new Logger();
+    private static final Logger          LOG            = new Logger();
     /**
      * The width of the robot.
      * 
      * @since 2018
      */
-    private static final double          WIDTH           = 18;
+    private static final double          WIDTH          = 18;
     /**
      * The center of the mass.
      * 
      * @since 2018
      */
-    private static final double          CENTER_OF_MASS  = 0.5;
+    private static final double          CENTER_OF_MASS = 0.5;
     /**
-     * Amount of inches we used to figure out amount of ticks per pulse
+     * The wheel's circumference
      * 
      * @since 2018
      */
-    private static final double          TEST_INCHES     = 18.84;
+    private static double                WHEEL_CIRCUMFERENCE;
     /**
-     * Amount of ticks we used to figure out amount of ticks per pulse
+     * Amount of ticks for a full rotation of the wheel.
      * 
      * @since 2018
      */
-    private static final double          TEST_TICKS      = 1200;
+    private static double                TICKS_PER_REV;
     /**
      * The last arc length #1.
      * 
@@ -213,6 +214,8 @@ public class LocationSubsystem extends SubsystemBase {
      */
     public LocationSubsystem() {
         contexts = new LinkedList<WeakReference<Context>>();
+        TICKS_PER_REV = Robot.preferences.getDouble("TICKS_PER_REV", 1200);
+        WHEEL_CIRCUMFERENCE = Robot.preferences.getDouble("WHEEL_DIAMETER", 18.84);
         reset();
     }
 
@@ -241,8 +244,8 @@ public class LocationSubsystem extends SubsystemBase {
      */
     @SuppressWarnings("unchecked")
     public void updateValues() {
-        double s1 = (leftDriveEncoder.getDistance()/TEST_TICKS)*TEST_INCHES;
-        double s2 = (-rightDriveEncoder.getDistance()/TEST_TICKS)*TEST_INCHES;
+        double s1 = (leftDriveEncoder.getDistance() / TICKS_PER_REV) * WHEEL_CIRCUMFERENCE;
+        double s2 = (-rightDriveEncoder.getDistance() / TICKS_PER_REV) * WHEEL_CIRCUMFERENCE;
         double theta = gyro.getAngle() * Math.PI / 180;
         double ds1 = s1 - lastS1;
         double ds2 = s2 - lastS2;

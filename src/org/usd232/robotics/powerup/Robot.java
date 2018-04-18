@@ -1,7 +1,7 @@
 package org.usd232.robotics.powerup;
 
-import org.usd232.robotics.powerup.RobotMap.Alliance;
-import org.usd232.robotics.powerup.RobotMap.StartingPosition;
+import java.net.URL;
+import java.net.URLClassLoader;
 import org.usd232.robotics.powerup.calibration.Calibration;
 import org.usd232.robotics.powerup.calibration.CalibratorData;
 import org.usd232.robotics.powerup.commands.Autonomous;
@@ -10,10 +10,9 @@ import org.usd232.robotics.powerup.log.LogServer;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.minimap.MinimapCoordsServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The first class that is called to set everything up
@@ -29,44 +28,35 @@ public class Robot extends IterativeRobot {
      * @since 2018
      * @version 2018
      */
-    private static final Logger                           LOG             = new Logger();
+    private static final Logger       LOG = new Logger();
     /**
      * The server for the minimap project that sends the coords back and forth.
      * 
      * @since 2018
      * @version 2018
      */
-    public static MinimapCoordsServer                     minimapServer;
-    /**
-     * chooser used on the SmartDashboard to choose the starting position.
-     * 
-     * @since 2017
-     * @version 2018
-     */
-    public static final SendableChooser<StartingPosition> positionChooser = LOG
-                    .catchAll(()->new SendableChooser<StartingPosition>());
-    /**
-     * Chooser used in SmartDashboard to choose which alliance we are on.
-     * 
-     * @since 2017
-     * @version 2018
-     */
-    public static final SendableChooser<Alliance>         allianceChooser = LOG
-                    .catchAll(()->new SendableChooser<Alliance>());
+    public static MinimapCoordsServer minimapServer;
     /**
      * The data that is saved to the robot for the calibration.
      * 
      * @since 2018
      * @version 2018
      */
-    public static CalibratorData                          calibratorData;
+    public static CalibratorData      calibratorData;
     /**
      * The command that the robot does for autonomous.
      * 
      * @since Always
      * @version 2018
      */
-    private Command                                       autonomousCommand;
+    private Command                   autonomousCommand;
+    /**
+     * The preferences instance.
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static Preferences         preferences;
 
     /**
      * {@inheritDoc}
@@ -82,22 +72,20 @@ public class Robot extends IterativeRobot {
                 LOG.info("Scale: %f", calibratorData.getLiftScale());
                 LOG.info("Friction: %f", calibratorData.getFrictionalAcceleration());
             } catch (Exception e) {
-                LOG.error("Exception in getting calibration file");
+                LOG.error("Exception in getting calibration file!");
                 calibratorData = new CalibratorData();
             }
+            preferences = Preferences.getInstance();
             CommandBase.init();
             Thread thread = new Thread(new LogServer());
             thread.start();
-            allianceChooser.addDefault("Blue", RobotMap.Alliance.Blue);
-            allianceChooser.addObject("Red", RobotMap.Alliance.Red);
-            SmartDashboard.putData("Alliance", allianceChooser);
-            positionChooser.addDefault("Left", RobotMap.StartingPosition.One);
-            positionChooser.addObject("Middle", RobotMap.StartingPosition.Two);
-            positionChooser.addObject("Right", RobotMap.StartingPosition.Three);
-            SmartDashboard.putData("Starting Position", positionChooser);
             Autonomous.loadDashboard();
-//            minimapServer = new MinimapCoordsServer(CommandBase.locationSubsystem.createContext());
-//            minimapServer.start();
+            // minimapServer = new MinimapCoordsServer(CommandBase.locationSubsystem.new Context());
+            // minimapServer.start();
+            URLClassLoader cl = (URLClassLoader) ClassLoader.getSystemClassLoader();
+            for (URL url : cl.getURLs()) {
+                LOG.debug(url.getFile());
+            }
         });
     }
 
