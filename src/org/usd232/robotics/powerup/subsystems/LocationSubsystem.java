@@ -170,12 +170,6 @@ public class LocationSubsystem extends SubsystemBase {
      */
     private static final double          TEST_TICKS      = 1200;
     /**
-     * The amount of ticks per pulse.
-     * 
-     * @since 2018
-     */
-    private static final double          TICKS_PER_PULSE = 1;
-    /**
      * The last arc length #1.
      * 
      * @since 2018

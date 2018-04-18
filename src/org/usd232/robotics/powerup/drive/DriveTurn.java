@@ -10,7 +10,6 @@ public class DriveTurn extends CommandBase {
 	private final ISpeedFunction speedFunc;
 	private final double angle;
 	private final double sign;
-	private final double KP = .5;
 	private LocationSubsystem.Context location;
 
     @Override
