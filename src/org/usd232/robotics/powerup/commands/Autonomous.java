@@ -151,6 +151,9 @@ public class Autonomous extends CommandGroup {
                             LOG.debug("Lower to limit switch");
                             addSequential(new LowerToBottom());
                             break;
+                        case 9:
+                        	LOG.debug("Go to switch");
+                        	addSequential(new GoToLevel(()->Robot.calibratorData.getLiftSwitch()));
                         default:
                             LOG.error("Unknown command ID %d", param.getCommandID());
                     }

@@ -163,13 +163,13 @@ public class LocationSubsystem extends SubsystemBase {
      * 
      * @since 2018
      */
-    private static double                WHEEL_CIRCUMFERENCE;
+    private static double                WHEEL_CIRCUMFERENCE = 18.84;
     /**
      * Amount of ticks for a full rotation of the wheel.
      * 
      * @since 2018
      */
-    private static double                TICKS_PER_REV;
+    private static double                TICKS_PER_REV = 750;
     /**
      * The last arc length #1.
      * 
@@ -214,8 +214,6 @@ public class LocationSubsystem extends SubsystemBase {
      */
     public LocationSubsystem() {
         contexts = new LinkedList<WeakReference<Context>>();
-        TICKS_PER_REV = Robot.preferences.getDouble("TICKS_PER_REV", 1200);
-        WHEEL_CIRCUMFERENCE = Robot.preferences.getDouble("WHEEL_DIAMETER", 18.84);
         reset();
     }
 
@@ -244,8 +242,8 @@ public class LocationSubsystem extends SubsystemBase {
      */
     @SuppressWarnings("unchecked")
     public void updateValues() {
-        double s1 = (leftDriveEncoder.getDistance() / TICKS_PER_REV) * WHEEL_CIRCUMFERENCE;
-        double s2 = (-rightDriveEncoder.getDistance() / TICKS_PER_REV) * WHEEL_CIRCUMFERENCE;
+        double s1 = (leftDriveEncoder.getRaw() / TICKS_PER_REV) * WHEEL_CIRCUMFERENCE;
+        double s2 = (-rightDriveEncoder.getRaw() / TICKS_PER_REV) * WHEEL_CIRCUMFERENCE;
         double theta = gyro.getAngle() * Math.PI / 180;
         double ds1 = s1 - lastS1;
         double ds2 = s2 - lastS2;
