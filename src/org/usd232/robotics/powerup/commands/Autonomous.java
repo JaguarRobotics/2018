@@ -170,9 +170,9 @@ public class Autonomous extends CommandGroup {
                     TurnParameter param = (TurnParameter) step.getGenericParameter();
                     LOG.debug("Turn %f rad", param.getAngle());
                     if (param.getAngle() > 0) {
-                        addSequential(new TurnLeft(turnSpeed, param.getAngle()));
-                    } else {
                         addSequential(new TurnRight(turnSpeed, param.getAngle()));
+                    } else {
+                        addSequential(new TurnLeft(turnSpeed, param.getAngle()));
                     }
                     break;
                 }
