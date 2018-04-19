@@ -93,7 +93,6 @@ public class Autonomous extends CommandGroup {
         AutonomousRoute route = model.getRoute(DriverStation.getInstance().getGameSpecificMessage());
         LOG.debug("Autonomous route:");
         for (AutonomousStep step : route.getSteps()) {
-            addSequential(new Delay(500));
             switch (step.getType()) {
                 case CustomCommand: {
                     CustomCommandParameter param = (CustomCommandParameter) step.getGenericParameter();
