@@ -1,16 +1,13 @@
 package org.usd232.robotics.powerup;
 
-import org.usd232.robotics.powerup.calibration.CalibrateCommand;
 import org.usd232.robotics.powerup.climb.ClimbDown;
 import org.usd232.robotics.powerup.climb.ClimbUp;
 import org.usd232.robotics.powerup.intake.DropCube;
 import org.usd232.robotics.powerup.intake.GrabCube;
 import org.usd232.robotics.powerup.intake.LowerIntake;
 import org.usd232.robotics.powerup.intake.RaiseIntake;
-import org.usd232.robotics.powerup.lift.GoToLevel;
 import org.usd232.robotics.powerup.lift.ManualLower;
 import org.usd232.robotics.powerup.lift.ManualRaise;
-import org.usd232.robotics.powerup.lift.RaiseToScale;
 import org.usd232.robotics.powerup.log.Logger;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -37,17 +34,9 @@ public class OI extends Trigger implements RobotMap {
 
     public OI() {
         LOG.catchAll(()-> {
-            CalibratorXbox_A.whenPressed(new CalibrateCommand());
+//            CalibratorXbox_A.whenPressed(new CalibrateCommand());
             ManipulatorXbox_RB.whileHeld(new ManualRaise());
             ManipulatorXbox_LB.whileHeld(new ManualLower());
-            try {
-                whenPovIs(Manipulator, 0, new RaiseToScale());
-                whenPovIs(Manipulator, 6, new GoToLevel(()->Robot.calibratorData.getLiftSwitch()));
-                whenPovIs(Manipulator, 4, new GoToLevel(()->Robot.calibratorData.getLiftBottom()));
-                LOG.info("The POV controls were successfuly created");
-            } catch (Exception e) {
-                LOG.info("The POV controls failed to be created");
-            }
             whileGreaterThan(Manipulator, 2, .1, new ClimbUp(()->Manipulator.getRawAxis(2)));
             whileGreaterThan(Manipulator, 3, .1, new ClimbDown(()->-Manipulator.getRawAxis(3)));
             ManipulatorXbox_Y.whenPressed(new RaiseIntake());
@@ -61,7 +50,7 @@ public class OI extends Trigger implements RobotMap {
     public final Joystick Joystick0              = LOG.catchAll(()->new Joystick(LEFT_JOYSTICK_PORT));
     public final Joystick Joystick1              = LOG.catchAll(()->new Joystick(RIGHT_JOYSTICK_PORT));
     public final Joystick Manipulator            = LOG.catchAll(()->new Joystick(MANIPULATOR_JOYSTICK_PORT));
-    public final Joystick Calibrator             = LOG.catchAll(()->new Joystick(CALIBRATION_JOYSTICK_PORT));
+//    public final Joystick Calibrator             = LOG.catchAll(()->new Joystick(CALIBRATION_JOYSTICK_PORT));
     // Buttons here are as labeled on the controllers.
     public final Button   Joystick0_Button1      = LOG.catchAll(()->new JoystickButton(Joystick0, 1));
     public final Button   Joystick0_Button2      = LOG.catchAll(()->new JoystickButton(Joystick0, 2));
@@ -96,16 +85,16 @@ public class OI extends Trigger implements RobotMap {
     public final Button   ManipulatorXbox_Start  = LOG.catchAll(()->new JoystickButton(Manipulator, 8));
     public final Button   ManipulatorXbox_LStick = LOG.catchAll(()->new JoystickButton(Manipulator, 9));
     public final Button   ManipulatorXbox_RStick = LOG.catchAll(()->new JoystickButton(Manipulator, 10));
-    public final Button   CalibratorXbox_A       = LOG.catchAll(()->new JoystickButton(Calibrator, 1));
-    public final Button   CalibratorXbox_B       = LOG.catchAll(()->new JoystickButton(Calibrator, 2));
-    public final Button   CalibratorXbox_X       = LOG.catchAll(()->new JoystickButton(Calibrator, 3));
-    public final Button   CalibratorXbox_Y       = LOG.catchAll(()->new JoystickButton(Calibrator, 4));
-    public final Button   CalibratorXbox_LB      = LOG.catchAll(()->new JoystickButton(Calibrator, 5));
-    public final Button   CalibratorXbox_RB      = LOG.catchAll(()->new JoystickButton(Calibrator, 6));
-    public final Button   CalibratorXbox_Back    = LOG.catchAll(()->new JoystickButton(Calibrator, 7));
-    public final Button   CalibratorXbox_Start   = LOG.catchAll(()->new JoystickButton(Calibrator, 8));
-    public final Button   CalibratorXBox_LStick  = LOG.catchAll(()->new JoystickButton(Calibrator, 9));
-    public final Button   CalibratorXbox_RStick  = LOG.catchAll(()->new JoystickButton(Calibrator, 10));
+//    public final Button   CalibratorXbox_A       = LOG.catchAll(()->new JoystickButton(Calibrator, 1));
+//    public final Button   CalibratorXbox_B       = LOG.catchAll(()->new JoystickButton(Calibrator, 2));
+//    public final Button   CalibratorXbox_X       = LOG.catchAll(()->new JoystickButton(Calibrator, 3));
+//    public final Button   CalibratorXbox_Y       = LOG.catchAll(()->new JoystickButton(Calibrator, 4));
+//    public final Button   CalibratorXbox_LB      = LOG.catchAll(()->new JoystickButton(Calibrator, 5));
+//    public final Button   CalibratorXbox_RB      = LOG.catchAll(()->new JoystickButton(Calibrator, 6));
+//    public final Button   CalibratorXbox_Back    = LOG.catchAll(()->new JoystickButton(Calibrator, 7));
+//    public final Button   CalibratorXbox_Start   = LOG.catchAll(()->new JoystickButton(Calibrator, 8));
+//    public final Button   CalibratorXBox_LStick  = LOG.catchAll(()->new JoystickButton(Calibrator, 9));
+//    public final Button   CalibratorXbox_RStick  = LOG.catchAll(()->new JoystickButton(Calibrator, 10));
 
     abstract class Scheduler extends ButtonScheduler {
         @Override

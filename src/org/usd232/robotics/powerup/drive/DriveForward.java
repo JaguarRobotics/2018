@@ -80,13 +80,10 @@ public class DriveForward extends CommandBase {
             }
             if (x == 0 || (Math.abs(location.getAngle() - Math.PI / 2) > maxAngle)
                             && Math.signum(x) == Math.signum(location.getAngle() - Math.PI / 2)) {
-                LOG.debug("Therefore, the tank speeds are (%f, %f)", highSpeed, highSpeed);
                 driveSubsystem.driveTank(sign * highSpeed, sign * highSpeed);
             } else if (x < 0) {
-                LOG.debug("Therefore, the tank speeds are (%f, %f)", highSpeed + x * correctionPerInch, highSpeed);
                 driveSubsystem.driveTank(sign * (highSpeed + x * correctionPerInch), sign * highSpeed);
             } else {
-                LOG.debug("Therefore, the tank speeds are (%f, %f)", highSpeed, highSpeed - x * correctionPerInch);
                 driveSubsystem.driveTank(sign * highSpeed, sign * (highSpeed - x * correctionPerInch));
             }
         });
