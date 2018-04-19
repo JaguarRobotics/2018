@@ -55,6 +55,10 @@
                 "name": "Pot Value",
                 "unit": ""
             }
+        },
+        {
+            "name": "Go To Switch",
+            "id": 7
         }
     ]
 }
