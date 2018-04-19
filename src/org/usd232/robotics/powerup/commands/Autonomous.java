@@ -178,6 +178,7 @@ public class Autonomous extends CommandGroup {
                 default:
                     LOG.error("Unknown step type %s", step.getType());
             }
+            addSequential(new Delay(250));
         }
     }
 }
