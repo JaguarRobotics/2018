@@ -169,7 +169,7 @@ public class LocationSubsystem extends SubsystemBase {
      * 
      * @since 2018
      */
-    private static double                TICKS_PER_REV = 750;
+    private static double                TICKS_PER_REV = 1680;
     /**
      * The last arc length #1.
      * 
@@ -243,7 +243,7 @@ public class LocationSubsystem extends SubsystemBase {
     @SuppressWarnings("unchecked")
     public void updateValues() {
         double s1 = (leftDriveEncoder.getRaw() / TICKS_PER_REV) * WHEEL_CIRCUMFERENCE;
-        double s2 = (-rightDriveEncoder.getRaw() / TICKS_PER_REV) * WHEEL_CIRCUMFERENCE;
+        double s2 = (rightDriveEncoder.getRaw() / TICKS_PER_REV) * WHEEL_CIRCUMFERENCE;
         double theta = gyro.getAngle() * Math.PI / 180;
         double ds1 = s1 - lastS1;
         double ds2 = s2 - lastS2;
