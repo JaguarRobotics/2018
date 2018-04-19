@@ -27,9 +27,9 @@ public class TurnLeft extends CommandBase {
 	protected void execute() {
 		LOG.catchAll(() -> {
 			double speed = this.speed;
-			if (location.getAngle() <= cutoffAngle) {
-				speed = SLOW_SPEED_TURN;
-			}
+//			if (location.getAngle() <= cutoffAngle) {
+//				speed = SLOW_SPEED_TURN;
+//			}
 			LOG.debug("Turning to %f (currently at %f)", angle, location.getAngle());
 			driveSubsystem.driveTank(-speed, speed);
 		});

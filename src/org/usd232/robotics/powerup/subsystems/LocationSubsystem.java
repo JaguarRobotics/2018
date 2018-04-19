@@ -137,6 +137,7 @@ public class LocationSubsystem extends SubsystemBase {
             ref = new WeakReference<Context>(this);
             contexts.add(ref);
             angleOffset = gyro.getAngle() * Math.PI / 180 - Math.PI / 2;
+            theta = Math.PI / 2;
         }
     }
 

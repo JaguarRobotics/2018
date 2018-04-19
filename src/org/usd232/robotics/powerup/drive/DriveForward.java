@@ -75,9 +75,9 @@ public class DriveForward extends CommandBase {
             double x = location.getX();
             double y = location.getY();
             LOG.debug("LocationSubsytem is reporting (%f, %f) @ %f", x, y, location.getAngle());
-            if (y >= inches * .75) {
-                highSpeed = CUTOFF_SPEED;
-            }
+//            if (y >= inches * .75) {
+//                highSpeed = CUTOFF_SPEED;
+//            }
             if (x == 0 || (Math.abs(location.getAngle() - Math.PI / 2) > maxAngle)
                             && Math.signum(x) == Math.signum(location.getAngle() - Math.PI / 2)) {
                 driveSubsystem.driveTank(sign * highSpeed, sign * highSpeed);
