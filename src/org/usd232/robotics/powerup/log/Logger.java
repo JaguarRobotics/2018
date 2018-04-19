@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.Calendar;
 
 /**
  * Our custom logger.
@@ -69,12 +70,13 @@ public class Logger {
         try {
             byte[] buf = message.getBytes("utf8");
             LogServer.emit(LogServer.serialize(buf, 0, buf.length, System.currentTimeMillis(), level, logger));
-            REAL_STDOUT.printf("[%6s] [%32s] %s%n", level,
+            Calendar cal = Calendar.getInstance();
+            String msg = String.format("[%02d:%02d:%02d.%03d] [%6s] [%32s] %s%n", cal.get(Calendar.HOUR),
+                            cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND), cal.get(Calendar.MILLISECOND), level,
                             logger.length() > 32 ? logger.substring(logger.length() - 32, logger.length()) : logger,
                             message);
-            LOG_FILE.printf("[%6s] [%32s] %s%n", level,
-                            logger.length() > 32 ? logger.substring(logger.length() - 32, logger.length()) : logger,
-                            message);
+            REAL_STDOUT.printf(msg);
+            LOG_FILE.printf(msg);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
