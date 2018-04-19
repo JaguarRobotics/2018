@@ -3,7 +3,6 @@ package org.usd232.robotics.powerup.subsystems;
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
-import org.usd232.robotics.powerup.Robot;
 import org.usd232.robotics.powerup.log.Logger;
 import org.usd232.robotics.powerup.minimap.IMinimapCoordProvider;
 
@@ -20,7 +19,7 @@ public class LocationSubsystem extends SubsystemBase {
      * @author Zach, Brian
      * @since 2018
      */
-    public class Context implements IMinimapCoordProvider {
+    public static class Context implements IMinimapCoordProvider {
         /**
          * The X position.
          * 
@@ -51,6 +50,7 @@ public class LocationSubsystem extends SubsystemBase {
          * @since 2018
          */
         private WeakReference<Context> ref;
+        private LocationSubsystem      that;
 
         /**
          * Updates the values of the robots location.
@@ -117,7 +117,7 @@ public class LocationSubsystem extends SubsystemBase {
          * @since 2018
          */
         public double getSpeed() {
-            return speed;
+            return that.speed;
         }
 
         /**
@@ -125,7 +125,7 @@ public class LocationSubsystem extends SubsystemBase {
          */
         @Override
         protected void finalize() throws Throwable {
-            contexts.remove(ref);
+            that.contexts.remove(ref);
         }
 
         /**
@@ -133,9 +133,10 @@ public class LocationSubsystem extends SubsystemBase {
          * 
          * @since 2018
          */
-        public Context() {
+        public Context(LocationSubsystem that) {
+            this.that = that;
             ref = new WeakReference<Context>(this);
-            contexts.add(ref);
+            that.contexts.add(ref);
             angleOffset = gyro.getAngle() * Math.PI / 180 - Math.PI / 2;
         }
     }
@@ -145,19 +146,19 @@ public class LocationSubsystem extends SubsystemBase {
      * 
      * @since 2018
      */
-    private static final Logger          LOG            = new Logger();
+    private static final Logger          LOG                 = new Logger();
     /**
      * The width of the robot.
      * 
      * @since 2018
      */
-    private static final double          WIDTH          = 18;
+    private static final double          WIDTH               = 18;
     /**
      * The center of the mass.
      * 
      * @since 2018
      */
-    private static final double          CENTER_OF_MASS = 0.5;
+    private static final double          CENTER_OF_MASS      = 0.5;
     /**
      * The wheel's circumference
      * 
@@ -169,7 +170,7 @@ public class LocationSubsystem extends SubsystemBase {
      * 
      * @since 2018
      */
-    private static double                TICKS_PER_REV = 1680;
+    private static double                TICKS_PER_REV       = 1680;
     /**
      * The last arc length #1.
      * 
@@ -267,6 +268,6 @@ public class LocationSubsystem extends SubsystemBase {
     }
 
     public Context createContext() {
-        return new Context();
+        return new Context(this);
     }
 }
