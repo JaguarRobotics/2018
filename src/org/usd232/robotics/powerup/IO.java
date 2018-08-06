@@ -52,8 +52,8 @@ public interface IO extends RobotMap {
      * @since 2018
      * @version 2018
      */
-    public static final Relay           liftRelay              = DO_NOT_USE_THIS_LOGGER
-                    .catchAll(()->new Relay(LIFT_RELAY_PORT));
+    public static final Relay           liftMotor              = DO_NOT_USE_THIS_LOGGER
+                    .catchAll(()->new Relay(LIFT_MOTOR_PORT));
     /**
      * The encoder on the left drive motor.
      * 

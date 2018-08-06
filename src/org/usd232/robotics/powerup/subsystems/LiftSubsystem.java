@@ -43,7 +43,8 @@ public class LiftSubsystem extends SubsystemBase {
      * @since 2018
      */
     public void raiseScissor() {
-        liftRelay.set(Relay.Value.kReverse);
+    	liftMotor.set(Value.kOn);
+    	liftMotor.set(Value.kReverse);
     }
 
     /**
@@ -52,8 +53,9 @@ public class LiftSubsystem extends SubsystemBase {
      * @since 2018
      */
     public void lowerScissor() {
+    	liftMotor.set(Value.kOn);
         if (counter % (onTime + offTime) >= offTime) {
-            liftRelay.set(Value.kForward);
+        	liftMotor.set(Value.kForward);
         } else {
             stopScissor();
         }
@@ -66,7 +68,7 @@ public class LiftSubsystem extends SubsystemBase {
      * @since 2018
      */
     public void stopScissor() {
-        liftRelay.set(Relay.Value.kOff);
+    	liftMotor.set(Value.kOff);
         IO.helpRaiseSolenoid.set(false);
     }
 

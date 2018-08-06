@@ -65,14 +65,20 @@ public interface RobotMap {
      * @version 2018
      */
     public static final int     RIGHT_ENCODER_CHANNEL_B    = 3;
-    // Relays
     /**
-     * The port for the lift relay.
+     * The port for the lift motor.
      * 
      * @since 2018
      * @version 2018
      */
-    public static final int     LIFT_RELAY_PORT            = 0;
+    public static final int     LIFT_MOTOR_PORT            = 0;
+    /**
+     * The type for the lift motor.
+     * 
+     * @since 2018
+     * @version 2018
+     */
+    public static final MotorID     LIFT_MOTOR_TYPE            = MotorID.Victor;
     /**
      * The type of the winch motor.
      * 
